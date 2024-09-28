@@ -1,0 +1,11 @@
+SENSOR MQ-3: CONCENTRACIÓN DE ALCOHOL EN AIRE
+---------------------------------------------
+
+- Alimentación:
+		5V (VCC)
+		GND
+
+- Salidas:
+		Análogica 0-5V (siendo 5V la concentración más alta detectada).
+		Salida de nivel TTL (Descartado).
+
