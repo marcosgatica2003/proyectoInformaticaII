@@ -1,5 +1,7 @@
 #!/bin/bash
 
+mkdir -p ./documentacionCodigos
+
 DOXYFILE_DIR="."
 DOCS_DIR="$DOXYFILE_DIR/documentacionCodigos"
 
