@@ -9,9 +9,27 @@
 
 #define SS_PIN 10 ///< Pin SS para el módulo RFID
 #define RST_PIN 9 ///< Pin RST para el módulo RFID
+#define TAM 2
 
-accesoRFID accesoCamFrig(SS_PIN, RST_PIN, "B0 AC 7E 7A"); ///< Instancia del acceso RFID para la cámara frigorífica.
+String uidAccess[TAM] = {"87 9C 0A 4E", "79 C3 C3 A2"};
 
+accesoRFID accesoCamFrig(SS_PIN, RST_PIN, uidAccess[0]); ///< Instancia del acceso RFID para la cámara frigorífica.
+
+
+bool verificarAcceso () {
+  if(accesoCamFrig.autorizar()) {
+    //Acceso autorizado
+    Serial.println("Autorizado");
+
+    return true;
+
+  } else {
+    //Acceso denegado
+    Serial.println("Denegado");
+  }
+  
+  return false;
+}
 
 /**
 * @brief void setup()
@@ -31,9 +49,8 @@ void setup() {
 */
 
 void loop() {
-  if(accesoCamFrig.autorizar()) {
-    //Acceso autorizado
-  } else {
-    //Acceso denegado
+  if(verificarAcceso()){
+    //Abrir puerta
   }
 }
+
