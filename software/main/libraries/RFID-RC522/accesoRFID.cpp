@@ -8,7 +8,7 @@
 *@param autorizarID: El UID de la tarjeta autorizada para el acceso.
 */
 
-accesoRFID::accesoRFID (byte ssPin, byte rstPin, String ID): rfid(ssPin, rstPin), autorizarID(ID) {}
+accesoRFID::accesoRFID (byte ssPin, byte rstPin, String ID): rdif(ssPin, rstPin), autorizarID(ID) {}
 
 
 /**
@@ -17,7 +17,7 @@ accesoRFID::accesoRFID (byte ssPin, byte rstPin, String ID): rfid(ssPin, rstPin)
 */
 void accesoRFID::start(){
   SPI.begin();
-  rfid.PCD_Init();
+  rdif.PCD_Init();
 }
 
 /**
@@ -28,17 +28,17 @@ void accesoRFID::start(){
 bool accesoRFID::autorizar() {
     String content = "";
 
-    if (!rfid.PICC_IsNewCardPresent()) {
+    if (!rdif.PICC_IsNewCardPresent()) {
         return false;
     }
 
-    if (!rfid.PICC_ReadCardSerial()) {
+    if (!rdif.PICC_ReadCardSerial()) {
         return false;
     }
 
-    for (byte i = 0; i < rfid.uid.size; ++i) {
-        content.concat(String(rfid.uid.uidByte[i] < 0x10 ? " 0" : " "));
-        content.concat(String(rfid.uid.uidByte[i], HEX));
+    for (byte i = 0; i < rdif.uid.size; ++i) {
+        content.concat(String(rdif.uid.uidByte[i] < 0x10 ? " 0" : " "));
+        content.concat(String(rdif.uid.uidByte[i], HEX));
     }
 
     content.toUpperCase();
@@ -54,11 +54,28 @@ bool accesoRFID::autorizar() {
 void accesoRFID::mostrarID() {
   Serial.print("UID de la llave: ");
 
-  for (byte i = 0; i < rfid.uid.size; ++i) {
-    Serial.print(rfid.uid.uidByte[i] < 0x10 ? " 0" : " ");
-    Serial.print(rfid.uid.uidByte[i], HEX);
+  for (byte i = 0; i < rdif.uid.size; ++i) {
+    Serial.print(rdif.uid.uidByte[i] < 0x10 ? " 0" : " ");
+    Serial.print(rdif.uid.uidByte[i], HEX);
   }
 
   Serial.println();
+
+}
+/**
+* @brief bool detectarTarjeta();
+* 
+* Este método detecta si hay una tarjeta para poder leerla.
+*/
+bool accesoRFID::detectarTarjeta() {
+  if (!rdif.PICC_IsNewCardPresent()) {
+    return false;
+  }
+
+  if (!rdif.PICC_ReadCardSerial()) {
+    return false;
+  }
+
+  return true;
 
 }
