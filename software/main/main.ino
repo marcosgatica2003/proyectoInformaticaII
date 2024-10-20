@@ -2,33 +2,38 @@
 * @file main.ino
 * @brief Programa principal para controlar el acceso a una cámara frigorífica usando RFID.
 * 
-* Este archivo utiliza la clase accesoRFID para leer tarjetas RFID y determinar si una tarjeta tiene acceso autorizado.
+* @brief RFIDLibs.h 
+* Este archivo de cabecera contiene lo necesario para usar el módulo RFID-RC522
 */
 
-#include <accesoRFID.h>
+#include "libraries/RFID-RC522/RFIDLibs.h"
 
 #define SS_PIN 10 ///< Pin SS para el módulo RFID
 #define RST_PIN 9 ///< Pin RST para el módulo RFID
 #define TAM 2
 
-String uidAccess[TAM] = {"87 9C 0A 4E", "79 C3 C3 A2"};
+accesoRFID tarjetaRFID(SS_PIN, RST_PIN, "87 9C 0A 4E"); ///< Instancia del acceso RFID para la cámara frigorífica.
+accesoRFID llaveroRFID(SS_PIN, RST_PIN, "79 C3 C3 A2"); ///< Instancia del acceso RFID para la cámara frigorífica.
 
-accesoRFID accesoCamFrig(SS_PIN, RST_PIN, uidAccess[0]); ///< Instancia del acceso RFID para la cámara frigorífica.
-
+/**
+* @brief bool verificarAcceso()
+* 
+* Función que devuelve true si alguna llave tiene permiso para entrar.
+*/
 
 bool verificarAcceso () {
-  if(accesoCamFrig.autorizar()) {
-    //Acceso autorizado
-    Serial.println("Autorizado");
+  bool verif = false;
 
-    return true;
+  if(tarjetaRFID.autorizar() || llaveroRFID.autorizar()) {
+
+    Serial.println("Autorizado");
+    verif = true;
 
   } else {
-    //Acceso denegado
     Serial.println("Denegado");
   }
   
-  return false;
+  return verif;
 }
 
 /**
@@ -39,14 +44,8 @@ bool verificarAcceso () {
 
 void setup() {
   Serial.begin(9600);
-  accesoCamFrig.start();
+  tarjetaRFID.start(); llaveroRFID.start();
 }
-
-/**
-* @brief void loop()
-* 
-* if(accesoCamFrig.autorizar()): Llama a la función autorizar() de la clase accesoRFID para verificar si la tarjeta leída tiene acceso.
-*/
 
 void loop() {
   if(verificarAcceso()){
