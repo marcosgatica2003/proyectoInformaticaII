@@ -1,7 +1,8 @@
-/*
-  DHT11 Library
-  Author: Bonezegei (Jofel Batutay)
-  Date : November 2023
+/**
+*  @class DHT11 Library
+*  Author: Bonezegei (Jofel Batutay)
+*  Date : November 2023
+*  Link: https://github.com/bonezegei/Bonezegei_DHT11/tree/main
 */
 
 #include <Arduino.h>
