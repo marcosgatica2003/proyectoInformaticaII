@@ -16,7 +16,7 @@
 accesoRFID tarjetaRFID(SS_PIN, RST_PIN, "87 9C 0A 4E"); ///< Instancia del acceso RFID para la cámara frigorífica.
 accesoRFID llaveroRFID(SS_PIN, RST_PIN, "79 C3 C3 A2"); ///< Instancia del acceso RFID para la cámara frigorífica.
 
-sensorTemp sensor;
+sensorTemp sensor(2);
 
 /**
 * @brief bool verificarAcceso()
