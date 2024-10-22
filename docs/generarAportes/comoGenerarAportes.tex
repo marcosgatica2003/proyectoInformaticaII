@@ -230,6 +230,31 @@ Una vez que los cambios se han subido al repositorio remoto y haya pasado la rev
         "Detalles del cambio"
     \end{lstlisting}
 
+\indent También puede generar un pull request desde el menú en la página de GitHub por si prefiere una interfaz gráfica: \\
+
+\begin{figure}[h!]
+    \centering
+    \includegraphics[width=6cm]{../imagenesParaInformes/pullRequestMenu.png}
+\end{figure}
+
+\indent Compare las dos ramas origen $\rightarrow$ destino (ejemplo de devel a main): \\
+
+\begin{figure}[h!]
+    \centering
+    \includegraphics[width=7cm]{../imagenesParaInformes/comparingChanges.png}
+\end{figure}
+
+\indent A continuación verá un menú para terminar de abrir el pull request, tiene una entrada de título del pull request y una descripción (convenientemente agregue los detalles y los cambios): \\
+
+\newpage
+\noindent
+\thispagestyle{fancy}
+
+\begin{figure}[h!]
+    \centering
+    \includegraphics[width=7cm]{../imagenesParaInformes/openAPullRequest.png}
+\end{figure}
+
 \indent A partir de aquí, los cambios de una rama de desarrollo están aplicados a la rama \textit{main}.
 
 
@@ -266,10 +291,6 @@ Una vez que los cambios se han subido al repositorio remoto y haya pasado la rev
         git checkout devel
     \end{lstlisting}
 
-\newpage
-\noindent
-\thispagestyle{fancy}
-
 \item Cree una nueva rama sobre la rama de desarrollo con el nombre ``\text{fix-issue\#XX}'', siendo el número ``XX'', el que asigna GitHub al Issue:
 
     \begin{lstlisting}
@@ -296,6 +317,11 @@ Una vez que los cambios se han subido al repositorio remoto y haya pasado la rev
     \begin{figure}[h!]
         \centering
         \includegraphics[width=5.5cm]{../imagenesParaInformes/ramasDelProyecto.png}
+    \end{figure}
+
+    \begin{figure}[h!]
+        \centering
+        \includegraphics[width=8.5cm]{../imagenesParaInformes/yourBranches.png}
     \end{figure}
 
 \end{enumerate}
