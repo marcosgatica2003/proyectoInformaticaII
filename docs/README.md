@@ -97,4 +97,4 @@ Por favor, lea nuestra [guía de contribución](docs/generarAportes/comoGenerarA
 - Marcos Raúl Gatica (Leg. 402006)
 
 ## Licencia
-Este proyecto está licenciado bajo la Licencia GPL - vea el archivo [LICENSE](LICENSE) para más detalles.
+Este proyecto está licenciado bajo la Licencia GPL - vea el archivo [LICENSE](/LICENSE) para más detalles.
