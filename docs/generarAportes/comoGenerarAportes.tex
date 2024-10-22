@@ -78,11 +78,11 @@
 \twocolumn
 
 \section{Flujo de trabajo}
-    \indent En el siguiente documento se explica la metodología de trabajo para el proyecto "pendiente", con el fin de organizar y separar las diferentes áreas de desarrollo, facilitando que cada integrante o aportes voluntarios puedan subir sus modificaciones o generarlos.
+    \indent En el siguiente documento se explica la metodología de trabajo para el proyecto ''Prototipo de sistema de seguridad en cámaras frigoríficas'', con el fin de organizar y separar las diferentes áreas de desarrollo, facilitando que cada integrante o aportes voluntarios puedan subir sus modificaciones o generarlos.
     \indent El motivo de esta metodología surge con el fin de evitar conflictos entre cambios no relacionados y manteniendo el historial de trabajo estructurado.
     
     \subsection{main}
-        \indent Rama principal del proyecto "". Aquí se integran los cambios aprobados y estables. Todo lo que se llega a \textit{main} debe haber pasado por un proceso de revisión. Es importante mantener esta rama libre de errores, ya que representa la versión final y funcional del proyecto.
+        \indent Rama principal del proyecto. Aquí se integran los cambios aprobados y estables. Todo lo que se llega a \textit{main} debe haber pasado por un proceso de revisión. Es importante mantener esta rama libre de errores, ya que representa la versión final y funcional del proyecto.
 
     \subsection{devel}
         \indent Esta es la rama de desarrollo principal. Todo el código relacionado con el software del proyecto se trabaja aquí. El objetivo de esta rama es que cada integrante pueda hacer sus aportes y pruebas antes de integrarlo a \textit{main}. Al trabajar en \textit{devel}, nos permite implementar y probar nuevas funcionalidades sin afectar la estabilidad del proyecto.
@@ -109,13 +109,15 @@
         \begin{itemize}
             \item Cada colaborador trabaja en su área específica en alguna de las ramas (\textit{devel, hardware, docs}), según corresponda.
             \item Cada colaborador debe notificar el comienzo y fin de su trabajo.
+            \item Los desarrolladores pueden hacer \textit{push} directamente a sus respectivas ramas de trabajo.
             \item Se realizan los commits correspondientes para reflejar los avances.
         \end{itemize}
 
-    \subsection{Revisión y Pull Requests}
+        \subsection{Revisión e integración a \textit{main}}
         \begin{itemize}
-            \item Una vez que los cambios están listos, se abre un PR desde la rama de trabajo (\textit{devel, hardware, docs}), hacia la rama principal (\textit{main}).
-            \item El equipo principal de desarrollo (los autores de este documento) revisan los cambios propuestos, los comentarios y, si es necesario, los ajustes.
+            \item Los supervisores del proyecto revisan periódicamente los cambios en las ramas de desarrollo.
+            \item Cuando los cambios en una rama de desarrollo (\textit{devel, docs, hardware}) están listos y probados, un supervisor abre un PR desde la rama de desarollo, hacia la rama principal (\textit{main}).
+            \item El equipo principal de desarrollo revisan los cambios propuestos, los comentarios y, si es necesario, solicita ajustes.
         \end{itemize}
 
     \subsection{Integración con \textit{main}}
@@ -140,11 +142,14 @@
             pacman -Syu git github-cli
         \end{lstlisting}
     \end{center}
+
+\newpage
+\noindent
+\thispagestyle{fancy}
+
 \thispagestyle{fancy}
 \indent Una vez instalado en su sistema, ya puede clonar el repositorio remoto del proyecto. Recomendamos usar SSH con este link: 
 
-\newpage
-\thispagestyle{fancy}
 \begin{center}
     \url{git@github.com:marcosgatica2003/} \\
     \url{proyectoInformaticaII.git} \\
@@ -179,7 +184,7 @@ Git utiliza el nombre de usuario y el correo electrónico configurados para asoc
 
 Después de ejecutar estos comandos, Git usará el nombre y el correo electrónico proporcionados para identificar las contribuciones en todos los repositorios locales.
 
-\subsection{Generar un PR}
+\subsection{Subir cambios al repositorio}
 
 Antes de realizar cualquier cambio, es necesario cambiarse a la rama en la que se desea trabajar. El siguiente comando cambia a una rama existente, por ejemplo \textit{devel}:
 
@@ -202,15 +207,21 @@ A partir de aquí sus cambios están preparados para ser agregados a un commit, 
     git commit
 \end{lstlisting}
 
+\newpage
+\noindent
+\thispagestyle{fancy}
+
 Para compartir los cambios con el resto del equipo, debes subir la rama de trabajo al repositorio remoto. Esto se hace con el siguiente comando (suponiendo que está trabajando en la rama devel):
 
     \begin{lstlisting}
         git push origin devel
     \end{lstlisting}
 
-\newpage
-\thispagestyle{fancy}
-Una vez que los cambios se han subido al repositorio remoto, se puede generar un Pull Request para que el responsable de la revisión lo apruebe y combine con la rama principal. Para ello, es necesario utilizar la herramienta \textbf{GitHub CLI}, como se explicó al principio:
+Una vez que los cambios se han subido al repositorio remoto y haya pasado la revisión, el supervisor puede generar un Pull Request y combine con la rama principal. 
+
+\subsection{Generar un Pull Request - supervisores}
+
+\indent Para generar un pull request, es necesario utilizar la herramienta \textbf{GitHub CLI}, como se explicó al principio de la sección \textbf{TRABAJO CON GNU/LINUX}:
 
     \begin{lstlisting}
         # Crear un PR desde la rama actual hacia main
@@ -219,7 +230,75 @@ Una vez que los cambios se han subido al repositorio remoto, se puede generar un
         "Detalles del cambio"
     \end{lstlisting}
 
-A partir de aquí, sus aportes al proyecto ya han sido subidos y estarán a la espera de que un supervisor los revise.
+\indent A partir de aquí, los cambios de una rama de desarrollo están aplicados a la rama \textit{main}.
+
+
+\section{Manejo de Issues}
+
+\subsection{Creación y asignación de Issues}
+
+\indent Los Issues son la herramienta principal para el seguimiento de tareas y problemas en el proyecto. Pueden representar: \\
+
+\begin{itemize}
+    \item Errores que necesitan ser corregidos.
+    \item Nuevas funcionalidades por implementar.
+    \item Mejoras en el código existente.
+    \item Tareas de documentación.
+    \item Implementación de módulos de hardware.
+\end{itemize}
+
+\indent Cada Issue puede contener: \\
+
+\begin{itemize}
+    \item Una descripción clara del problema o tarea.
+    \item Los requisitos necesarios para resolverlo.
+    \item Cualquier información técnica relevante.
+\end{itemize}
+
+\subsection{Flujo de trabajo con Issues}
+
+\indent Para trabajar en un Issue asignado, se debe seguir el siguiente procedimiento: \\
+
+\begin{enumerate}
+    \item Asegúrese de estar en la rama de desarrollo correspondiente a lo que detalla el Issue:
+    \begin{lstlisting}
+        #Ejemplo con devel
+        git checkout devel
+    \end{lstlisting}
+
+\newpage
+\noindent
+\thispagestyle{fancy}
+
+\item Cree una nueva rama sobre la rama de desarrollo con el nombre ``\text{fix-issue\#XX}'', siendo el número ``XX'', el que asigna GitHub al Issue:
+
+    \begin{lstlisting}
+        #Ejemplo con un issue #12
+        git checkout -b fix-issue#12
+    \end{lstlisting}
+
+\item A partir de aquí puede trabajar en su rama fix-issue\#XX, resulva los detalles descriptos en el issue y haga los commits correspondientes al finalizar su trabajo. \\
+
+\item Subir los cambios: 
+
+    \begin{lstlisting}
+        git add .
+        git commit -m "fix-issue#XX: (detalles opcional)"
+        git push origin fix-issue#XX
+    \end{lstlisting}
+
+\item Una vez completado y subido su trabajo, un supervisor revisará su aporte y puede generar un pr a la rama de desarrollo correspondiente, o puede solicitar un ajuste sobre la misma interfaz de comunicación del issue en la página de GitHub.\\
+
+    \textit{Nota a los supervisores: se usa el mismo comando para generar un pull request a main, solo que en este punto es a una rama de desarrollo. También se puede generar otro pr a main posteriormente a la resolución del issue.}
+
+\item Tras haber resuelto el issue y haber subido su trabajo, es necesario borrar su rama con el nombre ''fix-issue\#XX'' para mantener únicamente las ramas de desarrollo. \\
+
+    \begin{figure}[h!]
+        \centering
+        \includegraphics[width=5.5cm]{../imagenesParaInformes/ramasDelProyecto.png}
+    \end{figure}
+
+\end{enumerate}
 
 \end{document}
 
