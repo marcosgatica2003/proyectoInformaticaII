@@ -88,7 +88,7 @@ sudo usermod -a -G uucp $USER
 3. Reinicie su sesión para que los cambios de grupo surtan efecto.
 
 ## Contribuir al Proyecto
-Por favor, lea nuestra [guía de contribución](software/generarAportes/comoGenerarAportes.pdf) para detalles sobre nuestro código de conducta y el proceso para enviar pull requests.
+Por favor, lea nuestra [guía de contribución](docs/generarAportes/comoGenerarAportes.pdf) para detalles sobre nuestro código de conducta y el proceso para enviar pull requests.
 
 ## Autores
 - Salas Joaquín (Leg. 98368)
