@@ -55,18 +55,10 @@ void loop() {
     //Abrir puerta
   }
 
-   if (sensor.verificarLectura()) {
-        /* Serial.print("Humedad: "); */
-        /* Serial.print(sensor.leerHumedad()); */
-        /* Serial.println("%"); */
-
-        Serial.print("Temperatura: ");
-        Serial.print(sensor.leerTemperatura());
-        Serial.println("°C");
-    } else {
-        Serial.println("Error en la lectura del sensor.");
-    }
-
+  Serial.println("Temperatura: ");
+  Serial.println(sensor.leerTemperatura());
+  Serial.println(" ºC");
+    
   delay(2000); //Esto deberíamos quitarlo luego.
 
 }
