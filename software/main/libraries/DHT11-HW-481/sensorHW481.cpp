@@ -8,8 +8,12 @@
 * Inicializa la lectura del sensor con el método begin de la clase Bonezegei_DHT11.
 */
 
-sensorTemp::sensorTemp(unsigned int p): pin(p), dht11(p) {
-    dht11.begin();
+sensorTemp::sensorTemp(int8_t p): Bonezegei_DHT11(p) {
+    if(verificarPin()) {
+        begin();
+    } else {
+        Serial.println("Error: No hay pin definido.")
+    }
 }
 
 /**
@@ -19,7 +23,7 @@ sensorTemp::sensorTemp(unsigned int p): pin(p), dht11(p) {
 
 
 bool sensorTemp::verificarPin(){
-    return (pin != -1);
+    return (_pin != -1);
 }
 
 /**
@@ -28,7 +32,7 @@ bool sensorTemp::verificarPin(){
 */
 
 void sensorTemp::setPin(unsigned int p) {
-    pin = p;
+    _pin = p;
 }
 
 /**
@@ -36,15 +40,15 @@ void sensorTemp::setPin(unsigned int p) {
 * Verifica que exista un pin válido, en caso de ser cierto, llama a un método de la clase Bonezegei_DHT11 para leer la humedad y devuelve ese valor.
 */
 
-float sensorTemp::leerHumedad() {
+// float sensorTemp::leerHumedad() {
 
-    if(!verificarPin()) {
-        Serial.println("Error: pin no establecido.");
-        return NAN;
-    }
+//     if(!verificarPin()) {
+//         Serial.println("Error: pin no establecido.");
+//         return NAN;
+//     }
 
-    return dht11.getHumidity();
-}
+//     return dht11.getHumidity();
+// }
 
 /**
 *@brief float leerTemperatura();
@@ -58,7 +62,7 @@ float sensorTemp::leerTemperatura() {
         return NAN;
     }
 
-    return dht11.getTemperature();
+    return getTemperature();
 }
 
 /**
@@ -70,16 +74,10 @@ bool sensorTemp::verificarLectura() {
 
     if(!verificarPin()) {
         Serial.println("Error: pin no establecido.");
-        return NAN;
+        return false;
     }
 
-    bool lectura = true;
-
-    if (isnan(dht11.getHumidity()) || isnan(dht11.getTemperature())) {
-        lectura = false;
-    }
-
-    return lectura;
+    return isnan(getTemperature());
 }
 
 /**
@@ -87,29 +85,29 @@ bool sensorTemp::verificarLectura() {
 * Verifica que exista un pin válido, en caso de ser cierto, manda por puerto serie UART las lecturas de humedad.
 */
 
-void sensorTemp::imprimirHum() {
+// void sensorTemp::imprimirHum() {
 
-    if(!verificarPin()) {
-        Serial.println("Error: pin no establecido.");
-    } else {
-        Serial.print("Humedad: ");
-        Serial.print(sensorTemp::leerHumedad());
-        Serial.println(" %");
-    }
-}
+//     if(!verificarPin()) {
+//         Serial.println("Error: pin no establecido.");
+//     } else {
+//         Serial.print("Humedad: ");
+//         Serial.print(sensorTemp::leerHumedad());
+//         Serial.println(" %");
+//     }
+// }
 
 /**
 *@brief void imprimirHum();
 * Verifica que exista un pin válido, en caso de ser cierto, manda por puerto serie UART las lecturas de temperatura.
 */
 
-void sensorTemp::imprimirTemp() {
+void sensorTemp::imprimirTemperatura() {
 
     if(!verificarPin()) {
         Serial.println("Error: pin no establecido.");
     } else {
         Serial.print("Temperatura: ");
-        Serial.print(sensorTemp::leerTemperatura());
+        Serial.print(leerTemperatura());
         Serial.println(" ºC");
     }
 }
