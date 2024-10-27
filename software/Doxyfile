@@ -965,9 +965,12 @@ WARN_LOGFILE           =
 # spaces. See also FILE_PATTERNS and EXTENSION_MAPPING
 # Note: If this tag is empty the current directory is searched.
 
-INPUT                  = ./main/main.ino ./main/libraries/RFID-RC522/accesoRFID.cpp ./main/libraries/RFID-RC522/accesoRFID.h ./main/libraries/DHT11-HW-481/sensorHW481.cpp ./main/libraries/DHT11-HW-481/sensorHW481.h ./main/libraries/DHT11-HW-481/Bonezegei_DHT11.h
+INPUT                  = ./main/main.ino \
+												 ./main/libraries/RFID-RC522/accesoRFID.h \
+												 ./main/libraries/DHT11-HW-481/sensorHW481.h \
+												 ./main/libraries/DHT11-HW-481/Bonezegei_DHT11.h
  
-p
+
 
 # This tag can be used to specify the character encoding of the source files
 # that Doxygen parses. Internally Doxygen uses the UTF-8 encoding. Doxygen uses
@@ -1348,7 +1351,7 @@ IGNORE_PREFIX          =
 # If the GENERATE_HTML tag is set to YES, Doxygen will generate HTML output
 # The default value is: YES.
 
-GENERATE_HTML          = YES
+GENERATE_HTML          = NO
 
 # The HTML_OUTPUT tag is used to specify where the HTML docs will be put. If a
 # relative path is entered the value of OUTPUT_DIRECTORY will be put in front of
@@ -2638,7 +2641,7 @@ DOT_FONTPATH           =
 # The default value is: YES.
 
 CLASS_GRAPH            = YES
-
+CLASS_DIAGRAMS				 = YES
 # If the COLLABORATION_GRAPH tag is set to YES then Doxygen will generate a
 # graph for each documented class showing the direct and indirect implementation
 # dependencies (inheritance, containment, and class references variables) of the
@@ -2668,7 +2671,7 @@ GROUP_GRAPHS           = YES
 # The default value is: NO.
 # This tag requires that the tag HAVE_DOT is set to YES.
 
-UML_LOOK               = NO
+UML_LOOK               = YES
 
 # If the UML_LOOK tag is enabled, the fields and methods are shown inside the
 # class node. If there are many fields or methods and many nodes the graph may
