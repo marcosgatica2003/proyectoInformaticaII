@@ -1,7 +1,0 @@
-<map id="MFRC522Extended::PICC_PPS" name="MFRC522Extended::PICC_PPS">
-<area shape="rect" id="Node000001" title=" " alt="" coords="466,14,679,42"/>
-<area shape="rect" id="Node000002" href="$classMFRC522Extended.html#a0740187cc7f336b0aaea2db432185cb5" title=" " alt="" coords="236,5,418,50"/>
-<area shape="poly" id="edge1_Node000001_Node000002" title=" " alt="" coords="450,30,419,30,419,25,450,25"/>
-<area shape="rect" id="Node000003" href="$classMFRC522Extended.html#ae68a2f90cec039dc856089aee08119ee" title=" " alt="" coords="5,5,188,50"/>
-<area shape="poly" id="edge2_Node000002_Node000003" title=" " alt="" coords="220,30,188,30,188,25,220,25"/>
-</map>

@@ -165,14 +165,6 @@ Amigas</h2></td></tr>
 <p>Constructor Initializes the data pin to be used for communication with the <a class="el" href="classDHT11.html">DHT11</a> sensor.</p>
 <dl class="params"><dt>Parámetros</dt><dd>
   <table class="params">
-    <tr><td class="paramname">pin</td><td>Digital pin number on the Arduino board to which the <a class="el" href="classDHT11.html">DHT11</a> sensor is connected.</td></tr>
-  </table>
-  </dd>
-</dl>
-<p><a class="el" href="DHT11_8cpp_source.html">DHT11.cpp</a> Library for reading temperature and humidity from the <a class="el" href="classDHT11.html">DHT11</a> sensor.</p>
-<p>Author: Dhruba Saha Version: 2.1.0 License: MIT Constructor for the <a class="el" href="classDHT11.html">DHT11</a> class. Initializes the pin to be used for communication and sets it to output mode.</p>
-<dl class="params"><dt>Parámetros</dt><dd>
-  <table class="params">
     <tr><td class="paramname">pin</td><td>Digital pin number on the Arduino board to which the <a class="el" href="classDHT11.html">DHT11</a> sensor is connected. </td></tr>
   </table>
   </dd>
@@ -196,9 +188,7 @@ Amigas</h2></td></tr>
       </table>
 </div><div class="memdoc">
 <p>Reads and returns the humidity from the <a class="el" href="classDHT11.html">DHT11</a> sensor.</p>
-<dl class="section return"><dt>Devuelve</dt><dd>: Humidity value in percentage. Returns DHT11_ERROR_TIMEOUT if reading times out. Returns DHT11_ERROR_CHECKSUM if checksum validation fails.</dd></dl>
-<p>Reads and returns the humidity from the <a class="el" href="classDHT11.html">DHT11</a> sensor. Utilizes the readRawData method to retrieve raw data from the sensor and then extracts the humidity from the data array.</p>
-<dl class="section return"><dt>Devuelve</dt><dd>: Humidity value in percentage. Returns DHT11::ERROR_TIMEOUT if reading times out, or DHT11::ERROR_CHECKSUM if checksum validation fails. </dd></dl>
+<dl class="section return"><dt>Devuelve</dt><dd>: Humidity value in percentage. Returns DHT11_ERROR_TIMEOUT if reading times out. Returns DHT11_ERROR_CHECKSUM if checksum validation fails. </dd></dl>
 
 </div>
 </div>
@@ -217,9 +207,7 @@ Amigas</h2></td></tr>
       </table>
 </div><div class="memdoc">
 <p>Reads and returns the temperature from the <a class="el" href="classDHT11.html">DHT11</a> sensor.</p>
-<dl class="section return"><dt>Devuelve</dt><dd>: Temperature value in Celsius. Returns DHT11_ERROR_TIMEOUT if reading times out. Returns DHT11_ERROR_CHECKSUM if checksum validation fails.</dd></dl>
-<p>Reads and returns the temperature from the <a class="el" href="classDHT11.html">DHT11</a> sensor. Utilizes the readRawData method to retrieve raw data from the sensor and then extracts the temperature from the data array.</p>
-<dl class="section return"><dt>Devuelve</dt><dd>: Temperature value in Celsius. Returns DHT11::ERROR_TIMEOUT if reading times out, or DHT11::ERROR_CHECKSUM if checksum validation fails. </dd></dl>
+<dl class="section return"><dt>Devuelve</dt><dd>: Temperature value in Celsius. Returns DHT11_ERROR_TIMEOUT if reading times out. Returns DHT11_ERROR_CHECKSUM if checksum validation fails. </dd></dl>
 
 </div>
 </div>
@@ -249,16 +237,7 @@ Amigas</h2></td></tr>
   </table>
   </dd>
 </dl>
-<dl class="section return"><dt>Devuelve</dt><dd>: true if the reading is successful, false if it fails due to timeout or checksum error.</dd></dl>
-<p>Reads and returns the temperature and humidity from the <a class="el" href="classDHT11.html">DHT11</a> sensor. Utilizes the readRawData method to retrieve raw data from the sensor and then extracts both temperature and humidity from the data array.</p>
-<dl class="params"><dt>Parámetros</dt><dd>
-  <table class="params">
-    <tr><td class="paramname">temperature</td><td>Reference to a variable where the temperature value will be stored. </td></tr>
-    <tr><td class="paramname">humidity</td><td>Reference to a variable where the humidity value will be stored. </td></tr>
-  </table>
-  </dd>
-</dl>
-<dl class="section return"><dt>Devuelve</dt><dd>: An integer representing the status of the read operation. Returns 0 if the reading is successful, DHT11::ERROR_TIMEOUT if a timeout occurs, or DHT11::ERROR_CHECKSUM if a checksum error occurs. </dd></dl>
+<dl class="section return"><dt>Devuelve</dt><dd>: true if the reading is successful, false if it fails due to timeout or checksum error. </dd></dl>
 
 </div>
 </div>
@@ -321,9 +300,8 @@ Amigas</h2></td></tr>
 
 </div>
 </div>
-<hr/>La documentación de esta clase está generada de los siguientes archivos:<ul>
+<hr/>La documentación de esta clase está generada del siguiente archivo:<ul>
 <li>main/libraries/DHT11-HW-481/<a class="el" href="DHT11_8h_source.html">DHT11.h</a></li>
-<li>main/libraries/DHT11-HW-481/<a class="el" href="DHT11_8cpp_source.html">DHT11.cpp</a></li>
 </ul>
 </div><!-- contents -->
 </div><!-- doc-content -->

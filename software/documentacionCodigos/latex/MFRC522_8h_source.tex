@@ -263,89 +263,89 @@
 \DoxyCodeLine{00267\ \ \ \ \ \mbox{\hyperlink{classMFRC522_structMFRC522_1_1Uid}{Uid}}\ uid;\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{comment}{//\ Used\ by\ PICC\_ReadCardSerial().}}
 \DoxyCodeLine{00268\ \ \ \ \ }
 \DoxyCodeLine{00270\ \ \ \ \ \textcolor{comment}{//\ Functions\ for\ setting\ up\ the\ Arduino}}
-\DoxyCodeLine{00272\ \ \ \ \ \mbox{\hyperlink{classMFRC522_a999d0301e800f479e1ecfa2fd06e28c8}{MFRC522}}();}
-\DoxyCodeLine{00273\ \ \ \ \ \mbox{\hyperlink{classMFRC522_a999d0301e800f479e1ecfa2fd06e28c8}{MFRC522}}(\textcolor{keywordtype}{byte}\ resetPowerDownPin);}
-\DoxyCodeLine{00274\ \ \ \ \ \mbox{\hyperlink{classMFRC522_a999d0301e800f479e1ecfa2fd06e28c8}{MFRC522}}(\textcolor{keywordtype}{byte}\ chipSelectPin,\ \textcolor{keywordtype}{byte}\ resetPowerDownPin);}
+\DoxyCodeLine{00272\ \ \ \ \ \mbox{\hyperlink{classMFRC522}{MFRC522}}();}
+\DoxyCodeLine{00273\ \ \ \ \ \mbox{\hyperlink{classMFRC522}{MFRC522}}(\textcolor{keywordtype}{byte}\ resetPowerDownPin);}
+\DoxyCodeLine{00274\ \ \ \ \ \mbox{\hyperlink{classMFRC522}{MFRC522}}(\textcolor{keywordtype}{byte}\ chipSelectPin,\ \textcolor{keywordtype}{byte}\ resetPowerDownPin);}
 \DoxyCodeLine{00275\ \ \ \ \ }
 \DoxyCodeLine{00277\ \ \ \ \ \textcolor{comment}{//\ Basic\ interface\ functions\ for\ communicating\ with\ the\ MFRC522}}
-\DoxyCodeLine{00279\ \ \ \ \ \textcolor{keywordtype}{void}\ \mbox{\hyperlink{classMFRC522_aa5e5825adb4c784d8a5a60242c135fb7}{PCD\_WriteRegister}}(PCD\_Register\ reg,\ \textcolor{keywordtype}{byte}\ value);}
-\DoxyCodeLine{00280\ \ \ \ \ \textcolor{keywordtype}{void}\ \mbox{\hyperlink{classMFRC522_aa5e5825adb4c784d8a5a60242c135fb7}{PCD\_WriteRegister}}(PCD\_Register\ reg,\ \textcolor{keywordtype}{byte}\ count,\ \textcolor{keywordtype}{byte}\ *values);}
-\DoxyCodeLine{00281\ \ \ \ \ \textcolor{keywordtype}{byte}\ \mbox{\hyperlink{classMFRC522_a4289838c6f24f2d62eb8dc0e7a6647d1}{PCD\_ReadRegister}}(PCD\_Register\ reg);}
-\DoxyCodeLine{00282\ \ \ \ \ \textcolor{keywordtype}{void}\ \mbox{\hyperlink{classMFRC522_a4289838c6f24f2d62eb8dc0e7a6647d1}{PCD\_ReadRegister}}(PCD\_Register\ reg,\ \textcolor{keywordtype}{byte}\ count,\ \textcolor{keywordtype}{byte}\ *values,\ \textcolor{keywordtype}{byte}\ rxAlign\ =\ 0);}
-\DoxyCodeLine{00283\ \ \ \ \ \textcolor{keywordtype}{void}\ \mbox{\hyperlink{classMFRC522_acebb9a90249419f2a53281c4a13727d1}{PCD\_SetRegisterBitMask}}(PCD\_Register\ reg,\ \textcolor{keywordtype}{byte}\ mask);}
-\DoxyCodeLine{00284\ \ \ \ \ \textcolor{keywordtype}{void}\ \mbox{\hyperlink{classMFRC522_a76193f4f8916f688fe2b7976d0fd1dc2}{PCD\_ClearRegisterBitMask}}(PCD\_Register\ reg,\ \textcolor{keywordtype}{byte}\ mask);}
-\DoxyCodeLine{00285\ \ \ \ \ StatusCode\ \mbox{\hyperlink{classMFRC522_a7c65647b1d72b6ee7557797322030643}{PCD\_CalculateCRC}}(\textcolor{keywordtype}{byte}\ *data,\ \textcolor{keywordtype}{byte}\ length,\ \textcolor{keywordtype}{byte}\ *result);}
+\DoxyCodeLine{00279\ \ \ \ \ \textcolor{keywordtype}{void}\ PCD\_WriteRegister(PCD\_Register\ reg,\ \textcolor{keywordtype}{byte}\ value);}
+\DoxyCodeLine{00280\ \ \ \ \ \textcolor{keywordtype}{void}\ PCD\_WriteRegister(PCD\_Register\ reg,\ \textcolor{keywordtype}{byte}\ count,\ \textcolor{keywordtype}{byte}\ *values);}
+\DoxyCodeLine{00281\ \ \ \ \ \textcolor{keywordtype}{byte}\ PCD\_ReadRegister(PCD\_Register\ reg);}
+\DoxyCodeLine{00282\ \ \ \ \ \textcolor{keywordtype}{void}\ PCD\_ReadRegister(PCD\_Register\ reg,\ \textcolor{keywordtype}{byte}\ count,\ \textcolor{keywordtype}{byte}\ *values,\ \textcolor{keywordtype}{byte}\ rxAlign\ =\ 0);}
+\DoxyCodeLine{00283\ \ \ \ \ \textcolor{keywordtype}{void}\ PCD\_SetRegisterBitMask(PCD\_Register\ reg,\ \textcolor{keywordtype}{byte}\ mask);}
+\DoxyCodeLine{00284\ \ \ \ \ \textcolor{keywordtype}{void}\ PCD\_ClearRegisterBitMask(PCD\_Register\ reg,\ \textcolor{keywordtype}{byte}\ mask);}
+\DoxyCodeLine{00285\ \ \ \ \ StatusCode\ PCD\_CalculateCRC(\textcolor{keywordtype}{byte}\ *data,\ \textcolor{keywordtype}{byte}\ length,\ \textcolor{keywordtype}{byte}\ *result);}
 \DoxyCodeLine{00286\ \ \ \ \ }
 \DoxyCodeLine{00288\ \ \ \ \ \textcolor{comment}{//\ Functions\ for\ manipulating\ the\ MFRC522}}
-\DoxyCodeLine{00290\ \ \ \ \ \textcolor{keywordtype}{void}\ \mbox{\hyperlink{classMFRC522_ad681e424fc68a57941bea5702cee05eb}{PCD\_Init}}();}
-\DoxyCodeLine{00291\ \ \ \ \ \textcolor{keywordtype}{void}\ \mbox{\hyperlink{classMFRC522_ad681e424fc68a57941bea5702cee05eb}{PCD\_Init}}(\textcolor{keywordtype}{byte}\ resetPowerDownPin);}
-\DoxyCodeLine{00292\ \ \ \ \ \textcolor{keywordtype}{void}\ \mbox{\hyperlink{classMFRC522_ad681e424fc68a57941bea5702cee05eb}{PCD\_Init}}(\textcolor{keywordtype}{byte}\ chipSelectPin,\ \textcolor{keywordtype}{byte}\ resetPowerDownPin);}
-\DoxyCodeLine{00293\ \ \ \ \ \textcolor{keywordtype}{void}\ \mbox{\hyperlink{classMFRC522_a9886678ea0a65021bf602cfb110caa15}{PCD\_Reset}}();}
-\DoxyCodeLine{00294\ \ \ \ \ \textcolor{keywordtype}{void}\ \mbox{\hyperlink{classMFRC522_a044be037a5f172e9cea7d8ce1dcf32e0}{PCD\_AntennaOn}}();}
-\DoxyCodeLine{00295\ \ \ \ \ \textcolor{keywordtype}{void}\ \mbox{\hyperlink{classMFRC522_a2098ebe85700109b20c5026643f1dad7}{PCD\_AntennaOff}}();}
-\DoxyCodeLine{00296\ \ \ \ \ \textcolor{keywordtype}{byte}\ \mbox{\hyperlink{classMFRC522_aa02ae994a9ebf146475f46fc538cef28}{PCD\_GetAntennaGain}}();}
-\DoxyCodeLine{00297\ \ \ \ \ \textcolor{keywordtype}{void}\ \mbox{\hyperlink{classMFRC522_a5ce84dd855f2ae297dd00fafaf62ef78}{PCD\_SetAntennaGain}}(\textcolor{keywordtype}{byte}\ mask);}
-\DoxyCodeLine{00298\ \ \ \ \ \textcolor{keywordtype}{bool}\ \mbox{\hyperlink{classMFRC522_a25f052c9c340da34128c365662370b01}{PCD\_PerformSelfTest}}();}
+\DoxyCodeLine{00290\ \ \ \ \ \textcolor{keywordtype}{void}\ PCD\_Init();}
+\DoxyCodeLine{00291\ \ \ \ \ \textcolor{keywordtype}{void}\ PCD\_Init(\textcolor{keywordtype}{byte}\ resetPowerDownPin);}
+\DoxyCodeLine{00292\ \ \ \ \ \textcolor{keywordtype}{void}\ PCD\_Init(\textcolor{keywordtype}{byte}\ chipSelectPin,\ \textcolor{keywordtype}{byte}\ resetPowerDownPin);}
+\DoxyCodeLine{00293\ \ \ \ \ \textcolor{keywordtype}{void}\ PCD\_Reset();}
+\DoxyCodeLine{00294\ \ \ \ \ \textcolor{keywordtype}{void}\ PCD\_AntennaOn();}
+\DoxyCodeLine{00295\ \ \ \ \ \textcolor{keywordtype}{void}\ PCD\_AntennaOff();}
+\DoxyCodeLine{00296\ \ \ \ \ \textcolor{keywordtype}{byte}\ PCD\_GetAntennaGain();}
+\DoxyCodeLine{00297\ \ \ \ \ \textcolor{keywordtype}{void}\ PCD\_SetAntennaGain(\textcolor{keywordtype}{byte}\ mask);}
+\DoxyCodeLine{00298\ \ \ \ \ \textcolor{keywordtype}{bool}\ PCD\_PerformSelfTest();}
 \DoxyCodeLine{00299\ \ \ \ \ }
 \DoxyCodeLine{00301\ \ \ \ \ \textcolor{comment}{//\ Power\ control\ functions}}
 \DoxyCodeLine{00303\ \ \ \ \ \textcolor{keywordtype}{void}\ PCD\_SoftPowerDown();}
 \DoxyCodeLine{00304\ \ \ \ \ \textcolor{keywordtype}{void}\ PCD\_SoftPowerUp();}
 \DoxyCodeLine{00305\ \ \ \ \ }
 \DoxyCodeLine{00307\ \ \ \ \ \textcolor{comment}{//\ Functions\ for\ communicating\ with\ PICCs}}
-\DoxyCodeLine{00309\ \ \ \ \ StatusCode\ \mbox{\hyperlink{classMFRC522_aaa96aa7ec4f95e0835cb758ad0450d74}{PCD\_TransceiveData}}(\textcolor{keywordtype}{byte}\ *sendData,\ \textcolor{keywordtype}{byte}\ sendLen,\ \textcolor{keywordtype}{byte}\ *backData,\ \textcolor{keywordtype}{byte}\ *backLen,\ \textcolor{keywordtype}{byte}\ *validBits\ =\ \textcolor{keyword}{nullptr},\ \textcolor{keywordtype}{byte}\ rxAlign\ =\ 0,\ \textcolor{keywordtype}{bool}\ checkCRC\ =\ \textcolor{keyword}{false});}
-\DoxyCodeLine{00310\ \ \ \ \ StatusCode\ \mbox{\hyperlink{classMFRC522_acb2b1e74bc49fda2704450a684faa845}{PCD\_CommunicateWithPICC}}(\textcolor{keywordtype}{byte}\ command,\ \textcolor{keywordtype}{byte}\ waitIRq,\ \textcolor{keywordtype}{byte}\ *sendData,\ \textcolor{keywordtype}{byte}\ sendLen,\ \textcolor{keywordtype}{byte}\ *backData\ =\ \textcolor{keyword}{nullptr},\ \textcolor{keywordtype}{byte}\ *backLen\ =\ \textcolor{keyword}{nullptr},\ \textcolor{keywordtype}{byte}\ *validBits\ =\ \textcolor{keyword}{nullptr},\ \textcolor{keywordtype}{byte}\ rxAlign\ =\ 0,\ \textcolor{keywordtype}{bool}\ checkCRC\ =\ \textcolor{keyword}{false});}
-\DoxyCodeLine{00311\ \ \ \ \ StatusCode\ \mbox{\hyperlink{classMFRC522_a4e0ac6edf5e8f6ade351b009278fbbc7}{PICC\_RequestA}}(\textcolor{keywordtype}{byte}\ *bufferATQA,\ \textcolor{keywordtype}{byte}\ *bufferSize);}
-\DoxyCodeLine{00312\ \ \ \ \ StatusCode\ \mbox{\hyperlink{classMFRC522_ad00a1efcfa6dc203ca885d43f4d02125}{PICC\_WakeupA}}(\textcolor{keywordtype}{byte}\ *bufferATQA,\ \textcolor{keywordtype}{byte}\ *bufferSize);}
-\DoxyCodeLine{00313\ \ \ \ \ StatusCode\ \mbox{\hyperlink{classMFRC522_a639d27ac072bc0dfa478d0957591afcc}{PICC\_REQA\_or\_WUPA}}(\textcolor{keywordtype}{byte}\ command,\ \textcolor{keywordtype}{byte}\ *bufferATQA,\ \textcolor{keywordtype}{byte}\ *bufferSize);}
-\DoxyCodeLine{00314\ \ \ \ \ \textcolor{keyword}{virtual}\ StatusCode\ \mbox{\hyperlink{classMFRC522_a7a78c629cb4e1d90cc2d7526b17d6c22}{PICC\_Select}}(\mbox{\hyperlink{classMFRC522_structMFRC522_1_1Uid}{Uid}}\ *uid,\ \textcolor{keywordtype}{byte}\ validBits\ =\ 0);}
-\DoxyCodeLine{00315\ \ \ \ \ StatusCode\ \mbox{\hyperlink{classMFRC522_a8874921b4ed26c5b73d89c90f76d4933}{PICC\_HaltA}}();}
+\DoxyCodeLine{00309\ \ \ \ \ StatusCode\ PCD\_TransceiveData(\textcolor{keywordtype}{byte}\ *sendData,\ \textcolor{keywordtype}{byte}\ sendLen,\ \textcolor{keywordtype}{byte}\ *backData,\ \textcolor{keywordtype}{byte}\ *backLen,\ \textcolor{keywordtype}{byte}\ *validBits\ =\ \textcolor{keyword}{nullptr},\ \textcolor{keywordtype}{byte}\ rxAlign\ =\ 0,\ \textcolor{keywordtype}{bool}\ checkCRC\ =\ \textcolor{keyword}{false});}
+\DoxyCodeLine{00310\ \ \ \ \ StatusCode\ PCD\_CommunicateWithPICC(\textcolor{keywordtype}{byte}\ command,\ \textcolor{keywordtype}{byte}\ waitIRq,\ \textcolor{keywordtype}{byte}\ *sendData,\ \textcolor{keywordtype}{byte}\ sendLen,\ \textcolor{keywordtype}{byte}\ *backData\ =\ \textcolor{keyword}{nullptr},\ \textcolor{keywordtype}{byte}\ *backLen\ =\ \textcolor{keyword}{nullptr},\ \textcolor{keywordtype}{byte}\ *validBits\ =\ \textcolor{keyword}{nullptr},\ \textcolor{keywordtype}{byte}\ rxAlign\ =\ 0,\ \textcolor{keywordtype}{bool}\ checkCRC\ =\ \textcolor{keyword}{false});}
+\DoxyCodeLine{00311\ \ \ \ \ StatusCode\ PICC\_RequestA(\textcolor{keywordtype}{byte}\ *bufferATQA,\ \textcolor{keywordtype}{byte}\ *bufferSize);}
+\DoxyCodeLine{00312\ \ \ \ \ StatusCode\ PICC\_WakeupA(\textcolor{keywordtype}{byte}\ *bufferATQA,\ \textcolor{keywordtype}{byte}\ *bufferSize);}
+\DoxyCodeLine{00313\ \ \ \ \ StatusCode\ PICC\_REQA\_or\_WUPA(\textcolor{keywordtype}{byte}\ command,\ \textcolor{keywordtype}{byte}\ *bufferATQA,\ \textcolor{keywordtype}{byte}\ *bufferSize);}
+\DoxyCodeLine{00314\ \ \ \ \ \textcolor{keyword}{virtual}\ StatusCode\ PICC\_Select(\mbox{\hyperlink{classMFRC522_structMFRC522_1_1Uid}{Uid}}\ *uid,\ \textcolor{keywordtype}{byte}\ validBits\ =\ 0);}
+\DoxyCodeLine{00315\ \ \ \ \ StatusCode\ PICC\_HaltA();}
 \DoxyCodeLine{00316\ }
 \DoxyCodeLine{00318\ \ \ \ \ \textcolor{comment}{//\ Functions\ for\ communicating\ with\ MIFARE\ PICCs}}
-\DoxyCodeLine{00320\ \ \ \ \ StatusCode\ \mbox{\hyperlink{classMFRC522_a6c2313c4aa98806cc2bf0e9cca993ec0}{PCD\_Authenticate}}(\textcolor{keywordtype}{byte}\ command,\ \textcolor{keywordtype}{byte}\ blockAddr,\ \mbox{\hyperlink{classMFRC522_structMFRC522_1_1MIFARE__Key}{MIFARE\_Key}}\ *key,\ \mbox{\hyperlink{classMFRC522_structMFRC522_1_1Uid}{Uid}}\ *uid);}
-\DoxyCodeLine{00321\ \ \ \ \ \textcolor{keywordtype}{void}\ \mbox{\hyperlink{classMFRC522_a24d3ab7b2170fdfa3f0121a7256f12d9}{PCD\_StopCrypto1}}();}
-\DoxyCodeLine{00322\ \ \ \ \ StatusCode\ \mbox{\hyperlink{classMFRC522_a6ed93e88913ea104420f3bb4a88cce52}{MIFARE\_Read}}(\textcolor{keywordtype}{byte}\ blockAddr,\ \textcolor{keywordtype}{byte}\ *buffer,\ \textcolor{keywordtype}{byte}\ *bufferSize);}
-\DoxyCodeLine{00323\ \ \ \ \ StatusCode\ \mbox{\hyperlink{classMFRC522_a0dc5fb05769779ec3ed708bd153706b3}{MIFARE\_Write}}(\textcolor{keywordtype}{byte}\ blockAddr,\ \textcolor{keywordtype}{byte}\ *buffer,\ \textcolor{keywordtype}{byte}\ bufferSize);}
-\DoxyCodeLine{00324\ \ \ \ \ StatusCode\ \mbox{\hyperlink{classMFRC522_a7053e61540b68e6aa5c6cbea308836c4}{MIFARE\_Ultralight\_Write}}(\textcolor{keywordtype}{byte}\ page,\ \textcolor{keywordtype}{byte}\ *buffer,\ \textcolor{keywordtype}{byte}\ bufferSize);}
-\DoxyCodeLine{00325\ \ \ \ \ StatusCode\ \mbox{\hyperlink{classMFRC522_aeab21496c761cdecb29c69f9f3fa6150}{MIFARE\_Decrement}}(\textcolor{keywordtype}{byte}\ blockAddr,\ int32\_t\ delta);}
-\DoxyCodeLine{00326\ \ \ \ \ StatusCode\ \mbox{\hyperlink{classMFRC522_af9566664f23d4d67efd270e42c3dc723}{MIFARE\_Increment}}(\textcolor{keywordtype}{byte}\ blockAddr,\ int32\_t\ delta);}
-\DoxyCodeLine{00327\ \ \ \ \ StatusCode\ \mbox{\hyperlink{classMFRC522_a946ba7e7e244f40adcb9f900d8fd3a48}{MIFARE\_Restore}}(\textcolor{keywordtype}{byte}\ blockAddr);}
-\DoxyCodeLine{00328\ \ \ \ \ StatusCode\ \mbox{\hyperlink{classMFRC522_a16ee66df69fda8a3065bc9218b45de0b}{MIFARE\_Transfer}}(\textcolor{keywordtype}{byte}\ blockAddr);}
-\DoxyCodeLine{00329\ \ \ \ \ StatusCode\ \mbox{\hyperlink{classMFRC522_ab4009cbdd5150b1b3a62084aa2033807}{MIFARE\_GetValue}}(\textcolor{keywordtype}{byte}\ blockAddr,\ int32\_t\ *value);}
-\DoxyCodeLine{00330\ \ \ \ \ StatusCode\ \mbox{\hyperlink{classMFRC522_af19fc75e9415322fbe89245ed70a784b}{MIFARE\_SetValue}}(\textcolor{keywordtype}{byte}\ blockAddr,\ int32\_t\ value);}
-\DoxyCodeLine{00331\ \ \ \ \ StatusCode\ \mbox{\hyperlink{classMFRC522_acb47eb7a05ae58825b4085efeb7a09bb}{PCD\_NTAG216\_AUTH}}(\textcolor{keywordtype}{byte}\ *passWord,\ \textcolor{keywordtype}{byte}\ pACK[]);}
+\DoxyCodeLine{00320\ \ \ \ \ StatusCode\ PCD\_Authenticate(\textcolor{keywordtype}{byte}\ command,\ \textcolor{keywordtype}{byte}\ blockAddr,\ \mbox{\hyperlink{classMFRC522_structMFRC522_1_1MIFARE__Key}{MIFARE\_Key}}\ *key,\ \mbox{\hyperlink{classMFRC522_structMFRC522_1_1Uid}{Uid}}\ *uid);}
+\DoxyCodeLine{00321\ \ \ \ \ \textcolor{keywordtype}{void}\ PCD\_StopCrypto1();}
+\DoxyCodeLine{00322\ \ \ \ \ StatusCode\ MIFARE\_Read(\textcolor{keywordtype}{byte}\ blockAddr,\ \textcolor{keywordtype}{byte}\ *buffer,\ \textcolor{keywordtype}{byte}\ *bufferSize);}
+\DoxyCodeLine{00323\ \ \ \ \ StatusCode\ MIFARE\_Write(\textcolor{keywordtype}{byte}\ blockAddr,\ \textcolor{keywordtype}{byte}\ *buffer,\ \textcolor{keywordtype}{byte}\ bufferSize);}
+\DoxyCodeLine{00324\ \ \ \ \ StatusCode\ MIFARE\_Ultralight\_Write(\textcolor{keywordtype}{byte}\ page,\ \textcolor{keywordtype}{byte}\ *buffer,\ \textcolor{keywordtype}{byte}\ bufferSize);}
+\DoxyCodeLine{00325\ \ \ \ \ StatusCode\ MIFARE\_Decrement(\textcolor{keywordtype}{byte}\ blockAddr,\ int32\_t\ delta);}
+\DoxyCodeLine{00326\ \ \ \ \ StatusCode\ MIFARE\_Increment(\textcolor{keywordtype}{byte}\ blockAddr,\ int32\_t\ delta);}
+\DoxyCodeLine{00327\ \ \ \ \ StatusCode\ MIFARE\_Restore(\textcolor{keywordtype}{byte}\ blockAddr);}
+\DoxyCodeLine{00328\ \ \ \ \ StatusCode\ MIFARE\_Transfer(\textcolor{keywordtype}{byte}\ blockAddr);}
+\DoxyCodeLine{00329\ \ \ \ \ StatusCode\ MIFARE\_GetValue(\textcolor{keywordtype}{byte}\ blockAddr,\ int32\_t\ *value);}
+\DoxyCodeLine{00330\ \ \ \ \ StatusCode\ MIFARE\_SetValue(\textcolor{keywordtype}{byte}\ blockAddr,\ int32\_t\ value);}
+\DoxyCodeLine{00331\ \ \ \ \ StatusCode\ PCD\_NTAG216\_AUTH(\textcolor{keywordtype}{byte}\ *passWord,\ \textcolor{keywordtype}{byte}\ pACK[]);}
 \DoxyCodeLine{00332\ \ \ \ \ }
 \DoxyCodeLine{00334\ \ \ \ \ \textcolor{comment}{//\ Support\ functions}}
-\DoxyCodeLine{00336\ \ \ \ \ StatusCode\ \mbox{\hyperlink{classMFRC522_aa88d28676b3ffb5985af8db35d39077b}{PCD\_MIFARE\_Transceive}}(\textcolor{keywordtype}{byte}\ *sendData,\ \textcolor{keywordtype}{byte}\ sendLen,\ \textcolor{keywordtype}{bool}\ acceptTimeout\ =\ \textcolor{keyword}{false});}
+\DoxyCodeLine{00336\ \ \ \ \ StatusCode\ PCD\_MIFARE\_Transceive(\textcolor{keywordtype}{byte}\ *sendData,\ \textcolor{keywordtype}{byte}\ sendLen,\ \textcolor{keywordtype}{bool}\ acceptTimeout\ =\ \textcolor{keyword}{false});}
 \DoxyCodeLine{00337\ \ \ \ \ \textcolor{comment}{//\ old\ function\ used\ too\ much\ memory,\ now\ name\ moved\ to\ flash;\ if\ you\ need\ char,\ copy\ from\ flash\ to\ memory}}
 \DoxyCodeLine{00338\ \ \ \ \ \textcolor{comment}{//const\ char\ *GetStatusCodeName(byte\ code);}}
-\DoxyCodeLine{00339\ \ \ \ \ \textcolor{keyword}{static}\ \textcolor{keyword}{const}\ \_\_FlashStringHelper\ *\mbox{\hyperlink{classMFRC522_a32f88620ab97f7fef3693280c58cb4bb}{GetStatusCodeName}}(StatusCode\ code);}
-\DoxyCodeLine{00340\ \ \ \ \ \textcolor{keyword}{static}\ PICC\_Type\ \mbox{\hyperlink{classMFRC522_ac80a18228260bdde07dff5d4ac23bb53}{PICC\_GetType}}(\textcolor{keywordtype}{byte}\ sak);}
+\DoxyCodeLine{00339\ \ \ \ \ \textcolor{keyword}{static}\ \textcolor{keyword}{const}\ \_\_FlashStringHelper\ *GetStatusCodeName(StatusCode\ code);}
+\DoxyCodeLine{00340\ \ \ \ \ \textcolor{keyword}{static}\ PICC\_Type\ PICC\_GetType(\textcolor{keywordtype}{byte}\ sak);}
 \DoxyCodeLine{00341\ \ \ \ \ \textcolor{comment}{//\ old\ function\ used\ too\ much\ memory,\ now\ name\ moved\ to\ flash;\ if\ you\ need\ char,\ copy\ from\ flash\ to\ memory}}
 \DoxyCodeLine{00342\ \ \ \ \ \textcolor{comment}{//const\ char\ *PICC\_GetTypeName(byte\ type);}}
-\DoxyCodeLine{00343\ \ \ \ \ \textcolor{keyword}{static}\ \textcolor{keyword}{const}\ \_\_FlashStringHelper\ *\mbox{\hyperlink{classMFRC522_aae4a482352d4d4b7d7a9714b0b0b7c38}{PICC\_GetTypeName}}(PICC\_Type\ type);}
+\DoxyCodeLine{00343\ \ \ \ \ \textcolor{keyword}{static}\ \textcolor{keyword}{const}\ \_\_FlashStringHelper\ *PICC\_GetTypeName(PICC\_Type\ type);}
 \DoxyCodeLine{00344\ \ \ \ \ }
 \DoxyCodeLine{00345\ \ \ \ \ \textcolor{comment}{//\ Support\ functions\ for\ debuging}}
-\DoxyCodeLine{00346\ \ \ \ \ \textcolor{keywordtype}{void}\ \mbox{\hyperlink{classMFRC522_a41c31c6932a59646eeff470c60a4d20d}{PCD\_DumpVersionToSerial}}();}
-\DoxyCodeLine{00347\ \ \ \ \ \textcolor{keywordtype}{void}\ \mbox{\hyperlink{classMFRC522_a6f324d43c6fbbd0e260b171747186037}{PICC\_DumpToSerial}}(\mbox{\hyperlink{classMFRC522_structMFRC522_1_1Uid}{Uid}}\ *uid);}
-\DoxyCodeLine{00348\ \ \ \ \ \textcolor{keywordtype}{void}\ \mbox{\hyperlink{classMFRC522_a3b9a2c6da6505e0ff7b58c37d7aeff37}{PICC\_DumpDetailsToSerial}}(\mbox{\hyperlink{classMFRC522_structMFRC522_1_1Uid}{Uid}}\ *uid);}
-\DoxyCodeLine{00349\ \ \ \ \ \textcolor{keywordtype}{void}\ \mbox{\hyperlink{classMFRC522_aafba2e74124efa2d736c1672ea104190}{PICC\_DumpMifareClassicToSerial}}(\mbox{\hyperlink{classMFRC522_structMFRC522_1_1Uid}{Uid}}\ *uid,\ PICC\_Type\ piccType,\ \mbox{\hyperlink{classMFRC522_structMFRC522_1_1MIFARE__Key}{MIFARE\_Key}}\ *key);}
-\DoxyCodeLine{00350\ \ \ \ \ \textcolor{keywordtype}{void}\ \mbox{\hyperlink{classMFRC522_a20c559f09927a7c5f91295f6158e4342}{PICC\_DumpMifareClassicSectorToSerial}}(\mbox{\hyperlink{classMFRC522_structMFRC522_1_1Uid}{Uid}}\ *uid,\ \mbox{\hyperlink{classMFRC522_structMFRC522_1_1MIFARE__Key}{MIFARE\_Key}}\ *key,\ \textcolor{keywordtype}{byte}\ sector);}
-\DoxyCodeLine{00351\ \ \ \ \ \textcolor{keywordtype}{void}\ \mbox{\hyperlink{classMFRC522_ac148d28877dd577606a28e9e7e4b6809}{PICC\_DumpMifareUltralightToSerial}}();}
+\DoxyCodeLine{00346\ \ \ \ \ \textcolor{keywordtype}{void}\ PCD\_DumpVersionToSerial();}
+\DoxyCodeLine{00347\ \ \ \ \ \textcolor{keywordtype}{void}\ PICC\_DumpToSerial(\mbox{\hyperlink{classMFRC522_structMFRC522_1_1Uid}{Uid}}\ *uid);}
+\DoxyCodeLine{00348\ \ \ \ \ \textcolor{keywordtype}{void}\ PICC\_DumpDetailsToSerial(\mbox{\hyperlink{classMFRC522_structMFRC522_1_1Uid}{Uid}}\ *uid);}
+\DoxyCodeLine{00349\ \ \ \ \ \textcolor{keywordtype}{void}\ PICC\_DumpMifareClassicToSerial(\mbox{\hyperlink{classMFRC522_structMFRC522_1_1Uid}{Uid}}\ *uid,\ PICC\_Type\ piccType,\ \mbox{\hyperlink{classMFRC522_structMFRC522_1_1MIFARE__Key}{MIFARE\_Key}}\ *key);}
+\DoxyCodeLine{00350\ \ \ \ \ \textcolor{keywordtype}{void}\ PICC\_DumpMifareClassicSectorToSerial(\mbox{\hyperlink{classMFRC522_structMFRC522_1_1Uid}{Uid}}\ *uid,\ \mbox{\hyperlink{classMFRC522_structMFRC522_1_1MIFARE__Key}{MIFARE\_Key}}\ *key,\ \textcolor{keywordtype}{byte}\ sector);}
+\DoxyCodeLine{00351\ \ \ \ \ \textcolor{keywordtype}{void}\ PICC\_DumpMifareUltralightToSerial();}
 \DoxyCodeLine{00352\ \ \ \ \ }
 \DoxyCodeLine{00353\ \ \ \ \ \textcolor{comment}{//\ Advanced\ functions\ for\ MIFARE}}
-\DoxyCodeLine{00354\ \ \ \ \ \textcolor{keywordtype}{void}\ \mbox{\hyperlink{classMFRC522_ab8c712963189654e9bc368be8783e2ab}{MIFARE\_SetAccessBits}}(\textcolor{keywordtype}{byte}\ *accessBitBuffer,\ \textcolor{keywordtype}{byte}\ g0,\ \textcolor{keywordtype}{byte}\ g1,\ \textcolor{keywordtype}{byte}\ g2,\ \textcolor{keywordtype}{byte}\ g3);}
-\DoxyCodeLine{00355\ \ \ \ \ \textcolor{keywordtype}{bool}\ \mbox{\hyperlink{classMFRC522_a925607adc9382720c222578bd236a9c8}{MIFARE\_OpenUidBackdoor}}(\textcolor{keywordtype}{bool}\ logErrors);}
-\DoxyCodeLine{00356\ \ \ \ \ \textcolor{keywordtype}{bool}\ \mbox{\hyperlink{classMFRC522_a2bdc18af4952ce99099607c84139b51c}{MIFARE\_SetUid}}(\textcolor{keywordtype}{byte}\ *newUid,\ \textcolor{keywordtype}{byte}\ uidSize,\ \textcolor{keywordtype}{bool}\ logErrors);}
-\DoxyCodeLine{00357\ \ \ \ \ \textcolor{keywordtype}{bool}\ \mbox{\hyperlink{classMFRC522_afcbb15d925cb3bea9f58595111fbca48}{MIFARE\_UnbrickUidSector}}(\textcolor{keywordtype}{bool}\ logErrors);}
+\DoxyCodeLine{00354\ \ \ \ \ \textcolor{keywordtype}{void}\ MIFARE\_SetAccessBits(\textcolor{keywordtype}{byte}\ *accessBitBuffer,\ \textcolor{keywordtype}{byte}\ g0,\ \textcolor{keywordtype}{byte}\ g1,\ \textcolor{keywordtype}{byte}\ g2,\ \textcolor{keywordtype}{byte}\ g3);}
+\DoxyCodeLine{00355\ \ \ \ \ \textcolor{keywordtype}{bool}\ MIFARE\_OpenUidBackdoor(\textcolor{keywordtype}{bool}\ logErrors);}
+\DoxyCodeLine{00356\ \ \ \ \ \textcolor{keywordtype}{bool}\ MIFARE\_SetUid(\textcolor{keywordtype}{byte}\ *newUid,\ \textcolor{keywordtype}{byte}\ uidSize,\ \textcolor{keywordtype}{bool}\ logErrors);}
+\DoxyCodeLine{00357\ \ \ \ \ \textcolor{keywordtype}{bool}\ MIFARE\_UnbrickUidSector(\textcolor{keywordtype}{bool}\ logErrors);}
 \DoxyCodeLine{00358\ \ \ \ \ }
 \DoxyCodeLine{00360\ \ \ \ \ \textcolor{comment}{//\ Convenience\ functions\ -\/\ does\ not\ add\ extra\ functionality}}
-\DoxyCodeLine{00362\ \ \ \ \ \textcolor{keyword}{virtual}\ \textcolor{keywordtype}{bool}\ \mbox{\hyperlink{classMFRC522_a3adca9d3b455c680ebcde3b74c4e567b}{PICC\_IsNewCardPresent}}();}
-\DoxyCodeLine{00363\ \ \ \ \ \textcolor{keyword}{virtual}\ \textcolor{keywordtype}{bool}\ \mbox{\hyperlink{classMFRC522_aab1218c71cec9cc17ee3ac8a683df106}{PICC\_ReadCardSerial}}();}
+\DoxyCodeLine{00362\ \ \ \ \ \textcolor{keyword}{virtual}\ \textcolor{keywordtype}{bool}\ PICC\_IsNewCardPresent();}
+\DoxyCodeLine{00363\ \ \ \ \ \textcolor{keyword}{virtual}\ \textcolor{keywordtype}{bool}\ PICC\_ReadCardSerial();}
 \DoxyCodeLine{00364\ \ \ \ \ }
 \DoxyCodeLine{00365\ \textcolor{keyword}{protected}:}
 \DoxyCodeLine{00366\ \ \ \ \ \textcolor{keywordtype}{byte}\ \_chipSelectPin;\ \ \ \ \ \ \ \ \textcolor{comment}{//\ Arduino\ pin\ connected\ to\ MFRC522's\ SPI\ slave\ select\ input\ (Pin\ 24,\ NSS,\ active\ low)}}
 \DoxyCodeLine{00367\ \ \ \ \ \textcolor{keywordtype}{byte}\ \_resetPowerDownPin;\ \ \ \ \textcolor{comment}{//\ Arduino\ pin\ connected\ to\ MFRC522's\ reset\ and\ power\ down\ input\ (Pin\ 6,\ NRSTPD,\ active\ low)}}
-\DoxyCodeLine{00368\ \ \ \ \ StatusCode\ \mbox{\hyperlink{classMFRC522_a86cb4ad38f61b823dfe97103b1b1f9d6}{MIFARE\_TwoStepHelper}}(\textcolor{keywordtype}{byte}\ command,\ \textcolor{keywordtype}{byte}\ blockAddr,\ int32\_t\ data);}
+\DoxyCodeLine{00368\ \ \ \ \ StatusCode\ MIFARE\_TwoStepHelper(\textcolor{keywordtype}{byte}\ command,\ \textcolor{keywordtype}{byte}\ blockAddr,\ int32\_t\ data);}
 \DoxyCodeLine{00369\ \};}
 \DoxyCodeLine{00370\ }
 \DoxyCodeLine{00371\ \textcolor{preprocessor}{\#endif}}

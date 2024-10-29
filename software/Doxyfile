@@ -965,8 +965,12 @@ WARN_LOGFILE           =
 # spaces. See also FILE_PATTERNS and EXTENSION_MAPPING
 # Note: If this tag is empty the current directory is searched.
 
-INPUT                  = ./main/ \
+INPUT                  = ./main/main.ino \
                          ./main/libraries/RFID-RC522/accesoRFID.h \
+												 ./main/libraries/RFID-RC522/MFRC522.h \
+												 ./main/libraries/RFID-RC522/MFRC522Extended.h \
+												 ./main/libraries/RFID-RC522/deprecated.h \
+												 ./main/libraries/RFID-RC522/require_cpp11.h \
                          ./main/libraries/DHT11-HW-481/setPin.h \
                          ./main/libraries/DHT11-HW-481/setPin.cpp \
                          ./main/libraries/DHT11-HW-481/DHT11.h
@@ -1065,7 +1069,7 @@ FILE_PATTERNS          = *.c \
 # be searched for input files as well.
 # The default value is: NO.
 
-RECURSIVE              = YES
+RECURSIVE              = NO
 
 # The EXCLUDE tag can be used to specify files and/or directories that should be
 # excluded from the INPUT source files. This way you can easily exclude a
@@ -2270,7 +2274,7 @@ RTF_EXTRA_FILES        =
 # classes and files.
 # The default value is: NO.
 
-GENERATE_MAN           = YES
+GENERATE_MAN           = NO
 
 # The MAN_OUTPUT tag is used to specify where the man pages will be put. If a
 # relative path is entered the value of OUTPUT_DIRECTORY will be put in front of
@@ -2348,7 +2352,7 @@ XML_NS_MEMB_FILE_SCOPE = NO
 # that can be used to generate PDF.
 # The default value is: NO.
 
-GENERATE_DOCBOOK       = YES
+GENERATE_DOCBOOK       = NO
 
 # The DOCBOOK_OUTPUT tag is used to specify where the Docbook pages will be put.
 # If a relative path is entered the value of OUTPUT_DIRECTORY will be put in

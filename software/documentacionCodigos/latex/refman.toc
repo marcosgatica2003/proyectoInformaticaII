@@ -1,0 +1,60 @@
+\@ifundefined {etoctocstyle}{\let \etoc@startlocaltoc \@gobble \let \etoc@settocdepth \@gobble \let \etoc@depthtag \@gobble \let \etoc@setlocaltop \@gobble }{}
+\babel@toc {spanish}{}\relax 
+\contentsline {chapter}{\numberline {1}Índice jerárquico}{1}{chapter.1}%
+\contentsline {section}{\numberline {1.1}Jerarquía de clases}{1}{section.1.1}%
+\contentsline {chapter}{\numberline {2}Índice de estructuras de datos}{3}{chapter.2}%
+\contentsline {section}{\numberline {2.1}Estructuras de datos}{3}{section.2.1}%
+\contentsline {chapter}{\numberline {3}Índice de archivos}{5}{chapter.3}%
+\contentsline {section}{\numberline {3.1}Lista de archivos}{5}{section.3.1}%
+\contentsline {chapter}{\numberline {4}Documentación de estructuras de datos}{7}{chapter.4}%
+\contentsline {section}{\numberline {4.1}Referencia de la clase acceso\discretionary {\mbox {\scriptsize $\hookleftarrow $}}{}{}RFID}{7}{section.4.1}%
+\contentsline {subsection}{\numberline {4.1.1}Descripción detallada}{8}{subsection.4.1.1}%
+\contentsline {subsection}{\numberline {4.1.2}Documentación de constructores y destructores}{8}{subsection.4.1.2}%
+\contentsline {subsubsection}{\numberline {4.1.2.1}accesoRFID()}{8}{subsubsection.4.1.2.1}%
+\contentsline {section}{\numberline {4.2}Referencia de la clase DHT11}{8}{section.4.2}%
+\contentsline {subsection}{\numberline {4.2.1}Descripción detallada}{9}{subsection.4.2.1}%
+\contentsline {subsection}{\numberline {4.2.2}Documentación de constructores y destructores}{9}{subsection.4.2.2}%
+\contentsline {subsubsection}{\numberline {4.2.2.1}DHT11()}{9}{subsubsection.4.2.2.1}%
+\contentsline {subsection}{\numberline {4.2.3}Documentación de funciones miembro}{9}{subsection.4.2.3}%
+\contentsline {subsubsection}{\numberline {4.2.3.1}readHumidity()}{9}{subsubsection.4.2.3.1}%
+\contentsline {subsubsection}{\numberline {4.2.3.2}readTemperature()}{10}{subsubsection.4.2.3.2}%
+\contentsline {subsubsection}{\numberline {4.2.3.3}readTemperatureHumidity()}{10}{subsubsection.4.2.3.3}%
+\contentsline {subsubsection}{\numberline {4.2.3.4}setDelay()}{10}{subsubsection.4.2.3.4}%
+\contentsline {subsection}{\numberline {4.2.4}Documentación de símbolos amigos y relacionados}{10}{subsection.4.2.4}%
+\contentsline {subsubsection}{\numberline {4.2.4.1}setPinDHT11}{10}{subsubsection.4.2.4.1}%
+\contentsline {section}{\numberline {4.3}Referencia de la clase MFRC522}{11}{section.4.3}%
+\contentsline {subsection}{\numberline {4.3.1}Documentación de estructuras de datos}{15}{subsection.4.3.1}%
+\contentsline {subsubsection}{\numberline {4.3.1.1}struct MFRC522\discretionary {\mbox {\scriptsize $\hookleftarrow $}}{}{}::MIFARE\discretionary {\mbox {\scriptsize $\hookleftarrow $}}{}{}\_\discretionary {\mbox {\scriptsize $\hookleftarrow $}}{}{}\discretionary {\mbox {\scriptsize $\hookleftarrow $}}{}{}Key}{15}{subsubsection.4.3.1.1}%
+\contentsline {subsubsection}{\numberline {4.3.1.2}struct MFRC522\discretionary {\mbox {\scriptsize $\hookleftarrow $}}{}{}::Uid}{16}{subsubsection.4.3.1.2}%
+\contentsline {section}{\numberline {4.4}Referencia de la clase MFRC522\discretionary {\mbox {\scriptsize $\hookleftarrow $}}{}{}Extended}{16}{section.4.4}%
+\contentsline {subsection}{\numberline {4.4.1}Descripción detallada}{22}{subsection.4.4.1}%
+\contentsline {subsection}{\numberline {4.4.2}Documentación de estructuras de datos}{22}{subsection.4.4.2}%
+\contentsline {subsubsection}{\numberline {4.4.2.1}struct MFRC522\discretionary {\mbox {\scriptsize $\hookleftarrow $}}{}{}Extended\discretionary {\mbox {\scriptsize $\hookleftarrow $}}{}{}::Ats}{22}{subsubsection.4.4.2.1}%
+\contentsline {subsubsection}{\numberline {4.4.2.2}struct MFRC522\discretionary {\mbox {\scriptsize $\hookleftarrow $}}{}{}Extended\discretionary {\mbox {\scriptsize $\hookleftarrow $}}{}{}::Ats.\discretionary {\mbox {\scriptsize $\hookleftarrow $}}{}{}ta1}{23}{subsubsection.4.4.2.2}%
+\contentsline {subsubsection}{\numberline {4.4.2.3}struct MFRC522\discretionary {\mbox {\scriptsize $\hookleftarrow $}}{}{}Extended\discretionary {\mbox {\scriptsize $\hookleftarrow $}}{}{}::Ats.\discretionary {\mbox {\scriptsize $\hookleftarrow $}}{}{}tb1}{24}{subsubsection.4.4.2.3}%
+\contentsline {subsubsection}{\numberline {4.4.2.4}struct MFRC522\discretionary {\mbox {\scriptsize $\hookleftarrow $}}{}{}Extended\discretionary {\mbox {\scriptsize $\hookleftarrow $}}{}{}::Ats.\discretionary {\mbox {\scriptsize $\hookleftarrow $}}{}{}tc1}{24}{subsubsection.4.4.2.4}%
+\contentsline {subsubsection}{\numberline {4.4.2.5}struct MFRC522\discretionary {\mbox {\scriptsize $\hookleftarrow $}}{}{}Extended\discretionary {\mbox {\scriptsize $\hookleftarrow $}}{}{}::Pcb\discretionary {\mbox {\scriptsize $\hookleftarrow $}}{}{}Block}{25}{subsubsection.4.4.2.5}%
+\contentsline {subsubsection}{\numberline {4.4.2.6}struct MFRC522\discretionary {\mbox {\scriptsize $\hookleftarrow $}}{}{}Extended\discretionary {\mbox {\scriptsize $\hookleftarrow $}}{}{}::Pcb\discretionary {\mbox {\scriptsize $\hookleftarrow $}}{}{}Block.\discretionary {\mbox {\scriptsize $\hookleftarrow $}}{}{}inf}{25}{subsubsection.4.4.2.6}%
+\contentsline {subsubsection}{\numberline {4.4.2.7}struct MFRC522\discretionary {\mbox {\scriptsize $\hookleftarrow $}}{}{}Extended\discretionary {\mbox {\scriptsize $\hookleftarrow $}}{}{}::Pcb\discretionary {\mbox {\scriptsize $\hookleftarrow $}}{}{}Block.\discretionary {\mbox {\scriptsize $\hookleftarrow $}}{}{}prologue}{26}{subsubsection.4.4.2.7}%
+\contentsline {subsubsection}{\numberline {4.4.2.8}struct MFRC522\discretionary {\mbox {\scriptsize $\hookleftarrow $}}{}{}Extended\discretionary {\mbox {\scriptsize $\hookleftarrow $}}{}{}::Tag\discretionary {\mbox {\scriptsize $\hookleftarrow $}}{}{}Info}{27}{subsubsection.4.4.2.8}%
+\contentsline {subsection}{\numberline {4.4.3}Documentación de funciones miembro}{27}{subsection.4.4.3}%
+\contentsline {subsubsection}{\numberline {4.4.3.1}PICC\_IsNewCardPresent()}{27}{subsubsection.4.4.3.1}%
+\contentsline {subsubsection}{\numberline {4.4.3.2}PICC\_ReadCardSerial()}{27}{subsubsection.4.4.3.2}%
+\contentsline {subsubsection}{\numberline {4.4.3.3}PICC\_Select()}{28}{subsubsection.4.4.3.3}%
+\contentsline {chapter}{\numberline {5}Documentación de archivos}{29}{chapter.5}%
+\contentsline {section}{\numberline {5.1}DHT11.\discretionary {\mbox {\scriptsize $\hookleftarrow $}}{}{}h}{29}{section.5.1}%
+\contentsline {section}{\numberline {5.2}Referencia del archivo main/libraries/\discretionary {\mbox {\scriptsize $\hookleftarrow $}}{}{}DHT11-\/\discretionary {\mbox {\scriptsize $\hookleftarrow $}}{}{}HW-\/481/set\discretionary {\mbox {\scriptsize $\hookleftarrow $}}{}{}Pin.cpp}{29}{section.5.2}%
+\contentsline {subsection}{\numberline {5.2.1}Descripción detallada}{30}{subsection.5.2.1}%
+\contentsline {subsection}{\numberline {5.2.2}Documentación de funciones}{30}{subsection.5.2.2}%
+\contentsline {subsubsection}{\numberline {5.2.2.1}setPinDHT11()}{30}{subsubsection.5.2.2.1}%
+\contentsline {section}{\numberline {5.3}Referencia del archivo main/libraries/\discretionary {\mbox {\scriptsize $\hookleftarrow $}}{}{}DHT11-\/\discretionary {\mbox {\scriptsize $\hookleftarrow $}}{}{}HW-\/481/set\discretionary {\mbox {\scriptsize $\hookleftarrow $}}{}{}Pin.h}{31}{section.5.3}%
+\contentsline {subsection}{\numberline {5.3.1}Descripción detallada}{31}{subsection.5.3.1}%
+\contentsline {subsection}{\numberline {5.3.2}Documentación de funciones}{31}{subsection.5.3.2}%
+\contentsline {subsubsection}{\numberline {5.3.2.1}setPinDHT11()}{31}{subsubsection.5.3.2.1}%
+\contentsline {section}{\numberline {5.4}set\discretionary {\mbox {\scriptsize $\hookleftarrow $}}{}{}Pin.\discretionary {\mbox {\scriptsize $\hookleftarrow $}}{}{}h}{32}{section.5.4}%
+\contentsline {section}{\numberline {5.5}acceso\discretionary {\mbox {\scriptsize $\hookleftarrow $}}{}{}RFID.\discretionary {\mbox {\scriptsize $\hookleftarrow $}}{}{}h}{32}{section.5.5}%
+\contentsline {section}{\numberline {5.6}deprecated.\discretionary {\mbox {\scriptsize $\hookleftarrow $}}{}{}h}{32}{section.5.6}%
+\contentsline {section}{\numberline {5.7}MFRC522.\discretionary {\mbox {\scriptsize $\hookleftarrow $}}{}{}h}{32}{section.5.7}%
+\contentsline {section}{\numberline {5.8}MFRC522\discretionary {\mbox {\scriptsize $\hookleftarrow $}}{}{}Extended.\discretionary {\mbox {\scriptsize $\hookleftarrow $}}{}{}h}{37}{section.5.8}%
+\contentsline {section}{\numberline {5.9}require\discretionary {\mbox {\scriptsize $\hookleftarrow $}}{}{}\_\discretionary {\mbox {\scriptsize $\hookleftarrow $}}{}{}cpp11.\discretionary {\mbox {\scriptsize $\hookleftarrow $}}{}{}h}{38}{section.5.9}%
+\contentsline {chapter}{\'{I}ndice alfab\'{e}tico}{39}{section*.46}%

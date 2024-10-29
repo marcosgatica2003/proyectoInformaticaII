@@ -1,7 +1,0 @@
-<map id="MFRC522::MIFARE_OpenUidBackdoor" name="MFRC522::MIFARE_OpenUidBackdoor">
-<area shape="rect" id="Node000001" title=" " alt="" coords="272,36,535,64"/>
-<area shape="rect" id="Node000002" href="$classMFRC522.html#a2bdc18af4952ce99099607c84139b51c" title=" " alt="" coords="20,5,209,33"/>
-<area shape="poly" id="edge1_Node000001_Node000002" title=" " alt="" coords="256,37,209,32,210,27,256,32"/>
-<area shape="rect" id="Node000003" href="$classMFRC522.html#afcbb15d925cb3bea9f58595111fbca48" title=" " alt="" coords="5,57,224,102"/>
-<area shape="poly" id="edge2_Node000001_Node000003" title=" " alt="" coords="256,67,224,71,224,65,256,62"/>
-</map>

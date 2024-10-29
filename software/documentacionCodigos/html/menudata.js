@@ -29,24 +29,8 @@ var menudata={children:[
 {text:"Índice de estructuras de datos",url:"classes.html"},
 {text:"Jerarquía de clases",url:"inherits.html"},
 {text:"Campos de datos",url:"functions.html",children:[
-{text:"Todos",url:"functions.html",children:[
-{text:"a",url:"functions.html#index_a"},
-{text:"d",url:"functions.html#index_d"},
-{text:"g",url:"functions.html#index_g"},
-{text:"m",url:"functions.html#index_m"},
-{text:"p",url:"functions.html#index_p"},
-{text:"r",url:"functions.html#index_r"},
-{text:"s",url:"functions.html#index_s"},
-{text:"t",url:"functions.html#index_t"}]},
-{text:"Funciones",url:"functions_func.html",children:[
-{text:"a",url:"functions_func.html#index_a"},
-{text:"d",url:"functions_func.html#index_d"},
-{text:"g",url:"functions_func.html#index_g"},
-{text:"m",url:"functions_func.html#index_m"},
-{text:"p",url:"functions_func.html#index_p"},
-{text:"r",url:"functions_func.html#index_r"},
-{text:"s",url:"functions_func.html#index_s"},
-{text:"t",url:"functions_func.html#index_t"}]},
+{text:"Todos",url:"functions.html"},
+{text:"Funciones",url:"functions_func.html"},
 {text:"Símbolos relacionados",url:"functions_rela.html"}]}]},
 {text:"Archivos",url:"files.html",children:[
 {text:"Lista de archivos",url:"files.html"},

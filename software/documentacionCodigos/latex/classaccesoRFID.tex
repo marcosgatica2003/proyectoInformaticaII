@@ -24,13 +24,17 @@ Diagrama de colaboración de acceso\+RFID\+:
 \item 
 \mbox{\hyperlink{classaccesoRFID_a76ec44dbd93eed875350296b46670f11}{acceso\+RFID}} (byte ss\+Pin, byte rst\+Pin, String autorizar\+ID)
 \begin{DoxyCompactList}\small\item\em Constructor de la clase \doxylink{classaccesoRFID}{acceso\+RFID}. \end{DoxyCompactList}\item 
-void \mbox{\hyperlink{classaccesoRFID_a3bc744bb024b8bfbe459092a36f9cd68}{start}} ()
+\Hypertarget{classaccesoRFID_a3bc744bb024b8bfbe459092a36f9cd68}\label{classaccesoRFID_a3bc744bb024b8bfbe459092a36f9cd68} 
+void {\bfseries start} ()
 \begin{DoxyCompactList}\small\item\em void \doxylink{classaccesoRFID_a3bc744bb024b8bfbe459092a36f9cd68}{start()}; Inicia la comunicación SPI con el módulo RFID (usando sus métodos). \end{DoxyCompactList}\item 
-void \mbox{\hyperlink{classaccesoRFID_a0274f257c332f825bdb079d4b4e6efd6}{mostrar\+ID}} ()
+\Hypertarget{classaccesoRFID_a0274f257c332f825bdb079d4b4e6efd6}\label{classaccesoRFID_a0274f257c332f825bdb079d4b4e6efd6} 
+void {\bfseries mostrar\+ID} ()
 \begin{DoxyCompactList}\small\item\em void \doxylink{classaccesoRFID_a0274f257c332f825bdb079d4b4e6efd6}{mostrar\+ID()}; Imprime por puerto serie el UID de la tarjeta detectada por el RFID \end{DoxyCompactList}\item 
-bool \mbox{\hyperlink{classaccesoRFID_abadde807c97ccaa1a49182292d43d8e1}{autorizar}} ()
+\Hypertarget{classaccesoRFID_abadde807c97ccaa1a49182292d43d8e1}\label{classaccesoRFID_abadde807c97ccaa1a49182292d43d8e1} 
+bool {\bfseries autorizar} ()
 \begin{DoxyCompactList}\small\item\em bool \doxylink{classaccesoRFID_abadde807c97ccaa1a49182292d43d8e1}{autorizar()}; Compara el UID de la tarjeta con el UID autorizado. Devuelve true (acceso permitido) o un false (acceso denegado). \end{DoxyCompactList}\item 
-bool \mbox{\hyperlink{classaccesoRFID_a796d502e70c965524f20c277278e2fc8}{detectar\+Tarjeta}} ()
+\Hypertarget{classaccesoRFID_a796d502e70c965524f20c277278e2fc8}\label{classaccesoRFID_a796d502e70c965524f20c277278e2fc8} 
+bool {\bfseries detectar\+Tarjeta} ()
 \begin{DoxyCompactList}\small\item\em bool \doxylink{classaccesoRFID_a796d502e70c965524f20c277278e2fc8}{detectar\+Tarjeta()}; Lee el UID de la tarjeta para implementarla en el sistema. \end{DoxyCompactList}\end{DoxyCompactItemize}
 
 
@@ -44,7 +48,7 @@ Esta clase permite inicializar el lector RFID y verificar si una tarjeta tiene a
 \index{accesoRFID@{accesoRFID}!accesoRFID@{accesoRFID}}
 \doxysubsubsection{\texorpdfstring{accesoRFID()}{accesoRFID()}}
 {\footnotesize\ttfamily \label{classaccesoRFID_a76ec44dbd93eed875350296b46670f11} 
-acceso\+RFID\+::acceso\+RFID (\begin{DoxyParamCaption}\item[{byte}]{ss\+Pin}{, }\item[{byte}]{rst\+Pin}{, }\item[{String}]{ID}{}\end{DoxyParamCaption})}
+acceso\+RFID\+::acceso\+RFID (\begin{DoxyParamCaption}\item[{byte}]{ss\+Pin}{, }\item[{byte}]{rst\+Pin}{, }\item[{String}]{autorizar\+ID}{}\end{DoxyParamCaption})}
 
 
 
@@ -61,83 +65,6 @@ Constructor de la clase \doxylink{classaccesoRFID}{acceso\+RFID}.
 \end{DoxyParams}
 
 
-\doxysubsection{Documentación de funciones miembro}
-\Hypertarget{classaccesoRFID_abadde807c97ccaa1a49182292d43d8e1}\index{accesoRFID@{accesoRFID}!autorizar@{autorizar}}
-\index{autorizar@{autorizar}!accesoRFID@{accesoRFID}}
-\doxysubsubsection{\texorpdfstring{autorizar()}{autorizar()}}
-{\footnotesize\ttfamily \label{classaccesoRFID_abadde807c97ccaa1a49182292d43d8e1} 
-bool acceso\+RFID\+::autorizar (\begin{DoxyParamCaption}{}{}\end{DoxyParamCaption})}
-
-
-
-bool \doxylink{classaccesoRFID_abadde807c97ccaa1a49182292d43d8e1}{autorizar()}; Compara el UID de la tarjeta con el UID autorizado. Devuelve true (acceso permitido) o un false (acceso denegado). 
-
-bool \doxylink{classaccesoRFID_abadde807c97ccaa1a49182292d43d8e1}{autorizar()};
-
-\begin{DoxyReturn}{Devuelve}
-true si el UID coincide con el autorizado, false en caso contrario. 
-\end{DoxyReturn}
-Gráfico de llamadas de esta función\+:
-\nopagebreak
-\begin{figure}[H]
-\begin{center}
-\leavevmode
-\includegraphics[width=350pt]{classaccesoRFID_abadde807c97ccaa1a49182292d43d8e1_cgraph}
-\end{center}
-\end{figure}
-\Hypertarget{classaccesoRFID_a796d502e70c965524f20c277278e2fc8}\index{accesoRFID@{accesoRFID}!detectarTarjeta@{detectarTarjeta}}
-\index{detectarTarjeta@{detectarTarjeta}!accesoRFID@{accesoRFID}}
-\doxysubsubsection{\texorpdfstring{detectarTarjeta()}{detectarTarjeta()}}
-{\footnotesize\ttfamily \label{classaccesoRFID_a796d502e70c965524f20c277278e2fc8} 
-bool acceso\+RFID\+::detectar\+Tarjeta (\begin{DoxyParamCaption}{}{}\end{DoxyParamCaption})}
-
-
-
-bool \doxylink{classaccesoRFID_a796d502e70c965524f20c277278e2fc8}{detectar\+Tarjeta()}; Lee el UID de la tarjeta para implementarla en el sistema. 
-
-bool \doxylink{classaccesoRFID_a796d502e70c965524f20c277278e2fc8}{detectar\+Tarjeta()};
-
-Este método detecta si hay una tarjeta para poder leerla. Gráfico de llamadas de esta función\+:
-\nopagebreak
-\begin{figure}[H]
-\begin{center}
-\leavevmode
-\includegraphics[width=350pt]{classaccesoRFID_a796d502e70c965524f20c277278e2fc8_cgraph}
-\end{center}
-\end{figure}
-\Hypertarget{classaccesoRFID_a0274f257c332f825bdb079d4b4e6efd6}\index{accesoRFID@{accesoRFID}!mostrarID@{mostrarID}}
-\index{mostrarID@{mostrarID}!accesoRFID@{accesoRFID}}
-\doxysubsubsection{\texorpdfstring{mostrarID()}{mostrarID()}}
-{\footnotesize\ttfamily \label{classaccesoRFID_a0274f257c332f825bdb079d4b4e6efd6} 
-void acceso\+RFID\+::mostrar\+ID (\begin{DoxyParamCaption}{}{}\end{DoxyParamCaption})}
-
-
-
-void \doxylink{classaccesoRFID_a0274f257c332f825bdb079d4b4e6efd6}{mostrar\+ID()}; Imprime por puerto serie el UID de la tarjeta detectada por el RFID 
-
-void \doxylink{classaccesoRFID_a0274f257c332f825bdb079d4b4e6efd6}{mostrar\+ID()};
-
-Este método imprime el UID de la tarjeta detectada por el lector RFID en formato hexadecimal. \Hypertarget{classaccesoRFID_a3bc744bb024b8bfbe459092a36f9cd68}\index{accesoRFID@{accesoRFID}!start@{start}}
-\index{start@{start}!accesoRFID@{accesoRFID}}
-\doxysubsubsection{\texorpdfstring{start()}{start()}}
-{\footnotesize\ttfamily \label{classaccesoRFID_a3bc744bb024b8bfbe459092a36f9cd68} 
-void acceso\+RFID\+::start (\begin{DoxyParamCaption}{}{}\end{DoxyParamCaption})}
-
-
-
-void \doxylink{classaccesoRFID_a3bc744bb024b8bfbe459092a36f9cd68}{start()}; Inicia la comunicación SPI con el módulo RFID (usando sus métodos). 
-
-void \doxylink{classaccesoRFID_a3bc744bb024b8bfbe459092a36f9cd68}{start()}; Este método llamada a otros dos de \doxylink{MFRC522_8h_source}{MFRC522.\+h} y SPI.\+h para iniciar la comunicación entre el RFID (rfid.\+PCD\+\_\+\+Init()) y el SPI (SPI\+\_\+begin()). Gráfico de llamadas de esta función\+:
-\nopagebreak
-\begin{figure}[H]
-\begin{center}
-\leavevmode
-\includegraphics[width=350pt]{classaccesoRFID_a3bc744bb024b8bfbe459092a36f9cd68_cgraph}
-\end{center}
-\end{figure}
-
-
-La documentación de esta clase está generada de los siguientes archivos\+:\begin{DoxyCompactItemize}
+La documentación de esta clase está generada del siguiente archivo\+:\begin{DoxyCompactItemize}
 \item 
-main/libraries/\+RFID-\/\+RC522/acceso\+RFID.\+h\item 
-main/libraries/\+RFID-\/\+RC522/acceso\+RFID.\+cpp\end{DoxyCompactItemize}
+main/libraries/\+RFID-\/\+RC522/acceso\+RFID.\+h\end{DoxyCompactItemize}

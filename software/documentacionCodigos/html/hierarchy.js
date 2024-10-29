@@ -5,7 +5,6 @@ var hierarchy =
     [ "MFRC522Extended::Ats.ta1", "classMFRC522Extended.html#structMFRC522Extended_1_1Ats_8ta1", null ],
     [ "MFRC522Extended::Ats.tb1", "classMFRC522Extended.html#structMFRC522Extended_1_1Ats_8tb1", null ],
     [ "MFRC522Extended::Ats.tc1", "classMFRC522Extended.html#structMFRC522Extended_1_1Ats_8tc1", null ],
-    [ "Buzzer", "classBuzzer.html", null ],
     [ "DHT11", "classDHT11.html", null ],
     [ "MFRC522", "classMFRC522.html", [
       [ "MFRC522Extended", "classMFRC522Extended.html", null ]

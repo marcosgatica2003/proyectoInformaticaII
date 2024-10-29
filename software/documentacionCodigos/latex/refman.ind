@@ -1,0 +1,73 @@
+\begin{theindex}
+
+  \item {accesoRFID}, \hyperpage{7}
+    \subitem {accesoRFID}, \hyperpage{8}
+
+  \indexspace
+
+  \item {DHT11}, \hyperpage{8}
+    \subitem {DHT11}, \hyperpage{9}
+    \subitem {readHumidity}, \hyperpage{9}
+    \subitem {readTemperature}, \hyperpage{9}
+    \subitem {readTemperatureHumidity}, \hyperpage{10}
+    \subitem {setDelay}, \hyperpage{10}
+    \subitem {setPinDHT11}, \hyperpage{10}
+
+  \indexspace
+
+  \item {main/libraries/DHT11-\/HW-\/481/DHT11.h}, \hyperpage{29}
+  \item {main/libraries/DHT11-\/HW-\/481/setPin.cpp}, \hyperpage{29}
+  \item {main/libraries/DHT11-\/HW-\/481/setPin.h}, \hyperpage{31, 32}
+  \item {main/libraries/RFID-\/RC522/accesoRFID.h}, \hyperpage{32}
+  \item {main/libraries/RFID-\/RC522/deprecated.h}, \hyperpage{32}
+  \item {main/libraries/RFID-\/RC522/MFRC522.h}, \hyperpage{32}
+  \item {main/libraries/RFID-\/RC522/MFRC522Extended.h}, \hyperpage{37}
+  \item {main/libraries/RFID-\/RC522/require\_cpp11.h}, \hyperpage{38}
+  \item {MFRC522}, \hyperpage{11}
+  \item {MFRC522::MIFARE\_Key}, \hyperpage{15}
+  \item {MFRC522::Uid}, \hyperpage{15}
+  \item {MFRC522Extended}, \hyperpage{16}
+    \subitem {PICC\_IsNewCardPresent}, \hyperpage{27}
+    \subitem {PICC\_ReadCardSerial}, \hyperpage{27}
+    \subitem {PICC\_Select}, \hyperpage{27}
+  \item {MFRC522Extended::Ats}, \hyperpage{22}
+  \item {MFRC522Extended::Ats.ta1}, \hyperpage{23}
+  \item {MFRC522Extended::Ats.tb1}, \hyperpage{23}
+  \item {MFRC522Extended::Ats.tc1}, \hyperpage{24}
+  \item {MFRC522Extended::PcbBlock}, \hyperpage{24}
+  \item {MFRC522Extended::PcbBlock.inf}, \hyperpage{25}
+  \item {MFRC522Extended::PcbBlock.prologue}, \hyperpage{25}
+  \item {MFRC522Extended::TagInfo}, \hyperpage{26}
+
+  \indexspace
+
+  \item {PICC\_IsNewCardPresent}
+    \subitem {MFRC522Extended}, \hyperpage{27}
+  \item {PICC\_ReadCardSerial}
+    \subitem {MFRC522Extended}, \hyperpage{27}
+  \item {PICC\_Select}
+    \subitem {MFRC522Extended}, \hyperpage{27}
+
+  \indexspace
+
+  \item {readHumidity}
+    \subitem {DHT11}, \hyperpage{9}
+  \item {readTemperature}
+    \subitem {DHT11}, \hyperpage{9}
+  \item {readTemperatureHumidity}
+    \subitem {DHT11}, \hyperpage{10}
+
+  \indexspace
+
+  \item {setDelay}
+    \subitem {DHT11}, \hyperpage{10}
+  \item {setPin.cpp}
+    \subitem {setPinDHT11}, \hyperpage{30}
+  \item {setPin.h}
+    \subitem {setPinDHT11}, \hyperpage{31}
+  \item {setPinDHT11}
+    \subitem {DHT11}, \hyperpage{10}
+    \subitem {setPin.cpp}, \hyperpage{30}
+    \subitem {setPin.h}, \hyperpage{31}
+
+\end{theindex}

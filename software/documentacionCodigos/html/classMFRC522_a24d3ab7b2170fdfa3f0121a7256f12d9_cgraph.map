@@ -1,9 +1,0 @@
-<map id="MFRC522::PCD_StopCrypto1" name="MFRC522::PCD_StopCrypto1">
-<area shape="rect" id="Node000001" title=" " alt="" coords="5,32,211,60"/>
-<area shape="rect" id="Node000002" href="$classMFRC522.html#a76193f4f8916f688fe2b7976d0fd1dc2" title=" " alt="" coords="259,24,472,68"/>
-<area shape="poly" id="edge1_Node000001_Node000002" title=" " alt="" coords="211,43,243,43,243,48,211,48"/>
-<area shape="rect" id="Node000003" href="$classMFRC522.html#a4289838c6f24f2d62eb8dc0e7a6647d1" title=" " alt="" coords="521,5,733,33"/>
-<area shape="poly" id="edge2_Node000002_Node000003" title=" " alt="" coords="472,32,505,29,506,34,473,38"/>
-<area shape="rect" id="Node000004" href="$classMFRC522.html#aa5e5825adb4c784d8a5a60242c135fb7" title=" " alt="" coords="520,57,734,85"/>
-<area shape="poly" id="edge3_Node000002_Node000004" title=" " alt="" coords="473,54,505,57,504,62,472,59"/>
-</map>

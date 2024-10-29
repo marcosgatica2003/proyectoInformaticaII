@@ -47,7 +47,7 @@ var NAVTREE =
 
 var NAVTREEINDEX =
 [
-"DHT11Libs_8h_source.html"
+"DHT11_8h_source.html"
 ];
 
 var SYNCONMSG = 'pulsar para deshabilitar sincronización';

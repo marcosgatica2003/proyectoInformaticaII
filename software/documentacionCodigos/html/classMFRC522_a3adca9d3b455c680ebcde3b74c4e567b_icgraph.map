@@ -1,9 +1,0 @@
-<map id="MFRC522::PICC_IsNewCardPresent" name="MFRC522::PICC_IsNewCardPresent">
-<area shape="rect" id="Node000001" title=" " alt="" coords="257,57,504,85"/>
-<area shape="rect" id="Node000002" href="$classaccesoRFID.html#abadde807c97ccaa1a49182292d43d8e1" title="bool autorizar(); Compara el UID de la tarjeta con el UID autorizado. Devuelve true (acceso permitido..." alt="" coords="25,5,189,33"/>
-<area shape="poly" id="edge1_Node000001_Node000002" title=" " alt="" coords="288,56,183,36,184,31,289,51"/>
-<area shape="rect" id="Node000003" href="$classaccesoRFID.html#a796d502e70c965524f20c277278e2fc8" title="bool detectarTarjeta(); Lee el UID de la tarjeta para implementarla en el sistema." alt="" coords="5,57,209,85"/>
-<area shape="poly" id="edge2_Node000001_Node000003" title=" " alt="" coords="241,74,209,74,209,68,241,68"/>
-<area shape="rect" id="Node000004" href="$classMFRC522.html#a2bdc18af4952ce99099607c84139b51c" title=" " alt="" coords="12,109,202,137"/>
-<area shape="poly" id="edge3_Node000001_Node000004" title=" " alt="" coords="289,91,184,111,183,106,288,86"/>
-</map>

@@ -1,6 +1,0 @@
-<?xml version='1.0' encoding='UTF-8' standalone='no'?>
-<section xmlns="http://docbook.org/ns/docbook" version="5.0" xmlns:xlink="http://www.w3.org/1999/xlink" xml:id="_annotated" xml:lang="es">
-<title>Estructuras de datos</title>
-Lista de estructuras con breves descripciones:<link linkend="_classaccesoRFID">accesoRFID</link>
-<para>Clase para manejar el acceso usando el módulo RFID-RC522 </para>
-<link linkend="_classBuzzer">Buzzer</link><link linkend="_classDHT11">DHT11</link><link linkend="_classMFRC522">MFRC522</link><link linkend="_classMFRC522Extended">MFRC522Extended</link></section>

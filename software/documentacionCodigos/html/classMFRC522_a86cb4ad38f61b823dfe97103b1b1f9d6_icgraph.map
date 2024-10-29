@@ -1,9 +1,0 @@
-<map id="MFRC522::MIFARE_TwoStepHelper" name="MFRC522::MIFARE_TwoStepHelper">
-<area shape="rect" id="Node000001" title=" " alt="" coords="272,57,515,85"/>
-<area shape="rect" id="Node000002" href="$classMFRC522.html#aeab21496c761cdecb29c69f9f3fa6150" title=" " alt="" coords="5,5,224,33"/>
-<area shape="poly" id="edge1_Node000001_Node000002" title=" " alt="" coords="300,57,192,36,193,31,301,51"/>
-<area shape="rect" id="Node000003" href="$classMFRC522.html#af9566664f23d4d67efd270e42c3dc723" title=" " alt="" coords="8,57,221,85"/>
-<area shape="poly" id="edge2_Node000001_Node000003" title=" " alt="" coords="256,74,221,74,221,68,256,68"/>
-<area shape="rect" id="Node000004" href="$classMFRC522.html#a946ba7e7e244f40adcb9f900d8fd3a48" title=" " alt="" coords="16,109,213,137"/>
-<area shape="poly" id="edge3_Node000001_Node000004" title=" " alt="" coords="301,91,193,111,192,106,300,86"/>
-</map>

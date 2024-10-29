@@ -5,7 +5,7 @@ Gráfico de los archivos que directa o indirectamente incluyen a este archivo\+:
 \begin{figure}[H]
 \begin{center}
 \leavevmode
-\includegraphics[width=245pt]{setPin_8h__dep__incl}
+\includegraphics[width=200pt]{setPin_8h__dep__incl}
 \end{center}
 \end{figure}
 \doxysubsubsection*{Funciones}
@@ -24,16 +24,6 @@ Este archivo contiene las declaraciones de la clase \doxylink{classDHT11}{DHT11}
 \doxysubsubsection{\texorpdfstring{setPinDHT11()}{setPinDHT11()}}
 {\footnotesize\ttfamily \label{setPin_8h_a73010b69762bc8832cebeabe6c10bed1} 
 void set\+Pin\+DHT11 (\begin{DoxyParamCaption}\item[{\mbox{\hyperlink{classDHT11}{DHT11}} \&}]{sensor}{, }\item[{int}]{pin}{}\end{DoxyParamCaption})}
-
-Bloque if-\/else Controla si el pin ingresado es uno físicamente válido. Imprime por puerto serie UART un mensaje de error en caso de no serlo.
-
-pin\+Mode(sensor.\+\_\+pin, INPUT) "{}\+Desactiva"{} el pin anterior.
-
-sensor.\+\_\+pin = pin Actualiza el pin.
-
-pin\+Mode(pin, OUTPUT) y digital\+Write(pin, HIGH) Inicializa el nuevo pin como lo hace internamente la clase \doxylink{classDHT11}{DHT11}
-
-delay(250) Tiempo de espera a que el sensor se estabilice.
 
 Bloque if-\/else Controla si el pin ingresado es uno físicamente válido. Imprime por puerto serie UART un mensaje de error en caso de no serlo.
 
