@@ -1,0 +1,112 @@
+\doxysection{MFRC522\+Extended.\+h}
+\hypertarget{MFRC522Extended_8h_source}{}\label{MFRC522Extended_8h_source}\index{main/libraries/RFID-\/RC522/MFRC522Extended.h@{main/libraries/RFID-\/RC522/MFRC522Extended.h}}
+
+\begin{DoxyCode}{0}
+\DoxyCodeLine{00001\ }
+\DoxyCodeLine{00006\ \textcolor{preprocessor}{\#ifndef\ MFRC522Extended\_h}}
+\DoxyCodeLine{00007\ \textcolor{preprocessor}{\#define\ MFRC522Extended\_h}}
+\DoxyCodeLine{00008\ }
+\DoxyCodeLine{00009\ \textcolor{preprocessor}{\#include\ <Arduino.h>}}
+\DoxyCodeLine{00010\ \textcolor{preprocessor}{\#include\ "{}MFRC522.h"{}}}
+\DoxyCodeLine{00011\ }
+\DoxyCodeLine{00012\ \textcolor{keyword}{class\ }\mbox{\hyperlink{classMFRC522Extended}{MFRC522Extended}}\ :\ \textcolor{keyword}{public}\ \mbox{\hyperlink{classMFRC522}{MFRC522}}\ \{}
+\DoxyCodeLine{00013\ \ \ \ \ \ \ \ \ }
+\DoxyCodeLine{00014\ \textcolor{keyword}{public}:}
+\DoxyCodeLine{00015\ \ \ \ \ \textcolor{comment}{//\ ISO/IEC\ 14443-\/4\ bit\ rates}}
+\DoxyCodeLine{00016\ \ \ \ \ \textcolor{keyword}{enum}\ TagBitRates\ :\ \textcolor{keywordtype}{byte}\ \{}
+\DoxyCodeLine{00017\ \ \ \ \ \ \ \ \ BITRATE\_106KBITS\ =\ 0x00,}
+\DoxyCodeLine{00018\ \ \ \ \ \ \ \ \ BITRATE\_212KBITS\ =\ 0x01,}
+\DoxyCodeLine{00019\ \ \ \ \ \ \ \ \ BITRATE\_424KBITS\ =\ 0x02,}
+\DoxyCodeLine{00020\ \ \ \ \ \ \ \ \ BITRATE\_848KBITS\ =\ 0x03}
+\DoxyCodeLine{00021\ \ \ \ \ \};}
+\DoxyCodeLine{00022\ }
+\DoxyCodeLine{00023\ \ \ \ \ \textcolor{comment}{//\ Structure\ to\ store\ ISO/IEC\ 14443-\/4\ ATS}}
+\DoxyCodeLine{00024\ \ \ \ \ \textcolor{keyword}{typedef}\ \textcolor{keyword}{struct\ }\{}
+\DoxyCodeLine{00025\ \ \ \ \ \ \ \ \ \textcolor{keywordtype}{byte}\ size;}
+\DoxyCodeLine{00026\ \ \ \ \ \ \ \ \ \textcolor{keywordtype}{byte}\ fsc;\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{comment}{//\ Frame\ size\ for\ proximity\ card}}
+\DoxyCodeLine{00027\ }
+\DoxyCodeLine{00028\ \ \ \ \ \ \ \ \ \textcolor{keyword}{struct\ }\{}
+\DoxyCodeLine{00029\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordtype}{bool}\ transmitted;}
+\DoxyCodeLine{00030\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordtype}{bool}\ \ \ \ \ \ \ \ sameD;\ \ \textcolor{comment}{//\ Only\ the\ same\ D\ for\ both\ directions\ supported}}
+\DoxyCodeLine{00031\ \ \ \ \ \ \ \ \ \ \ \ \ TagBitRates\ ds;\ \ \ \ \ \textcolor{comment}{//\ Send\ D}}
+\DoxyCodeLine{00032\ \ \ \ \ \ \ \ \ \ \ \ \ TagBitRates\ dr;\ \ \ \ \ \textcolor{comment}{//\ Receive\ D}}
+\DoxyCodeLine{00033\ \ \ \ \ \ \ \ \ \}\ ta1;}
+\DoxyCodeLine{00034\ }
+\DoxyCodeLine{00035\ \ \ \ \ \ \ \ \ \textcolor{keyword}{struct\ }\{}
+\DoxyCodeLine{00036\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordtype}{bool}\ transmitted;}
+\DoxyCodeLine{00037\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordtype}{byte}\ fwi;\ \ \ \ \ \ \ \ \ \ \ \textcolor{comment}{//\ Frame\ waiting\ time\ integer}}
+\DoxyCodeLine{00038\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordtype}{byte}\ sfgi;\ \ \ \ \ \ \ \ \ \ \textcolor{comment}{//\ Start-\/up\ frame\ guard\ time\ integer}}
+\DoxyCodeLine{00039\ \ \ \ \ \ \ \ \ \}\ tb1;}
+\DoxyCodeLine{00040\ }
+\DoxyCodeLine{00041\ \ \ \ \ \ \ \ \ \textcolor{keyword}{struct\ }\{}
+\DoxyCodeLine{00042\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordtype}{bool}\ transmitted;}
+\DoxyCodeLine{00043\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordtype}{bool}\ supportsCID;}
+\DoxyCodeLine{00044\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordtype}{bool}\ supportsNAD;}
+\DoxyCodeLine{00045\ \ \ \ \ \ \ \ \ \}\ tc1;}
+\DoxyCodeLine{00046\ }
+\DoxyCodeLine{00047\ \ \ \ \ \ \ \ \ \textcolor{comment}{//\ Raw\ data\ from\ ATS}}
+\DoxyCodeLine{00048\ \ \ \ \ \ \ \ \ \textcolor{keywordtype}{byte}\ data[FIFO\_SIZE\ -\/\ 2];\ \textcolor{comment}{//\ ATS\ cannot\ be\ bigger\ than\ FSD\ -\/\ 2\ bytes\ (CRC),\ according\ to\ ISO\ 14443-\/4\ 5.2.2}}
+\DoxyCodeLine{00049\ \ \ \ \ \}\ Ats;}
+\DoxyCodeLine{00050\ }
+\DoxyCodeLine{00051\ \ \ \ \ \textcolor{comment}{//\ A\ struct\ used\ for\ passing\ the\ PICC\ information}}
+\DoxyCodeLine{00052\ \ \ \ \ \textcolor{keyword}{typedef}\ \textcolor{keyword}{struct\ }\{}
+\DoxyCodeLine{00053\ \ \ \ \ \ \ \ \ uint16\_t\ \ \ \ atqa;}
+\DoxyCodeLine{00054\ \ \ \ \ \ \ \ \ \mbox{\hyperlink{classMFRC522_structMFRC522_1_1Uid}{Uid}}\ \ \ \ \ \ \ \ \ \ uid;}
+\DoxyCodeLine{00055\ \ \ \ \ \ \ \ \ \mbox{\hyperlink{classMFRC522Extended_structMFRC522Extended_1_1Ats}{Ats}}\ \ \ \ \ \ \ \ \ \ ats;\ }
+\DoxyCodeLine{00056\ }
+\DoxyCodeLine{00057\ \ \ \ \ \ \ \ \ \textcolor{comment}{//\ For\ Block\ PCB}}
+\DoxyCodeLine{00058\ \ \ \ \ \ \ \ \ \textcolor{keywordtype}{bool}\ blockNumber;}
+\DoxyCodeLine{00059\ \ \ \ \ \}\ \mbox{\hyperlink{classMFRC522Extended_structMFRC522Extended_1_1TagInfo}{TagInfo}};}
+\DoxyCodeLine{00060\ }
+\DoxyCodeLine{00061\ \ \ \ \ \textcolor{comment}{//\ A\ struct\ used\ for\ passing\ PCB\ Block}}
+\DoxyCodeLine{00062\ \ \ \ \ \textcolor{keyword}{typedef}\ \textcolor{keyword}{struct\ }\{}
+\DoxyCodeLine{00063\ \ \ \ \ \ \ \ \ \textcolor{keyword}{struct\ }\{}
+\DoxyCodeLine{00064\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordtype}{byte}\ pcb;}
+\DoxyCodeLine{00065\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordtype}{byte}\ cid;}
+\DoxyCodeLine{00066\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordtype}{byte}\ nad;}
+\DoxyCodeLine{00067\ \ \ \ \ \ \ \ \ \}\ prologue;}
+\DoxyCodeLine{00068\ \ \ \ \ \ \ \ \ \textcolor{keyword}{struct\ }\{}
+\DoxyCodeLine{00069\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordtype}{byte}\ size;}
+\DoxyCodeLine{00070\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordtype}{byte}\ *data;}
+\DoxyCodeLine{00071\ \ \ \ \ \ \ \ \ \}\ inf;}
+\DoxyCodeLine{00072\ \ \ \ \ \}\ PcbBlock;}
+\DoxyCodeLine{00073\ \ \ \ \ }
+\DoxyCodeLine{00074\ \ \ \ \ \textcolor{comment}{//\ Member\ variables}}
+\DoxyCodeLine{00075\ \ \ \ \ TagInfo\ tag;}
+\DoxyCodeLine{00076\ \ \ \ \ }
+\DoxyCodeLine{00078\ \ \ \ \ \textcolor{comment}{//\ Contructors}}
+\DoxyCodeLine{00080\ \ \ \ \ \mbox{\hyperlink{classMFRC522Extended}{MFRC522Extended}}()\ :\ \mbox{\hyperlink{classMFRC522}{MFRC522}}()\ \{\};}
+\DoxyCodeLine{00081\ \ \ \ \ \mbox{\hyperlink{classMFRC522Extended}{MFRC522Extended}}(uint8\_t\ rst)\ :\ \mbox{\hyperlink{classMFRC522}{MFRC522}}(rst)\ \{\};}
+\DoxyCodeLine{00082\ \ \ \ \ \mbox{\hyperlink{classMFRC522Extended}{MFRC522Extended}}(uint8\_t\ ss,\ uint8\_t\ rst)\ :\ \mbox{\hyperlink{classMFRC522}{MFRC522}}(ss,\ rst)\ \{\};}
+\DoxyCodeLine{00083\ \ \ \ \ }
+\DoxyCodeLine{00085\ \ \ \ \ \textcolor{comment}{//\ Functions\ for\ communicating\ with\ PICCs}}
+\DoxyCodeLine{00087\ \ \ \ \ StatusCode\ \mbox{\hyperlink{classMFRC522Extended_a0740187cc7f336b0aaea2db432185cb5}{PICC\_Select}}(Uid\ *uid,\ \textcolor{keywordtype}{byte}\ validBits\ =\ 0)\ \textcolor{keyword}{override};\ \textcolor{comment}{//\ overrride}}
+\DoxyCodeLine{00088\ \ \ \ \ StatusCode\ \mbox{\hyperlink{classMFRC522Extended_a2671f1de35a0cac5da87e4300b7df74d}{PICC\_RequestATS}}(Ats\ *ats);}
+\DoxyCodeLine{00089\ \ \ \ \ StatusCode\ \mbox{\hyperlink{classMFRC522Extended_acb69d5c429b8e06ecec8dc1e34c02d65}{PICC\_PPS}}();\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{comment}{//\ PPS\ command\ without\ bitrate\ parameter}}
+\DoxyCodeLine{00090\ \ \ \ \ StatusCode\ \mbox{\hyperlink{classMFRC522Extended_acb69d5c429b8e06ecec8dc1e34c02d65}{PICC\_PPS}}(TagBitRates\ sendBitRate,\ TagBitRates\ receiveBitRate);\ \textcolor{comment}{//\ Different\ D\ values}}
+\DoxyCodeLine{00091\ \ \ \ \ }
+\DoxyCodeLine{00093\ \ \ \ \ \textcolor{comment}{//\ Functions\ for\ communicating\ with\ ISO/IEC\ 14433-\/4\ cards}}
+\DoxyCodeLine{00095\ \ \ \ \ StatusCode\ TCL\_Transceive(PcbBlock\ *send,\ PcbBlock\ *back);}
+\DoxyCodeLine{00096\ \ \ \ \ StatusCode\ TCL\_Transceive(TagInfo\ *\ tag,\ \textcolor{keywordtype}{byte}\ *sendData,\ \textcolor{keywordtype}{byte}\ sendLen,\ \textcolor{keywordtype}{byte}\ *backData\ =\ NULL,\ \textcolor{keywordtype}{byte}\ *backLen\ =\ NULL);}
+\DoxyCodeLine{00097\ \ \ \ \ StatusCode\ \mbox{\hyperlink{classMFRC522Extended_aebbf1bbae99dea09128a6bcc4cf27f9d}{TCL\_TransceiveRBlock}}(TagInfo\ *tag,\ \textcolor{keywordtype}{bool}\ ack,\ \textcolor{keywordtype}{byte}\ *backData\ =\ NULL,\ \textcolor{keywordtype}{byte}\ *backLen\ =\ NULL);}
+\DoxyCodeLine{00098\ \ \ \ \ StatusCode\ \mbox{\hyperlink{classMFRC522Extended_a2de7e4ead4065d896d7ee39e9e2040dd}{TCL\_Deselect}}(TagInfo\ *tag);}
+\DoxyCodeLine{00099\ \ \ \ \ }
+\DoxyCodeLine{00101\ \ \ \ \ \textcolor{comment}{//\ Support\ functions}}
+\DoxyCodeLine{00103\ \ \ \ \ \textcolor{keyword}{static}\ PICC\_Type\ \mbox{\hyperlink{classMFRC522Extended_addf00efdd2de1002a4f4b34ebe0e1fb2}{PICC\_GetType}}(TagInfo\ *tag);}
+\DoxyCodeLine{00104\ \ \ \ \ \textcolor{keyword}{using\ }\mbox{\hyperlink{classMFRC522_ac80a18228260bdde07dff5d4ac23bb53}{MFRC522::PICC\_GetType}};\textcolor{comment}{//\ //\ make\ old\ PICC\_GetType(byte\ sak)\ available,\ otherwise\ would\ be\ hidden\ by\ PICC\_GetType(TagInfo\ *tag)}}
+\DoxyCodeLine{00105\ }
+\DoxyCodeLine{00106\ \ \ \ \ \textcolor{comment}{//\ Support\ functions\ for\ debuging}}
+\DoxyCodeLine{00107\ \ \ \ \ \textcolor{keywordtype}{void}\ \mbox{\hyperlink{classMFRC522Extended_a1739931b517243305c765d547d819968}{PICC\_DumpToSerial}}(TagInfo\ *tag);}
+\DoxyCodeLine{00108\ \ \ \ \ \textcolor{keyword}{using\ }\mbox{\hyperlink{classMFRC522_a6f324d43c6fbbd0e260b171747186037}{MFRC522::PICC\_DumpToSerial}};\ \textcolor{comment}{//\ make\ old\ PICC\_DumpToSerial(Uid\ *uid)\ available,\ otherwise\ would\ be\ hidden\ by\ PICC\_DumpToSerial(TagInfo\ *tag)}}
+\DoxyCodeLine{00109\ \ \ \ \ \textcolor{keywordtype}{void}\ \mbox{\hyperlink{classMFRC522Extended_a456d810cdd67f28aa319746d277841b8}{PICC\_DumpDetailsToSerial}}(TagInfo\ *tag);}
+\DoxyCodeLine{00110\ \ \ \ \ \textcolor{keyword}{using\ }\mbox{\hyperlink{classMFRC522_a3b9a2c6da6505e0ff7b58c37d7aeff37}{MFRC522::PICC\_DumpDetailsToSerial}};\ \textcolor{comment}{//\ make\ old\ PICC\_DumpDetailsToSerial(Uid\ *uid)\ available,\ otherwise\ would\ be\ hidden\ by\ PICC\_DumpDetailsToSerial(TagInfo\ *tag)}}
+\DoxyCodeLine{00111\ \ \ \ \ \textcolor{keywordtype}{void}\ \mbox{\hyperlink{classMFRC522Extended_a8bb3b09bd19eb99430730af0fbb1565f}{PICC\_DumpISO14443\_4}}(TagInfo\ *tag);}
+\DoxyCodeLine{00112\ \ \ \ \ }
+\DoxyCodeLine{00114\ \ \ \ \ \textcolor{comment}{//\ Convenience\ functions\ -\/\ does\ not\ add\ extra\ functionality}}
+\DoxyCodeLine{00116\ \ \ \ \ \textcolor{keywordtype}{bool}\ \mbox{\hyperlink{classMFRC522Extended_afaa1289052274755acec885017507b64}{PICC\_IsNewCardPresent}}()\ \textcolor{keyword}{override};\ \textcolor{comment}{//\ overrride}}
+\DoxyCodeLine{00117\ \ \ \ \ \textcolor{keywordtype}{bool}\ \mbox{\hyperlink{classMFRC522Extended_ae68a2f90cec039dc856089aee08119ee}{PICC\_ReadCardSerial}}()\ \textcolor{keyword}{override};\ \textcolor{comment}{//\ overrride}}
+\DoxyCodeLine{00118\ \};}
+\DoxyCodeLine{00119\ }
+\DoxyCodeLine{00120\ \textcolor{preprocessor}{\#endif}}
+
+\end{DoxyCode}

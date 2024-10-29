@@ -1,0 +1,18 @@
+<map id="MFRC522::PCD_NTAG216_AUTH" name="MFRC522::PCD_NTAG216_AUTH">
+<area shape="rect" id="Node000001" title=" " alt="" coords="5,120,235,148"/>
+<area shape="rect" id="Node000002" href="$classMFRC522.html#a7c65647b1d72b6ee7557797322030643" title=" " alt="" coords="547,150,760,177"/>
+<area shape="poly" id="edge1_Node000001_Node000002" title=" " alt="" coords="235,138,532,154,531,160,235,143"/>
+<area shape="rect" id="Node000005" href="$classMFRC522.html#acb2b1e74bc49fda2704450a684faa845" title=" " alt="" coords="283,81,499,126"/>
+<area shape="poly" id="edge4_Node000001_Node000005" title=" " alt="" coords="235,119,267,115,268,120,235,124"/>
+<area shape="rect" id="Node000003" href="$classMFRC522.html#a4289838c6f24f2d62eb8dc0e7a6647d1" title=" " alt="" coords="809,99,1022,127"/>
+<area shape="poly" id="edge2_Node000002_Node000003" title=" " alt="" coords="728,146,825,128,826,133,729,152"/>
+<area shape="rect" id="Node000004" href="$classMFRC522.html#aa5e5825adb4c784d8a5a60242c135fb7" title=" " alt="" coords="808,39,1023,67"/>
+<area shape="poly" id="edge3_Node000002_Node000004" title=" " alt="" coords="680,147,738,117,807,85,850,69,852,74,809,90,740,122,682,152"/>
+<area shape="poly" id="edge5_Node000005_Node000002" title=" " alt="" coords="492,124,575,143,574,148,491,129"/>
+<area shape="poly" id="edge6_Node000005_Node000003" title=" " alt="" coords="499,103,794,108,794,113,499,108"/>
+<area shape="poly" id="edge10_Node000005_Node000004" title=" " alt="" coords="421,79,477,44,511,28,546,16,587,8,629,4,712,6,789,17,854,32,853,37,789,23,712,12,629,9,588,13,548,21,513,33,479,49,424,83"/>
+<area shape="rect" id="Node000006" href="$classMFRC522.html#acebb9a90249419f2a53281c4a13727d1" title=" " alt="" coords="554,31,754,75"/>
+<area shape="poly" id="edge7_Node000005_Node000006" title=" " alt="" coords="499,80,538,72,539,78,500,85"/>
+<area shape="poly" id="edge8_Node000006_Node000003" title=" " alt="" coords="755,73,838,92,836,98,753,78"/>
+<area shape="poly" id="edge9_Node000006_Node000004" title=" " alt="" coords="754,50,793,50,793,56,754,56"/>
+</map>

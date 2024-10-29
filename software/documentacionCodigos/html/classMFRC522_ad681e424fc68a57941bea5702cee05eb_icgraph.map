@@ -1,0 +1,9 @@
+<map id="MFRC522::PCD_Init" name="MFRC522::PCD_Init">
+<area shape="rect" id="Node000001" title=" " alt="" coords="200,57,346,85"/>
+<area shape="rect" id="Node000002" href="$classMFRC522.html#a3a14c851e9a2f62956db01d5666c284b" title=" " alt="" coords="5,5,152,33"/>
+<area shape="poly" id="edge1_Node000001_Node000002" title=" " alt="" coords="203,55,133,36,134,31,204,50"/>
+<area shape="rect" id="Node000003" href="$classMFRC522.html#a50a743c6c0c3ced652cb7fdca61949ab" title=" " alt="" coords="5,57,152,85"/>
+<area shape="poly" id="edge2_Node000001_Node000003" title=" " alt="" coords="184,74,152,74,152,68,184,68"/>
+<area shape="rect" id="Node000004" href="$classaccesoRFID.html#a3bc744bb024b8bfbe459092a36f9cd68" title="void start(); Inicia la comunicación SPI con el módulo RFID (usando sus métodos)." alt="" coords="11,109,146,137"/>
+<area shape="poly" id="edge3_Node000001_Node000004" title=" " alt="" coords="204,92,134,111,133,106,203,87"/>
+</map>

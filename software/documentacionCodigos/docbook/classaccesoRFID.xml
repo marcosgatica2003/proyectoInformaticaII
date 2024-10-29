@@ -1,0 +1,186 @@
+<?xml version='1.0' encoding='UTF-8' standalone='no'?>
+<section xmlns="http://docbook.org/ns/docbook" version="5.0" xmlns:xlink="http://www.w3.org/1999/xlink" xml:id="_classaccesoRFID" xml:lang="es">
+<title>Referencia de la clase accesoRFID</title>
+<indexterm><primary>accesoRFID</primary></indexterm>
+<para>
+
+<para>Clase para manejar el acceso usando el módulo RFID-RC522. </para>
+ 
+</para>
+<para>
+<computeroutput>#include &lt;accesoRFID.h&gt;</computeroutput>
+</para>
+Diagrama de colaboración de accesoRFID:<para>
+    <informalfigure>
+        <mediaobject>
+            <imageobject>
+                <imagedata width="50%" align="center" valign="middle" scalefit="0" fileref="classaccesoRFID__coll__graph.png"></imagedata>
+            </imageobject>
+        </mediaobject>
+    </informalfigure>
+</para>
+<simplesect>
+    <title>Métodos públicos    </title>
+        <itemizedlist>
+            <listitem><para><link linkend="_classaccesoRFID_1a76ec44dbd93eed875350296b46670f11">accesoRFID</link> (byte ssPin, byte rstPin, String autorizarID)</para>
+
+<para>Constructor de la clase <link linkend="_classaccesoRFID">accesoRFID</link>. </para>
+</listitem>
+            <listitem><para>void <link linkend="_classaccesoRFID_1a3bc744bb024b8bfbe459092a36f9cd68">start</link> ()</para>
+
+<para>void <link linkend="_classaccesoRFID_1a3bc744bb024b8bfbe459092a36f9cd68">start()</link>; Inicia la comunicación SPI con el módulo RFID (usando sus métodos). </para>
+</listitem>
+            <listitem><para>void <link linkend="_classaccesoRFID_1a0274f257c332f825bdb079d4b4e6efd6">mostrarID</link> ()</para>
+
+<para>void <link linkend="_classaccesoRFID_1a0274f257c332f825bdb079d4b4e6efd6">mostrarID()</link>; Imprime por puerto serie el UID de la tarjeta detectada por el RFID </para>
+</listitem>
+            <listitem><para>bool <link linkend="_classaccesoRFID_1abadde807c97ccaa1a49182292d43d8e1">autorizar</link> ()</para>
+
+<para>bool <link linkend="_classaccesoRFID_1abadde807c97ccaa1a49182292d43d8e1">autorizar()</link>; Compara el UID de la tarjeta con el UID autorizado. Devuelve true (acceso permitido) o un false (acceso denegado). </para>
+</listitem>
+            <listitem><para>bool <link linkend="_classaccesoRFID_1a796d502e70c965524f20c277278e2fc8">detectarTarjeta</link> ()</para>
+
+<para>bool <link linkend="_classaccesoRFID_1a796d502e70c965524f20c277278e2fc8">detectarTarjeta()</link>; Lee el UID de la tarjeta para implementarla en el sistema. </para>
+</listitem>
+        </itemizedlist>
+</simplesect>
+<section>
+<title>Descripción detallada</title>
+
+<para>Clase para manejar el acceso usando el módulo RFID-RC522. </para>
+
+
+
+<para>Esta clase permite inicializar el lector RFID y verificar si una tarjeta tiene autorización para entrar. </para>
+</section>
+<section>
+<title>Documentación de constructores y destructores</title>
+<anchor xml:id="_classaccesoRFID_1a76ec44dbd93eed875350296b46670f11"/><section>
+    <title>accesoRFID()</title>
+<indexterm><primary>accesoRFID</primary><secondary>accesoRFID</secondary></indexterm>
+<indexterm><primary>accesoRFID</primary><secondary>accesoRFID</secondary></indexterm>
+<para><computeroutput>accesoRFID::accesoRFID (byte ssPin, byte rstPin, String ID)</computeroutput></para><para>
+
+<para>Constructor de la clase <link linkend="_classaccesoRFID">accesoRFID</link>. </para>
+</para>
+
+<para>
+                <formalpara>
+                    <title>
+Parámetros</title>
+                    <para>
+                    <table frame="all">
+                        <tgroup cols="2" align="left" colsep="1" rowsep="1">
+                        <colspec colwidth="1*"/>
+                        <colspec colwidth="4*"/>
+                        <tbody>
+                            <row>
+<entry>ssPin</entry><entry>
+<para>El pin SS (Slave Select) para la comunicación SPI. </para>
+</entry>
+                            </row>
+                            <row>
+<entry>rstPin</entry><entry>
+<para>es el pin de Reset para el módulo RFID. </para>
+</entry>
+                            </row>
+                            <row>
+<entry>autorizarID</entry><entry>
+<para>El UID de la tarjeta autorizada para el acceso. </para>
+</entry>
+                            </row>
+                        </tbody>
+                        </tgroup>
+                    </table>
+                    </para>
+                </formalpara>
+                </para>
+</section>
+</section>
+<section>
+<title>Documentación de funciones miembro</title>
+<anchor xml:id="_classaccesoRFID_1abadde807c97ccaa1a49182292d43d8e1"/><section>
+    <title>autorizar()</title>
+<indexterm><primary>autorizar</primary><secondary>accesoRFID</secondary></indexterm>
+<indexterm><primary>accesoRFID</primary><secondary>autorizar</secondary></indexterm>
+<para><computeroutput>bool accesoRFID::autorizar ( )</computeroutput></para><para>
+
+<para>bool <link linkend="_classaccesoRFID_1abadde807c97ccaa1a49182292d43d8e1">autorizar()</link>; Compara el UID de la tarjeta con el UID autorizado. Devuelve true (acceso permitido) o un false (acceso denegado). </para>
+</para>
+
+<para>bool <link linkend="_classaccesoRFID_1abadde807c97ccaa1a49182292d43d8e1">autorizar()</link>;</para>
+
+<para><formalpara><title>Devuelve</title>
+
+<para>true si el UID coincide con el autorizado, false en caso contrario. </para>
+</formalpara>
+</para>
+Gráfico de llamadas de esta función:<para>
+    <informalfigure>
+        <mediaobject>
+            <imageobject>
+                <imagedata width="50%" align="center" valign="middle" scalefit="0" fileref="classaccesoRFID_abadde807c97ccaa1a49182292d43d8e1_cgraph.png"></imagedata>
+            </imageobject>
+        </mediaobject>
+    </informalfigure>
+</para>
+</section>
+<anchor xml:id="_classaccesoRFID_1a796d502e70c965524f20c277278e2fc8"/><section>
+    <title>detectarTarjeta()</title>
+<indexterm><primary>detectarTarjeta</primary><secondary>accesoRFID</secondary></indexterm>
+<indexterm><primary>accesoRFID</primary><secondary>detectarTarjeta</secondary></indexterm>
+<para><computeroutput>bool accesoRFID::detectarTarjeta ( )</computeroutput></para><para>
+
+<para>bool <link linkend="_classaccesoRFID_1a796d502e70c965524f20c277278e2fc8">detectarTarjeta()</link>; Lee el UID de la tarjeta para implementarla en el sistema. </para>
+</para>
+
+<para>bool <link linkend="_classaccesoRFID_1a796d502e70c965524f20c277278e2fc8">detectarTarjeta()</link>;</para>
+
+<para>Este método detecta si hay una tarjeta para poder leerla. </para>
+Gráfico de llamadas de esta función:<para>
+    <informalfigure>
+        <mediaobject>
+            <imageobject>
+                <imagedata width="50%" align="center" valign="middle" scalefit="0" fileref="classaccesoRFID_a796d502e70c965524f20c277278e2fc8_cgraph.png"></imagedata>
+            </imageobject>
+        </mediaobject>
+    </informalfigure>
+</para>
+</section>
+<anchor xml:id="_classaccesoRFID_1a0274f257c332f825bdb079d4b4e6efd6"/><section>
+    <title>mostrarID()</title>
+<indexterm><primary>mostrarID</primary><secondary>accesoRFID</secondary></indexterm>
+<indexterm><primary>accesoRFID</primary><secondary>mostrarID</secondary></indexterm>
+<para><computeroutput>void accesoRFID::mostrarID ( )</computeroutput></para><para>
+
+<para>void <link linkend="_classaccesoRFID_1a0274f257c332f825bdb079d4b4e6efd6">mostrarID()</link>; Imprime por puerto serie el UID de la tarjeta detectada por el RFID </para>
+</para>
+
+<para>void <link linkend="_classaccesoRFID_1a0274f257c332f825bdb079d4b4e6efd6">mostrarID()</link>;</para>
+
+<para>Este método imprime el UID de la tarjeta detectada por el lector RFID en formato hexadecimal. </para>
+</section>
+<anchor xml:id="_classaccesoRFID_1a3bc744bb024b8bfbe459092a36f9cd68"/><section>
+    <title>start()</title>
+<indexterm><primary>start</primary><secondary>accesoRFID</secondary></indexterm>
+<indexterm><primary>accesoRFID</primary><secondary>start</secondary></indexterm>
+<para><computeroutput>void accesoRFID::start ( )</computeroutput></para><para>
+
+<para>void <link linkend="_classaccesoRFID_1a3bc744bb024b8bfbe459092a36f9cd68">start()</link>; Inicia la comunicación SPI con el módulo RFID (usando sus métodos). </para>
+</para>
+
+<para>void <link linkend="_classaccesoRFID_1a3bc744bb024b8bfbe459092a36f9cd68">start()</link>; Este método llamada a otros dos de <link linkend="_MFRC522_8h_source">MFRC522.h</link> y SPI.h para iniciar la comunicación entre el RFID (rfid.PCD_Init()) y el SPI (SPI_begin()). </para>
+Gráfico de llamadas de esta función:<para>
+    <informalfigure>
+        <mediaobject>
+            <imageobject>
+                <imagedata width="50%" align="center" valign="middle" scalefit="0" fileref="classaccesoRFID_a3bc744bb024b8bfbe459092a36f9cd68_cgraph.png"></imagedata>
+            </imageobject>
+        </mediaobject>
+    </informalfigure>
+</para>
+</section>
+<para>
+La documentación de esta clase está generada de los siguientes archivos:</para>
+main/libraries/RFID-RC522/accesoRFID.hmain/libraries/RFID-RC522/accesoRFID.cpp</section>
+</section>

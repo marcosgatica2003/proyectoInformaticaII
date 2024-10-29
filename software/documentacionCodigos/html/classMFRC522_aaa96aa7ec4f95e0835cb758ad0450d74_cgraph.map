@@ -1,0 +1,17 @@
+<map id="MFRC522::PCD_TransceiveData" name="MFRC522::PCD_TransceiveData">
+<area shape="rect" id="Node000001" title=" " alt="" coords="5,56,231,84"/>
+<area shape="rect" id="Node000002" href="$classMFRC522.html#acb2b1e74bc49fda2704450a684faa845" title=" " alt="" coords="279,48,495,92"/>
+<area shape="poly" id="edge1_Node000001_Node000002" title=" " alt="" coords="231,67,263,67,263,73,231,73"/>
+<area shape="rect" id="Node000003" href="$classMFRC522.html#a7c65647b1d72b6ee7557797322030643" title=" " alt="" coords="543,25,756,53"/>
+<area shape="poly" id="edge2_Node000002_Node000003" title=" " alt="" coords="495,55,527,51,528,56,496,60"/>
+<area shape="rect" id="Node000004" href="$classMFRC522.html#a4289838c6f24f2d62eb8dc0e7a6647d1" title=" " alt="" coords="805,25,1018,53"/>
+<area shape="poly" id="edge5_Node000002_Node000004" title=" " alt="" coords="437,45,487,26,543,11,617,4,693,4,765,11,827,20,827,25,764,16,693,10,618,9,543,17,489,31,439,50"/>
+<area shape="rect" id="Node000005" href="$classMFRC522.html#aa5e5825adb4c784d8a5a60242c135fb7" title=" " alt="" coords="804,85,1019,113"/>
+<area shape="poly" id="edge9_Node000002_Node000005" title=" " alt="" coords="432,90,484,114,544,131,603,141,649,142,756,131,844,115,845,120,757,137,649,148,602,146,542,137,482,119,430,95"/>
+<area shape="rect" id="Node000006" href="$classMFRC522.html#acebb9a90249419f2a53281c4a13727d1" title=" " alt="" coords="550,77,750,122"/>
+<area shape="poly" id="edge6_Node000002_Node000006" title=" " alt="" coords="496,79,535,84,534,89,495,85"/>
+<area shape="poly" id="edge3_Node000003_Node000004" title=" " alt="" coords="757,37,789,37,789,42,757,42"/>
+<area shape="poly" id="edge4_Node000003_Node000005" title=" " alt="" coords="714,51,833,79,832,84,712,56"/>
+<area shape="poly" id="edge7_Node000006_Node000004" title=" " alt="" coords="749,74,832,55,834,60,751,79"/>
+<area shape="poly" id="edge8_Node000006_Node000005" title=" " alt="" coords="750,97,789,97,789,102,750,102"/>
+</map>

@@ -1,0 +1,9 @@
+<map id="MFRC522::PCD_AntennaOff" name="MFRC522::PCD_AntennaOff">
+<area shape="rect" id="Node000001" title=" " alt="" coords="5,32,204,60"/>
+<area shape="rect" id="Node000002" href="$classMFRC522.html#a76193f4f8916f688fe2b7976d0fd1dc2" title=" " alt="" coords="252,24,465,68"/>
+<area shape="poly" id="edge1_Node000001_Node000002" title=" " alt="" coords="204,43,236,43,236,48,204,48"/>
+<area shape="rect" id="Node000003" href="$classMFRC522.html#a4289838c6f24f2d62eb8dc0e7a6647d1" title=" " alt="" coords="514,5,726,33"/>
+<area shape="poly" id="edge2_Node000002_Node000003" title=" " alt="" coords="465,32,498,29,499,34,466,38"/>
+<area shape="rect" id="Node000004" href="$classMFRC522.html#aa5e5825adb4c784d8a5a60242c135fb7" title=" " alt="" coords="513,57,727,85"/>
+<area shape="poly" id="edge3_Node000002_Node000004" title=" " alt="" coords="466,54,498,57,497,62,465,59"/>
+</map>

@@ -1,0 +1,9 @@
+<map id="MFRC522::MIFARE_Write" name="MFRC522::MIFARE_Write">
+<area shape="rect" id="Node000001" title=" " alt="" coords="272,57,453,85"/>
+<area shape="rect" id="Node000002" href="$classMFRC522.html#a2bdc18af4952ce99099607c84139b51c" title=" " alt="" coords="20,5,209,33"/>
+<area shape="poly" id="edge1_Node000001_Node000002" title=" " alt="" coords="277,56,184,36,185,31,279,51"/>
+<area shape="rect" id="Node000003" href="$classMFRC522.html#af19fc75e9415322fbe89245ed70a784b" title=" " alt="" coords="13,57,216,85"/>
+<area shape="poly" id="edge2_Node000001_Node000003" title=" " alt="" coords="256,74,216,74,216,68,256,68"/>
+<area shape="rect" id="Node000004" href="$classMFRC522.html#afcbb15d925cb3bea9f58595111fbca48" title=" " alt="" coords="5,109,224,154"/>
+<area shape="poly" id="edge3_Node000001_Node000004" title=" " alt="" coords="288,92,210,111,209,106,287,87"/>
+</map>

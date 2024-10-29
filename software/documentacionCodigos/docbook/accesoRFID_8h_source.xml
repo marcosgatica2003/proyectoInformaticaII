@@ -1,0 +1,31 @@
+<?xml version='1.0' encoding='UTF-8' standalone='no'?>
+<section xmlns="http://docbook.org/ns/docbook" version="5.0" xmlns:xlink="http://www.w3.org/1999/xlink" xml:id="_accesoRFID_8h_source" xml:lang="es">
+<title>accesoRFID.h</title>
+<indexterm><primary>main/libraries/RFID-RC522/accesoRFID.h</primary></indexterm>
+<programlisting linenumbering="unnumbered">1 <emphasis role="preprocessor">#ifndef&#32;ACCESORRFID_H</emphasis>
+2 <emphasis role="preprocessor">#define&#32;ACCESORRFID_H</emphasis>
+3 
+4 <emphasis role="preprocessor">#include&#32;&lt;SPI.h&gt;</emphasis>
+5 <emphasis role="preprocessor">#include&#32;&quot;MFRC522.h&quot;</emphasis>
+6 
+16 <emphasis role="keyword">class&#32;</emphasis><link linkend="_classaccesoRFID">accesoRFID</link>&#32;{
+17 &#32;&#32;&#32;&#32;<emphasis role="keyword">public</emphasis>:
+18 
+27 &#32;&#32;&#32;&#32;&#32;&#32;<link linkend="_classaccesoRFID_1a76ec44dbd93eed875350296b46670f11">accesoRFID</link>(<emphasis role="keywordtype">byte</emphasis>&#32;ssPin,&#32;<emphasis role="keywordtype">byte</emphasis>&#32;rstPin,&#32;String&#32;autorizarID);
+28 
+34 &#32;&#32;&#32;&#32;&#32;&#32;<emphasis role="keywordtype">void</emphasis>&#32;<link linkend="_classaccesoRFID_1a3bc744bb024b8bfbe459092a36f9cd68">start</link>();
+35 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;
+42 &#32;&#32;&#32;&#32;&#32;&#32;<emphasis role="keywordtype">void</emphasis>&#32;<link linkend="_classaccesoRFID_1a0274f257c332f825bdb079d4b4e6efd6">mostrarID</link>();
+43 
+49 &#32;&#32;&#32;&#32;&#32;&#32;<emphasis role="keywordtype">bool</emphasis>&#32;<link linkend="_classaccesoRFID_1abadde807c97ccaa1a49182292d43d8e1">autorizar</link>();
+50 
+56 &#32;&#32;&#32;&#32;&#32;&#32;<emphasis role="keywordtype">bool</emphasis>&#32;<link linkend="_classaccesoRFID_1a796d502e70c965524f20c277278e2fc8">detectarTarjeta</link>();
+57 
+58 &#32;&#32;&#32;&#32;<emphasis role="keyword">private</emphasis>:
+59 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;<link linkend="_classMFRC522">MFRC522</link>&#32;rdif;&#32;
+60 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;String&#32;autorizarID;&#32;
+61 
+62 };
+63 
+64 <emphasis role="preprocessor">#endif</emphasis>
+</programlisting></section>

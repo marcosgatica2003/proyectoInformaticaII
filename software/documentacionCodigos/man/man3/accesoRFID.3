@@ -1,0 +1,93 @@
+.TH "accesoRFID" 3 "Sistema de seguridad en cámaras frigoríficas" \" -*- nroff -*-
+.ad l
+.nh
+.SH NAME
+accesoRFID \- Clase para manejar el acceso usando el módulo RFID-RC522\&.  
+
+.SH SYNOPSIS
+.br
+.PP
+.PP
+\fR#include <accesoRFID\&.h>\fP
+.SS "Métodos públicos"
+
+.in +1c
+.ti -1c
+.RI "\fBaccesoRFID\fP (byte ssPin, byte rstPin, String autorizarID)"
+.br
+.RI "Constructor de la clase \fBaccesoRFID\fP\&. "
+.ti -1c
+.RI "void \fBstart\fP ()"
+.br
+.RI "void \fBstart()\fP; Inicia la comunicación SPI con el módulo RFID (usando sus métodos)\&. "
+.ti -1c
+.RI "void \fBmostrarID\fP ()"
+.br
+.RI "void \fBmostrarID()\fP; Imprime por puerto serie el UID de la tarjeta detectada por el RFID "
+.ti -1c
+.RI "bool \fBautorizar\fP ()"
+.br
+.RI "bool \fBautorizar()\fP; Compara el UID de la tarjeta con el UID autorizado\&. Devuelve true (acceso permitido) o un false (acceso denegado)\&. "
+.ti -1c
+.RI "bool \fBdetectarTarjeta\fP ()"
+.br
+.RI "bool \fBdetectarTarjeta()\fP; Lee el UID de la tarjeta para implementarla en el sistema\&. "
+.in -1c
+.SH "Descripción detallada"
+.PP 
+Clase para manejar el acceso usando el módulo RFID-RC522\&. 
+
+Esta clase permite inicializar el lector RFID y verificar si una tarjeta tiene autorización para entrar\&. 
+.SH "Documentación de constructores y destructores"
+.PP 
+.SS "accesoRFID::accesoRFID (byte ssPin, byte rstPin, String ID)"
+
+.PP
+Constructor de la clase \fBaccesoRFID\fP\&. 
+.PP
+\fBParámetros\fP
+.RS 4
+\fIssPin\fP El pin SS (Slave Select) para la comunicación SPI\&. 
+.br
+\fIrstPin\fP es el pin de Reset para el módulo RFID\&. 
+.br
+\fIautorizarID\fP El UID de la tarjeta autorizada para el acceso\&. 
+.RE
+.PP
+
+.SH "Documentación de funciones miembro"
+.PP 
+.SS "bool accesoRFID::autorizar ()"
+
+.PP
+bool \fBautorizar()\fP; Compara el UID de la tarjeta con el UID autorizado\&. Devuelve true (acceso permitido) o un false (acceso denegado)\&. bool \fBautorizar()\fP;
+
+.PP
+\fBDevuelve\fP
+.RS 4
+true si el UID coincide con el autorizado, false en caso contrario\&. 
+.RE
+.PP
+
+.SS "bool accesoRFID::detectarTarjeta ()"
+
+.PP
+bool \fBdetectarTarjeta()\fP; Lee el UID de la tarjeta para implementarla en el sistema\&. bool \fBdetectarTarjeta()\fP;
+
+.PP
+Este método detecta si hay una tarjeta para poder leerla\&. 
+.SS "void accesoRFID::mostrarID ()"
+
+.PP
+void \fBmostrarID()\fP; Imprime por puerto serie el UID de la tarjeta detectada por el RFID void \fBmostrarID()\fP;
+
+.PP
+Este método imprime el UID de la tarjeta detectada por el lector RFID en formato hexadecimal\&. 
+.SS "void accesoRFID::start ()"
+
+.PP
+void \fBstart()\fP; Inicia la comunicación SPI con el módulo RFID (usando sus métodos)\&. void \fBstart()\fP; Este método llamada a otros dos de \fBMFRC522\&.h\fP y SPI\&.h para iniciar la comunicación entre el RFID (rfid\&.PCD_Init()) y el SPI (SPI_begin())\&. 
+
+.SH "Autor"
+.PP 
+Generado automáticamente por Doxygen para Sistema de seguridad en cámaras frigoríficas del código fuente\&.

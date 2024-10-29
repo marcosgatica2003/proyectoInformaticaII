@@ -1,0 +1,1837 @@
+\doxysection{Referencia de la clase MFRC522}
+\hypertarget{classMFRC522}{}\label{classMFRC522}\index{MFRC522@{MFRC522}}
+
+
+Diagrama de herencia de MFRC522
+\nopagebreak
+\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[height=550pt]{classMFRC522__inherit__graph}
+\end{center}
+\end{figure}
+
+
+Diagrama de colaboración de MFRC522\+:
+\nopagebreak
+\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[width=238pt]{classMFRC522__coll__graph}
+\end{center}
+\end{figure}
+\doxysubsubsection*{Estructuras de datos}
+\begin{DoxyCompactItemize}
+\item 
+struct \mbox{\hyperlink{classMFRC522_structMFRC522_1_1MIFARE__Key}{MIFARE\+\_\+\+Key}}
+\item 
+struct \mbox{\hyperlink{classMFRC522_structMFRC522_1_1Uid}{Uid}}
+\end{DoxyCompactItemize}
+\doxysubsubsection*{Tipos públicos}
+\begin{DoxyCompactItemize}
+\item 
+\Hypertarget{classMFRC522_a3f25eb3421a80d3aeca247c9640f0669}\label{classMFRC522_a3f25eb3421a80d3aeca247c9640f0669} 
+enum {\bfseries PCD\+\_\+\+Register} \+: byte \{ \newline
+{\bfseries Command\+Reg} = 0x01 \texorpdfstring{$<$}{<}\texorpdfstring{$<$}{<} 1
+, {\bfseries Com\+IEn\+Reg} = 0x02 \texorpdfstring{$<$}{<}\texorpdfstring{$<$}{<} 1
+, {\bfseries Div\+IEn\+Reg} = 0x03 \texorpdfstring{$<$}{<}\texorpdfstring{$<$}{<} 1
+, {\bfseries Com\+Irq\+Reg} = 0x04 \texorpdfstring{$<$}{<}\texorpdfstring{$<$}{<} 1
+, \newline
+{\bfseries Div\+Irq\+Reg} = 0x05 \texorpdfstring{$<$}{<}\texorpdfstring{$<$}{<} 1
+, {\bfseries Error\+Reg} = 0x06 \texorpdfstring{$<$}{<}\texorpdfstring{$<$}{<} 1
+, {\bfseries Status1\+Reg} = 0x07 \texorpdfstring{$<$}{<}\texorpdfstring{$<$}{<} 1
+, {\bfseries Status2\+Reg} = 0x08 \texorpdfstring{$<$}{<}\texorpdfstring{$<$}{<} 1
+, \newline
+{\bfseries FIFOData\+Reg} = 0x09 \texorpdfstring{$<$}{<}\texorpdfstring{$<$}{<} 1
+, {\bfseries FIFOLevel\+Reg} = 0x0A \texorpdfstring{$<$}{<}\texorpdfstring{$<$}{<} 1
+, {\bfseries Water\+Level\+Reg} = 0x0B \texorpdfstring{$<$}{<}\texorpdfstring{$<$}{<} 1
+, {\bfseries Control\+Reg} = 0x0C \texorpdfstring{$<$}{<}\texorpdfstring{$<$}{<} 1
+, \newline
+{\bfseries Bit\+Framing\+Reg} = 0x0D \texorpdfstring{$<$}{<}\texorpdfstring{$<$}{<} 1
+, {\bfseries Coll\+Reg} = 0x0E \texorpdfstring{$<$}{<}\texorpdfstring{$<$}{<} 1
+, {\bfseries Mode\+Reg} = 0x11 \texorpdfstring{$<$}{<}\texorpdfstring{$<$}{<} 1
+, {\bfseries Tx\+Mode\+Reg} = 0x12 \texorpdfstring{$<$}{<}\texorpdfstring{$<$}{<} 1
+, \newline
+{\bfseries Rx\+Mode\+Reg} = 0x13 \texorpdfstring{$<$}{<}\texorpdfstring{$<$}{<} 1
+, {\bfseries Tx\+Control\+Reg} = 0x14 \texorpdfstring{$<$}{<}\texorpdfstring{$<$}{<} 1
+, {\bfseries Tx\+ASKReg} = 0x15 \texorpdfstring{$<$}{<}\texorpdfstring{$<$}{<} 1
+, {\bfseries Tx\+Sel\+Reg} = 0x16 \texorpdfstring{$<$}{<}\texorpdfstring{$<$}{<} 1
+, \newline
+{\bfseries Rx\+Sel\+Reg} = 0x17 \texorpdfstring{$<$}{<}\texorpdfstring{$<$}{<} 1
+, {\bfseries Rx\+Threshold\+Reg} = 0x18 \texorpdfstring{$<$}{<}\texorpdfstring{$<$}{<} 1
+, {\bfseries Demod\+Reg} = 0x19 \texorpdfstring{$<$}{<}\texorpdfstring{$<$}{<} 1
+, {\bfseries Mf\+Tx\+Reg} = 0x1C \texorpdfstring{$<$}{<}\texorpdfstring{$<$}{<} 1
+, \newline
+{\bfseries Mf\+Rx\+Reg} = 0x1D \texorpdfstring{$<$}{<}\texorpdfstring{$<$}{<} 1
+, {\bfseries Serial\+Speed\+Reg} = 0x1F \texorpdfstring{$<$}{<}\texorpdfstring{$<$}{<} 1
+, {\bfseries CRCResult\+RegH} = 0x21 \texorpdfstring{$<$}{<}\texorpdfstring{$<$}{<} 1
+, {\bfseries CRCResult\+RegL} = 0x22 \texorpdfstring{$<$}{<}\texorpdfstring{$<$}{<} 1
+, \newline
+{\bfseries Mod\+Width\+Reg} = 0x24 \texorpdfstring{$<$}{<}\texorpdfstring{$<$}{<} 1
+, {\bfseries RFCfg\+Reg} = 0x26 \texorpdfstring{$<$}{<}\texorpdfstring{$<$}{<} 1
+, {\bfseries Gs\+NReg} = 0x27 \texorpdfstring{$<$}{<}\texorpdfstring{$<$}{<} 1
+, {\bfseries CWGs\+PReg} = 0x28 \texorpdfstring{$<$}{<}\texorpdfstring{$<$}{<} 1
+, \newline
+{\bfseries Mod\+Gs\+PReg} = 0x29 \texorpdfstring{$<$}{<}\texorpdfstring{$<$}{<} 1
+, {\bfseries TMode\+Reg} = 0x2A \texorpdfstring{$<$}{<}\texorpdfstring{$<$}{<} 1
+, {\bfseries TPrescaler\+Reg} = 0x2B \texorpdfstring{$<$}{<}\texorpdfstring{$<$}{<} 1
+, {\bfseries TReload\+RegH} = 0x2C \texorpdfstring{$<$}{<}\texorpdfstring{$<$}{<} 1
+, \newline
+{\bfseries TReload\+RegL} = 0x2D \texorpdfstring{$<$}{<}\texorpdfstring{$<$}{<} 1
+, {\bfseries TCounter\+Value\+RegH} = 0x2E \texorpdfstring{$<$}{<}\texorpdfstring{$<$}{<} 1
+, {\bfseries TCounter\+Value\+RegL} = 0x2F \texorpdfstring{$<$}{<}\texorpdfstring{$<$}{<} 1
+, {\bfseries Test\+Sel1\+Reg} = 0x31 \texorpdfstring{$<$}{<}\texorpdfstring{$<$}{<} 1
+, \newline
+{\bfseries Test\+Sel2\+Reg} = 0x32 \texorpdfstring{$<$}{<}\texorpdfstring{$<$}{<} 1
+, {\bfseries Test\+Pin\+En\+Reg} = 0x33 \texorpdfstring{$<$}{<}\texorpdfstring{$<$}{<} 1
+, {\bfseries Test\+Pin\+Value\+Reg} = 0x34 \texorpdfstring{$<$}{<}\texorpdfstring{$<$}{<} 1
+, {\bfseries Test\+Bus\+Reg} = 0x35 \texorpdfstring{$<$}{<}\texorpdfstring{$<$}{<} 1
+, \newline
+{\bfseries Auto\+Test\+Reg} = 0x36 \texorpdfstring{$<$}{<}\texorpdfstring{$<$}{<} 1
+, {\bfseries Version\+Reg} = 0x37 \texorpdfstring{$<$}{<}\texorpdfstring{$<$}{<} 1
+, {\bfseries Analog\+Test\+Reg} = 0x38 \texorpdfstring{$<$}{<}\texorpdfstring{$<$}{<} 1
+, {\bfseries Test\+DAC1\+Reg} = 0x39 \texorpdfstring{$<$}{<}\texorpdfstring{$<$}{<} 1
+, \newline
+{\bfseries Test\+DAC2\+Reg} = 0x3A \texorpdfstring{$<$}{<}\texorpdfstring{$<$}{<} 1
+, {\bfseries Test\+ADCReg} = 0x3B \texorpdfstring{$<$}{<}\texorpdfstring{$<$}{<} 1
+ \}
+\item 
+\Hypertarget{classMFRC522_a9a9be34ff94660db8bf098745d9fc1d8}\label{classMFRC522_a9a9be34ff94660db8bf098745d9fc1d8} 
+enum {\bfseries PCD\+\_\+\+Command} \+: byte \{ \newline
+{\bfseries PCD\+\_\+\+Idle} = 0x00
+, {\bfseries PCD\+\_\+\+Mem} = 0x01
+, {\bfseries PCD\+\_\+\+Generate\+Random\+ID} = 0x02
+, {\bfseries PCD\+\_\+\+Calc\+CRC} = 0x03
+, \newline
+{\bfseries PCD\+\_\+\+Transmit} = 0x04
+, {\bfseries PCD\+\_\+\+No\+Cmd\+Change} = 0x07
+, {\bfseries PCD\+\_\+\+Receive} = 0x08
+, {\bfseries PCD\+\_\+\+Transceive} = 0x0C
+, \newline
+{\bfseries PCD\+\_\+\+MFAuthent} = 0x0E
+, {\bfseries PCD\+\_\+\+Soft\+Reset} = 0x0F
+ \}
+\item 
+\Hypertarget{classMFRC522_a5aafab5cf00bb9a8ba4240b97d72cca1}\label{classMFRC522_a5aafab5cf00bb9a8ba4240b97d72cca1} 
+enum {\bfseries PCD\+\_\+\+Rx\+Gain} \+: byte \{ \newline
+{\bfseries Rx\+Gain\+\_\+18dB} = 0x00 \texorpdfstring{$<$}{<}\texorpdfstring{$<$}{<} 4
+, {\bfseries Rx\+Gain\+\_\+23dB} = 0x01 \texorpdfstring{$<$}{<}\texorpdfstring{$<$}{<} 4
+, {\bfseries Rx\+Gain\+\_\+18d\+B\+\_\+2} = 0x02 \texorpdfstring{$<$}{<}\texorpdfstring{$<$}{<} 4
+, {\bfseries Rx\+Gain\+\_\+23d\+B\+\_\+2} = 0x03 \texorpdfstring{$<$}{<}\texorpdfstring{$<$}{<} 4
+, \newline
+{\bfseries Rx\+Gain\+\_\+33dB} = 0x04 \texorpdfstring{$<$}{<}\texorpdfstring{$<$}{<} 4
+, {\bfseries Rx\+Gain\+\_\+38dB} = 0x05 \texorpdfstring{$<$}{<}\texorpdfstring{$<$}{<} 4
+, {\bfseries Rx\+Gain\+\_\+43dB} = 0x06 \texorpdfstring{$<$}{<}\texorpdfstring{$<$}{<} 4
+, {\bfseries Rx\+Gain\+\_\+48dB} = 0x07 \texorpdfstring{$<$}{<}\texorpdfstring{$<$}{<} 4
+, \newline
+{\bfseries Rx\+Gain\+\_\+min} = 0x00 \texorpdfstring{$<$}{<}\texorpdfstring{$<$}{<} 4
+, {\bfseries Rx\+Gain\+\_\+avg} = 0x04 \texorpdfstring{$<$}{<}\texorpdfstring{$<$}{<} 4
+, {\bfseries Rx\+Gain\+\_\+max} = 0x07 \texorpdfstring{$<$}{<}\texorpdfstring{$<$}{<} 4
+ \}
+\item 
+\Hypertarget{classMFRC522_ab57242c2e8a0ca7de1a968c2ccb55341}\label{classMFRC522_ab57242c2e8a0ca7de1a968c2ccb55341} 
+enum {\bfseries PICC\+\_\+\+Command} \+: byte \{ \newline
+{\bfseries PICC\+\_\+\+CMD\+\_\+\+REQA} = 0x26
+, {\bfseries PICC\+\_\+\+CMD\+\_\+\+WUPA} = 0x52
+, {\bfseries PICC\+\_\+\+CMD\+\_\+\+CT} = 0x88
+, {\bfseries PICC\+\_\+\+CMD\+\_\+\+SEL\+\_\+\+CL1} = 0x93
+, \newline
+{\bfseries PICC\+\_\+\+CMD\+\_\+\+SEL\+\_\+\+CL2} = 0x95
+, {\bfseries PICC\+\_\+\+CMD\+\_\+\+SEL\+\_\+\+CL3} = 0x97
+, {\bfseries PICC\+\_\+\+CMD\+\_\+\+HLTA} = 0x50
+, {\bfseries PICC\+\_\+\+CMD\+\_\+\+RATS} = 0x\+E0
+, \newline
+{\bfseries PICC\+\_\+\+CMD\+\_\+\+MF\+\_\+\+AUTH\+\_\+\+KEY\+\_\+A} = 0x60
+, {\bfseries PICC\+\_\+\+CMD\+\_\+\+MF\+\_\+\+AUTH\+\_\+\+KEY\+\_\+B} = 0x61
+, {\bfseries PICC\+\_\+\+CMD\+\_\+\+MF\+\_\+\+READ} = 0x30
+, {\bfseries PICC\+\_\+\+CMD\+\_\+\+MF\+\_\+\+WRITE} = 0x\+A0
+, \newline
+{\bfseries PICC\+\_\+\+CMD\+\_\+\+MF\+\_\+\+DECREMENT} = 0x\+C0
+, {\bfseries PICC\+\_\+\+CMD\+\_\+\+MF\+\_\+\+INCREMENT} = 0x\+C1
+, {\bfseries PICC\+\_\+\+CMD\+\_\+\+MF\+\_\+\+RESTORE} = 0x\+C2
+, {\bfseries PICC\+\_\+\+CMD\+\_\+\+MF\+\_\+\+TRANSFER} = 0x\+B0
+, \newline
+{\bfseries PICC\+\_\+\+CMD\+\_\+\+UL\+\_\+\+WRITE} = 0x\+A2
+ \}
+\item 
+\Hypertarget{classMFRC522_a92c17a5b83cc4fde3cc3454c03b8eede}\label{classMFRC522_a92c17a5b83cc4fde3cc3454c03b8eede} 
+enum {\bfseries MIFARE\+\_\+\+Misc} \{ {\bfseries MF\+\_\+\+ACK} = 0xA
+, {\bfseries MF\+\_\+\+KEY\+\_\+\+SIZE} = 6
+ \}
+\item 
+\Hypertarget{classMFRC522_aafd15c276e5cf3b677885b7b95e71ca2}\label{classMFRC522_aafd15c276e5cf3b677885b7b95e71ca2} 
+enum {\bfseries PICC\+\_\+\+Type} \+: byte \{ \newline
+{\bfseries PICC\+\_\+\+TYPE\+\_\+\+UNKNOWN}
+, {\bfseries PICC\+\_\+\+TYPE\+\_\+\+ISO\+\_\+14443\+\_\+4}
+, {\bfseries PICC\+\_\+\+TYPE\+\_\+\+ISO\+\_\+18092}
+, {\bfseries PICC\+\_\+\+TYPE\+\_\+\+MIFARE\+\_\+\+MINI}
+, \newline
+{\bfseries PICC\+\_\+\+TYPE\+\_\+\+MIFARE\+\_\+1K}
+, {\bfseries PICC\+\_\+\+TYPE\+\_\+\+MIFARE\+\_\+4K}
+, {\bfseries PICC\+\_\+\+TYPE\+\_\+\+MIFARE\+\_\+\+UL}
+, {\bfseries PICC\+\_\+\+TYPE\+\_\+\+MIFARE\+\_\+\+PLUS}
+, \newline
+{\bfseries PICC\+\_\+\+TYPE\+\_\+\+MIFARE\+\_\+\+DESFIRE}
+, {\bfseries PICC\+\_\+\+TYPE\+\_\+\+TNP3\+XXX}
+, {\bfseries PICC\+\_\+\+TYPE\+\_\+\+NOT\+\_\+\+COMPLETE} = 0xff
+ \}
+\item 
+\Hypertarget{classMFRC522_a7cb2a1ad6f06e49fddac5c62399c81a9}\label{classMFRC522_a7cb2a1ad6f06e49fddac5c62399c81a9} 
+enum {\bfseries Status\+Code} \+: byte \{ \newline
+{\bfseries STATUS\+\_\+\+OK}
+, {\bfseries STATUS\+\_\+\+ERROR}
+, {\bfseries STATUS\+\_\+\+COLLISION}
+, {\bfseries STATUS\+\_\+\+TIMEOUT}
+, \newline
+{\bfseries STATUS\+\_\+\+NO\+\_\+\+ROOM}
+, {\bfseries STATUS\+\_\+\+INTERNAL\+\_\+\+ERROR}
+, {\bfseries STATUS\+\_\+\+INVALID}
+, {\bfseries STATUS\+\_\+\+CRC\+\_\+\+WRONG}
+, \newline
+{\bfseries STATUS\+\_\+\+MIFARE\+\_\+\+NACK} = 0xff
+ \}
+\end{DoxyCompactItemize}
+\doxysubsubsection*{Métodos públicos}
+\begin{DoxyCompactItemize}
+\item 
+\mbox{\hyperlink{classMFRC522_a999d0301e800f479e1ecfa2fd06e28c8}{MFRC522}} ()
+\item 
+\mbox{\hyperlink{classMFRC522_a59c2f9a7664d029afe4e0185c7f3623b}{MFRC522}} (byte reset\+Power\+Down\+Pin)
+\item 
+\mbox{\hyperlink{classMFRC522_a8b859e244e80970594bf333a0148ade1}{MFRC522}} (byte chip\+Select\+Pin, byte reset\+Power\+Down\+Pin)
+\item 
+void \mbox{\hyperlink{classMFRC522_aa5e5825adb4c784d8a5a60242c135fb7}{PCD\+\_\+\+Write\+Register}} (PCD\+\_\+\+Register reg, byte value)
+\item 
+void \mbox{\hyperlink{classMFRC522_a846b4b9d0468b62d853b125d4b269054}{PCD\+\_\+\+Write\+Register}} (PCD\+\_\+\+Register reg, byte count, byte \texorpdfstring{$\ast$}{*}values)
+\item 
+byte \mbox{\hyperlink{classMFRC522_a4289838c6f24f2d62eb8dc0e7a6647d1}{PCD\+\_\+\+Read\+Register}} (PCD\+\_\+\+Register reg)
+\item 
+void \mbox{\hyperlink{classMFRC522_ae84aeb5b0cab567ac0445ae76c16a86b}{PCD\+\_\+\+Read\+Register}} (PCD\+\_\+\+Register reg, byte count, byte \texorpdfstring{$\ast$}{*}values, byte rx\+Align=0)
+\item 
+void \mbox{\hyperlink{classMFRC522_acebb9a90249419f2a53281c4a13727d1}{PCD\+\_\+\+Set\+Register\+Bit\+Mask}} (PCD\+\_\+\+Register reg, byte mask)
+\item 
+void \mbox{\hyperlink{classMFRC522_a76193f4f8916f688fe2b7976d0fd1dc2}{PCD\+\_\+\+Clear\+Register\+Bit\+Mask}} (PCD\+\_\+\+Register reg, byte mask)
+\item 
+Status\+Code \mbox{\hyperlink{classMFRC522_a7c65647b1d72b6ee7557797322030643}{PCD\+\_\+\+Calculate\+CRC}} (byte \texorpdfstring{$\ast$}{*}data, byte length, byte \texorpdfstring{$\ast$}{*}result)
+\item 
+void \mbox{\hyperlink{classMFRC522_ad681e424fc68a57941bea5702cee05eb}{PCD\+\_\+\+Init}} ()
+\item 
+void \mbox{\hyperlink{classMFRC522_a50a743c6c0c3ced652cb7fdca61949ab}{PCD\+\_\+\+Init}} (byte reset\+Power\+Down\+Pin)
+\item 
+void \mbox{\hyperlink{classMFRC522_a3a14c851e9a2f62956db01d5666c284b}{PCD\+\_\+\+Init}} (byte chip\+Select\+Pin, byte reset\+Power\+Down\+Pin)
+\item 
+void \mbox{\hyperlink{classMFRC522_a9886678ea0a65021bf602cfb110caa15}{PCD\+\_\+\+Reset}} ()
+\item 
+void \mbox{\hyperlink{classMFRC522_a044be037a5f172e9cea7d8ce1dcf32e0}{PCD\+\_\+\+Antenna\+On}} ()
+\item 
+void \mbox{\hyperlink{classMFRC522_a2098ebe85700109b20c5026643f1dad7}{PCD\+\_\+\+Antenna\+Off}} ()
+\item 
+byte \mbox{\hyperlink{classMFRC522_aa02ae994a9ebf146475f46fc538cef28}{PCD\+\_\+\+Get\+Antenna\+Gain}} ()
+\item 
+void \mbox{\hyperlink{classMFRC522_a5ce84dd855f2ae297dd00fafaf62ef78}{PCD\+\_\+\+Set\+Antenna\+Gain}} (byte mask)
+\item 
+bool \mbox{\hyperlink{classMFRC522_a25f052c9c340da34128c365662370b01}{PCD\+\_\+\+Perform\+Self\+Test}} ()
+\item 
+\Hypertarget{classMFRC522_a98befa52f6df765779dce6bf616ff009}\label{classMFRC522_a98befa52f6df765779dce6bf616ff009} 
+void {\bfseries PCD\+\_\+\+Soft\+Power\+Down} ()
+\item 
+\Hypertarget{classMFRC522_ad6559531854fba81f7440babe617c90e}\label{classMFRC522_ad6559531854fba81f7440babe617c90e} 
+void {\bfseries PCD\+\_\+\+Soft\+Power\+Up} ()
+\item 
+Status\+Code \mbox{\hyperlink{classMFRC522_aaa96aa7ec4f95e0835cb758ad0450d74}{PCD\+\_\+\+Transceive\+Data}} (byte \texorpdfstring{$\ast$}{*}send\+Data, byte send\+Len, byte \texorpdfstring{$\ast$}{*}back\+Data, byte \texorpdfstring{$\ast$}{*}back\+Len, byte \texorpdfstring{$\ast$}{*}valid\+Bits=nullptr, byte rx\+Align=0, bool check\+CRC=false)
+\item 
+Status\+Code \mbox{\hyperlink{classMFRC522_acb2b1e74bc49fda2704450a684faa845}{PCD\+\_\+\+Communicate\+With\+PICC}} (byte command, byte wait\+IRq, byte \texorpdfstring{$\ast$}{*}send\+Data, byte send\+Len, byte \texorpdfstring{$\ast$}{*}back\+Data=nullptr, byte \texorpdfstring{$\ast$}{*}back\+Len=nullptr, byte \texorpdfstring{$\ast$}{*}valid\+Bits=nullptr, byte rx\+Align=0, bool check\+CRC=false)
+\item 
+Status\+Code \mbox{\hyperlink{classMFRC522_a4e0ac6edf5e8f6ade351b009278fbbc7}{PICC\+\_\+\+RequestA}} (byte \texorpdfstring{$\ast$}{*}buffer\+ATQA, byte \texorpdfstring{$\ast$}{*}buffer\+Size)
+\item 
+Status\+Code \mbox{\hyperlink{classMFRC522_ad00a1efcfa6dc203ca885d43f4d02125}{PICC\+\_\+\+WakeupA}} (byte \texorpdfstring{$\ast$}{*}buffer\+ATQA, byte \texorpdfstring{$\ast$}{*}buffer\+Size)
+\item 
+Status\+Code \mbox{\hyperlink{classMFRC522_a639d27ac072bc0dfa478d0957591afcc}{PICC\+\_\+\+REQA\+\_\+or\+\_\+\+WUPA}} (byte command, byte \texorpdfstring{$\ast$}{*}buffer\+ATQA, byte \texorpdfstring{$\ast$}{*}buffer\+Size)
+\item 
+virtual Status\+Code \mbox{\hyperlink{classMFRC522_a7a78c629cb4e1d90cc2d7526b17d6c22}{PICC\+\_\+\+Select}} (\mbox{\hyperlink{classMFRC522_structMFRC522_1_1Uid}{Uid}} \texorpdfstring{$\ast$}{*}uid, byte valid\+Bits=0)
+\item 
+Status\+Code \mbox{\hyperlink{classMFRC522_a8874921b4ed26c5b73d89c90f76d4933}{PICC\+\_\+\+HaltA}} ()
+\item 
+Status\+Code \mbox{\hyperlink{classMFRC522_a6c2313c4aa98806cc2bf0e9cca993ec0}{PCD\+\_\+\+Authenticate}} (byte command, byte block\+Addr, \mbox{\hyperlink{classMFRC522_structMFRC522_1_1MIFARE__Key}{MIFARE\+\_\+\+Key}} \texorpdfstring{$\ast$}{*}key, \mbox{\hyperlink{classMFRC522_structMFRC522_1_1Uid}{Uid}} \texorpdfstring{$\ast$}{*}uid)
+\item 
+void \mbox{\hyperlink{classMFRC522_a24d3ab7b2170fdfa3f0121a7256f12d9}{PCD\+\_\+\+Stop\+Crypto1}} ()
+\item 
+Status\+Code \mbox{\hyperlink{classMFRC522_a6ed93e88913ea104420f3bb4a88cce52}{MIFARE\+\_\+\+Read}} (byte block\+Addr, byte \texorpdfstring{$\ast$}{*}buffer, byte \texorpdfstring{$\ast$}{*}buffer\+Size)
+\item 
+Status\+Code \mbox{\hyperlink{classMFRC522_a0dc5fb05769779ec3ed708bd153706b3}{MIFARE\+\_\+\+Write}} (byte block\+Addr, byte \texorpdfstring{$\ast$}{*}buffer, byte buffer\+Size)
+\item 
+Status\+Code \mbox{\hyperlink{classMFRC522_a7053e61540b68e6aa5c6cbea308836c4}{MIFARE\+\_\+\+Ultralight\+\_\+\+Write}} (byte page, byte \texorpdfstring{$\ast$}{*}buffer, byte buffer\+Size)
+\item 
+Status\+Code \mbox{\hyperlink{classMFRC522_aeab21496c761cdecb29c69f9f3fa6150}{MIFARE\+\_\+\+Decrement}} (byte block\+Addr, int32\+\_\+t delta)
+\item 
+Status\+Code \mbox{\hyperlink{classMFRC522_af9566664f23d4d67efd270e42c3dc723}{MIFARE\+\_\+\+Increment}} (byte block\+Addr, int32\+\_\+t delta)
+\item 
+Status\+Code \mbox{\hyperlink{classMFRC522_a946ba7e7e244f40adcb9f900d8fd3a48}{MIFARE\+\_\+\+Restore}} (byte block\+Addr)
+\item 
+Status\+Code \mbox{\hyperlink{classMFRC522_a16ee66df69fda8a3065bc9218b45de0b}{MIFARE\+\_\+\+Transfer}} (byte block\+Addr)
+\item 
+Status\+Code \mbox{\hyperlink{classMFRC522_ab4009cbdd5150b1b3a62084aa2033807}{MIFARE\+\_\+\+Get\+Value}} (byte block\+Addr, int32\+\_\+t \texorpdfstring{$\ast$}{*}value)
+\item 
+Status\+Code \mbox{\hyperlink{classMFRC522_af19fc75e9415322fbe89245ed70a784b}{MIFARE\+\_\+\+Set\+Value}} (byte block\+Addr, int32\+\_\+t value)
+\item 
+Status\+Code \mbox{\hyperlink{classMFRC522_acb47eb7a05ae58825b4085efeb7a09bb}{PCD\+\_\+\+NTAG216\+\_\+\+AUTH}} (byte \texorpdfstring{$\ast$}{*}pass\+Word, byte p\+ACK\mbox{[}$\,$\mbox{]})
+\item 
+Status\+Code \mbox{\hyperlink{classMFRC522_aa88d28676b3ffb5985af8db35d39077b}{PCD\+\_\+\+MIFARE\+\_\+\+Transceive}} (byte \texorpdfstring{$\ast$}{*}send\+Data, byte send\+Len, bool accept\+Timeout=false)
+\item 
+void \mbox{\hyperlink{classMFRC522_a41c31c6932a59646eeff470c60a4d20d}{PCD\+\_\+\+Dump\+Version\+To\+Serial}} ()
+\item 
+void \mbox{\hyperlink{classMFRC522_a6f324d43c6fbbd0e260b171747186037}{PICC\+\_\+\+Dump\+To\+Serial}} (\mbox{\hyperlink{classMFRC522_structMFRC522_1_1Uid}{Uid}} \texorpdfstring{$\ast$}{*}uid)
+\item 
+void \mbox{\hyperlink{classMFRC522_a3b9a2c6da6505e0ff7b58c37d7aeff37}{PICC\+\_\+\+Dump\+Details\+To\+Serial}} (\mbox{\hyperlink{classMFRC522_structMFRC522_1_1Uid}{Uid}} \texorpdfstring{$\ast$}{*}uid)
+\item 
+void \mbox{\hyperlink{classMFRC522_aafba2e74124efa2d736c1672ea104190}{PICC\+\_\+\+Dump\+Mifare\+Classic\+To\+Serial}} (\mbox{\hyperlink{classMFRC522_structMFRC522_1_1Uid}{Uid}} \texorpdfstring{$\ast$}{*}uid, PICC\+\_\+\+Type picc\+Type, \mbox{\hyperlink{classMFRC522_structMFRC522_1_1MIFARE__Key}{MIFARE\+\_\+\+Key}} \texorpdfstring{$\ast$}{*}key)
+\item 
+void \mbox{\hyperlink{classMFRC522_a20c559f09927a7c5f91295f6158e4342}{PICC\+\_\+\+Dump\+Mifare\+Classic\+Sector\+To\+Serial}} (\mbox{\hyperlink{classMFRC522_structMFRC522_1_1Uid}{Uid}} \texorpdfstring{$\ast$}{*}uid, \mbox{\hyperlink{classMFRC522_structMFRC522_1_1MIFARE__Key}{MIFARE\+\_\+\+Key}} \texorpdfstring{$\ast$}{*}key, byte sector)
+\item 
+void \mbox{\hyperlink{classMFRC522_ac148d28877dd577606a28e9e7e4b6809}{PICC\+\_\+\+Dump\+Mifare\+Ultralight\+To\+Serial}} ()
+\item 
+void \mbox{\hyperlink{classMFRC522_ab8c712963189654e9bc368be8783e2ab}{MIFARE\+\_\+\+Set\+Access\+Bits}} (byte \texorpdfstring{$\ast$}{*}access\+Bit\+Buffer, byte g0, byte g1, byte g2, byte g3)
+\item 
+bool \mbox{\hyperlink{classMFRC522_a925607adc9382720c222578bd236a9c8}{MIFARE\+\_\+\+Open\+Uid\+Backdoor}} (bool log\+Errors)
+\item 
+bool \mbox{\hyperlink{classMFRC522_a2bdc18af4952ce99099607c84139b51c}{MIFARE\+\_\+\+Set\+Uid}} (byte \texorpdfstring{$\ast$}{*}new\+Uid, byte uid\+Size, bool log\+Errors)
+\item 
+bool \mbox{\hyperlink{classMFRC522_afcbb15d925cb3bea9f58595111fbca48}{MIFARE\+\_\+\+Unbrick\+Uid\+Sector}} (bool log\+Errors)
+\item 
+virtual bool \mbox{\hyperlink{classMFRC522_a3adca9d3b455c680ebcde3b74c4e567b}{PICC\+\_\+\+Is\+New\+Card\+Present}} ()
+\item 
+virtual bool \mbox{\hyperlink{classMFRC522_aab1218c71cec9cc17ee3ac8a683df106}{PICC\+\_\+\+Read\+Card\+Serial}} ()
+\end{DoxyCompactItemize}
+\doxysubsubsection*{Métodos públicos estáticos}
+\begin{DoxyCompactItemize}
+\item 
+static const \+\_\+\+\_\+\+Flash\+String\+Helper \texorpdfstring{$\ast$}{*} \mbox{\hyperlink{classMFRC522_a32f88620ab97f7fef3693280c58cb4bb}{Get\+Status\+Code\+Name}} (Status\+Code code)
+\item 
+static PICC\+\_\+\+Type \mbox{\hyperlink{classMFRC522_ac80a18228260bdde07dff5d4ac23bb53}{PICC\+\_\+\+Get\+Type}} (byte sak)
+\item 
+static const \+\_\+\+\_\+\+Flash\+String\+Helper \texorpdfstring{$\ast$}{*} \mbox{\hyperlink{classMFRC522_aae4a482352d4d4b7d7a9714b0b0b7c38}{PICC\+\_\+\+Get\+Type\+Name}} (PICC\+\_\+\+Type type)
+\end{DoxyCompactItemize}
+\doxysubsubsection*{Campos de datos}
+\begin{DoxyCompactItemize}
+\item 
+\Hypertarget{classMFRC522_ad456545d41962dd7f8bd4210f5618498}\label{classMFRC522_ad456545d41962dd7f8bd4210f5618498} 
+\mbox{\hyperlink{classMFRC522_structMFRC522_1_1Uid}{Uid}} {\bfseries uid}
+\end{DoxyCompactItemize}
+\doxysubsubsection*{Atributos públicos estáticos}
+\begin{DoxyCompactItemize}
+\item 
+\Hypertarget{classMFRC522_a37ca1cca79286c98755584f2256bbe1b}\label{classMFRC522_a37ca1cca79286c98755584f2256bbe1b} 
+static constexpr byte {\bfseries FIFO\+\_\+\+SIZE} = 64
+\item 
+\Hypertarget{classMFRC522_a41313d0e4a8a674271e64362d24e1d6b}\label{classMFRC522_a41313d0e4a8a674271e64362d24e1d6b} 
+static constexpr uint8\+\_\+t {\bfseries UNUSED\+\_\+\+PIN} = UINT8\+\_\+\+MAX
+\end{DoxyCompactItemize}
+\doxysubsubsection*{Métodos protegidos}
+\begin{DoxyCompactItemize}
+\item 
+Status\+Code \mbox{\hyperlink{classMFRC522_a86cb4ad38f61b823dfe97103b1b1f9d6}{MIFARE\+\_\+\+Two\+Step\+Helper}} (byte command, byte block\+Addr, int32\+\_\+t data)
+\end{DoxyCompactItemize}
+\doxysubsubsection*{Atributos protegidos}
+\begin{DoxyCompactItemize}
+\item 
+\Hypertarget{classMFRC522_affaa7030ec6e5984cce845a8ed6df1b2}\label{classMFRC522_affaa7030ec6e5984cce845a8ed6df1b2} 
+byte {\bfseries \+\_\+chip\+Select\+Pin}
+\item 
+\Hypertarget{classMFRC522_a3885cb4bb582de0045cff2829d59006f}\label{classMFRC522_a3885cb4bb582de0045cff2829d59006f} 
+byte {\bfseries \+\_\+reset\+Power\+Down\+Pin}
+\end{DoxyCompactItemize}
+
+
+\doxysubsection{Documentación de estructuras de datos}
+\index{MFRC522::MIFARE\_Key@{MFRC522::MIFARE\_Key}}\label{structMFRC522_1_1MIFARE__Key}
+\Hypertarget{classMFRC522_structMFRC522_1_1MIFARE__Key}
+\doxysubsubsection{struct MFRC522\+::MIFARE\+\_\+\+Key}
+
+
+Diagrama de colaboración de MFRC522\+::MIFARE\+\_\+\+Key\+:
+\nopagebreak
+\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[width=201pt]{structMFRC522_1_1MIFARE__Key__coll__graph}
+\end{center}
+\end{figure}
+\begin{DoxyFields}{Campos de datos}
+\mbox{\Hypertarget{classMFRC522_af4b154f686bfbb46e6ee780ce154cefa}\label{classMFRC522_af4b154f686bfbb46e6ee780ce154cefa}} 
+byte&
+keyByte\mbox{[}MF\_KEY\_SIZE\mbox{]}&
+\\
+\hline
+
+\end{DoxyFields}
+\index{MFRC522::Uid@{MFRC522::Uid}}\label{structMFRC522_1_1Uid}
+\Hypertarget{classMFRC522_structMFRC522_1_1Uid}
+\doxysubsubsection{struct MFRC522\+::Uid}
+
+
+Diagrama de colaboración de MFRC522\+::Uid\+:
+\nopagebreak
+\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[width=159pt]{structMFRC522_1_1Uid__coll__graph}
+\end{center}
+\end{figure}
+\begin{DoxyFields}{Campos de datos}
+\mbox{\Hypertarget{classMFRC522_a90aa2fd57a03011252148c2ccdc8875b}\label{classMFRC522_a90aa2fd57a03011252148c2ccdc8875b}} 
+byte&
+sak&
+\\
+\hline
+
+\mbox{\Hypertarget{classMFRC522_a49c06f93c7748abe00a9ab5899d479b7}\label{classMFRC522_a49c06f93c7748abe00a9ab5899d479b7}} 
+byte&
+size&
+\\
+\hline
+
+\mbox{\Hypertarget{classMFRC522_a5581167c1e1c8beb98c44ff86f4fbc52}\label{classMFRC522_a5581167c1e1c8beb98c44ff86f4fbc52}} 
+byte&
+uidByte\mbox{[}10\mbox{]}&
+\\
+\hline
+
+\end{DoxyFields}
+
+
+\doxysubsection{Documentación de constructores y destructores}
+\Hypertarget{classMFRC522_a999d0301e800f479e1ecfa2fd06e28c8}\index{MFRC522@{MFRC522}!MFRC522@{MFRC522}}
+\index{MFRC522@{MFRC522}!MFRC522@{MFRC522}}
+\doxysubsubsection{\texorpdfstring{MFRC522()}{MFRC522()}\hspace{0.1cm}{\footnotesize\ttfamily [1/3]}}
+{\footnotesize\ttfamily \label{classMFRC522_a999d0301e800f479e1ecfa2fd06e28c8} 
+MFRC522\+::\+MFRC522 (\begin{DoxyParamCaption}{}{}\end{DoxyParamCaption})}
+
+Constructor. \Hypertarget{classMFRC522_a59c2f9a7664d029afe4e0185c7f3623b}\index{MFRC522@{MFRC522}!MFRC522@{MFRC522}}
+\index{MFRC522@{MFRC522}!MFRC522@{MFRC522}}
+\doxysubsubsection{\texorpdfstring{MFRC522()}{MFRC522()}\hspace{0.1cm}{\footnotesize\ttfamily [2/3]}}
+{\footnotesize\ttfamily \label{classMFRC522_a59c2f9a7664d029afe4e0185c7f3623b} 
+MFRC522\+::\+MFRC522 (\begin{DoxyParamCaption}\item[{byte}]{reset\+Power\+Down\+Pin}{}\end{DoxyParamCaption})}
+
+Constructor. Prepares the output pins. 
+\begin{DoxyParams}{Parámetros}
+{\em reset\+Power\+Down\+Pin} & Arduino pin connected to \doxylink{classMFRC522}{MFRC522}\textquotesingle{}s reset and power down input (Pin 6, NRSTPD, active low). If there is no connection from the CPU to NRSTPD, set this to UINT8\+\_\+\+MAX. In this case, only soft reset will be used in \doxylink{classMFRC522_ad681e424fc68a57941bea5702cee05eb}{PCD\+\_\+\+Init()}. \\
+\hline
+\end{DoxyParams}
+\Hypertarget{classMFRC522_a8b859e244e80970594bf333a0148ade1}\index{MFRC522@{MFRC522}!MFRC522@{MFRC522}}
+\index{MFRC522@{MFRC522}!MFRC522@{MFRC522}}
+\doxysubsubsection{\texorpdfstring{MFRC522()}{MFRC522()}\hspace{0.1cm}{\footnotesize\ttfamily [3/3]}}
+{\footnotesize\ttfamily \label{classMFRC522_a8b859e244e80970594bf333a0148ade1} 
+MFRC522\+::\+MFRC522 (\begin{DoxyParamCaption}\item[{byte}]{chip\+Select\+Pin}{, }\item[{byte}]{reset\+Power\+Down\+Pin}{}\end{DoxyParamCaption})}
+
+Constructor. Prepares the output pins. 
+\begin{DoxyParams}{Parámetros}
+{\em chip\+Select\+Pin} & Arduino pin connected to \doxylink{classMFRC522}{MFRC522}\textquotesingle{}s SPI slave select input (Pin 24, NSS, active low)  \\
+\hline
+{\em reset\+Power\+Down\+Pin} & Arduino pin connected to \doxylink{classMFRC522}{MFRC522}\textquotesingle{}s reset and power down input (Pin 6, NRSTPD, active low). If there is no connection from the CPU to NRSTPD, set this to UINT8\+\_\+\+MAX. In this case, only soft reset will be used in \doxylink{classMFRC522_ad681e424fc68a57941bea5702cee05eb}{PCD\+\_\+\+Init()}. \\
+\hline
+\end{DoxyParams}
+
+
+\doxysubsection{Documentación de funciones miembro}
+\Hypertarget{classMFRC522_a32f88620ab97f7fef3693280c58cb4bb}\index{MFRC522@{MFRC522}!GetStatusCodeName@{GetStatusCodeName}}
+\index{GetStatusCodeName@{GetStatusCodeName}!MFRC522@{MFRC522}}
+\doxysubsubsection{\texorpdfstring{GetStatusCodeName()}{GetStatusCodeName()}}
+{\footnotesize\ttfamily \label{classMFRC522_a32f88620ab97f7fef3693280c58cb4bb} 
+const \+\_\+\+\_\+\+Flash\+String\+Helper \texorpdfstring{$\ast$}{*} MFRC522\+::\+Get\+Status\+Code\+Name (\begin{DoxyParamCaption}\item[{MFRC522\+::\+Status\+Code}]{code}{}\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [static]}}
+
+Returns a \+\_\+\+\_\+\+Flash\+String\+Helper pointer to a status code name.
+
+\begin{DoxyReturn}{Devuelve}
+const \+\_\+\+\_\+\+Flash\+String\+Helper \texorpdfstring{$\ast$}{*} 
+\end{DoxyReturn}
+
+\begin{DoxyParams}{Parámetros}
+{\em code} & One of the Status\+Code enums. \\
+\hline
+\end{DoxyParams}
+Gráfico de llamadas a esta función\+:
+\nopagebreak
+\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[width=350pt]{classMFRC522_a32f88620ab97f7fef3693280c58cb4bb_icgraph}
+\end{center}
+\end{figure}
+\Hypertarget{classMFRC522_aeab21496c761cdecb29c69f9f3fa6150}\index{MFRC522@{MFRC522}!MIFARE\_Decrement@{MIFARE\_Decrement}}
+\index{MIFARE\_Decrement@{MIFARE\_Decrement}!MFRC522@{MFRC522}}
+\doxysubsubsection{\texorpdfstring{MIFARE\_Decrement()}{MIFARE\_Decrement()}}
+{\footnotesize\ttfamily \label{classMFRC522_aeab21496c761cdecb29c69f9f3fa6150} 
+MFRC522\+::\+Status\+Code MFRC522\+::\+MIFARE\+\_\+\+Decrement (\begin{DoxyParamCaption}\item[{byte}]{block\+Addr}{, }\item[{int32\+\_\+t}]{delta}{}\end{DoxyParamCaption})}
+
+MIFARE Decrement subtracts the delta from the value of the addressed block, and stores the result in a volatile memory. For MIFARE Classic only. The sector containing the block must be authenticated before calling this function. Only for blocks in "{}value block"{} mode, ie with access bits \mbox{[}C1 C2 C3\mbox{]} = \mbox{[}110\mbox{]} or \mbox{[}001\mbox{]}. Use \doxylink{classMFRC522_a16ee66df69fda8a3065bc9218b45de0b}{MIFARE\+\_\+\+Transfer()} to store the result in a block.
+
+\begin{DoxyReturn}{Devuelve}
+STATUS\+\_\+\+OK on success, STATUS\+\_\+??? otherwise. 
+\end{DoxyReturn}
+
+\begin{DoxyParams}{Parámetros}
+{\em block\+Addr} & The block (0-\/0xff) number.  \\
+\hline
+{\em delta} & This number is subtracted from the value of block block\+Addr. \\
+\hline
+\end{DoxyParams}
+Gráfico de llamadas de esta función\+:
+\nopagebreak
+\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[width=350pt]{classMFRC522_aeab21496c761cdecb29c69f9f3fa6150_cgraph}
+\end{center}
+\end{figure}
+\Hypertarget{classMFRC522_ab4009cbdd5150b1b3a62084aa2033807}\index{MFRC522@{MFRC522}!MIFARE\_GetValue@{MIFARE\_GetValue}}
+\index{MIFARE\_GetValue@{MIFARE\_GetValue}!MFRC522@{MFRC522}}
+\doxysubsubsection{\texorpdfstring{MIFARE\_GetValue()}{MIFARE\_GetValue()}}
+{\footnotesize\ttfamily \label{classMFRC522_ab4009cbdd5150b1b3a62084aa2033807} 
+MFRC522\+::\+Status\+Code MFRC522\+::\+MIFARE\+\_\+\+Get\+Value (\begin{DoxyParamCaption}\item[{byte}]{block\+Addr}{, }\item[{int32\+\_\+t \texorpdfstring{$\ast$}{*}}]{value}{}\end{DoxyParamCaption})}
+
+Helper routine to read the current value from a Value Block.
+
+Only for MIFARE Classic and only for blocks in "{}value block"{} mode, that is\+: with access bits \mbox{[}C1 C2 C3\mbox{]} = \mbox{[}110\mbox{]} or \mbox{[}001\mbox{]}. The sector containing the block must be authenticated before calling this function.
+
+
+\begin{DoxyParams}[1]{Parámetros}
+\mbox{\texttt{ in}}  & {\em block\+Addr} & The block (0x00-\/0xff) number. \\
+\hline
+\mbox{\texttt{ out}}  & {\em value} & Current value of the Value Block. \\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{Devuelve}
+STATUS\+\_\+\+OK on success, STATUS\+\_\+??? otherwise. 
+\end{DoxyReturn}
+Gráfico de llamadas de esta función\+:
+\nopagebreak
+\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[width=350pt]{classMFRC522_ab4009cbdd5150b1b3a62084aa2033807_cgraph}
+\end{center}
+\end{figure}
+\Hypertarget{classMFRC522_af9566664f23d4d67efd270e42c3dc723}\index{MFRC522@{MFRC522}!MIFARE\_Increment@{MIFARE\_Increment}}
+\index{MIFARE\_Increment@{MIFARE\_Increment}!MFRC522@{MFRC522}}
+\doxysubsubsection{\texorpdfstring{MIFARE\_Increment()}{MIFARE\_Increment()}}
+{\footnotesize\ttfamily \label{classMFRC522_af9566664f23d4d67efd270e42c3dc723} 
+MFRC522\+::\+Status\+Code MFRC522\+::\+MIFARE\+\_\+\+Increment (\begin{DoxyParamCaption}\item[{byte}]{block\+Addr}{, }\item[{int32\+\_\+t}]{delta}{}\end{DoxyParamCaption})}
+
+MIFARE Increment adds the delta to the value of the addressed block, and stores the result in a volatile memory. For MIFARE Classic only. The sector containing the block must be authenticated before calling this function. Only for blocks in "{}value block"{} mode, ie with access bits \mbox{[}C1 C2 C3\mbox{]} = \mbox{[}110\mbox{]} or \mbox{[}001\mbox{]}. Use \doxylink{classMFRC522_a16ee66df69fda8a3065bc9218b45de0b}{MIFARE\+\_\+\+Transfer()} to store the result in a block.
+
+\begin{DoxyReturn}{Devuelve}
+STATUS\+\_\+\+OK on success, STATUS\+\_\+??? otherwise. 
+\end{DoxyReturn}
+
+\begin{DoxyParams}{Parámetros}
+{\em block\+Addr} & The block (0-\/0xff) number.  \\
+\hline
+{\em delta} & This number is added to the value of block block\+Addr. \\
+\hline
+\end{DoxyParams}
+Gráfico de llamadas de esta función\+:
+\nopagebreak
+\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[width=350pt]{classMFRC522_af9566664f23d4d67efd270e42c3dc723_cgraph}
+\end{center}
+\end{figure}
+\Hypertarget{classMFRC522_a925607adc9382720c222578bd236a9c8}\index{MFRC522@{MFRC522}!MIFARE\_OpenUidBackdoor@{MIFARE\_OpenUidBackdoor}}
+\index{MIFARE\_OpenUidBackdoor@{MIFARE\_OpenUidBackdoor}!MFRC522@{MFRC522}}
+\doxysubsubsection{\texorpdfstring{MIFARE\_OpenUidBackdoor()}{MIFARE\_OpenUidBackdoor()}}
+{\footnotesize\ttfamily \label{classMFRC522_a925607adc9382720c222578bd236a9c8} 
+bool MFRC522\+::\+MIFARE\+\_\+\+Open\+Uid\+Backdoor (\begin{DoxyParamCaption}\item[{bool}]{log\+Errors}{}\end{DoxyParamCaption})}
+
+Performs the "{}magic sequence"{} needed to get Chinese UID changeable Mifare cards to allow writing to sector 0, where the card UID is stored.
+
+Note that you do not need to have selected the card through REQA or WUPA, this sequence works immediately when the card is in the reader vicinity. This means you can use this method even on "{}bricked"{} cards that your reader does not recognise anymore (see \doxylink{classMFRC522_afcbb15d925cb3bea9f58595111fbca48}{MFRC522\+::\+MIFARE\+\_\+\+Unbrick\+Uid\+Sector}).
+
+Of course with non-\/bricked devices, you\textquotesingle{}re free to select them before calling this function. Gráfico de llamadas de esta función\+:
+\nopagebreak
+\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[width=350pt]{classMFRC522_a925607adc9382720c222578bd236a9c8_cgraph}
+\end{center}
+\end{figure}
+Gráfico de llamadas a esta función\+:
+\nopagebreak
+\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[width=350pt]{classMFRC522_a925607adc9382720c222578bd236a9c8_icgraph}
+\end{center}
+\end{figure}
+\Hypertarget{classMFRC522_a6ed93e88913ea104420f3bb4a88cce52}\index{MFRC522@{MFRC522}!MIFARE\_Read@{MIFARE\_Read}}
+\index{MIFARE\_Read@{MIFARE\_Read}!MFRC522@{MFRC522}}
+\doxysubsubsection{\texorpdfstring{MIFARE\_Read()}{MIFARE\_Read()}}
+{\footnotesize\ttfamily \label{classMFRC522_a6ed93e88913ea104420f3bb4a88cce52} 
+MFRC522\+::\+Status\+Code MFRC522\+::\+MIFARE\+\_\+\+Read (\begin{DoxyParamCaption}\item[{byte}]{block\+Addr}{, }\item[{byte \texorpdfstring{$\ast$}{*}}]{buffer}{, }\item[{byte \texorpdfstring{$\ast$}{*}}]{buffer\+Size}{}\end{DoxyParamCaption})}
+
+Reads 16 bytes (+ 2 bytes CRC\+\_\+A) from the active PICC.
+
+For MIFARE Classic the sector containing the block must be authenticated before calling this function.
+
+For MIFARE Ultralight only addresses 00h to 0Fh are decoded. The MF0\+ICU1 returns a NAK for higher addresses. The MF0\+ICU1 responds to the READ command by sending 16 bytes starting from the page address defined by the command argument. For example; if block\+Addr is 03h then pages 03h, 04h, 05h, 06h are returned. A roll-\/back is implemented\+: If block\+Addr is 0Eh, then the contents of pages 0Eh, 0Fh, 00h and 01h are returned.
+
+The buffer must be at least 18 bytes because a CRC\+\_\+A is also returned. Checks the CRC\+\_\+A before returning STATUS\+\_\+\+OK.
+
+\begin{DoxyReturn}{Devuelve}
+STATUS\+\_\+\+OK on success, STATUS\+\_\+??? otherwise. 
+\end{DoxyReturn}
+
+\begin{DoxyParams}{Parámetros}
+{\em block\+Addr} & MIFARE Classic\+: The block (0-\/0xff) number. MIFARE Ultralight\+: The first page to return data from.  \\
+\hline
+{\em buffer} & The buffer to store the data in  \\
+\hline
+{\em buffer\+Size} & Buffer size, at least 18 bytes. Also number of bytes returned if STATUS\+\_\+\+OK. \\
+\hline
+\end{DoxyParams}
+Gráfico de llamadas de esta función\+:
+\nopagebreak
+\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[width=350pt]{classMFRC522_a6ed93e88913ea104420f3bb4a88cce52_cgraph}
+\end{center}
+\end{figure}
+Gráfico de llamadas a esta función\+:
+\nopagebreak
+\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[width=350pt]{classMFRC522_a6ed93e88913ea104420f3bb4a88cce52_icgraph}
+\end{center}
+\end{figure}
+\Hypertarget{classMFRC522_a946ba7e7e244f40adcb9f900d8fd3a48}\index{MFRC522@{MFRC522}!MIFARE\_Restore@{MIFARE\_Restore}}
+\index{MIFARE\_Restore@{MIFARE\_Restore}!MFRC522@{MFRC522}}
+\doxysubsubsection{\texorpdfstring{MIFARE\_Restore()}{MIFARE\_Restore()}}
+{\footnotesize\ttfamily \label{classMFRC522_a946ba7e7e244f40adcb9f900d8fd3a48} 
+MFRC522\+::\+Status\+Code MFRC522\+::\+MIFARE\+\_\+\+Restore (\begin{DoxyParamCaption}\item[{byte}]{block\+Addr}{}\end{DoxyParamCaption})}
+
+MIFARE Restore copies the value of the addressed block into a volatile memory. For MIFARE Classic only. The sector containing the block must be authenticated before calling this function. Only for blocks in "{}value block"{} mode, ie with access bits \mbox{[}C1 C2 C3\mbox{]} = \mbox{[}110\mbox{]} or \mbox{[}001\mbox{]}. Use \doxylink{classMFRC522_a16ee66df69fda8a3065bc9218b45de0b}{MIFARE\+\_\+\+Transfer()} to store the result in a block.
+
+\begin{DoxyReturn}{Devuelve}
+STATUS\+\_\+\+OK on success, STATUS\+\_\+??? otherwise. 
+\end{DoxyReturn}
+
+\begin{DoxyParams}{Parámetros}
+{\em block\+Addr} & The block (0-\/0xff) number. \\
+\hline
+\end{DoxyParams}
+Gráfico de llamadas de esta función\+:
+\nopagebreak
+\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[width=350pt]{classMFRC522_a946ba7e7e244f40adcb9f900d8fd3a48_cgraph}
+\end{center}
+\end{figure}
+\Hypertarget{classMFRC522_ab8c712963189654e9bc368be8783e2ab}\index{MFRC522@{MFRC522}!MIFARE\_SetAccessBits@{MIFARE\_SetAccessBits}}
+\index{MIFARE\_SetAccessBits@{MIFARE\_SetAccessBits}!MFRC522@{MFRC522}}
+\doxysubsubsection{\texorpdfstring{MIFARE\_SetAccessBits()}{MIFARE\_SetAccessBits()}}
+{\footnotesize\ttfamily \label{classMFRC522_ab8c712963189654e9bc368be8783e2ab} 
+void MFRC522\+::\+MIFARE\+\_\+\+Set\+Access\+Bits (\begin{DoxyParamCaption}\item[{byte \texorpdfstring{$\ast$}{*}}]{access\+Bit\+Buffer}{, }\item[{byte}]{g0}{, }\item[{byte}]{g1}{, }\item[{byte}]{g2}{, }\item[{byte}]{g3}{}\end{DoxyParamCaption})}
+
+Calculates the bit pattern needed for the specified access bits. In the \mbox{[}C1 C2 C3\mbox{]} tuples C1 is MSB (=4) and C3 is LSB (=1). 
+\begin{DoxyParams}{Parámetros}
+{\em access\+Bit\+Buffer} & Pointer to byte 6, 7 and 8 in the sector trailer. Bytes \mbox{[}0..2\mbox{]} will be set.  \\
+\hline
+{\em g0} & Access bits \mbox{[}C1 C2 C3\mbox{]} for block 0 (for sectors 0-\/31) or blocks 0-\/4 (for sectors 32-\/39)  \\
+\hline
+{\em g1} & Access bits C1 C2 C3\mbox{]} for block 1 (for sectors 0-\/31) or blocks 5-\/9 (for sectors 32-\/39)  \\
+\hline
+{\em g2} & Access bits C1 C2 C3\mbox{]} for block 2 (for sectors 0-\/31) or blocks 10-\/14 (for sectors 32-\/39)  \\
+\hline
+{\em g3} & Access bits C1 C2 C3\mbox{]} for the sector trailer, block 3 (for sectors 0-\/31) or block 15 (for sectors 32-\/39) \\
+\hline
+\end{DoxyParams}
+\Hypertarget{classMFRC522_a2bdc18af4952ce99099607c84139b51c}\index{MFRC522@{MFRC522}!MIFARE\_SetUid@{MIFARE\_SetUid}}
+\index{MIFARE\_SetUid@{MIFARE\_SetUid}!MFRC522@{MFRC522}}
+\doxysubsubsection{\texorpdfstring{MIFARE\_SetUid()}{MIFARE\_SetUid()}}
+{\footnotesize\ttfamily \label{classMFRC522_a2bdc18af4952ce99099607c84139b51c} 
+bool MFRC522\+::\+MIFARE\+\_\+\+Set\+Uid (\begin{DoxyParamCaption}\item[{byte \texorpdfstring{$\ast$}{*}}]{new\+Uid}{, }\item[{byte}]{uid\+Size}{, }\item[{bool}]{log\+Errors}{}\end{DoxyParamCaption})}
+
+Reads entire block 0, including all manufacturer data, and overwrites that block with the new UID, a freshly calculated BCC, and the original manufacturer data.
+
+It assumes a default KEY A of 0x\+FFFFFFFFFFFF. Make sure to have selected the card before this function is called. Gráfico de llamadas de esta función\+:
+\nopagebreak
+\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[width=350pt]{classMFRC522_a2bdc18af4952ce99099607c84139b51c_cgraph}
+\end{center}
+\end{figure}
+\Hypertarget{classMFRC522_af19fc75e9415322fbe89245ed70a784b}\index{MFRC522@{MFRC522}!MIFARE\_SetValue@{MIFARE\_SetValue}}
+\index{MIFARE\_SetValue@{MIFARE\_SetValue}!MFRC522@{MFRC522}}
+\doxysubsubsection{\texorpdfstring{MIFARE\_SetValue()}{MIFARE\_SetValue()}}
+{\footnotesize\ttfamily \label{classMFRC522_af19fc75e9415322fbe89245ed70a784b} 
+MFRC522\+::\+Status\+Code MFRC522\+::\+MIFARE\+\_\+\+Set\+Value (\begin{DoxyParamCaption}\item[{byte}]{block\+Addr}{, }\item[{int32\+\_\+t}]{value}{}\end{DoxyParamCaption})}
+
+Helper routine to write a specific value into a Value Block.
+
+Only for MIFARE Classic and only for blocks in "{}value block"{} mode, that is\+: with access bits \mbox{[}C1 C2 C3\mbox{]} = \mbox{[}110\mbox{]} or \mbox{[}001\mbox{]}. The sector containing the block must be authenticated before calling this function.
+
+
+\begin{DoxyParams}[1]{Parámetros}
+\mbox{\texttt{ in}}  & {\em block\+Addr} & The block (0x00-\/0xff) number. \\
+\hline
+\mbox{\texttt{ in}}  & {\em value} & New value of the Value Block. \\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{Devuelve}
+STATUS\+\_\+\+OK on success, STATUS\+\_\+??? otherwise. 
+\end{DoxyReturn}
+Gráfico de llamadas de esta función\+:
+\nopagebreak
+\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[width=350pt]{classMFRC522_af19fc75e9415322fbe89245ed70a784b_cgraph}
+\end{center}
+\end{figure}
+\Hypertarget{classMFRC522_a16ee66df69fda8a3065bc9218b45de0b}\index{MFRC522@{MFRC522}!MIFARE\_Transfer@{MIFARE\_Transfer}}
+\index{MIFARE\_Transfer@{MIFARE\_Transfer}!MFRC522@{MFRC522}}
+\doxysubsubsection{\texorpdfstring{MIFARE\_Transfer()}{MIFARE\_Transfer()}}
+{\footnotesize\ttfamily \label{classMFRC522_a16ee66df69fda8a3065bc9218b45de0b} 
+MFRC522\+::\+Status\+Code MFRC522\+::\+MIFARE\+\_\+\+Transfer (\begin{DoxyParamCaption}\item[{byte}]{block\+Addr}{}\end{DoxyParamCaption})}
+
+MIFARE Transfer writes the value stored in the volatile memory into one MIFARE Classic block. For MIFARE Classic only. The sector containing the block must be authenticated before calling this function. Only for blocks in "{}value block"{} mode, ie with access bits \mbox{[}C1 C2 C3\mbox{]} = \mbox{[}110\mbox{]} or \mbox{[}001\mbox{]}.
+
+\begin{DoxyReturn}{Devuelve}
+STATUS\+\_\+\+OK on success, STATUS\+\_\+??? otherwise. 
+\end{DoxyReturn}
+
+\begin{DoxyParams}{Parámetros}
+{\em block\+Addr} & The block (0-\/0xff) number. \\
+\hline
+\end{DoxyParams}
+Gráfico de llamadas de esta función\+:
+\nopagebreak
+\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[width=350pt]{classMFRC522_a16ee66df69fda8a3065bc9218b45de0b_cgraph}
+\end{center}
+\end{figure}
+\Hypertarget{classMFRC522_a86cb4ad38f61b823dfe97103b1b1f9d6}\index{MFRC522@{MFRC522}!MIFARE\_TwoStepHelper@{MIFARE\_TwoStepHelper}}
+\index{MIFARE\_TwoStepHelper@{MIFARE\_TwoStepHelper}!MFRC522@{MFRC522}}
+\doxysubsubsection{\texorpdfstring{MIFARE\_TwoStepHelper()}{MIFARE\_TwoStepHelper()}}
+{\footnotesize\ttfamily \label{classMFRC522_a86cb4ad38f61b823dfe97103b1b1f9d6} 
+MFRC522\+::\+Status\+Code MFRC522\+::\+MIFARE\+\_\+\+Two\+Step\+Helper (\begin{DoxyParamCaption}\item[{byte}]{command}{, }\item[{byte}]{block\+Addr}{, }\item[{int32\+\_\+t}]{data}{}\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [protected]}}
+
+Helper function for the two-\/step MIFARE Classic protocol operations Decrement, Increment and Restore.
+
+\begin{DoxyReturn}{Devuelve}
+STATUS\+\_\+\+OK on success, STATUS\+\_\+??? otherwise. 
+\end{DoxyReturn}
+
+\begin{DoxyParams}{Parámetros}
+{\em command} & The command to use  \\
+\hline
+{\em block\+Addr} & The block (0-\/0xff) number.  \\
+\hline
+{\em data} & The data to transfer in step 2 \\
+\hline
+\end{DoxyParams}
+Gráfico de llamadas de esta función\+:
+\nopagebreak
+\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[width=350pt]{classMFRC522_a86cb4ad38f61b823dfe97103b1b1f9d6_cgraph}
+\end{center}
+\end{figure}
+Gráfico de llamadas a esta función\+:
+\nopagebreak
+\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[width=350pt]{classMFRC522_a86cb4ad38f61b823dfe97103b1b1f9d6_icgraph}
+\end{center}
+\end{figure}
+\Hypertarget{classMFRC522_a7053e61540b68e6aa5c6cbea308836c4}\index{MFRC522@{MFRC522}!MIFARE\_Ultralight\_Write@{MIFARE\_Ultralight\_Write}}
+\index{MIFARE\_Ultralight\_Write@{MIFARE\_Ultralight\_Write}!MFRC522@{MFRC522}}
+\doxysubsubsection{\texorpdfstring{MIFARE\_Ultralight\_Write()}{MIFARE\_Ultralight\_Write()}}
+{\footnotesize\ttfamily \label{classMFRC522_a7053e61540b68e6aa5c6cbea308836c4} 
+MFRC522\+::\+Status\+Code MFRC522\+::\+MIFARE\+\_\+\+Ultralight\+\_\+\+Write (\begin{DoxyParamCaption}\item[{byte}]{page}{, }\item[{byte \texorpdfstring{$\ast$}{*}}]{buffer}{, }\item[{byte}]{buffer\+Size}{}\end{DoxyParamCaption})}
+
+Writes a 4 byte page to the active MIFARE Ultralight PICC.
+
+\begin{DoxyReturn}{Devuelve}
+STATUS\+\_\+\+OK on success, STATUS\+\_\+??? otherwise. 
+\end{DoxyReturn}
+
+\begin{DoxyParams}{Parámetros}
+{\em page} & The page (2-\/15) to write to.  \\
+\hline
+{\em buffer} & The 4 bytes to write to the PICC  \\
+\hline
+{\em buffer\+Size} & Buffer size, must be at least 4 bytes. Exactly 4 bytes are written. \\
+\hline
+\end{DoxyParams}
+Gráfico de llamadas de esta función\+:
+\nopagebreak
+\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[width=350pt]{classMFRC522_a7053e61540b68e6aa5c6cbea308836c4_cgraph}
+\end{center}
+\end{figure}
+\Hypertarget{classMFRC522_afcbb15d925cb3bea9f58595111fbca48}\index{MFRC522@{MFRC522}!MIFARE\_UnbrickUidSector@{MIFARE\_UnbrickUidSector}}
+\index{MIFARE\_UnbrickUidSector@{MIFARE\_UnbrickUidSector}!MFRC522@{MFRC522}}
+\doxysubsubsection{\texorpdfstring{MIFARE\_UnbrickUidSector()}{MIFARE\_UnbrickUidSector()}}
+{\footnotesize\ttfamily \label{classMFRC522_afcbb15d925cb3bea9f58595111fbca48} 
+bool MFRC522\+::\+MIFARE\+\_\+\+Unbrick\+Uid\+Sector (\begin{DoxyParamCaption}\item[{bool}]{log\+Errors}{}\end{DoxyParamCaption})}
+
+Resets entire sector 0 to zeroes, so the card can be read again by readers. Gráfico de llamadas de esta función\+:
+\nopagebreak
+\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[width=350pt]{classMFRC522_afcbb15d925cb3bea9f58595111fbca48_cgraph}
+\end{center}
+\end{figure}
+\Hypertarget{classMFRC522_a0dc5fb05769779ec3ed708bd153706b3}\index{MFRC522@{MFRC522}!MIFARE\_Write@{MIFARE\_Write}}
+\index{MIFARE\_Write@{MIFARE\_Write}!MFRC522@{MFRC522}}
+\doxysubsubsection{\texorpdfstring{MIFARE\_Write()}{MIFARE\_Write()}}
+{\footnotesize\ttfamily \label{classMFRC522_a0dc5fb05769779ec3ed708bd153706b3} 
+MFRC522\+::\+Status\+Code MFRC522\+::\+MIFARE\+\_\+\+Write (\begin{DoxyParamCaption}\item[{byte}]{block\+Addr}{, }\item[{byte \texorpdfstring{$\ast$}{*}}]{buffer}{, }\item[{byte}]{buffer\+Size}{}\end{DoxyParamCaption})}
+
+Writes 16 bytes to the active PICC.
+
+For MIFARE Classic the sector containing the block must be authenticated before calling this function.
+
+For MIFARE Ultralight the operation is called "{}\+COMPATIBILITY WRITE"{}. Even though 16 bytes are transferred to the Ultralight PICC, only the least significant 4 bytes (bytes 0 to 3) are written to the specified address. It is recommended to set the remaining bytes 04h to 0Fh to all logic 0.
+\begin{DoxyItemize}
+\item \begin{DoxyReturn}{Devuelve}
+STATUS\+\_\+\+OK on success, STATUS\+\_\+??? otherwise. 
+\end{DoxyReturn}
+
+\end{DoxyItemize}
+\begin{DoxyParams}{Parámetros}
+{\em block\+Addr} & MIFARE Classic\+: The block (0-\/0xff) number. MIFARE Ultralight\+: The page (2-\/15) to write to.  \\
+\hline
+{\em buffer} & The 16 bytes to write to the PICC  \\
+\hline
+{\em buffer\+Size} & Buffer size, must be at least 16 bytes. Exactly 16 bytes are written. \\
+\hline
+\end{DoxyParams}
+Gráfico de llamadas de esta función\+:
+\nopagebreak
+\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[width=350pt]{classMFRC522_a0dc5fb05769779ec3ed708bd153706b3_cgraph}
+\end{center}
+\end{figure}
+Gráfico de llamadas a esta función\+:
+\nopagebreak
+\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[width=350pt]{classMFRC522_a0dc5fb05769779ec3ed708bd153706b3_icgraph}
+\end{center}
+\end{figure}
+\Hypertarget{classMFRC522_a2098ebe85700109b20c5026643f1dad7}\index{MFRC522@{MFRC522}!PCD\_AntennaOff@{PCD\_AntennaOff}}
+\index{PCD\_AntennaOff@{PCD\_AntennaOff}!MFRC522@{MFRC522}}
+\doxysubsubsection{\texorpdfstring{PCD\_AntennaOff()}{PCD\_AntennaOff()}}
+{\footnotesize\ttfamily \label{classMFRC522_a2098ebe85700109b20c5026643f1dad7} 
+void MFRC522\+::\+PCD\+\_\+\+Antenna\+Off (\begin{DoxyParamCaption}{}{}\end{DoxyParamCaption})}
+
+Turns the antenna off by disabling pins TX1 and TX2. Gráfico de llamadas de esta función\+:
+\nopagebreak
+\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[width=350pt]{classMFRC522_a2098ebe85700109b20c5026643f1dad7_cgraph}
+\end{center}
+\end{figure}
+\Hypertarget{classMFRC522_a044be037a5f172e9cea7d8ce1dcf32e0}\index{MFRC522@{MFRC522}!PCD\_AntennaOn@{PCD\_AntennaOn}}
+\index{PCD\_AntennaOn@{PCD\_AntennaOn}!MFRC522@{MFRC522}}
+\doxysubsubsection{\texorpdfstring{PCD\_AntennaOn()}{PCD\_AntennaOn()}}
+{\footnotesize\ttfamily \label{classMFRC522_a044be037a5f172e9cea7d8ce1dcf32e0} 
+void MFRC522\+::\+PCD\+\_\+\+Antenna\+On (\begin{DoxyParamCaption}{}{}\end{DoxyParamCaption})}
+
+Turns the antenna on by enabling pins TX1 and TX2. After a reset these pins are disabled. Gráfico de llamadas de esta función\+:
+\nopagebreak
+\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[width=350pt]{classMFRC522_a044be037a5f172e9cea7d8ce1dcf32e0_cgraph}
+\end{center}
+\end{figure}
+Gráfico de llamadas a esta función\+:
+\nopagebreak
+\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[width=350pt]{classMFRC522_a044be037a5f172e9cea7d8ce1dcf32e0_icgraph}
+\end{center}
+\end{figure}
+\Hypertarget{classMFRC522_a6c2313c4aa98806cc2bf0e9cca993ec0}\index{MFRC522@{MFRC522}!PCD\_Authenticate@{PCD\_Authenticate}}
+\index{PCD\_Authenticate@{PCD\_Authenticate}!MFRC522@{MFRC522}}
+\doxysubsubsection{\texorpdfstring{PCD\_Authenticate()}{PCD\_Authenticate()}}
+{\footnotesize\ttfamily \label{classMFRC522_a6c2313c4aa98806cc2bf0e9cca993ec0} 
+MFRC522\+::\+Status\+Code MFRC522\+::\+PCD\+\_\+\+Authenticate (\begin{DoxyParamCaption}\item[{byte}]{command}{, }\item[{byte}]{block\+Addr}{, }\item[{\mbox{\hyperlink{classMFRC522_structMFRC522_1_1MIFARE__Key}{MIFARE\+\_\+\+Key}} \texorpdfstring{$\ast$}{*}}]{key}{, }\item[{\mbox{\hyperlink{classMFRC522_structMFRC522_1_1Uid}{Uid}} \texorpdfstring{$\ast$}{*}}]{uid}{}\end{DoxyParamCaption})}
+
+Executes the \doxylink{classMFRC522}{MFRC522} MFAuthent command. This command manages MIFARE authentication to enable a secure communication to any MIFARE Mini, MIFARE 1K and MIFARE 4K card. The authentication is described in the \doxylink{classMFRC522}{MFRC522} datasheet section 10.\+3.\+1.\+9 and \href{http://www.nxp.com/documents/data_sheet/MF1S503x.pdf}{\texttt{ http\+://www.\+nxp.\+com/documents/data\+\_\+sheet/\+MF1\+S503x.\+pdf}} section 10.\+1. For use with MIFARE Classic PICCs. The PICC must be selected -\/ ie in state ACTIVE(\texorpdfstring{$\ast$}{*}) -\/ before calling this function. Remember to call \doxylink{classMFRC522_a24d3ab7b2170fdfa3f0121a7256f12d9}{PCD\+\_\+\+Stop\+Crypto1()} after communicating with the authenticated PICC -\/ otherwise no new communications can start.
+
+All keys are set to FFFFFFFFFFFFh at chip delivery.
+
+\begin{DoxyReturn}{Devuelve}
+STATUS\+\_\+\+OK on success, STATUS\+\_\+??? otherwise. Probably STATUS\+\_\+\+TIMEOUT if you supply the wrong key. 
+\end{DoxyReturn}
+
+\begin{DoxyParams}{Parámetros}
+{\em command} & PICC\+\_\+\+CMD\+\_\+\+MF\+\_\+\+AUTH\+\_\+\+KEY\+\_\+A or PICC\+\_\+\+CMD\+\_\+\+MF\+\_\+\+AUTH\+\_\+\+KEY\+\_\+B  \\
+\hline
+{\em block\+Addr} & The block number. See numbering in the comments in the .h file.  \\
+\hline
+{\em key} & Pointer to the Crypteo1 key to use (6 bytes)  \\
+\hline
+{\em uid} & Pointer to \doxylink{classMFRC522_structMFRC522_1_1Uid}{Uid} struct. The first 4 bytes of the UID is used. \\
+\hline
+\end{DoxyParams}
+Gráfico de llamadas de esta función\+:
+\nopagebreak
+\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[width=350pt]{classMFRC522_a6c2313c4aa98806cc2bf0e9cca993ec0_cgraph}
+\end{center}
+\end{figure}
+Gráfico de llamadas a esta función\+:
+\nopagebreak
+\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[width=350pt]{classMFRC522_a6c2313c4aa98806cc2bf0e9cca993ec0_icgraph}
+\end{center}
+\end{figure}
+\Hypertarget{classMFRC522_a7c65647b1d72b6ee7557797322030643}\index{MFRC522@{MFRC522}!PCD\_CalculateCRC@{PCD\_CalculateCRC}}
+\index{PCD\_CalculateCRC@{PCD\_CalculateCRC}!MFRC522@{MFRC522}}
+\doxysubsubsection{\texorpdfstring{PCD\_CalculateCRC()}{PCD\_CalculateCRC()}}
+{\footnotesize\ttfamily \label{classMFRC522_a7c65647b1d72b6ee7557797322030643} 
+MFRC522\+::\+Status\+Code MFRC522\+::\+PCD\+\_\+\+Calculate\+CRC (\begin{DoxyParamCaption}\item[{byte \texorpdfstring{$\ast$}{*}}]{data}{, }\item[{byte}]{length}{, }\item[{byte \texorpdfstring{$\ast$}{*}}]{result}{}\end{DoxyParamCaption})}
+
+Use the CRC coprocessor in the \doxylink{classMFRC522}{MFRC522} to calculate a CRC\+\_\+A.
+
+\begin{DoxyReturn}{Devuelve}
+STATUS\+\_\+\+OK on success, STATUS\+\_\+??? otherwise. 
+\end{DoxyReturn}
+
+\begin{DoxyParams}{Parámetros}
+{\em data} & In\+: Pointer to the data to transfer to the FIFO for CRC calculation.  \\
+\hline
+{\em length} & In\+: The number of bytes to transfer.  \\
+\hline
+{\em result} & Out\+: Pointer to result buffer. Result is written to result\mbox{[}0..1\mbox{]}, low byte first. \\
+\hline
+\end{DoxyParams}
+Gráfico de llamadas de esta función\+:
+\nopagebreak
+\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[width=350pt]{classMFRC522_a7c65647b1d72b6ee7557797322030643_cgraph}
+\end{center}
+\end{figure}
+Gráfico de llamadas a esta función\+:
+\nopagebreak
+\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[width=350pt]{classMFRC522_a7c65647b1d72b6ee7557797322030643_icgraph}
+\end{center}
+\end{figure}
+\Hypertarget{classMFRC522_a76193f4f8916f688fe2b7976d0fd1dc2}\index{MFRC522@{MFRC522}!PCD\_ClearRegisterBitMask@{PCD\_ClearRegisterBitMask}}
+\index{PCD\_ClearRegisterBitMask@{PCD\_ClearRegisterBitMask}!MFRC522@{MFRC522}}
+\doxysubsubsection{\texorpdfstring{PCD\_ClearRegisterBitMask()}{PCD\_ClearRegisterBitMask()}}
+{\footnotesize\ttfamily \label{classMFRC522_a76193f4f8916f688fe2b7976d0fd1dc2} 
+void MFRC522\+::\+PCD\+\_\+\+Clear\+Register\+Bit\+Mask (\begin{DoxyParamCaption}\item[{PCD\+\_\+\+Register}]{reg}{, }\item[{byte}]{mask}{}\end{DoxyParamCaption})}
+
+Clears the bits given in mask from register reg. 
+\begin{DoxyParams}{Parámetros}
+{\em reg} & The register to update. One of the PCD\+\_\+\+Register enums.  \\
+\hline
+{\em mask} & The bits to clear. \\
+\hline
+\end{DoxyParams}
+Gráfico de llamadas de esta función\+:
+\nopagebreak
+\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[width=350pt]{classMFRC522_a76193f4f8916f688fe2b7976d0fd1dc2_cgraph}
+\end{center}
+\end{figure}
+Gráfico de llamadas a esta función\+:
+\nopagebreak
+\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[width=350pt]{classMFRC522_a76193f4f8916f688fe2b7976d0fd1dc2_icgraph}
+\end{center}
+\end{figure}
+\Hypertarget{classMFRC522_acb2b1e74bc49fda2704450a684faa845}\index{MFRC522@{MFRC522}!PCD\_CommunicateWithPICC@{PCD\_CommunicateWithPICC}}
+\index{PCD\_CommunicateWithPICC@{PCD\_CommunicateWithPICC}!MFRC522@{MFRC522}}
+\doxysubsubsection{\texorpdfstring{PCD\_CommunicateWithPICC()}{PCD\_CommunicateWithPICC()}}
+{\footnotesize\ttfamily \label{classMFRC522_acb2b1e74bc49fda2704450a684faa845} 
+MFRC522\+::\+Status\+Code MFRC522\+::\+PCD\+\_\+\+Communicate\+With\+PICC (\begin{DoxyParamCaption}\item[{byte}]{command}{, }\item[{byte}]{wait\+IRq}{, }\item[{byte \texorpdfstring{$\ast$}{*}}]{send\+Data}{, }\item[{byte}]{send\+Len}{, }\item[{byte \texorpdfstring{$\ast$}{*}}]{back\+Data}{ = {\ttfamily nullptr}, }\item[{byte \texorpdfstring{$\ast$}{*}}]{back\+Len}{ = {\ttfamily nullptr}, }\item[{byte \texorpdfstring{$\ast$}{*}}]{valid\+Bits}{ = {\ttfamily nullptr}, }\item[{byte}]{rx\+Align}{ = {\ttfamily 0}, }\item[{bool}]{check\+CRC}{ = {\ttfamily false}}\end{DoxyParamCaption})}
+
+Transfers data to the \doxylink{classMFRC522}{MFRC522} FIFO, executes a command, waits for completion and transfers data back from the FIFO. CRC validation can only be done if back\+Data and back\+Len are specified.
+
+\begin{DoxyReturn}{Devuelve}
+STATUS\+\_\+\+OK on success, STATUS\+\_\+??? otherwise. 
+\end{DoxyReturn}
+
+\begin{DoxyParams}{Parámetros}
+{\em command} & The command to execute. One of the PCD\+\_\+\+Command enums.  \\
+\hline
+{\em wait\+IRq} & The bits in the Com\+Irq\+Reg register that signals successful completion of the command.  \\
+\hline
+{\em send\+Data} & Pointer to the data to transfer to the FIFO.  \\
+\hline
+{\em send\+Len} & Number of bytes to transfer to the FIFO.  \\
+\hline
+{\em back\+Data} & nullptr or pointer to buffer if data should be read back after executing the command.  \\
+\hline
+{\em back\+Len} & In\+: Max number of bytes to write to \texorpdfstring{$\ast$}{*}back\+Data. Out\+: The number of bytes returned.  \\
+\hline
+{\em valid\+Bits} & In/\+Out\+: The number of valid bits in the last byte. 0 for 8 valid bits.  \\
+\hline
+{\em rx\+Align} & In\+: Defines the bit position in back\+Data\mbox{[}0\mbox{]} for the first bit received. Default 0.  \\
+\hline
+{\em check\+CRC} & In\+: True =\texorpdfstring{$>$}{>} The last two bytes of the response is assumed to be a CRC\+\_\+A that must be validated. \\
+\hline
+\end{DoxyParams}
+Gráfico de llamadas de esta función\+:
+\nopagebreak
+\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[width=350pt]{classMFRC522_acb2b1e74bc49fda2704450a684faa845_cgraph}
+\end{center}
+\end{figure}
+Gráfico de llamadas a esta función\+:
+\nopagebreak
+\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[width=350pt]{classMFRC522_acb2b1e74bc49fda2704450a684faa845_icgraph}
+\end{center}
+\end{figure}
+\Hypertarget{classMFRC522_a41c31c6932a59646eeff470c60a4d20d}\index{MFRC522@{MFRC522}!PCD\_DumpVersionToSerial@{PCD\_DumpVersionToSerial}}
+\index{PCD\_DumpVersionToSerial@{PCD\_DumpVersionToSerial}!MFRC522@{MFRC522}}
+\doxysubsubsection{\texorpdfstring{PCD\_DumpVersionToSerial()}{PCD\_DumpVersionToSerial()}}
+{\footnotesize\ttfamily \label{classMFRC522_a41c31c6932a59646eeff470c60a4d20d} 
+void MFRC522\+::\+PCD\+\_\+\+Dump\+Version\+To\+Serial (\begin{DoxyParamCaption}{}{}\end{DoxyParamCaption})}
+
+Dumps debug info about the connected PCD to Serial. Shows all known firmware versions Gráfico de llamadas de esta función\+:
+\nopagebreak
+\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[width=350pt]{classMFRC522_a41c31c6932a59646eeff470c60a4d20d_cgraph}
+\end{center}
+\end{figure}
+\Hypertarget{classMFRC522_aa02ae994a9ebf146475f46fc538cef28}\index{MFRC522@{MFRC522}!PCD\_GetAntennaGain@{PCD\_GetAntennaGain}}
+\index{PCD\_GetAntennaGain@{PCD\_GetAntennaGain}!MFRC522@{MFRC522}}
+\doxysubsubsection{\texorpdfstring{PCD\_GetAntennaGain()}{PCD\_GetAntennaGain()}}
+{\footnotesize\ttfamily \label{classMFRC522_aa02ae994a9ebf146475f46fc538cef28} 
+byte MFRC522\+::\+PCD\+\_\+\+Get\+Antenna\+Gain (\begin{DoxyParamCaption}{}{}\end{DoxyParamCaption})}
+
+Get the current \doxylink{classMFRC522}{MFRC522} Receiver Gain (Rx\+Gain\mbox{[}2\+:0\mbox{]}) value. See 9.\+3.\+3.\+6 / table 98 in \href{http://www.nxp.com/documents/data_sheet/MFRC522.pdf}{\texttt{ http\+://www.\+nxp.\+com/documents/data\+\_\+sheet/\+MFRC522.\+pdf}} NOTE\+: Return value scrubbed with (0x07\texorpdfstring{$<$}{<}\texorpdfstring{$<$}{<}4)=01110000b as RCFfg\+Reg may use reserved bits.
+
+\begin{DoxyReturn}{Devuelve}
+Value of the Rx\+Gain, scrubbed to the 3 bits used. 
+\end{DoxyReturn}
+Gráfico de llamadas de esta función\+:
+\nopagebreak
+\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[width=350pt]{classMFRC522_aa02ae994a9ebf146475f46fc538cef28_cgraph}
+\end{center}
+\end{figure}
+Gráfico de llamadas a esta función\+:
+\nopagebreak
+\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[width=350pt]{classMFRC522_aa02ae994a9ebf146475f46fc538cef28_icgraph}
+\end{center}
+\end{figure}
+\Hypertarget{classMFRC522_ad681e424fc68a57941bea5702cee05eb}\index{MFRC522@{MFRC522}!PCD\_Init@{PCD\_Init}}
+\index{PCD\_Init@{PCD\_Init}!MFRC522@{MFRC522}}
+\doxysubsubsection{\texorpdfstring{PCD\_Init()}{PCD\_Init()}\hspace{0.1cm}{\footnotesize\ttfamily [1/3]}}
+{\footnotesize\ttfamily \label{classMFRC522_ad681e424fc68a57941bea5702cee05eb} 
+void MFRC522\+::\+PCD\+\_\+\+Init (\begin{DoxyParamCaption}{}{}\end{DoxyParamCaption})}
+
+Initializes the \doxylink{classMFRC522}{MFRC522} chip. Gráfico de llamadas de esta función\+:
+\nopagebreak
+\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[width=350pt]{classMFRC522_ad681e424fc68a57941bea5702cee05eb_cgraph}
+\end{center}
+\end{figure}
+Gráfico de llamadas a esta función\+:
+\nopagebreak
+\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[width=336pt]{classMFRC522_ad681e424fc68a57941bea5702cee05eb_icgraph}
+\end{center}
+\end{figure}
+\Hypertarget{classMFRC522_a3a14c851e9a2f62956db01d5666c284b}\index{MFRC522@{MFRC522}!PCD\_Init@{PCD\_Init}}
+\index{PCD\_Init@{PCD\_Init}!MFRC522@{MFRC522}}
+\doxysubsubsection{\texorpdfstring{PCD\_Init()}{PCD\_Init()}\hspace{0.1cm}{\footnotesize\ttfamily [2/3]}}
+{\footnotesize\ttfamily \label{classMFRC522_a3a14c851e9a2f62956db01d5666c284b} 
+void MFRC522\+::\+PCD\+\_\+\+Init (\begin{DoxyParamCaption}\item[{byte}]{chip\+Select\+Pin}{, }\item[{byte}]{reset\+Power\+Down\+Pin}{}\end{DoxyParamCaption})}
+
+Initializes the \doxylink{classMFRC522}{MFRC522} chip. 
+\begin{DoxyParams}{Parámetros}
+{\em chip\+Select\+Pin} & Arduino pin connected to \doxylink{classMFRC522}{MFRC522}\textquotesingle{}s SPI slave select input (Pin 24, NSS, active low)  \\
+\hline
+{\em reset\+Power\+Down\+Pin} & Arduino pin connected to \doxylink{classMFRC522}{MFRC522}\textquotesingle{}s reset and power down input (Pin 6, NRSTPD, active low) \\
+\hline
+\end{DoxyParams}
+Gráfico de llamadas de esta función\+:
+\nopagebreak
+\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[width=350pt]{classMFRC522_a3a14c851e9a2f62956db01d5666c284b_cgraph}
+\end{center}
+\end{figure}
+\Hypertarget{classMFRC522_a50a743c6c0c3ced652cb7fdca61949ab}\index{MFRC522@{MFRC522}!PCD\_Init@{PCD\_Init}}
+\index{PCD\_Init@{PCD\_Init}!MFRC522@{MFRC522}}
+\doxysubsubsection{\texorpdfstring{PCD\_Init()}{PCD\_Init()}\hspace{0.1cm}{\footnotesize\ttfamily [3/3]}}
+{\footnotesize\ttfamily \label{classMFRC522_a50a743c6c0c3ced652cb7fdca61949ab} 
+void MFRC522\+::\+PCD\+\_\+\+Init (\begin{DoxyParamCaption}\item[{byte}]{reset\+Power\+Down\+Pin}{}\end{DoxyParamCaption})}
+
+Initializes the \doxylink{classMFRC522}{MFRC522} chip. 
+\begin{DoxyParams}{Parámetros}
+{\em reset\+Power\+Down\+Pin} & Arduino pin connected to \doxylink{classMFRC522}{MFRC522}\textquotesingle{}s reset and power down input (Pin 6, NRSTPD, active low) \\
+\hline
+\end{DoxyParams}
+Gráfico de llamadas de esta función\+:
+\nopagebreak
+\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[width=350pt]{classMFRC522_a50a743c6c0c3ced652cb7fdca61949ab_cgraph}
+\end{center}
+\end{figure}
+\Hypertarget{classMFRC522_aa88d28676b3ffb5985af8db35d39077b}\index{MFRC522@{MFRC522}!PCD\_MIFARE\_Transceive@{PCD\_MIFARE\_Transceive}}
+\index{PCD\_MIFARE\_Transceive@{PCD\_MIFARE\_Transceive}!MFRC522@{MFRC522}}
+\doxysubsubsection{\texorpdfstring{PCD\_MIFARE\_Transceive()}{PCD\_MIFARE\_Transceive()}}
+{\footnotesize\ttfamily \label{classMFRC522_aa88d28676b3ffb5985af8db35d39077b} 
+MFRC522\+::\+Status\+Code MFRC522\+::\+PCD\+\_\+\+MIFARE\+\_\+\+Transceive (\begin{DoxyParamCaption}\item[{byte \texorpdfstring{$\ast$}{*}}]{send\+Data}{, }\item[{byte}]{send\+Len}{, }\item[{bool}]{accept\+Timeout}{ = {\ttfamily false}}\end{DoxyParamCaption})}
+
+Wrapper for MIFARE protocol communication. Adds CRC\+\_\+A, executes the Transceive command and checks that the response is MF\+\_\+\+ACK or a timeout.
+
+\begin{DoxyReturn}{Devuelve}
+STATUS\+\_\+\+OK on success, STATUS\+\_\+??? otherwise. 
+\end{DoxyReturn}
+
+\begin{DoxyParams}{Parámetros}
+{\em send\+Data} & Pointer to the data to transfer to the FIFO. Do NOT include the CRC\+\_\+A.  \\
+\hline
+{\em send\+Len} & Number of bytes in send\+Data.  \\
+\hline
+{\em accept\+Timeout} & True =\texorpdfstring{$>$}{>} A timeout is also success \\
+\hline
+\end{DoxyParams}
+Gráfico de llamadas de esta función\+:
+\nopagebreak
+\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[width=350pt]{classMFRC522_aa88d28676b3ffb5985af8db35d39077b_cgraph}
+\end{center}
+\end{figure}
+Gráfico de llamadas a esta función\+:
+\nopagebreak
+\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[width=350pt]{classMFRC522_aa88d28676b3ffb5985af8db35d39077b_icgraph}
+\end{center}
+\end{figure}
+\Hypertarget{classMFRC522_acb47eb7a05ae58825b4085efeb7a09bb}\index{MFRC522@{MFRC522}!PCD\_NTAG216\_AUTH@{PCD\_NTAG216\_AUTH}}
+\index{PCD\_NTAG216\_AUTH@{PCD\_NTAG216\_AUTH}!MFRC522@{MFRC522}}
+\doxysubsubsection{\texorpdfstring{PCD\_NTAG216\_AUTH()}{PCD\_NTAG216\_AUTH()}}
+{\footnotesize\ttfamily \label{classMFRC522_acb47eb7a05ae58825b4085efeb7a09bb} 
+MFRC522\+::\+Status\+Code MFRC522\+::\+PCD\+\_\+\+NTAG216\+\_\+\+AUTH (\begin{DoxyParamCaption}\item[{byte \texorpdfstring{$\ast$}{*}}]{pass\+Word}{, }\item[{byte}]{p\+ACK}{\mbox{[}$\,$\mbox{]}}\end{DoxyParamCaption})}
+
+Authenticate with a NTAG216.
+
+Only for NTAG216. First implemented by Gargantuanman.
+
+
+\begin{DoxyParams}[1]{Parámetros}
+\mbox{\texttt{ in}}  & {\em pass\+Word} & password. \\
+\hline
+\mbox{\texttt{ in}}  & {\em p\+ACK} & result success???. \\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{Devuelve}
+STATUS\+\_\+\+OK on success, STATUS\+\_\+??? otherwise. 
+\end{DoxyReturn}
+Gráfico de llamadas de esta función\+:
+\nopagebreak
+\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[width=350pt]{classMFRC522_acb47eb7a05ae58825b4085efeb7a09bb_cgraph}
+\end{center}
+\end{figure}
+\Hypertarget{classMFRC522_a25f052c9c340da34128c365662370b01}\index{MFRC522@{MFRC522}!PCD\_PerformSelfTest@{PCD\_PerformSelfTest}}
+\index{PCD\_PerformSelfTest@{PCD\_PerformSelfTest}!MFRC522@{MFRC522}}
+\doxysubsubsection{\texorpdfstring{PCD\_PerformSelfTest()}{PCD\_PerformSelfTest()}}
+{\footnotesize\ttfamily \label{classMFRC522_a25f052c9c340da34128c365662370b01} 
+bool MFRC522\+::\+PCD\+\_\+\+Perform\+Self\+Test (\begin{DoxyParamCaption}{}{}\end{DoxyParamCaption})}
+
+Performs a self-\/test of the \doxylink{classMFRC522}{MFRC522} See 16.\+1.\+1 in \href{http://www.nxp.com/documents/data_sheet/MFRC522.pdf}{\texttt{ http\+://www.\+nxp.\+com/documents/data\+\_\+sheet/\+MFRC522.\+pdf}}
+
+\begin{DoxyReturn}{Devuelve}
+Whether or not the test passed. Or false if no firmware reference is available. 
+\end{DoxyReturn}
+Gráfico de llamadas de esta función\+:
+\nopagebreak
+\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[width=350pt]{classMFRC522_a25f052c9c340da34128c365662370b01_cgraph}
+\end{center}
+\end{figure}
+\Hypertarget{classMFRC522_a4289838c6f24f2d62eb8dc0e7a6647d1}\index{MFRC522@{MFRC522}!PCD\_ReadRegister@{PCD\_ReadRegister}}
+\index{PCD\_ReadRegister@{PCD\_ReadRegister}!MFRC522@{MFRC522}}
+\doxysubsubsection{\texorpdfstring{PCD\_ReadRegister()}{PCD\_ReadRegister()}\hspace{0.1cm}{\footnotesize\ttfamily [1/2]}}
+{\footnotesize\ttfamily \label{classMFRC522_a4289838c6f24f2d62eb8dc0e7a6647d1} 
+byte MFRC522\+::\+PCD\+\_\+\+Read\+Register (\begin{DoxyParamCaption}\item[{PCD\+\_\+\+Register}]{reg}{}\end{DoxyParamCaption})}
+
+Reads a byte from the specified register in the \doxylink{classMFRC522}{MFRC522} chip. The interface is described in the datasheet section 8.\+1.\+2. 
+\begin{DoxyParams}{Parámetros}
+{\em reg} & The register to read from. One of the PCD\+\_\+\+Register enums. \\
+\hline
+\end{DoxyParams}
+Gráfico de llamadas a esta función\+:
+\nopagebreak
+\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[width=350pt]{classMFRC522_a4289838c6f24f2d62eb8dc0e7a6647d1_icgraph}
+\end{center}
+\end{figure}
+\Hypertarget{classMFRC522_ae84aeb5b0cab567ac0445ae76c16a86b}\index{MFRC522@{MFRC522}!PCD\_ReadRegister@{PCD\_ReadRegister}}
+\index{PCD\_ReadRegister@{PCD\_ReadRegister}!MFRC522@{MFRC522}}
+\doxysubsubsection{\texorpdfstring{PCD\_ReadRegister()}{PCD\_ReadRegister()}\hspace{0.1cm}{\footnotesize\ttfamily [2/2]}}
+{\footnotesize\ttfamily \label{classMFRC522_ae84aeb5b0cab567ac0445ae76c16a86b} 
+void MFRC522\+::\+PCD\+\_\+\+Read\+Register (\begin{DoxyParamCaption}\item[{PCD\+\_\+\+Register}]{reg}{, }\item[{byte}]{count}{, }\item[{byte \texorpdfstring{$\ast$}{*}}]{values}{, }\item[{byte}]{rx\+Align}{ = {\ttfamily 0}}\end{DoxyParamCaption})}
+
+Reads a number of bytes from the specified register in the \doxylink{classMFRC522}{MFRC522} chip. The interface is described in the datasheet section 8.\+1.\+2. 
+\begin{DoxyParams}{Parámetros}
+{\em reg} & The register to read from. One of the PCD\+\_\+\+Register enums.  \\
+\hline
+{\em count} & The number of bytes to read  \\
+\hline
+{\em values} & Byte array to store the values in.  \\
+\hline
+{\em rx\+Align} & Only bit positions rx\+Align..7 in values\mbox{[}0\mbox{]} are updated. \\
+\hline
+\end{DoxyParams}
+\Hypertarget{classMFRC522_a9886678ea0a65021bf602cfb110caa15}\index{MFRC522@{MFRC522}!PCD\_Reset@{PCD\_Reset}}
+\index{PCD\_Reset@{PCD\_Reset}!MFRC522@{MFRC522}}
+\doxysubsubsection{\texorpdfstring{PCD\_Reset()}{PCD\_Reset()}}
+{\footnotesize\ttfamily \label{classMFRC522_a9886678ea0a65021bf602cfb110caa15} 
+void MFRC522\+::\+PCD\+\_\+\+Reset (\begin{DoxyParamCaption}{}{}\end{DoxyParamCaption})}
+
+Performs a soft reset on the \doxylink{classMFRC522}{MFRC522} chip and waits for it to be ready again. Gráfico de llamadas de esta función\+:
+\nopagebreak
+\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[width=350pt]{classMFRC522_a9886678ea0a65021bf602cfb110caa15_cgraph}
+\end{center}
+\end{figure}
+Gráfico de llamadas a esta función\+:
+\nopagebreak
+\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[width=350pt]{classMFRC522_a9886678ea0a65021bf602cfb110caa15_icgraph}
+\end{center}
+\end{figure}
+\Hypertarget{classMFRC522_a5ce84dd855f2ae297dd00fafaf62ef78}\index{MFRC522@{MFRC522}!PCD\_SetAntennaGain@{PCD\_SetAntennaGain}}
+\index{PCD\_SetAntennaGain@{PCD\_SetAntennaGain}!MFRC522@{MFRC522}}
+\doxysubsubsection{\texorpdfstring{PCD\_SetAntennaGain()}{PCD\_SetAntennaGain()}}
+{\footnotesize\ttfamily \label{classMFRC522_a5ce84dd855f2ae297dd00fafaf62ef78} 
+void MFRC522\+::\+PCD\+\_\+\+Set\+Antenna\+Gain (\begin{DoxyParamCaption}\item[{byte}]{mask}{}\end{DoxyParamCaption})}
+
+Set the \doxylink{classMFRC522}{MFRC522} Receiver Gain (Rx\+Gain) to value specified by given mask. See 9.\+3.\+3.\+6 / table 98 in \href{http://www.nxp.com/documents/data_sheet/MFRC522.pdf}{\texttt{ http\+://www.\+nxp.\+com/documents/data\+\_\+sheet/\+MFRC522.\+pdf}} NOTE\+: Given mask is scrubbed with (0x07\texorpdfstring{$<$}{<}\texorpdfstring{$<$}{<}4)=01110000b as RCFfg\+Reg may use reserved bits. Gráfico de llamadas de esta función\+:
+\nopagebreak
+\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[width=350pt]{classMFRC522_a5ce84dd855f2ae297dd00fafaf62ef78_cgraph}
+\end{center}
+\end{figure}
+\Hypertarget{classMFRC522_acebb9a90249419f2a53281c4a13727d1}\index{MFRC522@{MFRC522}!PCD\_SetRegisterBitMask@{PCD\_SetRegisterBitMask}}
+\index{PCD\_SetRegisterBitMask@{PCD\_SetRegisterBitMask}!MFRC522@{MFRC522}}
+\doxysubsubsection{\texorpdfstring{PCD\_SetRegisterBitMask()}{PCD\_SetRegisterBitMask()}}
+{\footnotesize\ttfamily \label{classMFRC522_acebb9a90249419f2a53281c4a13727d1} 
+void MFRC522\+::\+PCD\+\_\+\+Set\+Register\+Bit\+Mask (\begin{DoxyParamCaption}\item[{PCD\+\_\+\+Register}]{reg}{, }\item[{byte}]{mask}{}\end{DoxyParamCaption})}
+
+Sets the bits given in mask in register reg. 
+\begin{DoxyParams}{Parámetros}
+{\em reg} & The register to update. One of the PCD\+\_\+\+Register enums.  \\
+\hline
+{\em mask} & The bits to set. \\
+\hline
+\end{DoxyParams}
+Gráfico de llamadas de esta función\+:
+\nopagebreak
+\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[width=350pt]{classMFRC522_acebb9a90249419f2a53281c4a13727d1_cgraph}
+\end{center}
+\end{figure}
+Gráfico de llamadas a esta función\+:
+\nopagebreak
+\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[width=350pt]{classMFRC522_acebb9a90249419f2a53281c4a13727d1_icgraph}
+\end{center}
+\end{figure}
+\Hypertarget{classMFRC522_a24d3ab7b2170fdfa3f0121a7256f12d9}\index{MFRC522@{MFRC522}!PCD\_StopCrypto1@{PCD\_StopCrypto1}}
+\index{PCD\_StopCrypto1@{PCD\_StopCrypto1}!MFRC522@{MFRC522}}
+\doxysubsubsection{\texorpdfstring{PCD\_StopCrypto1()}{PCD\_StopCrypto1()}}
+{\footnotesize\ttfamily \label{classMFRC522_a24d3ab7b2170fdfa3f0121a7256f12d9} 
+void MFRC522\+::\+PCD\+\_\+\+Stop\+Crypto1 (\begin{DoxyParamCaption}{}{}\end{DoxyParamCaption})}
+
+Used to exit the PCD from its authenticated state. Remember to call this function after communicating with an authenticated PICC -\/ otherwise no new communications can start. Gráfico de llamadas de esta función\+:
+\nopagebreak
+\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[width=350pt]{classMFRC522_a24d3ab7b2170fdfa3f0121a7256f12d9_cgraph}
+\end{center}
+\end{figure}
+Gráfico de llamadas a esta función\+:
+\nopagebreak
+\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[width=350pt]{classMFRC522_a24d3ab7b2170fdfa3f0121a7256f12d9_icgraph}
+\end{center}
+\end{figure}
+\Hypertarget{classMFRC522_aaa96aa7ec4f95e0835cb758ad0450d74}\index{MFRC522@{MFRC522}!PCD\_TransceiveData@{PCD\_TransceiveData}}
+\index{PCD\_TransceiveData@{PCD\_TransceiveData}!MFRC522@{MFRC522}}
+\doxysubsubsection{\texorpdfstring{PCD\_TransceiveData()}{PCD\_TransceiveData()}}
+{\footnotesize\ttfamily \label{classMFRC522_aaa96aa7ec4f95e0835cb758ad0450d74} 
+MFRC522\+::\+Status\+Code MFRC522\+::\+PCD\+\_\+\+Transceive\+Data (\begin{DoxyParamCaption}\item[{byte \texorpdfstring{$\ast$}{*}}]{send\+Data}{, }\item[{byte}]{send\+Len}{, }\item[{byte \texorpdfstring{$\ast$}{*}}]{back\+Data}{, }\item[{byte \texorpdfstring{$\ast$}{*}}]{back\+Len}{, }\item[{byte \texorpdfstring{$\ast$}{*}}]{valid\+Bits}{ = {\ttfamily nullptr}, }\item[{byte}]{rx\+Align}{ = {\ttfamily 0}, }\item[{bool}]{check\+CRC}{ = {\ttfamily false}}\end{DoxyParamCaption})}
+
+Executes the Transceive command. CRC validation can only be done if back\+Data and back\+Len are specified.
+
+\begin{DoxyReturn}{Devuelve}
+STATUS\+\_\+\+OK on success, STATUS\+\_\+??? otherwise. 
+\end{DoxyReturn}
+
+\begin{DoxyParams}{Parámetros}
+{\em send\+Data} & Pointer to the data to transfer to the FIFO.  \\
+\hline
+{\em send\+Len} & Number of bytes to transfer to the FIFO.  \\
+\hline
+{\em back\+Data} & nullptr or pointer to buffer if data should be read back after executing the command.  \\
+\hline
+{\em back\+Len} & In\+: Max number of bytes to write to \texorpdfstring{$\ast$}{*}back\+Data. Out\+: The number of bytes returned.  \\
+\hline
+{\em valid\+Bits} & In/\+Out\+: The number of valid bits in the last byte. 0 for 8 valid bits. Default nullptr.  \\
+\hline
+{\em rx\+Align} & In\+: Defines the bit position in back\+Data\mbox{[}0\mbox{]} for the first bit received. Default 0.  \\
+\hline
+{\em check\+CRC} & In\+: True =\texorpdfstring{$>$}{>} The last two bytes of the response is assumed to be a CRC\+\_\+A that must be validated. \\
+\hline
+\end{DoxyParams}
+Gráfico de llamadas de esta función\+:
+\nopagebreak
+\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[width=350pt]{classMFRC522_aaa96aa7ec4f95e0835cb758ad0450d74_cgraph}
+\end{center}
+\end{figure}
+Gráfico de llamadas a esta función\+:
+\nopagebreak
+\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[width=350pt]{classMFRC522_aaa96aa7ec4f95e0835cb758ad0450d74_icgraph}
+\end{center}
+\end{figure}
+\Hypertarget{classMFRC522_a846b4b9d0468b62d853b125d4b269054}\index{MFRC522@{MFRC522}!PCD\_WriteRegister@{PCD\_WriteRegister}}
+\index{PCD\_WriteRegister@{PCD\_WriteRegister}!MFRC522@{MFRC522}}
+\doxysubsubsection{\texorpdfstring{PCD\_WriteRegister()}{PCD\_WriteRegister()}\hspace{0.1cm}{\footnotesize\ttfamily [1/2]}}
+{\footnotesize\ttfamily \label{classMFRC522_a846b4b9d0468b62d853b125d4b269054} 
+void MFRC522\+::\+PCD\+\_\+\+Write\+Register (\begin{DoxyParamCaption}\item[{PCD\+\_\+\+Register}]{reg}{, }\item[{byte}]{count}{, }\item[{byte \texorpdfstring{$\ast$}{*}}]{values}{}\end{DoxyParamCaption})}
+
+Writes a number of bytes to the specified register in the \doxylink{classMFRC522}{MFRC522} chip. The interface is described in the datasheet section 8.\+1.\+2. 
+\begin{DoxyParams}{Parámetros}
+{\em reg} & The register to write to. One of the PCD\+\_\+\+Register enums.  \\
+\hline
+{\em count} & The number of bytes to write to the register  \\
+\hline
+{\em values} & The values to write. Byte array. \\
+\hline
+\end{DoxyParams}
+\Hypertarget{classMFRC522_aa5e5825adb4c784d8a5a60242c135fb7}\index{MFRC522@{MFRC522}!PCD\_WriteRegister@{PCD\_WriteRegister}}
+\index{PCD\_WriteRegister@{PCD\_WriteRegister}!MFRC522@{MFRC522}}
+\doxysubsubsection{\texorpdfstring{PCD\_WriteRegister()}{PCD\_WriteRegister()}\hspace{0.1cm}{\footnotesize\ttfamily [2/2]}}
+{\footnotesize\ttfamily \label{classMFRC522_aa5e5825adb4c784d8a5a60242c135fb7} 
+void MFRC522\+::\+PCD\+\_\+\+Write\+Register (\begin{DoxyParamCaption}\item[{PCD\+\_\+\+Register}]{reg}{, }\item[{byte}]{value}{}\end{DoxyParamCaption})}
+
+Writes a byte to the specified register in the \doxylink{classMFRC522}{MFRC522} chip. The interface is described in the datasheet section 8.\+1.\+2. 
+\begin{DoxyParams}{Parámetros}
+{\em reg} & The register to write to. One of the PCD\+\_\+\+Register enums.  \\
+\hline
+{\em value} & The value to write. \\
+\hline
+\end{DoxyParams}
+Gráfico de llamadas a esta función\+:
+\nopagebreak
+\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[width=350pt]{classMFRC522_aa5e5825adb4c784d8a5a60242c135fb7_icgraph}
+\end{center}
+\end{figure}
+\Hypertarget{classMFRC522_a3b9a2c6da6505e0ff7b58c37d7aeff37}\index{MFRC522@{MFRC522}!PICC\_DumpDetailsToSerial@{PICC\_DumpDetailsToSerial}}
+\index{PICC\_DumpDetailsToSerial@{PICC\_DumpDetailsToSerial}!MFRC522@{MFRC522}}
+\doxysubsubsection{\texorpdfstring{PICC\_DumpDetailsToSerial()}{PICC\_DumpDetailsToSerial()}}
+{\footnotesize\ttfamily \label{classMFRC522_a3b9a2c6da6505e0ff7b58c37d7aeff37} 
+void MFRC522\+::\+PICC\+\_\+\+Dump\+Details\+To\+Serial (\begin{DoxyParamCaption}\item[{\mbox{\hyperlink{classMFRC522_structMFRC522_1_1Uid}{Uid}} \texorpdfstring{$\ast$}{*}}]{uid}{}\end{DoxyParamCaption})}
+
+Dumps card info (UID,SAK,Type) about the selected PICC to Serial. 
+\begin{DoxyParams}{Parámetros}
+{\em uid} & Pointer to \doxylink{classMFRC522_structMFRC522_1_1Uid}{Uid} struct returned from a successful \doxylink{classMFRC522_a7a78c629cb4e1d90cc2d7526b17d6c22}{PICC\+\_\+\+Select()}. \\
+\hline
+\end{DoxyParams}
+Gráfico de llamadas de esta función\+:
+\nopagebreak
+\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[width=350pt]{classMFRC522_a3b9a2c6da6505e0ff7b58c37d7aeff37_cgraph}
+\end{center}
+\end{figure}
+Gráfico de llamadas a esta función\+:
+\nopagebreak
+\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[width=350pt]{classMFRC522_a3b9a2c6da6505e0ff7b58c37d7aeff37_icgraph}
+\end{center}
+\end{figure}
+\Hypertarget{classMFRC522_a20c559f09927a7c5f91295f6158e4342}\index{MFRC522@{MFRC522}!PICC\_DumpMifareClassicSectorToSerial@{PICC\_DumpMifareClassicSectorToSerial}}
+\index{PICC\_DumpMifareClassicSectorToSerial@{PICC\_DumpMifareClassicSectorToSerial}!MFRC522@{MFRC522}}
+\doxysubsubsection{\texorpdfstring{PICC\_DumpMifareClassicSectorToSerial()}{PICC\_DumpMifareClassicSectorToSerial()}}
+{\footnotesize\ttfamily \label{classMFRC522_a20c559f09927a7c5f91295f6158e4342} 
+void MFRC522\+::\+PICC\+\_\+\+Dump\+Mifare\+Classic\+Sector\+To\+Serial (\begin{DoxyParamCaption}\item[{\mbox{\hyperlink{classMFRC522_structMFRC522_1_1Uid}{Uid}} \texorpdfstring{$\ast$}{*}}]{uid}{, }\item[{\mbox{\hyperlink{classMFRC522_structMFRC522_1_1MIFARE__Key}{MIFARE\+\_\+\+Key}} \texorpdfstring{$\ast$}{*}}]{key}{, }\item[{byte}]{sector}{}\end{DoxyParamCaption})}
+
+Dumps memory contents of a sector of a MIFARE Classic PICC. Uses \doxylink{classMFRC522_a6c2313c4aa98806cc2bf0e9cca993ec0}{PCD\+\_\+\+Authenticate()}, \doxylink{classMFRC522_a6ed93e88913ea104420f3bb4a88cce52}{MIFARE\+\_\+\+Read()} and PCD\+\_\+\+Stop\+Crypto1. Always uses PICC\+\_\+\+CMD\+\_\+\+MF\+\_\+\+AUTH\+\_\+\+KEY\+\_\+A because only Key A can always read the sector trailer access bits. 
+\begin{DoxyParams}{Parámetros}
+{\em uid} & Pointer to \doxylink{classMFRC522_structMFRC522_1_1Uid}{Uid} struct returned from a successful \doxylink{classMFRC522_a7a78c629cb4e1d90cc2d7526b17d6c22}{PICC\+\_\+\+Select()}.  \\
+\hline
+{\em key} & Key A for the sector.  \\
+\hline
+{\em sector} & The sector to dump, 0..39. \\
+\hline
+\end{DoxyParams}
+Gráfico de llamadas de esta función\+:
+\nopagebreak
+\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[width=350pt]{classMFRC522_a20c559f09927a7c5f91295f6158e4342_cgraph}
+\end{center}
+\end{figure}
+Gráfico de llamadas a esta función\+:
+\nopagebreak
+\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[width=350pt]{classMFRC522_a20c559f09927a7c5f91295f6158e4342_icgraph}
+\end{center}
+\end{figure}
+\Hypertarget{classMFRC522_aafba2e74124efa2d736c1672ea104190}\index{MFRC522@{MFRC522}!PICC\_DumpMifareClassicToSerial@{PICC\_DumpMifareClassicToSerial}}
+\index{PICC\_DumpMifareClassicToSerial@{PICC\_DumpMifareClassicToSerial}!MFRC522@{MFRC522}}
+\doxysubsubsection{\texorpdfstring{PICC\_DumpMifareClassicToSerial()}{PICC\_DumpMifareClassicToSerial()}}
+{\footnotesize\ttfamily \label{classMFRC522_aafba2e74124efa2d736c1672ea104190} 
+void MFRC522\+::\+PICC\+\_\+\+Dump\+Mifare\+Classic\+To\+Serial (\begin{DoxyParamCaption}\item[{\mbox{\hyperlink{classMFRC522_structMFRC522_1_1Uid}{Uid}} \texorpdfstring{$\ast$}{*}}]{uid}{, }\item[{PICC\+\_\+\+Type}]{picc\+Type}{, }\item[{\mbox{\hyperlink{classMFRC522_structMFRC522_1_1MIFARE__Key}{MIFARE\+\_\+\+Key}} \texorpdfstring{$\ast$}{*}}]{key}{}\end{DoxyParamCaption})}
+
+Dumps memory contents of a MIFARE Classic PICC. On success the PICC is halted after dumping the data. 
+\begin{DoxyParams}{Parámetros}
+{\em uid} & Pointer to \doxylink{classMFRC522_structMFRC522_1_1Uid}{Uid} struct returned from a successful \doxylink{classMFRC522_a7a78c629cb4e1d90cc2d7526b17d6c22}{PICC\+\_\+\+Select()}.  \\
+\hline
+{\em picc\+Type} & One of the PICC\+\_\+\+Type enums.  \\
+\hline
+{\em key} & Key A used for all sectors. \\
+\hline
+\end{DoxyParams}
+Gráfico de llamadas de esta función\+:
+\nopagebreak
+\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[width=350pt]{classMFRC522_aafba2e74124efa2d736c1672ea104190_cgraph}
+\end{center}
+\end{figure}
+Gráfico de llamadas a esta función\+:
+\nopagebreak
+\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[width=350pt]{classMFRC522_aafba2e74124efa2d736c1672ea104190_icgraph}
+\end{center}
+\end{figure}
+\Hypertarget{classMFRC522_ac148d28877dd577606a28e9e7e4b6809}\index{MFRC522@{MFRC522}!PICC\_DumpMifareUltralightToSerial@{PICC\_DumpMifareUltralightToSerial}}
+\index{PICC\_DumpMifareUltralightToSerial@{PICC\_DumpMifareUltralightToSerial}!MFRC522@{MFRC522}}
+\doxysubsubsection{\texorpdfstring{PICC\_DumpMifareUltralightToSerial()}{PICC\_DumpMifareUltralightToSerial()}}
+{\footnotesize\ttfamily \label{classMFRC522_ac148d28877dd577606a28e9e7e4b6809} 
+void MFRC522\+::\+PICC\+\_\+\+Dump\+Mifare\+Ultralight\+To\+Serial (\begin{DoxyParamCaption}{}{}\end{DoxyParamCaption})}
+
+Dumps memory contents of a MIFARE Ultralight PICC. Gráfico de llamadas de esta función\+:
+\nopagebreak
+\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[width=350pt]{classMFRC522_ac148d28877dd577606a28e9e7e4b6809_cgraph}
+\end{center}
+\end{figure}
+Gráfico de llamadas a esta función\+:
+\nopagebreak
+\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[width=350pt]{classMFRC522_ac148d28877dd577606a28e9e7e4b6809_icgraph}
+\end{center}
+\end{figure}
+\Hypertarget{classMFRC522_a6f324d43c6fbbd0e260b171747186037}\index{MFRC522@{MFRC522}!PICC\_DumpToSerial@{PICC\_DumpToSerial}}
+\index{PICC\_DumpToSerial@{PICC\_DumpToSerial}!MFRC522@{MFRC522}}
+\doxysubsubsection{\texorpdfstring{PICC\_DumpToSerial()}{PICC\_DumpToSerial()}}
+{\footnotesize\ttfamily \label{classMFRC522_a6f324d43c6fbbd0e260b171747186037} 
+void MFRC522\+::\+PICC\+\_\+\+Dump\+To\+Serial (\begin{DoxyParamCaption}\item[{\mbox{\hyperlink{classMFRC522_structMFRC522_1_1Uid}{Uid}} \texorpdfstring{$\ast$}{*}}]{uid}{}\end{DoxyParamCaption})}
+
+Dumps debug info about the selected PICC to Serial. On success the PICC is halted after dumping the data. For MIFARE Classic the factory default key of 0x\+FFFFFFFFFFFF is tried. ~\newline
+ 
+\begin{DoxyParams}{Parámetros}
+{\em uid} & Pointer to \doxylink{classMFRC522_structMFRC522_1_1Uid}{Uid} struct returned from a successful \doxylink{classMFRC522_a7a78c629cb4e1d90cc2d7526b17d6c22}{PICC\+\_\+\+Select()}. \\
+\hline
+\end{DoxyParams}
+Gráfico de llamadas de esta función\+:
+\nopagebreak
+\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[width=350pt]{classMFRC522_a6f324d43c6fbbd0e260b171747186037_cgraph}
+\end{center}
+\end{figure}
+\Hypertarget{classMFRC522_ac80a18228260bdde07dff5d4ac23bb53}\index{MFRC522@{MFRC522}!PICC\_GetType@{PICC\_GetType}}
+\index{PICC\_GetType@{PICC\_GetType}!MFRC522@{MFRC522}}
+\doxysubsubsection{\texorpdfstring{PICC\_GetType()}{PICC\_GetType()}}
+{\footnotesize\ttfamily \label{classMFRC522_ac80a18228260bdde07dff5d4ac23bb53} 
+MFRC522\+::\+PICC\+\_\+\+Type MFRC522\+::\+PICC\+\_\+\+Get\+Type (\begin{DoxyParamCaption}\item[{byte}]{sak}{}\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [static]}}
+
+Translates the SAK (Select Acknowledge) to a PICC type.
+
+\begin{DoxyReturn}{Devuelve}
+PICC\+\_\+\+Type 
+\end{DoxyReturn}
+
+\begin{DoxyParams}{Parámetros}
+{\em sak} & The SAK byte returned from \doxylink{classMFRC522_a7a78c629cb4e1d90cc2d7526b17d6c22}{PICC\+\_\+\+Select()}. \\
+\hline
+\end{DoxyParams}
+Gráfico de llamadas a esta función\+:
+\nopagebreak
+\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[width=350pt]{classMFRC522_ac80a18228260bdde07dff5d4ac23bb53_icgraph}
+\end{center}
+\end{figure}
+\Hypertarget{classMFRC522_aae4a482352d4d4b7d7a9714b0b0b7c38}\index{MFRC522@{MFRC522}!PICC\_GetTypeName@{PICC\_GetTypeName}}
+\index{PICC\_GetTypeName@{PICC\_GetTypeName}!MFRC522@{MFRC522}}
+\doxysubsubsection{\texorpdfstring{PICC\_GetTypeName()}{PICC\_GetTypeName()}}
+{\footnotesize\ttfamily \label{classMFRC522_aae4a482352d4d4b7d7a9714b0b0b7c38} 
+const \+\_\+\+\_\+\+Flash\+String\+Helper \texorpdfstring{$\ast$}{*} MFRC522\+::\+PICC\+\_\+\+Get\+Type\+Name (\begin{DoxyParamCaption}\item[{PICC\+\_\+\+Type}]{picc\+Type}{}\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [static]}}
+
+Returns a \+\_\+\+\_\+\+Flash\+String\+Helper pointer to the PICC type name.
+
+\begin{DoxyReturn}{Devuelve}
+const \+\_\+\+\_\+\+Flash\+String\+Helper \texorpdfstring{$\ast$}{*} 
+\end{DoxyReturn}
+
+\begin{DoxyParams}{Parámetros}
+{\em picc\+Type} & One of the PICC\+\_\+\+Type enums. \\
+\hline
+\end{DoxyParams}
+Gráfico de llamadas a esta función\+:
+\nopagebreak
+\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[width=350pt]{classMFRC522_aae4a482352d4d4b7d7a9714b0b0b7c38_icgraph}
+\end{center}
+\end{figure}
+\Hypertarget{classMFRC522_a8874921b4ed26c5b73d89c90f76d4933}\index{MFRC522@{MFRC522}!PICC\_HaltA@{PICC\_HaltA}}
+\index{PICC\_HaltA@{PICC\_HaltA}!MFRC522@{MFRC522}}
+\doxysubsubsection{\texorpdfstring{PICC\_HaltA()}{PICC\_HaltA()}}
+{\footnotesize\ttfamily \label{classMFRC522_a8874921b4ed26c5b73d89c90f76d4933} 
+MFRC522\+::\+Status\+Code MFRC522\+::\+PICC\+\_\+\+HaltA (\begin{DoxyParamCaption}{}{}\end{DoxyParamCaption})}
+
+Instructs a PICC in state ACTIVE(\texorpdfstring{$\ast$}{*}) to go to state HALT.
+
+\begin{DoxyReturn}{Devuelve}
+STATUS\+\_\+\+OK on success, STATUS\+\_\+??? otherwise. 
+\end{DoxyReturn}
+Gráfico de llamadas de esta función\+:
+\nopagebreak
+\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[width=350pt]{classMFRC522_a8874921b4ed26c5b73d89c90f76d4933_cgraph}
+\end{center}
+\end{figure}
+Gráfico de llamadas a esta función\+:
+\nopagebreak
+\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[width=350pt]{classMFRC522_a8874921b4ed26c5b73d89c90f76d4933_icgraph}
+\end{center}
+\end{figure}
+\Hypertarget{classMFRC522_a3adca9d3b455c680ebcde3b74c4e567b}\index{MFRC522@{MFRC522}!PICC\_IsNewCardPresent@{PICC\_IsNewCardPresent}}
+\index{PICC\_IsNewCardPresent@{PICC\_IsNewCardPresent}!MFRC522@{MFRC522}}
+\doxysubsubsection{\texorpdfstring{PICC\_IsNewCardPresent()}{PICC\_IsNewCardPresent()}}
+{\footnotesize\ttfamily \label{classMFRC522_a3adca9d3b455c680ebcde3b74c4e567b} 
+bool MFRC522\+::\+PICC\+\_\+\+Is\+New\+Card\+Present (\begin{DoxyParamCaption}{}{}\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [virtual]}}
+
+Returns true if a PICC responds to PICC\+\_\+\+CMD\+\_\+\+REQA. Only "{}new"{} cards in state IDLE are invited. Sleeping cards in state HALT are ignored.
+
+\begin{DoxyReturn}{Devuelve}
+bool 
+\end{DoxyReturn}
+
+
+Reimplementado en \mbox{\hyperlink{classMFRC522Extended_afaa1289052274755acec885017507b64}{MFRC522\+Extended}}.
+
+Gráfico de llamadas de esta función\+:
+\nopagebreak
+\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[width=350pt]{classMFRC522_a3adca9d3b455c680ebcde3b74c4e567b_cgraph}
+\end{center}
+\end{figure}
+Gráfico de llamadas a esta función\+:
+\nopagebreak
+\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[width=350pt]{classMFRC522_a3adca9d3b455c680ebcde3b74c4e567b_icgraph}
+\end{center}
+\end{figure}
+\Hypertarget{classMFRC522_aab1218c71cec9cc17ee3ac8a683df106}\index{MFRC522@{MFRC522}!PICC\_ReadCardSerial@{PICC\_ReadCardSerial}}
+\index{PICC\_ReadCardSerial@{PICC\_ReadCardSerial}!MFRC522@{MFRC522}}
+\doxysubsubsection{\texorpdfstring{PICC\_ReadCardSerial()}{PICC\_ReadCardSerial()}}
+{\footnotesize\ttfamily \label{classMFRC522_aab1218c71cec9cc17ee3ac8a683df106} 
+bool MFRC522\+::\+PICC\+\_\+\+Read\+Card\+Serial (\begin{DoxyParamCaption}{}{}\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [virtual]}}
+
+Simple wrapper around PICC\+\_\+\+Select. Returns true if a UID could be read. Remember to call \doxylink{classMFRC522_a3adca9d3b455c680ebcde3b74c4e567b}{PICC\+\_\+\+Is\+New\+Card\+Present()}, \doxylink{classMFRC522_a4e0ac6edf5e8f6ade351b009278fbbc7}{PICC\+\_\+\+Request\+A()} or \doxylink{classMFRC522_ad00a1efcfa6dc203ca885d43f4d02125}{PICC\+\_\+\+Wakeup\+A()} first. The read UID is available in the class variable uid.
+
+\begin{DoxyReturn}{Devuelve}
+bool 
+\end{DoxyReturn}
+
+
+Reimplementado en \mbox{\hyperlink{classMFRC522Extended_ae68a2f90cec039dc856089aee08119ee}{MFRC522\+Extended}}.
+
+Gráfico de llamadas de esta función\+:
+\nopagebreak
+\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[width=350pt]{classMFRC522_aab1218c71cec9cc17ee3ac8a683df106_cgraph}
+\end{center}
+\end{figure}
+Gráfico de llamadas a esta función\+:
+\nopagebreak
+\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[width=350pt]{classMFRC522_aab1218c71cec9cc17ee3ac8a683df106_icgraph}
+\end{center}
+\end{figure}
+\Hypertarget{classMFRC522_a639d27ac072bc0dfa478d0957591afcc}\index{MFRC522@{MFRC522}!PICC\_REQA\_or\_WUPA@{PICC\_REQA\_or\_WUPA}}
+\index{PICC\_REQA\_or\_WUPA@{PICC\_REQA\_or\_WUPA}!MFRC522@{MFRC522}}
+\doxysubsubsection{\texorpdfstring{PICC\_REQA\_or\_WUPA()}{PICC\_REQA\_or\_WUPA()}}
+{\footnotesize\ttfamily \label{classMFRC522_a639d27ac072bc0dfa478d0957591afcc} 
+MFRC522\+::\+Status\+Code MFRC522\+::\+PICC\+\_\+\+REQA\+\_\+or\+\_\+\+WUPA (\begin{DoxyParamCaption}\item[{byte}]{command}{, }\item[{byte \texorpdfstring{$\ast$}{*}}]{buffer\+ATQA}{, }\item[{byte \texorpdfstring{$\ast$}{*}}]{buffer\+Size}{}\end{DoxyParamCaption})}
+
+Transmits REQA or WUPA commands. Beware\+: When two PICCs are in the field at the same time I often get STATUS\+\_\+\+TIMEOUT -\/ probably due do bad antenna design.
+
+\begin{DoxyReturn}{Devuelve}
+STATUS\+\_\+\+OK on success, STATUS\+\_\+??? otherwise. 
+\end{DoxyReturn}
+
+\begin{DoxyParams}{Parámetros}
+{\em command} & The command to send -\/ PICC\+\_\+\+CMD\+\_\+\+REQA or PICC\+\_\+\+CMD\+\_\+\+WUPA  \\
+\hline
+{\em buffer\+ATQA} & The buffer to store the ATQA (Answer to request) in  \\
+\hline
+{\em buffer\+Size} & Buffer size, at least two bytes. Also number of bytes returned if STATUS\+\_\+\+OK. \\
+\hline
+\end{DoxyParams}
+Gráfico de llamadas de esta función\+:
+\nopagebreak
+\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[width=350pt]{classMFRC522_a639d27ac072bc0dfa478d0957591afcc_cgraph}
+\end{center}
+\end{figure}
+Gráfico de llamadas a esta función\+:
+\nopagebreak
+\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[width=350pt]{classMFRC522_a639d27ac072bc0dfa478d0957591afcc_icgraph}
+\end{center}
+\end{figure}
+\Hypertarget{classMFRC522_a4e0ac6edf5e8f6ade351b009278fbbc7}\index{MFRC522@{MFRC522}!PICC\_RequestA@{PICC\_RequestA}}
+\index{PICC\_RequestA@{PICC\_RequestA}!MFRC522@{MFRC522}}
+\doxysubsubsection{\texorpdfstring{PICC\_RequestA()}{PICC\_RequestA()}}
+{\footnotesize\ttfamily \label{classMFRC522_a4e0ac6edf5e8f6ade351b009278fbbc7} 
+MFRC522\+::\+Status\+Code MFRC522\+::\+PICC\+\_\+\+RequestA (\begin{DoxyParamCaption}\item[{byte \texorpdfstring{$\ast$}{*}}]{buffer\+ATQA}{, }\item[{byte \texorpdfstring{$\ast$}{*}}]{buffer\+Size}{}\end{DoxyParamCaption})}
+
+Transmits a REQuest command, Type A. Invites PICCs in state IDLE to go to READY and prepare for anticollision or selection. 7 bit frame. Beware\+: When two PICCs are in the field at the same time I often get STATUS\+\_\+\+TIMEOUT -\/ probably due do bad antenna design.
+
+\begin{DoxyReturn}{Devuelve}
+STATUS\+\_\+\+OK on success, STATUS\+\_\+??? otherwise. 
+\end{DoxyReturn}
+
+\begin{DoxyParams}{Parámetros}
+{\em buffer\+ATQA} & The buffer to store the ATQA (Answer to request) in  \\
+\hline
+{\em buffer\+Size} & Buffer size, at least two bytes. Also number of bytes returned if STATUS\+\_\+\+OK. \\
+\hline
+\end{DoxyParams}
+Gráfico de llamadas de esta función\+:
+\nopagebreak
+\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[width=350pt]{classMFRC522_a4e0ac6edf5e8f6ade351b009278fbbc7_cgraph}
+\end{center}
+\end{figure}
+Gráfico de llamadas a esta función\+:
+\nopagebreak
+\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[width=350pt]{classMFRC522_a4e0ac6edf5e8f6ade351b009278fbbc7_icgraph}
+\end{center}
+\end{figure}
+\Hypertarget{classMFRC522_a7a78c629cb4e1d90cc2d7526b17d6c22}\index{MFRC522@{MFRC522}!PICC\_Select@{PICC\_Select}}
+\index{PICC\_Select@{PICC\_Select}!MFRC522@{MFRC522}}
+\doxysubsubsection{\texorpdfstring{PICC\_Select()}{PICC\_Select()}}
+{\footnotesize\ttfamily \label{classMFRC522_a7a78c629cb4e1d90cc2d7526b17d6c22} 
+MFRC522\+::\+Status\+Code MFRC522\+::\+PICC\+\_\+\+Select (\begin{DoxyParamCaption}\item[{\mbox{\hyperlink{classMFRC522_structMFRC522_1_1Uid}{Uid}} \texorpdfstring{$\ast$}{*}}]{uid}{, }\item[{byte}]{valid\+Bits}{ = {\ttfamily 0}}\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [virtual]}}
+
+Transmits SELECT/\+ANTICOLLISION commands to select a single PICC. Before calling this function the PICCs must be placed in the READY(\texorpdfstring{$\ast$}{*}) state by calling \doxylink{classMFRC522_a4e0ac6edf5e8f6ade351b009278fbbc7}{PICC\+\_\+\+Request\+A()} or \doxylink{classMFRC522_ad00a1efcfa6dc203ca885d43f4d02125}{PICC\+\_\+\+Wakeup\+A()}. On success\+:
+\begin{DoxyItemize}
+\item The chosen PICC is in state ACTIVE(\texorpdfstring{$\ast$}{*}) and all other PICCs have returned to state IDLE/\+HALT. (Figure 7 of the ISO/\+IEC 14443-\/3 draft.)
+\item The UID size and value of the chosen PICC is returned in \texorpdfstring{$\ast$}{*}uid along with the SAK.
+\end{DoxyItemize}
+
+A PICC UID consists of 4, 7 or 10 bytes. Only 4 bytes can be specified in a SELECT command, so for the longer UIDs two or three iterations are used\+: UID size Number of UID bytes Cascade levels Example of PICC ======== =================== ============== =============== single 4 1 MIFARE Classic double 7 2 MIFARE Ultralight triple 10 3 Not currently in use?
+
+\begin{DoxyReturn}{Devuelve}
+STATUS\+\_\+\+OK on success, STATUS\+\_\+??? otherwise. 
+\end{DoxyReturn}
+
+\begin{DoxyParams}{Parámetros}
+{\em uid} & Pointer to \doxylink{classMFRC522_structMFRC522_1_1Uid}{Uid} struct. Normally output, but can also be used to supply a known UID.  \\
+\hline
+{\em valid\+Bits} & The number of known UID bits supplied in \texorpdfstring{$\ast$}{*}uid. Normally 0. If set you must also supply uid-\/\texorpdfstring{$>$}{>}size. \\
+\hline
+\end{DoxyParams}
+
+
+Reimplementado en \mbox{\hyperlink{classMFRC522Extended_a0740187cc7f336b0aaea2db432185cb5}{MFRC522\+Extended}}.
+
+Gráfico de llamadas de esta función\+:
+\nopagebreak
+\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[width=350pt]{classMFRC522_a7a78c629cb4e1d90cc2d7526b17d6c22_cgraph}
+\end{center}
+\end{figure}
+Gráfico de llamadas a esta función\+:
+\nopagebreak
+\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[width=350pt]{classMFRC522_a7a78c629cb4e1d90cc2d7526b17d6c22_icgraph}
+\end{center}
+\end{figure}
+\Hypertarget{classMFRC522_ad00a1efcfa6dc203ca885d43f4d02125}\index{MFRC522@{MFRC522}!PICC\_WakeupA@{PICC\_WakeupA}}
+\index{PICC\_WakeupA@{PICC\_WakeupA}!MFRC522@{MFRC522}}
+\doxysubsubsection{\texorpdfstring{PICC\_WakeupA()}{PICC\_WakeupA()}}
+{\footnotesize\ttfamily \label{classMFRC522_ad00a1efcfa6dc203ca885d43f4d02125} 
+MFRC522\+::\+Status\+Code MFRC522\+::\+PICC\+\_\+\+WakeupA (\begin{DoxyParamCaption}\item[{byte \texorpdfstring{$\ast$}{*}}]{buffer\+ATQA}{, }\item[{byte \texorpdfstring{$\ast$}{*}}]{buffer\+Size}{}\end{DoxyParamCaption})}
+
+Transmits a Wake-\/\+UP command, Type A. Invites PICCs in state IDLE and HALT to go to READY(\texorpdfstring{$\ast$}{*}) and prepare for anticollision or selection. 7 bit frame. Beware\+: When two PICCs are in the field at the same time I often get STATUS\+\_\+\+TIMEOUT -\/ probably due do bad antenna design.
+
+\begin{DoxyReturn}{Devuelve}
+STATUS\+\_\+\+OK on success, STATUS\+\_\+??? otherwise. 
+\end{DoxyReturn}
+
+\begin{DoxyParams}{Parámetros}
+{\em buffer\+ATQA} & The buffer to store the ATQA (Answer to request) in  \\
+\hline
+{\em buffer\+Size} & Buffer size, at least two bytes. Also number of bytes returned if STATUS\+\_\+\+OK. \\
+\hline
+\end{DoxyParams}
+Gráfico de llamadas de esta función\+:
+\nopagebreak
+\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[width=350pt]{classMFRC522_ad00a1efcfa6dc203ca885d43f4d02125_cgraph}
+\end{center}
+\end{figure}
+Gráfico de llamadas a esta función\+:
+\nopagebreak
+\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[width=350pt]{classMFRC522_ad00a1efcfa6dc203ca885d43f4d02125_icgraph}
+\end{center}
+\end{figure}
+
+
+La documentación de esta clase está generada de los siguientes archivos\+:\begin{DoxyCompactItemize}
+\item 
+main/libraries/\+RFID-\/\+RC522/MFRC522.\+h\item 
+main/libraries/\+RFID-\/\+RC522/MFRC522.\+cpp\end{DoxyCompactItemize}

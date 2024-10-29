@@ -1,0 +1,352 @@
+<?xml version='1.0' encoding='UTF-8' standalone='no'?>
+<section xmlns="http://docbook.org/ns/docbook" version="5.0" xmlns:xlink="http://www.w3.org/1999/xlink" xml:id="_MFRC522_8h_source" xml:lang="es">
+<title>MFRC522.h</title>
+<indexterm><primary>main/libraries/RFID-RC522/MFRC522.h</primary></indexterm>
+<programlisting linenumbering="unnumbered">1 
+10 <emphasis role="preprocessor">#ifndef&#32;MFRC522_h</emphasis>
+11 <emphasis role="preprocessor">#define&#32;MFRC522_h</emphasis>
+12 
+13 <emphasis role="preprocessor">#include&#32;&quot;require_cpp11.h&quot;</emphasis>
+14 <emphasis role="preprocessor">#include&#32;&quot;deprecated.h&quot;</emphasis>
+15 <emphasis role="comment">//&#32;Enable&#32;integer&#32;limits</emphasis>
+16 <emphasis role="preprocessor">#define&#32;__STDC_LIMIT_MACROS</emphasis>
+17 <emphasis role="preprocessor">#include&#32;&lt;stdint.h&gt;</emphasis>
+18 <emphasis role="preprocessor">#include&#32;&lt;Arduino.h&gt;</emphasis>
+19 <emphasis role="preprocessor">#include&#32;&lt;SPI.h&gt;</emphasis>
+20 
+21 <emphasis role="preprocessor">#ifndef&#32;MFRC522_SPICLOCK</emphasis>
+22 <emphasis role="preprocessor">#define&#32;MFRC522_SPICLOCK&#32;(4000000u)&#32;</emphasis><emphasis role="comment">//&#32;MFRC522&#32;accept&#32;upto&#32;10MHz,&#32;set&#32;to&#32;4MHz.</emphasis>
+23 <emphasis role="preprocessor">#endif</emphasis>
+24 
+25 <emphasis role="comment">//&#32;Firmware&#32;data&#32;for&#32;self-test</emphasis>
+26 <emphasis role="comment">//&#32;Reference&#32;values&#32;based&#32;on&#32;firmware&#32;version</emphasis>
+27 <emphasis role="comment">//&#32;Hint:&#32;if&#32;needed,&#32;you&#32;can&#32;remove&#32;unused&#32;self-test&#32;data&#32;to&#32;save&#32;flash&#32;memory</emphasis>
+28 <emphasis role="comment">//</emphasis>
+29 <emphasis role="comment">//&#32;Version&#32;0.0&#32;(0x90)</emphasis>
+30 <emphasis role="comment">//&#32;Philips&#32;Semiconductors;&#32;Preliminary&#32;Specification&#32;Revision&#32;2.0&#32;-&#32;01&#32;August&#32;2005;&#32;16.1&#32;self-test</emphasis>
+31 <emphasis role="keyword">const</emphasis>&#32;<emphasis role="keywordtype">byte</emphasis>&#32;MFRC522_firmware_referenceV0_0[]&#32;PROGMEM&#32;=&#32;{
+32 &#32;&#32;&#32;&#32;0x00,&#32;0x87,&#32;0x98,&#32;0x0f,&#32;0x49,&#32;0xFF,&#32;0x07,&#32;0x19,
+33 &#32;&#32;&#32;&#32;0xBF,&#32;0x22,&#32;0x30,&#32;0x49,&#32;0x59,&#32;0x63,&#32;0xAD,&#32;0xCA,
+34 &#32;&#32;&#32;&#32;0x7F,&#32;0xE3,&#32;0x4E,&#32;0x03,&#32;0x5C,&#32;0x4E,&#32;0x49,&#32;0x50,
+35 &#32;&#32;&#32;&#32;0x47,&#32;0x9A,&#32;0x37,&#32;0x61,&#32;0xE7,&#32;0xE2,&#32;0xC6,&#32;0x2E,
+36 &#32;&#32;&#32;&#32;0x75,&#32;0x5A,&#32;0xED,&#32;0x04,&#32;0x3D,&#32;0x02,&#32;0x4B,&#32;0x78,
+37 &#32;&#32;&#32;&#32;0x32,&#32;0xFF,&#32;0x58,&#32;0x3B,&#32;0x7C,&#32;0xE9,&#32;0x00,&#32;0x94,
+38 &#32;&#32;&#32;&#32;0xB4,&#32;0x4A,&#32;0x59,&#32;0x5B,&#32;0xFD,&#32;0xC9,&#32;0x29,&#32;0xDF,
+39 &#32;&#32;&#32;&#32;0x35,&#32;0x96,&#32;0x98,&#32;0x9E,&#32;0x4F,&#32;0x30,&#32;0x32,&#32;0x8D
+40 };
+41 <emphasis role="comment">//&#32;Version&#32;1.0&#32;(0x91)</emphasis>
+42 <emphasis role="comment">//&#32;NXP&#32;Semiconductors;&#32;Rev.&#32;3.8&#32;-&#32;17&#32;September&#32;2014;&#32;16.1.1&#32;self-test</emphasis>
+43 <emphasis role="keyword">const</emphasis>&#32;<emphasis role="keywordtype">byte</emphasis>&#32;MFRC522_firmware_referenceV1_0[]&#32;PROGMEM&#32;=&#32;{
+44 &#32;&#32;&#32;&#32;0x00,&#32;0xC6,&#32;0x37,&#32;0xD5,&#32;0x32,&#32;0xB7,&#32;0x57,&#32;0x5C,
+45 &#32;&#32;&#32;&#32;0xC2,&#32;0xD8,&#32;0x7C,&#32;0x4D,&#32;0xD9,&#32;0x70,&#32;0xC7,&#32;0x73,
+46 &#32;&#32;&#32;&#32;0x10,&#32;0xE6,&#32;0xD2,&#32;0xAA,&#32;0x5E,&#32;0xA1,&#32;0x3E,&#32;0x5A,
+47 &#32;&#32;&#32;&#32;0x14,&#32;0xAF,&#32;0x30,&#32;0x61,&#32;0xC9,&#32;0x70,&#32;0xDB,&#32;0x2E,
+48 &#32;&#32;&#32;&#32;0x64,&#32;0x22,&#32;0x72,&#32;0xB5,&#32;0xBD,&#32;0x65,&#32;0xF4,&#32;0xEC,
+49 &#32;&#32;&#32;&#32;0x22,&#32;0xBC,&#32;0xD3,&#32;0x72,&#32;0x35,&#32;0xCD,&#32;0xAA,&#32;0x41,
+50 &#32;&#32;&#32;&#32;0x1F,&#32;0xA7,&#32;0xF3,&#32;0x53,&#32;0x14,&#32;0xDE,&#32;0x7E,&#32;0x02,
+51 &#32;&#32;&#32;&#32;0xD9,&#32;0x0F,&#32;0xB5,&#32;0x5E,&#32;0x25,&#32;0x1D,&#32;0x29,&#32;0x79
+52 };
+53 <emphasis role="comment">//&#32;Version&#32;2.0&#32;(0x92)</emphasis>
+54 <emphasis role="comment">//&#32;NXP&#32;Semiconductors;&#32;Rev.&#32;3.8&#32;-&#32;17&#32;September&#32;2014;&#32;16.1.1&#32;self-test</emphasis>
+55 <emphasis role="keyword">const</emphasis>&#32;<emphasis role="keywordtype">byte</emphasis>&#32;MFRC522_firmware_referenceV2_0[]&#32;PROGMEM&#32;=&#32;{
+56 &#32;&#32;&#32;&#32;0x00,&#32;0xEB,&#32;0x66,&#32;0xBA,&#32;0x57,&#32;0xBF,&#32;0x23,&#32;0x95,
+57 &#32;&#32;&#32;&#32;0xD0,&#32;0xE3,&#32;0x0D,&#32;0x3D,&#32;0x27,&#32;0x89,&#32;0x5C,&#32;0xDE,
+58 &#32;&#32;&#32;&#32;0x9D,&#32;0x3B,&#32;0xA7,&#32;0x00,&#32;0x21,&#32;0x5B,&#32;0x89,&#32;0x82,
+59 &#32;&#32;&#32;&#32;0x51,&#32;0x3A,&#32;0xEB,&#32;0x02,&#32;0x0C,&#32;0xA5,&#32;0x00,&#32;0x49,
+60 &#32;&#32;&#32;&#32;0x7C,&#32;0x84,&#32;0x4D,&#32;0xB3,&#32;0xCC,&#32;0xD2,&#32;0x1B,&#32;0x81,
+61 &#32;&#32;&#32;&#32;0x5D,&#32;0x48,&#32;0x76,&#32;0xD5,&#32;0x71,&#32;0x61,&#32;0x21,&#32;0xA9,
+62 &#32;&#32;&#32;&#32;0x86,&#32;0x96,&#32;0x83,&#32;0x38,&#32;0xCF,&#32;0x9D,&#32;0x5B,&#32;0x6D,
+63 &#32;&#32;&#32;&#32;0xDC,&#32;0x15,&#32;0xBA,&#32;0x3E,&#32;0x7D,&#32;0x95,&#32;0x3B,&#32;0x2F
+64 };
+65 <emphasis role="comment">//&#32;Clone</emphasis>
+66 <emphasis role="comment">//&#32;Fudan&#32;Semiconductor&#32;FM17522&#32;(0x88)</emphasis>
+67 <emphasis role="keyword">const</emphasis>&#32;<emphasis role="keywordtype">byte</emphasis>&#32;FM17522_firmware_reference[]&#32;PROGMEM&#32;=&#32;{
+68 &#32;&#32;&#32;&#32;0x00,&#32;0xD6,&#32;0x78,&#32;0x8C,&#32;0xE2,&#32;0xAA,&#32;0x0C,&#32;0x18,
+69 &#32;&#32;&#32;&#32;0x2A,&#32;0xB8,&#32;0x7A,&#32;0x7F,&#32;0xD3,&#32;0x6A,&#32;0xCF,&#32;0x0B,
+70 &#32;&#32;&#32;&#32;0xB1,&#32;0x37,&#32;0x63,&#32;0x4B,&#32;0x69,&#32;0xAE,&#32;0x91,&#32;0xC7,
+71 &#32;&#32;&#32;&#32;0xC3,&#32;0x97,&#32;0xAE,&#32;0x77,&#32;0xF4,&#32;0x37,&#32;0xD7,&#32;0x9B,
+72 &#32;&#32;&#32;&#32;0x7C,&#32;0xF5,&#32;0x3C,&#32;0x11,&#32;0x8F,&#32;0x15,&#32;0xC3,&#32;0xD7,
+73 &#32;&#32;&#32;&#32;0xC1,&#32;0x5B,&#32;0x00,&#32;0x2A,&#32;0xD0,&#32;0x75,&#32;0xDE,&#32;0x9E,
+74 &#32;&#32;&#32;&#32;0x51,&#32;0x64,&#32;0xAB,&#32;0x3E,&#32;0xE9,&#32;0x15,&#32;0xB5,&#32;0xAB,
+75 &#32;&#32;&#32;&#32;0x56,&#32;0x9A,&#32;0x98,&#32;0x82,&#32;0x26,&#32;0xEA,&#32;0x2A,&#32;0x62
+76 };
+77 
+78 <emphasis role="keyword">class&#32;</emphasis><link linkend="_classMFRC522">MFRC522</link>&#32;{
+79 <emphasis role="keyword">public</emphasis>:
+80 &#32;&#32;&#32;&#32;<emphasis role="comment">//&#32;Size&#32;of&#32;the&#32;MFRC522&#32;FIFO</emphasis>
+81 &#32;&#32;&#32;&#32;<emphasis role="keyword">static</emphasis>&#32;<emphasis role="keyword">constexpr</emphasis>&#32;<emphasis role="keywordtype">byte</emphasis>&#32;FIFO_SIZE&#32;=&#32;64;&#32;&#32;&#32;&#32;&#32;&#32;&#32;<emphasis role="comment">//&#32;The&#32;FIFO&#32;is&#32;64&#32;bytes.</emphasis>
+82 &#32;&#32;&#32;&#32;<emphasis role="comment">//&#32;Default&#32;value&#32;for&#32;unused&#32;pin</emphasis>
+83 &#32;&#32;&#32;&#32;<emphasis role="keyword">static</emphasis>&#32;<emphasis role="keyword">constexpr</emphasis>&#32;uint8_t&#32;UNUSED_PIN&#32;=&#32;UINT8_MAX;
+84 
+85 &#32;&#32;&#32;&#32;<emphasis role="comment">//&#32;MFRC522&#32;registers.&#32;Described&#32;in&#32;chapter&#32;9&#32;of&#32;the&#32;datasheet.</emphasis>
+86 &#32;&#32;&#32;&#32;<emphasis role="comment">//&#32;When&#32;using&#32;SPI&#32;all&#32;addresses&#32;are&#32;shifted&#32;one&#32;bit&#32;left&#32;in&#32;the&#32;&quot;SPI&#32;address&#32;byte&quot;&#32;(section&#32;8.1.2.3)</emphasis>
+87 &#32;&#32;&#32;&#32;<emphasis role="keyword">enum</emphasis>&#32;PCD_Register&#32;:&#32;<emphasis role="keywordtype">byte</emphasis>&#32;{
+88 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;<emphasis role="comment">//&#32;Page&#32;0:&#32;Command&#32;and&#32;status</emphasis>
+89 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;<emphasis role="comment">//&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;0x00&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;//&#32;reserved&#32;for&#32;future&#32;use</emphasis>
+90 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;CommandReg&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;=&#32;0x01&#32;&lt;&lt;&#32;1,&#32;&#32;&#32;&#32;<emphasis role="comment">//&#32;starts&#32;and&#32;stops&#32;command&#32;execution</emphasis>
+91 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;ComIEnReg&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;=&#32;0x02&#32;&lt;&lt;&#32;1,&#32;&#32;&#32;&#32;<emphasis role="comment">//&#32;enable&#32;and&#32;disable&#32;interrupt&#32;request&#32;control&#32;bits</emphasis>
+92 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;DivIEnReg&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;=&#32;0x03&#32;&lt;&lt;&#32;1,&#32;&#32;&#32;&#32;<emphasis role="comment">//&#32;enable&#32;and&#32;disable&#32;interrupt&#32;request&#32;control&#32;bits</emphasis>
+93 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;ComIrqReg&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;=&#32;0x04&#32;&lt;&lt;&#32;1,&#32;&#32;&#32;&#32;<emphasis role="comment">//&#32;interrupt&#32;request&#32;bits</emphasis>
+94 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;DivIrqReg&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;=&#32;0x05&#32;&lt;&lt;&#32;1,&#32;&#32;&#32;&#32;<emphasis role="comment">//&#32;interrupt&#32;request&#32;bits</emphasis>
+95 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;ErrorReg&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;=&#32;0x06&#32;&lt;&lt;&#32;1,&#32;&#32;&#32;&#32;<emphasis role="comment">//&#32;error&#32;bits&#32;showing&#32;the&#32;error&#32;status&#32;of&#32;the&#32;last&#32;command&#32;executed&#32;</emphasis>
+96 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;Status1Reg&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;=&#32;0x07&#32;&lt;&lt;&#32;1,&#32;&#32;&#32;&#32;<emphasis role="comment">//&#32;communication&#32;status&#32;bits</emphasis>
+97 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;Status2Reg&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;=&#32;0x08&#32;&lt;&lt;&#32;1,&#32;&#32;&#32;&#32;<emphasis role="comment">//&#32;receiver&#32;and&#32;transmitter&#32;status&#32;bits</emphasis>
+98 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;FIFODataReg&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;=&#32;0x09&#32;&lt;&lt;&#32;1,&#32;&#32;&#32;&#32;<emphasis role="comment">//&#32;input&#32;and&#32;output&#32;of&#32;64&#32;byte&#32;FIFO&#32;buffer</emphasis>
+99 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;FIFOLevelReg&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;=&#32;0x0A&#32;&lt;&lt;&#32;1,&#32;&#32;&#32;&#32;<emphasis role="comment">//&#32;number&#32;of&#32;bytes&#32;stored&#32;in&#32;the&#32;FIFO&#32;buffer</emphasis>
+100 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;WaterLevelReg&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;=&#32;0x0B&#32;&lt;&lt;&#32;1,&#32;&#32;&#32;&#32;<emphasis role="comment">//&#32;level&#32;for&#32;FIFO&#32;underflow&#32;and&#32;overflow&#32;warning</emphasis>
+101 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;ControlReg&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;=&#32;0x0C&#32;&lt;&lt;&#32;1,&#32;&#32;&#32;&#32;<emphasis role="comment">//&#32;miscellaneous&#32;control&#32;registers</emphasis>
+102 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;BitFramingReg&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;=&#32;0x0D&#32;&lt;&lt;&#32;1,&#32;&#32;&#32;&#32;<emphasis role="comment">//&#32;adjustments&#32;for&#32;bit-oriented&#32;frames</emphasis>
+103 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;CollReg&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;=&#32;0x0E&#32;&lt;&lt;&#32;1,&#32;&#32;&#32;&#32;<emphasis role="comment">//&#32;bit&#32;position&#32;of&#32;the&#32;first&#32;bit-collision&#32;detected&#32;on&#32;the&#32;RF&#32;interface</emphasis>
+104 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;<emphasis role="comment">//&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;0x0F&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;//&#32;reserved&#32;for&#32;future&#32;use</emphasis>
+105 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;
+106 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;<emphasis role="comment">//&#32;Page&#32;1:&#32;Command</emphasis>
+107 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;<emphasis role="comment">//&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;0x10&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;//&#32;reserved&#32;for&#32;future&#32;use</emphasis>
+108 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;ModeReg&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;=&#32;0x11&#32;&lt;&lt;&#32;1,&#32;&#32;&#32;&#32;<emphasis role="comment">//&#32;defines&#32;general&#32;modes&#32;for&#32;transmitting&#32;and&#32;receiving&#32;</emphasis>
+109 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;TxModeReg&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;=&#32;0x12&#32;&lt;&lt;&#32;1,&#32;&#32;&#32;&#32;<emphasis role="comment">//&#32;defines&#32;transmission&#32;data&#32;rate&#32;and&#32;framing</emphasis>
+110 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;RxModeReg&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;=&#32;0x13&#32;&lt;&lt;&#32;1,&#32;&#32;&#32;&#32;<emphasis role="comment">//&#32;defines&#32;reception&#32;data&#32;rate&#32;and&#32;framing</emphasis>
+111 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;TxControlReg&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;=&#32;0x14&#32;&lt;&lt;&#32;1,&#32;&#32;&#32;&#32;<emphasis role="comment">//&#32;controls&#32;the&#32;logical&#32;behavior&#32;of&#32;the&#32;antenna&#32;driver&#32;pins&#32;TX1&#32;and&#32;TX2</emphasis>
+112 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;TxASKReg&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;=&#32;0x15&#32;&lt;&lt;&#32;1,&#32;&#32;&#32;&#32;<emphasis role="comment">//&#32;controls&#32;the&#32;setting&#32;of&#32;the&#32;transmission&#32;modulation</emphasis>
+113 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;TxSelReg&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;=&#32;0x16&#32;&lt;&lt;&#32;1,&#32;&#32;&#32;&#32;<emphasis role="comment">//&#32;selects&#32;the&#32;internal&#32;sources&#32;for&#32;the&#32;antenna&#32;driver</emphasis>
+114 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;RxSelReg&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;=&#32;0x17&#32;&lt;&lt;&#32;1,&#32;&#32;&#32;&#32;<emphasis role="comment">//&#32;selects&#32;internal&#32;receiver&#32;settings</emphasis>
+115 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;RxThresholdReg&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;=&#32;0x18&#32;&lt;&lt;&#32;1,&#32;&#32;&#32;&#32;<emphasis role="comment">//&#32;selects&#32;thresholds&#32;for&#32;the&#32;bit&#32;decoder</emphasis>
+116 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;DemodReg&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;=&#32;0x19&#32;&lt;&lt;&#32;1,&#32;&#32;&#32;&#32;<emphasis role="comment">//&#32;defines&#32;demodulator&#32;settings</emphasis>
+117 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;<emphasis role="comment">//&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;0x1A&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;//&#32;reserved&#32;for&#32;future&#32;use</emphasis>
+118 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;<emphasis role="comment">//&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;0x1B&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;//&#32;reserved&#32;for&#32;future&#32;use</emphasis>
+119 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;MfTxReg&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;=&#32;0x1C&#32;&lt;&lt;&#32;1,&#32;&#32;&#32;&#32;<emphasis role="comment">//&#32;controls&#32;some&#32;MIFARE&#32;communication&#32;transmit&#32;parameters</emphasis>
+120 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;MfRxReg&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;=&#32;0x1D&#32;&lt;&lt;&#32;1,&#32;&#32;&#32;&#32;<emphasis role="comment">//&#32;controls&#32;some&#32;MIFARE&#32;communication&#32;receive&#32;parameters</emphasis>
+121 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;<emphasis role="comment">//&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;0x1E&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;//&#32;reserved&#32;for&#32;future&#32;use</emphasis>
+122 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;SerialSpeedReg&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;=&#32;0x1F&#32;&lt;&lt;&#32;1,&#32;&#32;&#32;&#32;<emphasis role="comment">//&#32;selects&#32;the&#32;speed&#32;of&#32;the&#32;serial&#32;UART&#32;interface</emphasis>
+123 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;
+124 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;<emphasis role="comment">//&#32;Page&#32;2:&#32;Configuration</emphasis>
+125 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;<emphasis role="comment">//&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;0x20&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;//&#32;reserved&#32;for&#32;future&#32;use</emphasis>
+126 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;CRCResultRegH&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;=&#32;0x21&#32;&lt;&lt;&#32;1,&#32;&#32;&#32;&#32;<emphasis role="comment">//&#32;shows&#32;the&#32;MSB&#32;and&#32;LSB&#32;values&#32;of&#32;the&#32;CRC&#32;calculation</emphasis>
+127 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;CRCResultRegL&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;=&#32;0x22&#32;&lt;&lt;&#32;1,
+128 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;<emphasis role="comment">//&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;0x23&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;//&#32;reserved&#32;for&#32;future&#32;use</emphasis>
+129 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;ModWidthReg&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;=&#32;0x24&#32;&lt;&lt;&#32;1,&#32;&#32;&#32;&#32;<emphasis role="comment">//&#32;controls&#32;the&#32;ModWidth&#32;setting?</emphasis>
+130 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;<emphasis role="comment">//&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;0x25&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;//&#32;reserved&#32;for&#32;future&#32;use</emphasis>
+131 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;RFCfgReg&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;=&#32;0x26&#32;&lt;&lt;&#32;1,&#32;&#32;&#32;&#32;<emphasis role="comment">//&#32;configures&#32;the&#32;receiver&#32;gain</emphasis>
+132 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;GsNReg&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;=&#32;0x27&#32;&lt;&lt;&#32;1,&#32;&#32;&#32;&#32;<emphasis role="comment">//&#32;selects&#32;the&#32;conductance&#32;of&#32;the&#32;antenna&#32;driver&#32;pins&#32;TX1&#32;and&#32;TX2&#32;for&#32;modulation&#32;</emphasis>
+133 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;CWGsPReg&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;=&#32;0x28&#32;&lt;&lt;&#32;1,&#32;&#32;&#32;&#32;<emphasis role="comment">//&#32;defines&#32;the&#32;conductance&#32;of&#32;the&#32;p-driver&#32;output&#32;during&#32;periods&#32;of&#32;no&#32;modulation</emphasis>
+134 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;ModGsPReg&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;=&#32;0x29&#32;&lt;&lt;&#32;1,&#32;&#32;&#32;&#32;<emphasis role="comment">//&#32;defines&#32;the&#32;conductance&#32;of&#32;the&#32;p-driver&#32;output&#32;during&#32;periods&#32;of&#32;modulation</emphasis>
+135 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;TModeReg&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;=&#32;0x2A&#32;&lt;&lt;&#32;1,&#32;&#32;&#32;&#32;<emphasis role="comment">//&#32;defines&#32;settings&#32;for&#32;the&#32;internal&#32;timer</emphasis>
+136 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;TPrescalerReg&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;=&#32;0x2B&#32;&lt;&lt;&#32;1,&#32;&#32;&#32;&#32;<emphasis role="comment">//&#32;the&#32;lower&#32;8&#32;bits&#32;of&#32;the&#32;TPrescaler&#32;value.&#32;The&#32;4&#32;high&#32;bits&#32;are&#32;in&#32;TModeReg.</emphasis>
+137 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;TReloadRegH&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;=&#32;0x2C&#32;&lt;&lt;&#32;1,&#32;&#32;&#32;&#32;<emphasis role="comment">//&#32;defines&#32;the&#32;16-bit&#32;timer&#32;reload&#32;value</emphasis>
+138 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;TReloadRegL&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;=&#32;0x2D&#32;&lt;&lt;&#32;1,
+139 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;TCounterValueRegH&#32;&#32;&#32;&#32;&#32;&#32;&#32;=&#32;0x2E&#32;&lt;&lt;&#32;1,&#32;&#32;&#32;&#32;<emphasis role="comment">//&#32;shows&#32;the&#32;16-bit&#32;timer&#32;value</emphasis>
+140 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;TCounterValueRegL&#32;&#32;&#32;&#32;&#32;&#32;&#32;=&#32;0x2F&#32;&lt;&lt;&#32;1,
+141 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;
+142 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;<emphasis role="comment">//&#32;Page&#32;3:&#32;Test&#32;Registers</emphasis>
+143 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;<emphasis role="comment">//&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;0x30&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;//&#32;reserved&#32;for&#32;future&#32;use</emphasis>
+144 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;TestSel1Reg&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;=&#32;0x31&#32;&lt;&lt;&#32;1,&#32;&#32;&#32;&#32;<emphasis role="comment">//&#32;general&#32;test&#32;signal&#32;configuration</emphasis>
+145 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;TestSel2Reg&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;=&#32;0x32&#32;&lt;&lt;&#32;1,&#32;&#32;&#32;&#32;<emphasis role="comment">//&#32;general&#32;test&#32;signal&#32;configuration</emphasis>
+146 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;TestPinEnReg&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;=&#32;0x33&#32;&lt;&lt;&#32;1,&#32;&#32;&#32;&#32;<emphasis role="comment">//&#32;enables&#32;pin&#32;output&#32;driver&#32;on&#32;pins&#32;D1&#32;to&#32;D7</emphasis>
+147 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;TestPinValueReg&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;=&#32;0x34&#32;&lt;&lt;&#32;1,&#32;&#32;&#32;&#32;<emphasis role="comment">//&#32;defines&#32;the&#32;values&#32;for&#32;D1&#32;to&#32;D7&#32;when&#32;it&#32;is&#32;used&#32;as&#32;an&#32;I/O&#32;bus</emphasis>
+148 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;TestBusReg&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;=&#32;0x35&#32;&lt;&lt;&#32;1,&#32;&#32;&#32;&#32;<emphasis role="comment">//&#32;shows&#32;the&#32;status&#32;of&#32;the&#32;internal&#32;test&#32;bus</emphasis>
+149 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;AutoTestReg&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;=&#32;0x36&#32;&lt;&lt;&#32;1,&#32;&#32;&#32;&#32;<emphasis role="comment">//&#32;controls&#32;the&#32;digital&#32;self-test</emphasis>
+150 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;VersionReg&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;=&#32;0x37&#32;&lt;&lt;&#32;1,&#32;&#32;&#32;&#32;<emphasis role="comment">//&#32;shows&#32;the&#32;software&#32;version</emphasis>
+151 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;AnalogTestReg&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;=&#32;0x38&#32;&lt;&lt;&#32;1,&#32;&#32;&#32;&#32;<emphasis role="comment">//&#32;controls&#32;the&#32;pins&#32;AUX1&#32;and&#32;AUX2</emphasis>
+152 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;TestDAC1Reg&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;=&#32;0x39&#32;&lt;&lt;&#32;1,&#32;&#32;&#32;&#32;<emphasis role="comment">//&#32;defines&#32;the&#32;test&#32;value&#32;for&#32;TestDAC1</emphasis>
+153 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;TestDAC2Reg&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;=&#32;0x3A&#32;&lt;&lt;&#32;1,&#32;&#32;&#32;&#32;<emphasis role="comment">//&#32;defines&#32;the&#32;test&#32;value&#32;for&#32;TestDAC2</emphasis>
+154 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;TestADCReg&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;=&#32;0x3B&#32;&lt;&lt;&#32;1&#32;&#32;&#32;&#32;&#32;<emphasis role="comment">//&#32;shows&#32;the&#32;value&#32;of&#32;ADC&#32;I&#32;and&#32;Q&#32;channels</emphasis>
+155 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;<emphasis role="comment">//&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;0x3C&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;//&#32;reserved&#32;for&#32;production&#32;tests</emphasis>
+156 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;<emphasis role="comment">//&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;0x3D&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;//&#32;reserved&#32;for&#32;production&#32;tests</emphasis>
+157 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;<emphasis role="comment">//&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;0x3E&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;//&#32;reserved&#32;for&#32;production&#32;tests</emphasis>
+158 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;<emphasis role="comment">//&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;0x3F&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;//&#32;reserved&#32;for&#32;production&#32;tests</emphasis>
+159 &#32;&#32;&#32;&#32;};
+160 &#32;&#32;&#32;&#32;
+161 &#32;&#32;&#32;&#32;<emphasis role="comment">//&#32;MFRC522&#32;commands.&#32;Described&#32;in&#32;chapter&#32;10&#32;of&#32;the&#32;datasheet.</emphasis>
+162 &#32;&#32;&#32;&#32;<emphasis role="keyword">enum</emphasis>&#32;PCD_Command&#32;:&#32;<emphasis role="keywordtype">byte</emphasis>&#32;{
+163 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;PCD_Idle&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;=&#32;0x00,&#32;&#32;&#32;&#32;&#32;<emphasis role="comment">//&#32;no&#32;action,&#32;cancels&#32;current&#32;command&#32;execution</emphasis>
+164 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;PCD_Mem&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;=&#32;0x01,&#32;&#32;&#32;&#32;&#32;<emphasis role="comment">//&#32;stores&#32;25&#32;bytes&#32;into&#32;the&#32;internal&#32;buffer</emphasis>
+165 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;PCD_GenerateRandomID&#32;&#32;&#32;&#32;=&#32;0x02,&#32;&#32;&#32;&#32;&#32;<emphasis role="comment">//&#32;generates&#32;a&#32;10-byte&#32;random&#32;ID&#32;number</emphasis>
+166 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;PCD_CalcCRC&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;=&#32;0x03,&#32;&#32;&#32;&#32;&#32;<emphasis role="comment">//&#32;activates&#32;the&#32;CRC&#32;coprocessor&#32;or&#32;performs&#32;a&#32;self-test</emphasis>
+167 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;PCD_Transmit&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;=&#32;0x04,&#32;&#32;&#32;&#32;&#32;<emphasis role="comment">//&#32;transmits&#32;data&#32;from&#32;the&#32;FIFO&#32;buffer</emphasis>
+168 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;PCD_NoCmdChange&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;=&#32;0x07,&#32;&#32;&#32;&#32;&#32;<emphasis role="comment">//&#32;no&#32;command&#32;change,&#32;can&#32;be&#32;used&#32;to&#32;modify&#32;the&#32;CommandReg&#32;register&#32;bits&#32;without&#32;affecting&#32;the&#32;command,&#32;for&#32;example,&#32;the&#32;PowerDown&#32;bit</emphasis>
+169 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;PCD_Receive&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;=&#32;0x08,&#32;&#32;&#32;&#32;&#32;<emphasis role="comment">//&#32;activates&#32;the&#32;receiver&#32;circuits</emphasis>
+170 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;PCD_Transceive&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;=&#32;0x0C,&#32;&#32;&#32;&#32;&#32;<emphasis role="comment">//&#32;transmits&#32;data&#32;from&#32;FIFO&#32;buffer&#32;to&#32;antenna&#32;and&#32;automatically&#32;activates&#32;the&#32;receiver&#32;after&#32;transmission</emphasis>
+171 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;PCD_MFAuthent&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;=&#32;0x0E,&#32;&#32;&#32;&#32;&#32;<emphasis role="comment">//&#32;performs&#32;the&#32;MIFARE&#32;standard&#32;authentication&#32;as&#32;a&#32;reader</emphasis>
+172 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;PCD_SoftReset&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;=&#32;0x0F&#32;&#32;&#32;&#32;&#32;&#32;<emphasis role="comment">//&#32;resets&#32;the&#32;MFRC522</emphasis>
+173 &#32;&#32;&#32;&#32;};
+174 &#32;&#32;&#32;&#32;
+175 &#32;&#32;&#32;&#32;<emphasis role="comment">//&#32;MFRC522&#32;RxGain[2:0]&#32;masks,&#32;defines&#32;the&#32;receiver&apos;s&#32;signal&#32;voltage&#32;gain&#32;factor&#32;(on&#32;the&#32;PCD).</emphasis>
+176 &#32;&#32;&#32;&#32;<emphasis role="comment">//&#32;Described&#32;in&#32;9.3.3.6&#32;/&#32;table&#32;98&#32;of&#32;the&#32;datasheet&#32;at&#32;http://www.nxp.com/documents/data_sheet/MFRC522.pdf</emphasis>
+177 &#32;&#32;&#32;&#32;<emphasis role="keyword">enum</emphasis>&#32;PCD_RxGain&#32;:&#32;<emphasis role="keywordtype">byte</emphasis>&#32;{
+178 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;RxGain_18dB&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;=&#32;0x00&#32;&lt;&lt;&#32;4,&#32;&#32;&#32;&#32;<emphasis role="comment">//&#32;000b&#32;-&#32;18&#32;dB,&#32;minimum</emphasis>
+179 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;RxGain_23dB&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;=&#32;0x01&#32;&lt;&lt;&#32;4,&#32;&#32;&#32;&#32;<emphasis role="comment">//&#32;001b&#32;-&#32;23&#32;dB</emphasis>
+180 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;RxGain_18dB_2&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;=&#32;0x02&#32;&lt;&lt;&#32;4,&#32;&#32;&#32;&#32;<emphasis role="comment">//&#32;010b&#32;-&#32;18&#32;dB,&#32;it&#32;seems&#32;010b&#32;is&#32;a&#32;duplicate&#32;for&#32;000b</emphasis>
+181 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;RxGain_23dB_2&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;=&#32;0x03&#32;&lt;&lt;&#32;4,&#32;&#32;&#32;&#32;<emphasis role="comment">//&#32;011b&#32;-&#32;23&#32;dB,&#32;it&#32;seems&#32;011b&#32;is&#32;a&#32;duplicate&#32;for&#32;001b</emphasis>
+182 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;RxGain_33dB&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;=&#32;0x04&#32;&lt;&lt;&#32;4,&#32;&#32;&#32;&#32;<emphasis role="comment">//&#32;100b&#32;-&#32;33&#32;dB,&#32;average,&#32;and&#32;typical&#32;default</emphasis>
+183 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;RxGain_38dB&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;=&#32;0x05&#32;&lt;&lt;&#32;4,&#32;&#32;&#32;&#32;<emphasis role="comment">//&#32;101b&#32;-&#32;38&#32;dB</emphasis>
+184 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;RxGain_43dB&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;=&#32;0x06&#32;&lt;&lt;&#32;4,&#32;&#32;&#32;&#32;<emphasis role="comment">//&#32;110b&#32;-&#32;43&#32;dB</emphasis>
+185 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;RxGain_48dB&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;=&#32;0x07&#32;&lt;&lt;&#32;4,&#32;&#32;&#32;&#32;<emphasis role="comment">//&#32;111b&#32;-&#32;48&#32;dB,&#32;maximum</emphasis>
+186 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;RxGain_min&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;=&#32;0x00&#32;&lt;&lt;&#32;4,&#32;&#32;&#32;&#32;<emphasis role="comment">//&#32;000b&#32;-&#32;18&#32;dB,&#32;minimum,&#32;convenience&#32;for&#32;RxGain_18dB</emphasis>
+187 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;RxGain_avg&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;=&#32;0x04&#32;&lt;&lt;&#32;4,&#32;&#32;&#32;&#32;<emphasis role="comment">//&#32;100b&#32;-&#32;33&#32;dB,&#32;average,&#32;convenience&#32;for&#32;RxGain_33dB</emphasis>
+188 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;RxGain_max&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;=&#32;0x07&#32;&lt;&lt;&#32;4&#32;&#32;&#32;&#32;&#32;<emphasis role="comment">//&#32;111b&#32;-&#32;48&#32;dB,&#32;maximum,&#32;convenience&#32;for&#32;RxGain_48dB</emphasis>
+189 &#32;&#32;&#32;&#32;};
+190 &#32;&#32;&#32;&#32;
+191 &#32;&#32;&#32;&#32;<emphasis role="comment">//&#32;Commands&#32;sent&#32;to&#32;the&#32;PICC.</emphasis>
+192 &#32;&#32;&#32;&#32;<emphasis role="keyword">enum</emphasis>&#32;PICC_Command&#32;:&#32;<emphasis role="keywordtype">byte</emphasis>&#32;{
+193 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;<emphasis role="comment">//&#32;The&#32;commands&#32;used&#32;by&#32;the&#32;PCD&#32;to&#32;manage&#32;communication&#32;with&#32;several&#32;PICCs&#32;(ISO&#32;14443-3,&#32;Type&#32;A,&#32;section&#32;6.4)</emphasis>
+194 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;PICC_CMD_REQA&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;=&#32;0x26,&#32;&#32;&#32;&#32;&#32;<emphasis role="comment">//&#32;REQuest&#32;command,&#32;Type&#32;A.&#32;Invites&#32;PICCs&#32;in&#32;state&#32;IDLE&#32;to&#32;go&#32;to&#32;READY&#32;and&#32;prepare&#32;for&#32;anticollision&#32;or&#32;selection.&#32;7&#32;bit&#32;frame.</emphasis>
+195 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;PICC_CMD_WUPA&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;=&#32;0x52,&#32;&#32;&#32;&#32;&#32;<emphasis role="comment">//&#32;Wake-UP&#32;command,&#32;Type&#32;A.&#32;Invites&#32;PICCs&#32;in&#32;state&#32;IDLE&#32;and&#32;HALT&#32;to&#32;go&#32;to&#32;READY(*)&#32;and&#32;prepare&#32;for&#32;anticollision&#32;or&#32;selection.&#32;7&#32;bit&#32;frame.</emphasis>
+196 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;PICC_CMD_CT&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;=&#32;0x88,&#32;&#32;&#32;&#32;&#32;<emphasis role="comment">//&#32;Cascade&#32;Tag.&#32;Not&#32;really&#32;a&#32;command,&#32;but&#32;used&#32;during&#32;anti&#32;collision.</emphasis>
+197 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;PICC_CMD_SEL_CL1&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;=&#32;0x93,&#32;&#32;&#32;&#32;&#32;<emphasis role="comment">//&#32;Anti&#32;collision/Select,&#32;Cascade&#32;Level&#32;1</emphasis>
+198 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;PICC_CMD_SEL_CL2&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;=&#32;0x95,&#32;&#32;&#32;&#32;&#32;<emphasis role="comment">//&#32;Anti&#32;collision/Select,&#32;Cascade&#32;Level&#32;2</emphasis>
+199 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;PICC_CMD_SEL_CL3&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;=&#32;0x97,&#32;&#32;&#32;&#32;&#32;<emphasis role="comment">//&#32;Anti&#32;collision/Select,&#32;Cascade&#32;Level&#32;3</emphasis>
+200 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;PICC_CMD_HLTA&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;=&#32;0x50,&#32;&#32;&#32;&#32;&#32;<emphasis role="comment">//&#32;HaLT&#32;command,&#32;Type&#32;A.&#32;Instructs&#32;an&#32;ACTIVE&#32;PICC&#32;to&#32;go&#32;to&#32;state&#32;HALT.</emphasis>
+201 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;PICC_CMD_RATS&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;=&#32;0xE0,&#32;&#32;&#32;&#32;&#32;<emphasis role="comment">//&#32;Request&#32;command&#32;for&#32;Answer&#32;To&#32;Reset.</emphasis>
+202 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;<emphasis role="comment">//&#32;The&#32;commands&#32;used&#32;for&#32;MIFARE&#32;Classic&#32;(from&#32;http://www.mouser.com/ds/2/302/MF1S503x-89574.pdf,&#32;Section&#32;9)</emphasis>
+203 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;<emphasis role="comment">//&#32;Use&#32;PCD_MFAuthent&#32;to&#32;authenticate&#32;access&#32;to&#32;a&#32;sector,&#32;then&#32;use&#32;these&#32;commands&#32;to&#32;read/write/modify&#32;the&#32;blocks&#32;on&#32;the&#32;sector.</emphasis>
+204 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;<emphasis role="comment">//&#32;The&#32;read/write&#32;commands&#32;can&#32;also&#32;be&#32;used&#32;for&#32;MIFARE&#32;Ultralight.</emphasis>
+205 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;PICC_CMD_MF_AUTH_KEY_A&#32;&#32;=&#32;0x60,&#32;&#32;&#32;&#32;&#32;<emphasis role="comment">//&#32;Perform&#32;authentication&#32;with&#32;Key&#32;A</emphasis>
+206 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;PICC_CMD_MF_AUTH_KEY_B&#32;&#32;=&#32;0x61,&#32;&#32;&#32;&#32;&#32;<emphasis role="comment">//&#32;Perform&#32;authentication&#32;with&#32;Key&#32;B</emphasis>
+207 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;PICC_CMD_MF_READ&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;=&#32;0x30,&#32;&#32;&#32;&#32;&#32;<emphasis role="comment">//&#32;Reads&#32;one&#32;16&#32;byte&#32;block&#32;from&#32;the&#32;authenticated&#32;sector&#32;of&#32;the&#32;PICC.&#32;Also&#32;used&#32;for&#32;MIFARE&#32;Ultralight.</emphasis>
+208 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;PICC_CMD_MF_WRITE&#32;&#32;&#32;&#32;&#32;&#32;&#32;=&#32;0xA0,&#32;&#32;&#32;&#32;&#32;<emphasis role="comment">//&#32;Writes&#32;one&#32;16&#32;byte&#32;block&#32;to&#32;the&#32;authenticated&#32;sector&#32;of&#32;the&#32;PICC.&#32;Called&#32;&quot;COMPATIBILITY&#32;WRITE&quot;&#32;for&#32;MIFARE&#32;Ultralight.</emphasis>
+209 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;PICC_CMD_MF_DECREMENT&#32;&#32;&#32;=&#32;0xC0,&#32;&#32;&#32;&#32;&#32;<emphasis role="comment">//&#32;Decrements&#32;the&#32;contents&#32;of&#32;a&#32;block&#32;and&#32;stores&#32;the&#32;result&#32;in&#32;the&#32;internal&#32;data&#32;register.</emphasis>
+210 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;PICC_CMD_MF_INCREMENT&#32;&#32;&#32;=&#32;0xC1,&#32;&#32;&#32;&#32;&#32;<emphasis role="comment">//&#32;Increments&#32;the&#32;contents&#32;of&#32;a&#32;block&#32;and&#32;stores&#32;the&#32;result&#32;in&#32;the&#32;internal&#32;data&#32;register.</emphasis>
+211 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;PICC_CMD_MF_RESTORE&#32;&#32;&#32;&#32;&#32;=&#32;0xC2,&#32;&#32;&#32;&#32;&#32;<emphasis role="comment">//&#32;Reads&#32;the&#32;contents&#32;of&#32;a&#32;block&#32;into&#32;the&#32;internal&#32;data&#32;register.</emphasis>
+212 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;PICC_CMD_MF_TRANSFER&#32;&#32;&#32;&#32;=&#32;0xB0,&#32;&#32;&#32;&#32;&#32;<emphasis role="comment">//&#32;Writes&#32;the&#32;contents&#32;of&#32;the&#32;internal&#32;data&#32;register&#32;to&#32;a&#32;block.</emphasis>
+213 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;<emphasis role="comment">//&#32;The&#32;commands&#32;used&#32;for&#32;MIFARE&#32;Ultralight&#32;(from&#32;http://www.nxp.com/documents/data_sheet/MF0ICU1.pdf,&#32;Section&#32;8.6)</emphasis>
+214 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;<emphasis role="comment">//&#32;The&#32;PICC_CMD_MF_READ&#32;and&#32;PICC_CMD_MF_WRITE&#32;can&#32;also&#32;be&#32;used&#32;for&#32;MIFARE&#32;Ultralight.</emphasis>
+215 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;PICC_CMD_UL_WRITE&#32;&#32;&#32;&#32;&#32;&#32;&#32;=&#32;0xA2&#32;&#32;&#32;&#32;&#32;&#32;<emphasis role="comment">//&#32;Writes&#32;one&#32;4&#32;byte&#32;page&#32;to&#32;the&#32;PICC.</emphasis>
+216 &#32;&#32;&#32;&#32;};
+217 &#32;&#32;&#32;&#32;
+218 &#32;&#32;&#32;&#32;<emphasis role="comment">//&#32;MIFARE&#32;constants&#32;that&#32;does&#32;not&#32;fit&#32;anywhere&#32;else</emphasis>
+219 &#32;&#32;&#32;&#32;<emphasis role="keyword">enum</emphasis>&#32;MIFARE_Misc&#32;{
+220 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;MF_ACK&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;=&#32;0xA,&#32;&#32;&#32;&#32;&#32;&#32;<emphasis role="comment">//&#32;The&#32;MIFARE&#32;Classic&#32;uses&#32;a&#32;4&#32;bit&#32;ACK/NAK.&#32;Any&#32;other&#32;value&#32;than&#32;0xA&#32;is&#32;NAK.</emphasis>
+221 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;MF_KEY_SIZE&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;=&#32;6&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;<emphasis role="comment">//&#32;A&#32;Mifare&#32;Crypto1&#32;key&#32;is&#32;6&#32;bytes.</emphasis>
+222 &#32;&#32;&#32;&#32;};
+223 &#32;&#32;&#32;&#32;
+224 &#32;&#32;&#32;&#32;<emphasis role="comment">//&#32;PICC&#32;types&#32;we&#32;can&#32;detect.&#32;Remember&#32;to&#32;update&#32;PICC_GetTypeName()&#32;if&#32;you&#32;add&#32;more.</emphasis>
+225 &#32;&#32;&#32;&#32;<emphasis role="comment">//&#32;last&#32;value&#32;set&#32;to&#32;0xff,&#32;then&#32;compiler&#32;uses&#32;less&#32;ram,&#32;it&#32;seems&#32;some&#32;optimisations&#32;are&#32;triggered</emphasis>
+226 &#32;&#32;&#32;&#32;<emphasis role="keyword">enum</emphasis>&#32;PICC_Type&#32;:&#32;<emphasis role="keywordtype">byte</emphasis>&#32;{
+227 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;PICC_TYPE_UNKNOWN&#32;&#32;&#32;&#32;&#32;&#32;&#32;,
+228 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;PICC_TYPE_ISO_14443_4&#32;&#32;&#32;,&#32;&#32;&#32;<emphasis role="comment">//&#32;PICC&#32;compliant&#32;with&#32;ISO/IEC&#32;14443-4&#32;</emphasis>
+229 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;PICC_TYPE_ISO_18092&#32;&#32;&#32;&#32;&#32;,&#32;&#32;&#32;<emphasis role="comment">//&#32;PICC&#32;compliant&#32;with&#32;ISO/IEC&#32;18092&#32;(NFC)</emphasis>
+230 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;PICC_TYPE_MIFARE_MINI&#32;&#32;&#32;,&#32;&#32;&#32;<emphasis role="comment">//&#32;MIFARE&#32;Classic&#32;protocol,&#32;320&#32;bytes</emphasis>
+231 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;PICC_TYPE_MIFARE_1K&#32;&#32;&#32;&#32;&#32;,&#32;&#32;&#32;<emphasis role="comment">//&#32;MIFARE&#32;Classic&#32;protocol,&#32;1KB</emphasis>
+232 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;PICC_TYPE_MIFARE_4K&#32;&#32;&#32;&#32;&#32;,&#32;&#32;&#32;<emphasis role="comment">//&#32;MIFARE&#32;Classic&#32;protocol,&#32;4KB</emphasis>
+233 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;PICC_TYPE_MIFARE_UL&#32;&#32;&#32;&#32;&#32;,&#32;&#32;&#32;<emphasis role="comment">//&#32;MIFARE&#32;Ultralight&#32;or&#32;Ultralight&#32;C</emphasis>
+234 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;PICC_TYPE_MIFARE_PLUS&#32;&#32;&#32;,&#32;&#32;&#32;<emphasis role="comment">//&#32;MIFARE&#32;Plus</emphasis>
+235 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;PICC_TYPE_MIFARE_DESFIRE,&#32;&#32;&#32;<emphasis role="comment">//&#32;MIFARE&#32;DESFire</emphasis>
+236 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;PICC_TYPE_TNP3XXX&#32;&#32;&#32;&#32;&#32;&#32;&#32;,&#32;&#32;&#32;<emphasis role="comment">//&#32;Only&#32;mentioned&#32;in&#32;NXP&#32;AN&#32;10833&#32;MIFARE&#32;Type&#32;Identification&#32;Procedure</emphasis>
+237 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;PICC_TYPE_NOT_COMPLETE&#32;&#32;=&#32;0xff&#32;&#32;<emphasis role="comment">//&#32;SAK&#32;indicates&#32;UID&#32;is&#32;not&#32;complete.</emphasis>
+238 &#32;&#32;&#32;&#32;};
+239 &#32;&#32;&#32;&#32;
+240 &#32;&#32;&#32;&#32;<emphasis role="comment">//&#32;Return&#32;codes&#32;from&#32;the&#32;functions&#32;in&#32;this&#32;class.&#32;Remember&#32;to&#32;update&#32;GetStatusCodeName()&#32;if&#32;you&#32;add&#32;more.</emphasis>
+241 &#32;&#32;&#32;&#32;<emphasis role="comment">//&#32;last&#32;value&#32;set&#32;to&#32;0xff,&#32;then&#32;compiler&#32;uses&#32;less&#32;ram,&#32;it&#32;seems&#32;some&#32;optimisations&#32;are&#32;triggered</emphasis>
+242 &#32;&#32;&#32;&#32;<emphasis role="keyword">enum</emphasis>&#32;StatusCode&#32;:&#32;<emphasis role="keywordtype">byte</emphasis>&#32;{
+243 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;STATUS_OK&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;,&#32;&#32;&#32;<emphasis role="comment">//&#32;Success</emphasis>
+244 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;STATUS_ERROR&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;,&#32;&#32;&#32;<emphasis role="comment">//&#32;Error&#32;in&#32;communication</emphasis>
+245 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;STATUS_COLLISION&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;,&#32;&#32;&#32;<emphasis role="comment">//&#32;Collission&#32;detected</emphasis>
+246 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;STATUS_TIMEOUT&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;,&#32;&#32;&#32;<emphasis role="comment">//&#32;Timeout&#32;in&#32;communication.</emphasis>
+247 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;STATUS_NO_ROOM&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;,&#32;&#32;&#32;<emphasis role="comment">//&#32;A&#32;buffer&#32;is&#32;not&#32;big&#32;enough.</emphasis>
+248 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;STATUS_INTERNAL_ERROR&#32;&#32;&#32;,&#32;&#32;&#32;<emphasis role="comment">//&#32;Internal&#32;error&#32;in&#32;the&#32;code.&#32;Should&#32;not&#32;happen&#32;;-)</emphasis>
+249 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;STATUS_INVALID&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;,&#32;&#32;&#32;<emphasis role="comment">//&#32;Invalid&#32;argument.</emphasis>
+250 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;STATUS_CRC_WRONG&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;,&#32;&#32;&#32;<emphasis role="comment">//&#32;The&#32;CRC_A&#32;does&#32;not&#32;match</emphasis>
+251 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;STATUS_MIFARE_NACK&#32;&#32;&#32;&#32;&#32;&#32;=&#32;0xff&#32;&#32;<emphasis role="comment">//&#32;A&#32;MIFARE&#32;PICC&#32;responded&#32;with&#32;NAK.</emphasis>
+252 &#32;&#32;&#32;&#32;};
+253 &#32;&#32;&#32;&#32;
+254 &#32;&#32;&#32;&#32;<emphasis role="comment">//&#32;A&#32;struct&#32;used&#32;for&#32;passing&#32;the&#32;UID&#32;of&#32;a&#32;PICC.</emphasis>
+255 &#32;&#32;&#32;&#32;<emphasis role="keyword">typedef</emphasis>&#32;<emphasis role="keyword">struct&#32;</emphasis>{
+256 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;<emphasis role="keywordtype">byte</emphasis>&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;size;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;<emphasis role="comment">//&#32;Number&#32;of&#32;bytes&#32;in&#32;the&#32;UID.&#32;4,&#32;7&#32;or&#32;10.</emphasis>
+257 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;<emphasis role="keywordtype">byte</emphasis>&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;uidByte[10];
+258 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;<emphasis role="keywordtype">byte</emphasis>&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;sak;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;<emphasis role="comment">//&#32;The&#32;SAK&#32;(Select&#32;acknowledge)&#32;byte&#32;returned&#32;from&#32;the&#32;PICC&#32;after&#32;successful&#32;selection.</emphasis>
+259 &#32;&#32;&#32;&#32;}&#32;<link linkend="_classMFRC522_1structMFRC522_1_1Uid">Uid</link>;
+260 
+261 &#32;&#32;&#32;&#32;<emphasis role="comment">//&#32;A&#32;struct&#32;used&#32;for&#32;passing&#32;a&#32;MIFARE&#32;Crypto1&#32;key</emphasis>
+262 &#32;&#32;&#32;&#32;<emphasis role="keyword">typedef</emphasis>&#32;<emphasis role="keyword">struct&#32;</emphasis>{
+263 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;<emphasis role="keywordtype">byte</emphasis>&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;keyByte[MF_KEY_SIZE];
+264 &#32;&#32;&#32;&#32;}&#32;<link linkend="_classMFRC522_1structMFRC522_1_1MIFARE__Key">MIFARE_Key</link>;
+265 &#32;&#32;&#32;&#32;
+266 &#32;&#32;&#32;&#32;<emphasis role="comment">//&#32;Member&#32;variables</emphasis>
+267 &#32;&#32;&#32;&#32;<link linkend="_classMFRC522_1structMFRC522_1_1Uid">Uid</link>&#32;uid;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;<emphasis role="comment">//&#32;Used&#32;by&#32;PICC_ReadCardSerial().</emphasis>
+268 &#32;&#32;&#32;&#32;
+270 &#32;&#32;&#32;&#32;<emphasis role="comment">//&#32;Functions&#32;for&#32;setting&#32;up&#32;the&#32;Arduino</emphasis>
+272 &#32;&#32;&#32;&#32;<link linkend="_classMFRC522_1a999d0301e800f479e1ecfa2fd06e28c8">MFRC522</link>();
+273 &#32;&#32;&#32;&#32;<link linkend="_classMFRC522_1a999d0301e800f479e1ecfa2fd06e28c8">MFRC522</link>(<emphasis role="keywordtype">byte</emphasis>&#32;resetPowerDownPin);
+274 &#32;&#32;&#32;&#32;<link linkend="_classMFRC522_1a999d0301e800f479e1ecfa2fd06e28c8">MFRC522</link>(<emphasis role="keywordtype">byte</emphasis>&#32;chipSelectPin,&#32;<emphasis role="keywordtype">byte</emphasis>&#32;resetPowerDownPin);
+275 &#32;&#32;&#32;&#32;
+277 &#32;&#32;&#32;&#32;<emphasis role="comment">//&#32;Basic&#32;interface&#32;functions&#32;for&#32;communicating&#32;with&#32;the&#32;MFRC522</emphasis>
+279 &#32;&#32;&#32;&#32;<emphasis role="keywordtype">void</emphasis>&#32;<link linkend="_classMFRC522_1aa5e5825adb4c784d8a5a60242c135fb7">PCD_WriteRegister</link>(PCD_Register&#32;reg,&#32;<emphasis role="keywordtype">byte</emphasis>&#32;value);
+280 &#32;&#32;&#32;&#32;<emphasis role="keywordtype">void</emphasis>&#32;<link linkend="_classMFRC522_1aa5e5825adb4c784d8a5a60242c135fb7">PCD_WriteRegister</link>(PCD_Register&#32;reg,&#32;<emphasis role="keywordtype">byte</emphasis>&#32;count,&#32;<emphasis role="keywordtype">byte</emphasis>&#32;*values);
+281 &#32;&#32;&#32;&#32;<emphasis role="keywordtype">byte</emphasis>&#32;<link linkend="_classMFRC522_1a4289838c6f24f2d62eb8dc0e7a6647d1">PCD_ReadRegister</link>(PCD_Register&#32;reg);
+282 &#32;&#32;&#32;&#32;<emphasis role="keywordtype">void</emphasis>&#32;<link linkend="_classMFRC522_1a4289838c6f24f2d62eb8dc0e7a6647d1">PCD_ReadRegister</link>(PCD_Register&#32;reg,&#32;<emphasis role="keywordtype">byte</emphasis>&#32;count,&#32;<emphasis role="keywordtype">byte</emphasis>&#32;*values,&#32;<emphasis role="keywordtype">byte</emphasis>&#32;rxAlign&#32;=&#32;0);
+283 &#32;&#32;&#32;&#32;<emphasis role="keywordtype">void</emphasis>&#32;<link linkend="_classMFRC522_1acebb9a90249419f2a53281c4a13727d1">PCD_SetRegisterBitMask</link>(PCD_Register&#32;reg,&#32;<emphasis role="keywordtype">byte</emphasis>&#32;mask);
+284 &#32;&#32;&#32;&#32;<emphasis role="keywordtype">void</emphasis>&#32;<link linkend="_classMFRC522_1a76193f4f8916f688fe2b7976d0fd1dc2">PCD_ClearRegisterBitMask</link>(PCD_Register&#32;reg,&#32;<emphasis role="keywordtype">byte</emphasis>&#32;mask);
+285 &#32;&#32;&#32;&#32;StatusCode&#32;<link linkend="_classMFRC522_1a7c65647b1d72b6ee7557797322030643">PCD_CalculateCRC</link>(<emphasis role="keywordtype">byte</emphasis>&#32;*data,&#32;<emphasis role="keywordtype">byte</emphasis>&#32;length,&#32;<emphasis role="keywordtype">byte</emphasis>&#32;*result);
+286 &#32;&#32;&#32;&#32;
+288 &#32;&#32;&#32;&#32;<emphasis role="comment">//&#32;Functions&#32;for&#32;manipulating&#32;the&#32;MFRC522</emphasis>
+290 &#32;&#32;&#32;&#32;<emphasis role="keywordtype">void</emphasis>&#32;<link linkend="_classMFRC522_1ad681e424fc68a57941bea5702cee05eb">PCD_Init</link>();
+291 &#32;&#32;&#32;&#32;<emphasis role="keywordtype">void</emphasis>&#32;<link linkend="_classMFRC522_1ad681e424fc68a57941bea5702cee05eb">PCD_Init</link>(<emphasis role="keywordtype">byte</emphasis>&#32;resetPowerDownPin);
+292 &#32;&#32;&#32;&#32;<emphasis role="keywordtype">void</emphasis>&#32;<link linkend="_classMFRC522_1ad681e424fc68a57941bea5702cee05eb">PCD_Init</link>(<emphasis role="keywordtype">byte</emphasis>&#32;chipSelectPin,&#32;<emphasis role="keywordtype">byte</emphasis>&#32;resetPowerDownPin);
+293 &#32;&#32;&#32;&#32;<emphasis role="keywordtype">void</emphasis>&#32;<link linkend="_classMFRC522_1a9886678ea0a65021bf602cfb110caa15">PCD_Reset</link>();
+294 &#32;&#32;&#32;&#32;<emphasis role="keywordtype">void</emphasis>&#32;<link linkend="_classMFRC522_1a044be037a5f172e9cea7d8ce1dcf32e0">PCD_AntennaOn</link>();
+295 &#32;&#32;&#32;&#32;<emphasis role="keywordtype">void</emphasis>&#32;<link linkend="_classMFRC522_1a2098ebe85700109b20c5026643f1dad7">PCD_AntennaOff</link>();
+296 &#32;&#32;&#32;&#32;<emphasis role="keywordtype">byte</emphasis>&#32;<link linkend="_classMFRC522_1aa02ae994a9ebf146475f46fc538cef28">PCD_GetAntennaGain</link>();
+297 &#32;&#32;&#32;&#32;<emphasis role="keywordtype">void</emphasis>&#32;<link linkend="_classMFRC522_1a5ce84dd855f2ae297dd00fafaf62ef78">PCD_SetAntennaGain</link>(<emphasis role="keywordtype">byte</emphasis>&#32;mask);
+298 &#32;&#32;&#32;&#32;<emphasis role="keywordtype">bool</emphasis>&#32;<link linkend="_classMFRC522_1a25f052c9c340da34128c365662370b01">PCD_PerformSelfTest</link>();
+299 &#32;&#32;&#32;&#32;
+301 &#32;&#32;&#32;&#32;<emphasis role="comment">//&#32;Power&#32;control&#32;functions</emphasis>
+303 &#32;&#32;&#32;&#32;<emphasis role="keywordtype">void</emphasis>&#32;PCD_SoftPowerDown();
+304 &#32;&#32;&#32;&#32;<emphasis role="keywordtype">void</emphasis>&#32;PCD_SoftPowerUp();
+305 &#32;&#32;&#32;&#32;
+307 &#32;&#32;&#32;&#32;<emphasis role="comment">//&#32;Functions&#32;for&#32;communicating&#32;with&#32;PICCs</emphasis>
+309 &#32;&#32;&#32;&#32;StatusCode&#32;<link linkend="_classMFRC522_1aaa96aa7ec4f95e0835cb758ad0450d74">PCD_TransceiveData</link>(<emphasis role="keywordtype">byte</emphasis>&#32;*sendData,&#32;<emphasis role="keywordtype">byte</emphasis>&#32;sendLen,&#32;<emphasis role="keywordtype">byte</emphasis>&#32;*backData,&#32;<emphasis role="keywordtype">byte</emphasis>&#32;*backLen,&#32;<emphasis role="keywordtype">byte</emphasis>&#32;*validBits&#32;=&#32;<emphasis role="keyword">nullptr</emphasis>,&#32;<emphasis role="keywordtype">byte</emphasis>&#32;rxAlign&#32;=&#32;0,&#32;<emphasis role="keywordtype">bool</emphasis>&#32;checkCRC&#32;=&#32;<emphasis role="keyword">false</emphasis>);
+310 &#32;&#32;&#32;&#32;StatusCode&#32;<link linkend="_classMFRC522_1acb2b1e74bc49fda2704450a684faa845">PCD_CommunicateWithPICC</link>(<emphasis role="keywordtype">byte</emphasis>&#32;command,&#32;<emphasis role="keywordtype">byte</emphasis>&#32;waitIRq,&#32;<emphasis role="keywordtype">byte</emphasis>&#32;*sendData,&#32;<emphasis role="keywordtype">byte</emphasis>&#32;sendLen,&#32;<emphasis role="keywordtype">byte</emphasis>&#32;*backData&#32;=&#32;<emphasis role="keyword">nullptr</emphasis>,&#32;<emphasis role="keywordtype">byte</emphasis>&#32;*backLen&#32;=&#32;<emphasis role="keyword">nullptr</emphasis>,&#32;<emphasis role="keywordtype">byte</emphasis>&#32;*validBits&#32;=&#32;<emphasis role="keyword">nullptr</emphasis>,&#32;<emphasis role="keywordtype">byte</emphasis>&#32;rxAlign&#32;=&#32;0,&#32;<emphasis role="keywordtype">bool</emphasis>&#32;checkCRC&#32;=&#32;<emphasis role="keyword">false</emphasis>);
+311 &#32;&#32;&#32;&#32;StatusCode&#32;<link linkend="_classMFRC522_1a4e0ac6edf5e8f6ade351b009278fbbc7">PICC_RequestA</link>(<emphasis role="keywordtype">byte</emphasis>&#32;*bufferATQA,&#32;<emphasis role="keywordtype">byte</emphasis>&#32;*bufferSize);
+312 &#32;&#32;&#32;&#32;StatusCode&#32;<link linkend="_classMFRC522_1ad00a1efcfa6dc203ca885d43f4d02125">PICC_WakeupA</link>(<emphasis role="keywordtype">byte</emphasis>&#32;*bufferATQA,&#32;<emphasis role="keywordtype">byte</emphasis>&#32;*bufferSize);
+313 &#32;&#32;&#32;&#32;StatusCode&#32;<link linkend="_classMFRC522_1a639d27ac072bc0dfa478d0957591afcc">PICC_REQA_or_WUPA</link>(<emphasis role="keywordtype">byte</emphasis>&#32;command,&#32;<emphasis role="keywordtype">byte</emphasis>&#32;*bufferATQA,&#32;<emphasis role="keywordtype">byte</emphasis>&#32;*bufferSize);
+314 &#32;&#32;&#32;&#32;<emphasis role="keyword">virtual</emphasis>&#32;StatusCode&#32;<link linkend="_classMFRC522_1a7a78c629cb4e1d90cc2d7526b17d6c22">PICC_Select</link>(<link linkend="_classMFRC522_1structMFRC522_1_1Uid">Uid</link>&#32;*uid,&#32;<emphasis role="keywordtype">byte</emphasis>&#32;validBits&#32;=&#32;0);
+315 &#32;&#32;&#32;&#32;StatusCode&#32;<link linkend="_classMFRC522_1a8874921b4ed26c5b73d89c90f76d4933">PICC_HaltA</link>();
+316 
+318 &#32;&#32;&#32;&#32;<emphasis role="comment">//&#32;Functions&#32;for&#32;communicating&#32;with&#32;MIFARE&#32;PICCs</emphasis>
+320 &#32;&#32;&#32;&#32;StatusCode&#32;<link linkend="_classMFRC522_1a6c2313c4aa98806cc2bf0e9cca993ec0">PCD_Authenticate</link>(<emphasis role="keywordtype">byte</emphasis>&#32;command,&#32;<emphasis role="keywordtype">byte</emphasis>&#32;blockAddr,&#32;<link linkend="_classMFRC522_1structMFRC522_1_1MIFARE__Key">MIFARE_Key</link>&#32;*key,&#32;<link linkend="_classMFRC522_1structMFRC522_1_1Uid">Uid</link>&#32;*uid);
+321 &#32;&#32;&#32;&#32;<emphasis role="keywordtype">void</emphasis>&#32;<link linkend="_classMFRC522_1a24d3ab7b2170fdfa3f0121a7256f12d9">PCD_StopCrypto1</link>();
+322 &#32;&#32;&#32;&#32;StatusCode&#32;<link linkend="_classMFRC522_1a6ed93e88913ea104420f3bb4a88cce52">MIFARE_Read</link>(<emphasis role="keywordtype">byte</emphasis>&#32;blockAddr,&#32;<emphasis role="keywordtype">byte</emphasis>&#32;*buffer,&#32;<emphasis role="keywordtype">byte</emphasis>&#32;*bufferSize);
+323 &#32;&#32;&#32;&#32;StatusCode&#32;<link linkend="_classMFRC522_1a0dc5fb05769779ec3ed708bd153706b3">MIFARE_Write</link>(<emphasis role="keywordtype">byte</emphasis>&#32;blockAddr,&#32;<emphasis role="keywordtype">byte</emphasis>&#32;*buffer,&#32;<emphasis role="keywordtype">byte</emphasis>&#32;bufferSize);
+324 &#32;&#32;&#32;&#32;StatusCode&#32;<link linkend="_classMFRC522_1a7053e61540b68e6aa5c6cbea308836c4">MIFARE_Ultralight_Write</link>(<emphasis role="keywordtype">byte</emphasis>&#32;page,&#32;<emphasis role="keywordtype">byte</emphasis>&#32;*buffer,&#32;<emphasis role="keywordtype">byte</emphasis>&#32;bufferSize);
+325 &#32;&#32;&#32;&#32;StatusCode&#32;<link linkend="_classMFRC522_1aeab21496c761cdecb29c69f9f3fa6150">MIFARE_Decrement</link>(<emphasis role="keywordtype">byte</emphasis>&#32;blockAddr,&#32;int32_t&#32;delta);
+326 &#32;&#32;&#32;&#32;StatusCode&#32;<link linkend="_classMFRC522_1af9566664f23d4d67efd270e42c3dc723">MIFARE_Increment</link>(<emphasis role="keywordtype">byte</emphasis>&#32;blockAddr,&#32;int32_t&#32;delta);
+327 &#32;&#32;&#32;&#32;StatusCode&#32;<link linkend="_classMFRC522_1a946ba7e7e244f40adcb9f900d8fd3a48">MIFARE_Restore</link>(<emphasis role="keywordtype">byte</emphasis>&#32;blockAddr);
+328 &#32;&#32;&#32;&#32;StatusCode&#32;<link linkend="_classMFRC522_1a16ee66df69fda8a3065bc9218b45de0b">MIFARE_Transfer</link>(<emphasis role="keywordtype">byte</emphasis>&#32;blockAddr);
+329 &#32;&#32;&#32;&#32;StatusCode&#32;<link linkend="_classMFRC522_1ab4009cbdd5150b1b3a62084aa2033807">MIFARE_GetValue</link>(<emphasis role="keywordtype">byte</emphasis>&#32;blockAddr,&#32;int32_t&#32;*value);
+330 &#32;&#32;&#32;&#32;StatusCode&#32;<link linkend="_classMFRC522_1af19fc75e9415322fbe89245ed70a784b">MIFARE_SetValue</link>(<emphasis role="keywordtype">byte</emphasis>&#32;blockAddr,&#32;int32_t&#32;value);
+331 &#32;&#32;&#32;&#32;StatusCode&#32;<link linkend="_classMFRC522_1acb47eb7a05ae58825b4085efeb7a09bb">PCD_NTAG216_AUTH</link>(<emphasis role="keywordtype">byte</emphasis>&#32;*passWord,&#32;<emphasis role="keywordtype">byte</emphasis>&#32;pACK[]);
+332 &#32;&#32;&#32;&#32;
+334 &#32;&#32;&#32;&#32;<emphasis role="comment">//&#32;Support&#32;functions</emphasis>
+336 &#32;&#32;&#32;&#32;StatusCode&#32;<link linkend="_classMFRC522_1aa88d28676b3ffb5985af8db35d39077b">PCD_MIFARE_Transceive</link>(<emphasis role="keywordtype">byte</emphasis>&#32;*sendData,&#32;<emphasis role="keywordtype">byte</emphasis>&#32;sendLen,&#32;<emphasis role="keywordtype">bool</emphasis>&#32;acceptTimeout&#32;=&#32;<emphasis role="keyword">false</emphasis>);
+337 &#32;&#32;&#32;&#32;<emphasis role="comment">//&#32;old&#32;function&#32;used&#32;too&#32;much&#32;memory,&#32;now&#32;name&#32;moved&#32;to&#32;flash;&#32;if&#32;you&#32;need&#32;char,&#32;copy&#32;from&#32;flash&#32;to&#32;memory</emphasis>
+338 &#32;&#32;&#32;&#32;<emphasis role="comment">//const&#32;char&#32;*GetStatusCodeName(byte&#32;code);</emphasis>
+339 &#32;&#32;&#32;&#32;<emphasis role="keyword">static</emphasis>&#32;<emphasis role="keyword">const</emphasis>&#32;__FlashStringHelper&#32;*<link linkend="_classMFRC522_1a32f88620ab97f7fef3693280c58cb4bb">GetStatusCodeName</link>(StatusCode&#32;code);
+340 &#32;&#32;&#32;&#32;<emphasis role="keyword">static</emphasis>&#32;PICC_Type&#32;<link linkend="_classMFRC522_1ac80a18228260bdde07dff5d4ac23bb53">PICC_GetType</link>(<emphasis role="keywordtype">byte</emphasis>&#32;sak);
+341 &#32;&#32;&#32;&#32;<emphasis role="comment">//&#32;old&#32;function&#32;used&#32;too&#32;much&#32;memory,&#32;now&#32;name&#32;moved&#32;to&#32;flash;&#32;if&#32;you&#32;need&#32;char,&#32;copy&#32;from&#32;flash&#32;to&#32;memory</emphasis>
+342 &#32;&#32;&#32;&#32;<emphasis role="comment">//const&#32;char&#32;*PICC_GetTypeName(byte&#32;type);</emphasis>
+343 &#32;&#32;&#32;&#32;<emphasis role="keyword">static</emphasis>&#32;<emphasis role="keyword">const</emphasis>&#32;__FlashStringHelper&#32;*<link linkend="_classMFRC522_1aae4a482352d4d4b7d7a9714b0b0b7c38">PICC_GetTypeName</link>(PICC_Type&#32;type);
+344 &#32;&#32;&#32;&#32;
+345 &#32;&#32;&#32;&#32;<emphasis role="comment">//&#32;Support&#32;functions&#32;for&#32;debuging</emphasis>
+346 &#32;&#32;&#32;&#32;<emphasis role="keywordtype">void</emphasis>&#32;<link linkend="_classMFRC522_1a41c31c6932a59646eeff470c60a4d20d">PCD_DumpVersionToSerial</link>();
+347 &#32;&#32;&#32;&#32;<emphasis role="keywordtype">void</emphasis>&#32;<link linkend="_classMFRC522_1a6f324d43c6fbbd0e260b171747186037">PICC_DumpToSerial</link>(<link linkend="_classMFRC522_1structMFRC522_1_1Uid">Uid</link>&#32;*uid);
+348 &#32;&#32;&#32;&#32;<emphasis role="keywordtype">void</emphasis>&#32;<link linkend="_classMFRC522_1a3b9a2c6da6505e0ff7b58c37d7aeff37">PICC_DumpDetailsToSerial</link>(<link linkend="_classMFRC522_1structMFRC522_1_1Uid">Uid</link>&#32;*uid);
+349 &#32;&#32;&#32;&#32;<emphasis role="keywordtype">void</emphasis>&#32;<link linkend="_classMFRC522_1aafba2e74124efa2d736c1672ea104190">PICC_DumpMifareClassicToSerial</link>(<link linkend="_classMFRC522_1structMFRC522_1_1Uid">Uid</link>&#32;*uid,&#32;PICC_Type&#32;piccType,&#32;<link linkend="_classMFRC522_1structMFRC522_1_1MIFARE__Key">MIFARE_Key</link>&#32;*key);
+350 &#32;&#32;&#32;&#32;<emphasis role="keywordtype">void</emphasis>&#32;<link linkend="_classMFRC522_1a20c559f09927a7c5f91295f6158e4342">PICC_DumpMifareClassicSectorToSerial</link>(<link linkend="_classMFRC522_1structMFRC522_1_1Uid">Uid</link>&#32;*uid,&#32;<link linkend="_classMFRC522_1structMFRC522_1_1MIFARE__Key">MIFARE_Key</link>&#32;*key,&#32;<emphasis role="keywordtype">byte</emphasis>&#32;sector);
+351 &#32;&#32;&#32;&#32;<emphasis role="keywordtype">void</emphasis>&#32;<link linkend="_classMFRC522_1ac148d28877dd577606a28e9e7e4b6809">PICC_DumpMifareUltralightToSerial</link>();
+352 &#32;&#32;&#32;&#32;
+353 &#32;&#32;&#32;&#32;<emphasis role="comment">//&#32;Advanced&#32;functions&#32;for&#32;MIFARE</emphasis>
+354 &#32;&#32;&#32;&#32;<emphasis role="keywordtype">void</emphasis>&#32;<link linkend="_classMFRC522_1ab8c712963189654e9bc368be8783e2ab">MIFARE_SetAccessBits</link>(<emphasis role="keywordtype">byte</emphasis>&#32;*accessBitBuffer,&#32;<emphasis role="keywordtype">byte</emphasis>&#32;g0,&#32;<emphasis role="keywordtype">byte</emphasis>&#32;g1,&#32;<emphasis role="keywordtype">byte</emphasis>&#32;g2,&#32;<emphasis role="keywordtype">byte</emphasis>&#32;g3);
+355 &#32;&#32;&#32;&#32;<emphasis role="keywordtype">bool</emphasis>&#32;<link linkend="_classMFRC522_1a925607adc9382720c222578bd236a9c8">MIFARE_OpenUidBackdoor</link>(<emphasis role="keywordtype">bool</emphasis>&#32;logErrors);
+356 &#32;&#32;&#32;&#32;<emphasis role="keywordtype">bool</emphasis>&#32;<link linkend="_classMFRC522_1a2bdc18af4952ce99099607c84139b51c">MIFARE_SetUid</link>(<emphasis role="keywordtype">byte</emphasis>&#32;*newUid,&#32;<emphasis role="keywordtype">byte</emphasis>&#32;uidSize,&#32;<emphasis role="keywordtype">bool</emphasis>&#32;logErrors);
+357 &#32;&#32;&#32;&#32;<emphasis role="keywordtype">bool</emphasis>&#32;<link linkend="_classMFRC522_1afcbb15d925cb3bea9f58595111fbca48">MIFARE_UnbrickUidSector</link>(<emphasis role="keywordtype">bool</emphasis>&#32;logErrors);
+358 &#32;&#32;&#32;&#32;
+360 &#32;&#32;&#32;&#32;<emphasis role="comment">//&#32;Convenience&#32;functions&#32;-&#32;does&#32;not&#32;add&#32;extra&#32;functionality</emphasis>
+362 &#32;&#32;&#32;&#32;<emphasis role="keyword">virtual</emphasis>&#32;<emphasis role="keywordtype">bool</emphasis>&#32;<link linkend="_classMFRC522_1a3adca9d3b455c680ebcde3b74c4e567b">PICC_IsNewCardPresent</link>();
+363 &#32;&#32;&#32;&#32;<emphasis role="keyword">virtual</emphasis>&#32;<emphasis role="keywordtype">bool</emphasis>&#32;<link linkend="_classMFRC522_1aab1218c71cec9cc17ee3ac8a683df106">PICC_ReadCardSerial</link>();
+364 &#32;&#32;&#32;&#32;
+365 <emphasis role="keyword">protected</emphasis>:
+366 &#32;&#32;&#32;&#32;<emphasis role="keywordtype">byte</emphasis>&#32;_chipSelectPin;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;<emphasis role="comment">//&#32;Arduino&#32;pin&#32;connected&#32;to&#32;MFRC522&apos;s&#32;SPI&#32;slave&#32;select&#32;input&#32;(Pin&#32;24,&#32;NSS,&#32;active&#32;low)</emphasis>
+367 &#32;&#32;&#32;&#32;<emphasis role="keywordtype">byte</emphasis>&#32;_resetPowerDownPin;&#32;&#32;&#32;&#32;<emphasis role="comment">//&#32;Arduino&#32;pin&#32;connected&#32;to&#32;MFRC522&apos;s&#32;reset&#32;and&#32;power&#32;down&#32;input&#32;(Pin&#32;6,&#32;NRSTPD,&#32;active&#32;low)</emphasis>
+368 &#32;&#32;&#32;&#32;StatusCode&#32;<link linkend="_classMFRC522_1a86cb4ad38f61b823dfe97103b1b1f9d6">MIFARE_TwoStepHelper</link>(<emphasis role="keywordtype">byte</emphasis>&#32;command,&#32;<emphasis role="keywordtype">byte</emphasis>&#32;blockAddr,&#32;int32_t&#32;data);
+369 };
+370 
+371 <emphasis role="preprocessor">#endif</emphasis>
+</programlisting></section>

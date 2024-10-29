@@ -1,0 +1,60 @@
+\doxysection{Referencia del archivo main/libraries/\+DHT11-\/\+HW-\/481/set\+Pin.cpp}
+\hypertarget{setPin_8cpp}{}\label{setPin_8cpp}\index{main/libraries/DHT11-\/HW-\/481/setPin.cpp@{main/libraries/DHT11-\/HW-\/481/setPin.cpp}}
+
+
+Función amiga set\+Pin\+DHT11.  
+
+
+{\ttfamily \#include "{}DHT11.\+h"{}}\newline
+{\ttfamily \#include "{}set\+Pin.\+h"{}}\newline
+Gráfico de dependencias incluidas en set\+Pin.\+cpp\+:
+\nopagebreak
+\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[width=214pt]{setPin_8cpp__incl}
+\end{center}
+\end{figure}
+Gráfico de los archivos que directa o indirectamente incluyen a este archivo\+:
+\nopagebreak
+\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[width=203pt]{setPin_8cpp__dep__incl}
+\end{center}
+\end{figure}
+\doxysubsubsection*{Funciones}
+\begin{DoxyCompactItemize}
+\item 
+void \mbox{\hyperlink{setPin_8cpp_a73010b69762bc8832cebeabe6c10bed1}{set\+Pin\+DHT11}} (\mbox{\hyperlink{classDHT11}{DHT11}} \&sensor, int pin)
+\end{DoxyCompactItemize}
+
+
+\doxysubsection{Descripción detallada}
+Función amiga set\+Pin\+DHT11. 
+
+
+\begin{DoxyParams}{Parámetros}
+{\em DHT11\&} & sensor\+: recibe una referencia al objeto de la clase \doxylink{classDHT11}{DHT11} al cual se le cambiará el pin de conexión correspondiente al sensor de temperatura. \\
+\hline
+{\em int} & pin\+: es el nuevo pin para la entrada de datos del sensor de temperatura.\\
+\hline
+\end{DoxyParams}
+La función comprueba si el pin es válido, luego "{}desactiva"{} el pin anterior para inicializar el nuevo. 
+
+\doxysubsection{Documentación de funciones}
+\Hypertarget{setPin_8cpp_a73010b69762bc8832cebeabe6c10bed1}\index{setPin.cpp@{setPin.cpp}!setPinDHT11@{setPinDHT11}}
+\index{setPinDHT11@{setPinDHT11}!setPin.cpp@{setPin.cpp}}
+\doxysubsubsection{\texorpdfstring{setPinDHT11()}{setPinDHT11()}}
+{\footnotesize\ttfamily \label{setPin_8cpp_a73010b69762bc8832cebeabe6c10bed1} 
+void set\+Pin\+DHT11 (\begin{DoxyParamCaption}\item[{\mbox{\hyperlink{classDHT11}{DHT11}} \&}]{sensor}{, }\item[{int}]{pin}{}\end{DoxyParamCaption})}
+
+Bloque if-\/else Controla si el pin ingresado es uno físicamente válido. Imprime por puerto serie UART un mensaje de error en caso de no serlo.
+
+pin\+Mode(sensor.\+\_\+pin, INPUT) "{}\+Desactiva"{} el pin anterior.
+
+sensor.\+\_\+pin = pin Actualiza el pin.
+
+pin\+Mode(pin, OUTPUT) y digital\+Write(pin, HIGH) Inicializa el nuevo pin como lo hace internamente la clase \doxylink{classDHT11}{DHT11}
+
+delay(250) Tiempo de espera a que el sensor se estabilice.

@@ -1,0 +1,39 @@
+<map id="MFRC522::PICC_DumpMifareClassicToSerial" name="MFRC522::PICC_DumpMifareClassicToSerial">
+<area shape="rect" id="Node000001" title=" " alt="" coords="5,139,215,184"/>
+<area shape="rect" id="Node000002" href="$classMFRC522.html#a24d3ab7b2170fdfa3f0121a7256f12d9" title=" " alt="" coords="265,67,470,95"/>
+<area shape="poly" id="edge1_Node000001_Node000002" title=" " alt="" coords="184,136,305,98,306,103,185,141"/>
+<area shape="rect" id="Node000006" href="$classMFRC522.html#a20c559f09927a7c5f91295f6158e4342" title=" " alt="" coords="263,139,472,184"/>
+<area shape="poly" id="edge5_Node000001_Node000006" title=" " alt="" coords="215,159,247,159,247,164,215,164"/>
+<area shape="rect" id="Node000014" href="$classMFRC522.html#a8874921b4ed26c5b73d89c90f76d4933" title=" " alt="" coords="552,251,716,279"/>
+<area shape="poly" id="edge21_Node000001_Node000014" title=" " alt="" coords="209,182,263,193,537,246,536,251,262,198,208,187"/>
+<area shape="rect" id="Node000003" href="$classMFRC522.html#a76193f4f8916f688fe2b7976d0fd1dc2" title=" " alt="" coords="1333,38,1546,82"/>
+<area shape="poly" id="edge2_Node000002_Node000003" title=" " alt="" coords="470,76,1318,60,1318,65,470,82"/>
+<area shape="rect" id="Node000004" href="$classMFRC522.html#a4289838c6f24f2d62eb8dc0e7a6647d1" title=" " alt="" coords="1595,143,1808,171"/>
+<area shape="poly" id="edge3_Node000003_Node000004" title=" " alt="" coords="1520,80,1548,92,1572,108,1596,124,1625,136,1623,141,1593,129,1569,113,1545,97,1517,85"/>
+<area shape="rect" id="Node000005" href="$classMFRC522.html#aa5e5825adb4c784d8a5a60242c135fb7" title=" " alt="" coords="1594,87,1809,115"/>
+<area shape="poly" id="edge4_Node000003_Node000005" title=" " alt="" coords="1547,74,1595,82,1594,87,1546,79"/>
+<area shape="rect" id="Node000007" href="$classMFRC522.html#a32f88620ab97f7fef3693280c58cb4bb" title=" " alt="" coords="520,199,747,227"/>
+<area shape="poly" id="edge6_Node000006_Node000007" title=" " alt="" coords="473,179,545,193,544,198,472,184"/>
+<area shape="rect" id="Node000008" href="$classMFRC522.html#a6ed93e88913ea104420f3bb4a88cce52" title=" " alt="" coords="544,147,723,175"/>
+<area shape="poly" id="edge7_Node000006_Node000008" title=" " alt="" coords="472,159,528,159,528,164,472,164"/>
+<area shape="rect" id="Node000013" href="$classMFRC522.html#a6c2313c4aa98806cc2bf0e9cca993ec0" title=" " alt="" coords="804,97,1012,124"/>
+<area shape="poly" id="edge19_Node000006_Node000013" title=" " alt="" coords="472,140,520,133,659,120,788,113,789,118,659,126,520,138,473,145"/>
+<area shape="rect" id="Node000009" href="$classMFRC522.html#a7c65647b1d72b6ee7557797322030643" title=" " alt="" coords="1333,226,1546,254"/>
+<area shape="poly" id="edge8_Node000008_Node000009" title=" " alt="" coords="714,173,796,185,1076,213,1318,230,1318,236,1076,219,795,190,714,178"/>
+<area shape="rect" id="Node000010" href="$classMFRC522.html#aaa96aa7ec4f95e0835cb758ad0450d74" title=" " alt="" coords="795,149,1021,176"/>
+<area shape="poly" id="edge11_Node000008_Node000010" title=" " alt="" coords="724,159,780,159,780,165,724,164"/>
+<area shape="poly" id="edge9_Node000009_Node000004" title=" " alt="" coords="1489,223,1546,205,1642,174,1644,179,1547,210,1490,228"/>
+<area shape="poly" id="edge10_Node000009_Node000005" title=" " alt="" coords="1460,223,1593,130,1622,118,1624,123,1596,134,1463,228"/>
+<area shape="rect" id="Node000011" href="$classMFRC522.html#acb2b1e74bc49fda2704450a684faa845" title=" " alt="" coords="1069,119,1285,164"/>
+<area shape="poly" id="edge12_Node000010_Node000011" title=" " alt="" coords="1021,151,1053,148,1053,154,1021,156"/>
+<area shape="poly" id="edge14_Node000011_Node000004" title=" " alt="" coords="1286,156,1333,161,1460,165,1580,162,1580,168,1460,170,1333,167,1285,162"/>
+<area shape="poly" id="edge18_Node000011_Node000005" title=" " alt="" coords="1197,116,1254,66,1291,41,1332,23,1391,7,1439,3,1487,9,1547,23,1580,33,1613,46,1668,76,1665,81,1610,51,1579,38,1546,28,1486,14,1439,9,1392,12,1334,28,1294,46,1257,70,1201,120"/>
+<area shape="poly" id="edge13_Node000011_Node000009" title=" " alt="" coords="1228,162,1334,205,1373,218,1371,223,1332,210,1226,167"/>
+<area shape="rect" id="Node000012" href="$classMFRC522.html#acebb9a90249419f2a53281c4a13727d1" title=" " alt="" coords="1340,107,1540,152"/>
+<area shape="poly" id="edge15_Node000011_Node000012" title=" " alt="" coords="1285,134,1324,132,1324,137,1286,139"/>
+<area shape="poly" id="edge16_Node000012_Node000004" title=" " alt="" coords="1541,137,1580,142,1580,147,1540,143"/>
+<area shape="poly" id="edge17_Node000012_Node000005" title=" " alt="" coords="1540,116,1579,112,1579,117,1541,121"/>
+<area shape="poly" id="edge20_Node000013_Node000011" title=" " alt="" coords="1013,120,1053,124,1053,130,1012,125"/>
+<area shape="poly" id="edge22_Node000014_Node000009" title=" " alt="" coords="716,260,1317,241,1318,246,717,265"/>
+<area shape="poly" id="edge23_Node000014_Node000010" title=" " alt="" coords="705,248,746,236,810,210,866,182,869,187,812,214,748,241,707,253"/>
+</map>

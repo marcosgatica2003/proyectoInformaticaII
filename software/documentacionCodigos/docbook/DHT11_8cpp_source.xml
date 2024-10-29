@@ -1,0 +1,137 @@
+<?xml version='1.0' encoding='UTF-8' standalone='no'?>
+<section xmlns="http://docbook.org/ns/docbook" version="5.0" xmlns:xlink="http://www.w3.org/1999/xlink" xml:id="_DHT11_8cpp_source" xml:lang="es">
+<title>DHT11.cpp</title>
+<indexterm><primary>main/libraries/DHT11-HW-481/DHT11.cpp</primary></indexterm>
+<programlisting linenumbering="unnumbered">1 
+10 <emphasis role="preprocessor">#include&#32;&quot;DHT11.h&quot;</emphasis>
+11 
+18 <link linkend="_classDHT11_1ad52a70ab511e087aaad53848d64ee976">DHT11::DHT11</link>(<emphasis role="keywordtype">int</emphasis>&#32;pin)&#32;:&#32;_pin(pin)
+19 {
+20 &#32;&#32;pinMode(_pin,&#32;OUTPUT);
+21 &#32;&#32;digitalWrite(_pin,&#32;HIGH);
+22 }
+23 
+30 <emphasis role="keywordtype">void</emphasis>&#32;<link linkend="_classDHT11_1a70a9b21081d65b2b418745366efd8d88">DHT11::setDelay</link>(<emphasis role="keywordtype">unsigned</emphasis>&#32;<emphasis role="keywordtype">long</emphasis>&#32;delay)
+31 {
+32 &#32;&#32;_delayMS&#32;=&#32;delay;
+33 }
+34 
+46 <emphasis role="keywordtype">int</emphasis>&#32;DHT11::readRawData(<emphasis role="keywordtype">byte</emphasis>&#32;data[5])
+47 {
+48 &#32;&#32;delay(_delayMS);
+49 &#32;&#32;startSignal();
+50 &#32;&#32;<emphasis role="keywordtype">unsigned</emphasis>&#32;<emphasis role="keywordtype">long</emphasis>&#32;timeout_start&#32;=&#32;millis();
+51 
+52 &#32;&#32;<emphasis role="keywordflow">while</emphasis>&#32;(digitalRead(_pin)&#32;==&#32;HIGH)
+53 &#32;&#32;{
+54 &#32;&#32;&#32;&#32;<emphasis role="keywordflow">if</emphasis>&#32;(millis()&#32;-&#32;timeout_start&#32;&gt;&#32;TIMEOUT_DURATION)
+55 &#32;&#32;&#32;&#32;{
+56 &#32;&#32;&#32;&#32;&#32;&#32;<emphasis role="keywordflow">return</emphasis>&#32;DHT11::ERROR_TIMEOUT;
+57 &#32;&#32;&#32;&#32;}
+58 &#32;&#32;}
+59 
+60 &#32;&#32;<emphasis role="keywordflow">if</emphasis>&#32;(digitalRead(_pin)&#32;==&#32;LOW)
+61 &#32;&#32;{
+62 &#32;&#32;&#32;&#32;delayMicroseconds(80);
+63 &#32;&#32;&#32;&#32;<emphasis role="keywordflow">if</emphasis>&#32;(digitalRead(_pin)&#32;==&#32;HIGH)
+64 &#32;&#32;&#32;&#32;{
+65 &#32;&#32;&#32;&#32;&#32;&#32;delayMicroseconds(80);
+66 &#32;&#32;&#32;&#32;&#32;&#32;<emphasis role="keywordflow">for</emphasis>&#32;(<emphasis role="keywordtype">int</emphasis>&#32;i&#32;=&#32;0;&#32;i&#32;&lt;&#32;5;&#32;i++)
+67 &#32;&#32;&#32;&#32;&#32;&#32;{
+68 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;data[i]&#32;=&#32;readByte();
+69 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;<emphasis role="keywordflow">if</emphasis>&#32;(data[i]&#32;==&#32;DHT11::ERROR_TIMEOUT)
+70 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;{
+71 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;<emphasis role="keywordflow">return</emphasis>&#32;DHT11::ERROR_TIMEOUT;
+72 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;}
+73 &#32;&#32;&#32;&#32;&#32;&#32;}
+74 
+75 &#32;&#32;&#32;&#32;&#32;&#32;<emphasis role="keywordflow">if</emphasis>&#32;(data[4]&#32;==&#32;((data[0]&#32;+&#32;data[1]&#32;+&#32;data[2]&#32;+&#32;data[3])&#32;&amp;&#32;0xFF))
+76 &#32;&#32;&#32;&#32;&#32;&#32;{
+77 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;<emphasis role="keywordflow">return</emphasis>&#32;0;&#32;<emphasis role="comment">//&#32;Success</emphasis>
+78 &#32;&#32;&#32;&#32;&#32;&#32;}
+79 &#32;&#32;&#32;&#32;&#32;&#32;<emphasis role="keywordflow">else</emphasis>
+80 &#32;&#32;&#32;&#32;&#32;&#32;{
+81 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;<emphasis role="keywordflow">return</emphasis>&#32;DHT11::ERROR_CHECKSUM;
+82 &#32;&#32;&#32;&#32;&#32;&#32;}
+83 &#32;&#32;&#32;&#32;}
+84 &#32;&#32;}
+85 &#32;&#32;<emphasis role="keywordflow">return</emphasis>&#32;DHT11::ERROR_TIMEOUT;
+86 }
+87 
+93 <emphasis role="keywordtype">byte</emphasis>&#32;DHT11::readByte()
+94 {
+95 &#32;&#32;<emphasis role="keywordtype">byte</emphasis>&#32;value&#32;=&#32;0;
+96 
+97 &#32;&#32;<emphasis role="keywordflow">for</emphasis>&#32;(<emphasis role="keywordtype">int</emphasis>&#32;i&#32;=&#32;0;&#32;i&#32;&lt;&#32;8;&#32;i++)
+98 &#32;&#32;{
+99 &#32;&#32;&#32;&#32;<emphasis role="keywordflow">while</emphasis>&#32;(digitalRead(_pin)&#32;==&#32;LOW)
+100 &#32;&#32;&#32;&#32;&#32;&#32;;
+101 &#32;&#32;&#32;&#32;delayMicroseconds(30);
+102 &#32;&#32;&#32;&#32;<emphasis role="keywordflow">if</emphasis>&#32;(digitalRead(_pin)&#32;==&#32;HIGH)
+103 &#32;&#32;&#32;&#32;{
+104 &#32;&#32;&#32;&#32;&#32;&#32;value&#32;|=&#32;(1&#32;&lt;&lt;&#32;(7&#32;-&#32;i));
+105 &#32;&#32;&#32;&#32;}
+106 &#32;&#32;&#32;&#32;<emphasis role="keywordflow">while</emphasis>&#32;(digitalRead(_pin)&#32;==&#32;HIGH)
+107 &#32;&#32;&#32;&#32;&#32;&#32;;
+108 &#32;&#32;}
+109 &#32;&#32;<emphasis role="keywordflow">return</emphasis>&#32;value;
+110 }
+111 
+117 <emphasis role="keywordtype">void</emphasis>&#32;DHT11::startSignal()
+118 {
+119 &#32;&#32;pinMode(_pin,&#32;OUTPUT);
+120 &#32;&#32;digitalWrite(_pin,&#32;LOW);
+121 &#32;&#32;delay(18);
+122 &#32;&#32;digitalWrite(_pin,&#32;HIGH);
+123 &#32;&#32;delayMicroseconds(40);
+124 &#32;&#32;pinMode(_pin,&#32;INPUT);
+125 }
+126 
+135 <emphasis role="keywordtype">int</emphasis>&#32;<link linkend="_classDHT11_1a5891be6d1c971949e3fe3b8d7bc2a993">DHT11::readTemperature</link>()
+136 {
+137 &#32;&#32;<emphasis role="keywordtype">byte</emphasis>&#32;data[5];
+138 &#32;&#32;<emphasis role="keywordtype">int</emphasis>&#32;error&#32;=&#32;readRawData(data);
+139 &#32;&#32;<emphasis role="keywordflow">if</emphasis>&#32;(error&#32;!=&#32;0)
+140 &#32;&#32;{
+141 &#32;&#32;&#32;&#32;<emphasis role="keywordflow">return</emphasis>&#32;error;
+142 &#32;&#32;}
+143 &#32;&#32;<emphasis role="keywordflow">return</emphasis>&#32;data[2];
+144 }
+145 
+154 <emphasis role="keywordtype">int</emphasis>&#32;<link linkend="_classDHT11_1ae869e047ca078c54d2601f0247fa2078">DHT11::readHumidity</link>()
+155 {
+156 &#32;&#32;<emphasis role="keywordtype">byte</emphasis>&#32;data[5];
+157 &#32;&#32;<emphasis role="keywordtype">int</emphasis>&#32;error&#32;=&#32;readRawData(data);
+158 &#32;&#32;<emphasis role="keywordflow">if</emphasis>&#32;(error&#32;!=&#32;0)
+159 &#32;&#32;{
+160 &#32;&#32;&#32;&#32;<emphasis role="keywordflow">return</emphasis>&#32;error;
+161 &#32;&#32;}
+162 &#32;&#32;<emphasis role="keywordflow">return</emphasis>&#32;data[0];
+163 }
+164 
+176 <emphasis role="keywordtype">int</emphasis>&#32;<link linkend="_classDHT11_1a071ea5ad5f0df9275c2ed338645f6479">DHT11::readTemperatureHumidity</link>(<emphasis role="keywordtype">int</emphasis>&#32;&amp;temperature,&#32;<emphasis role="keywordtype">int</emphasis>&#32;&amp;humidity)
+177 {
+178 &#32;&#32;<emphasis role="keywordtype">byte</emphasis>&#32;data[5];
+179 &#32;&#32;<emphasis role="keywordtype">int</emphasis>&#32;error&#32;=&#32;readRawData(data);
+180 &#32;&#32;<emphasis role="keywordflow">if</emphasis>&#32;(error&#32;!=&#32;0)
+181 &#32;&#32;{
+182 &#32;&#32;&#32;&#32;<emphasis role="keywordflow">return</emphasis>&#32;error;
+183 &#32;&#32;}
+184 &#32;&#32;humidity&#32;=&#32;data[0];
+185 &#32;&#32;temperature&#32;=&#32;data[2];
+186 &#32;&#32;<emphasis role="keywordflow">return</emphasis>&#32;0;&#32;<emphasis role="comment">//&#32;Indicate&#32;success</emphasis>
+187 }
+188 
+197 <emphasis role="comment">//&#32;String&#32;DHT11::getErrorString(int&#32;errorCode)</emphasis>
+198 <emphasis role="comment">//&#32;{</emphasis>
+199 <emphasis role="comment">//&#32;&#32;&#32;switch&#32;(errorCode)</emphasis>
+200 <emphasis role="comment">//&#32;&#32;&#32;{</emphasis>
+201 <emphasis role="comment">//&#32;&#32;&#32;case&#32;DHT11::ERROR_TIMEOUT:</emphasis>
+202 <emphasis role="comment">//&#32;&#32;&#32;&#32;&#32;return&#32;&quot;Error&#32;253&#32;Reading&#32;from&#32;DHT11&#32;timed&#32;out.&quot;;</emphasis>
+203 <emphasis role="comment">//&#32;&#32;&#32;case&#32;DHT11::ERROR_CHECKSUM:</emphasis>
+204 <emphasis role="comment">//&#32;&#32;&#32;&#32;&#32;return&#32;&quot;Error&#32;254&#32;Checksum&#32;mismatch&#32;while&#32;reading&#32;from&#32;DHT11.&quot;;</emphasis>
+205 <emphasis role="comment">//&#32;&#32;&#32;default:</emphasis>
+206 <emphasis role="comment">//&#32;&#32;&#32;&#32;&#32;return&#32;&quot;Error&#32;Unknown.&quot;;</emphasis>
+207 <emphasis role="comment">//&#32;&#32;&#32;}</emphasis>
+208 <emphasis role="comment">//&#32;}</emphasis>
+</programlisting></section>

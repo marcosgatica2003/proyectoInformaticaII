@@ -1,0 +1,16 @@
+<map id="accesoRFID::start" name="accesoRFID::start">
+<area shape="rect" id="Node000001" title="void start(); Inicia la comunicación SPI con el módulo RFID (usando sus métodos)." alt="" coords="5,57,141,85"/>
+<area shape="rect" id="Node000002" href="$classMFRC522.html#ad681e424fc68a57941bea5702cee05eb" title=" " alt="" coords="189,57,335,85"/>
+<area shape="poly" id="edge1_Node000001_Node000002" title=" " alt="" coords="141,68,173,68,173,74,141,74"/>
+<area shape="rect" id="Node000003" href="$classMFRC522.html#a044be037a5f172e9cea7d8ce1dcf32e0" title=" " alt="" coords="383,57,580,85"/>
+<area shape="poly" id="edge2_Node000002_Node000003" title=" " alt="" coords="335,68,367,68,367,74,335,74"/>
+<area shape="rect" id="Node000005" href="$classMFRC522.html#aa5e5825adb4c784d8a5a60242c135fb7" title=" " alt="" coords="628,57,843,85"/>
+<area shape="poly" id="edge8_Node000002_Node000005" title=" " alt="" coords="320,83,383,94,482,100,580,94,647,85,647,91,581,99,482,105,383,99,319,88"/>
+<area shape="rect" id="Node000006" href="$classMFRC522.html#a9886678ea0a65021bf602cfb110caa15" title=" " alt="" coords="400,5,563,33"/>
+<area shape="poly" id="edge5_Node000002_Node000006" title=" " alt="" coords="323,54,404,35,406,40,324,59"/>
+<area shape="rect" id="Node000004" href="$classMFRC522.html#a4289838c6f24f2d62eb8dc0e7a6647d1" title=" " alt="" coords="629,5,842,33"/>
+<area shape="poly" id="edge3_Node000003_Node000004" title=" " alt="" coords="552,54,649,34,650,39,554,59"/>
+<area shape="poly" id="edge4_Node000003_Node000005" title=" " alt="" coords="581,68,613,68,613,74,581,74"/>
+<area shape="poly" id="edge6_Node000006_Node000004" title=" " alt="" coords="563,16,614,16,614,22,563,22"/>
+<area shape="poly" id="edge7_Node000006_Node000005" title=" " alt="" coords="554,31,650,51,649,56,552,36"/>
+</map>

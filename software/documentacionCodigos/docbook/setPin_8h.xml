@@ -1,0 +1,54 @@
+<?xml version='1.0' encoding='UTF-8' standalone='no'?>
+<section xmlns="http://docbook.org/ns/docbook" version="5.0" xmlns:xlink="http://www.w3.org/1999/xlink" xml:id="_setPin_8h" xml:lang="es">
+<title>Referencia del archivo main/libraries/DHT11-HW-481/setPin.h</title>
+<indexterm><primary>main/libraries/DHT11-HW-481/setPin.h</primary></indexterm>
+Gráfico de los archivos que directa o indirectamente incluyen a este archivo:<para>
+    <informalfigure>
+        <mediaobject>
+            <imageobject>
+                <imagedata width="50%" align="center" valign="middle" scalefit="0" fileref="setPin_8h__dep__incl.png"></imagedata>
+            </imageobject>
+        </mediaobject>
+    </informalfigure>
+</para>
+<simplesect>
+    <title>Funciones    </title>
+        <itemizedlist>
+            <listitem><para>void <link linkend="_setPin_8h_1a73010b69762bc8832cebeabe6c10bed1">setPinDHT11</link> (<link linkend="_classDHT11">DHT11</link> &amp;sensor, int pin)</para>
+</listitem>
+        </itemizedlist>
+</simplesect>
+<section>
+<title>Descripción detallada</title>
+
+<para>Este archivo contiene las declaraciones de la clase <link linkend="_classDHT11">DHT11</link> y su función amiga setPinDHT11. </para>
+</section>
+<section>
+<title>Documentación de funciones</title>
+<anchor xml:id="_setPin_8h_1a73010b69762bc8832cebeabe6c10bed1"/><section>
+    <title>setPinDHT11()</title>
+<indexterm><primary>setPinDHT11</primary><secondary>setPin.h</secondary></indexterm>
+<indexterm><primary>setPin.h</primary><secondary>setPinDHT11</secondary></indexterm>
+<para><computeroutput>void setPinDHT11 (<link linkend="_classDHT11">DHT11</link> &amp; sensor, int pin)</computeroutput></para>
+<para>Bloque if-else Controla si el pin ingresado es uno físicamente válido. Imprime por puerto serie UART un mensaje de error en caso de no serlo.</para>
+
+<para>pinMode(sensor._pin, INPUT) &quot;Desactiva&quot; el pin anterior.</para>
+
+<para>sensor._pin = pin Actualiza el pin.</para>
+
+<para>pinMode(pin, OUTPUT) y digitalWrite(pin, HIGH) Inicializa el nuevo pin como lo hace internamente la clase <link linkend="_classDHT11">DHT11</link></para>
+
+<para>delay(250) Tiempo de espera a que el sensor se estabilice.</para>
+
+<para>Bloque if-else Controla si el pin ingresado es uno físicamente válido. Imprime por puerto serie UART un mensaje de error en caso de no serlo.</para>
+
+<para>pinMode(sensor._pin, INPUT) &quot;Desactiva&quot; el pin anterior.</para>
+
+<para>sensor._pin = pin Actualiza el pin.</para>
+
+<para>pinMode(pin, OUTPUT) y digitalWrite(pin, HIGH) Inicializa el nuevo pin como lo hace internamente la clase <link linkend="_classDHT11">DHT11</link></para>
+
+<para>delay(250) Tiempo de espera a que el sensor se estabilice.</para>
+</section>
+</section>
+</section>

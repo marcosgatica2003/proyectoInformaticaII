@@ -1,0 +1,59 @@
+\doxysection{acceso\+RFID.\+cpp}
+\hypertarget{accesoRFID_8cpp_source}{}\label{accesoRFID_8cpp_source}\index{main/libraries/RFID-\/RC522/accesoRFID.cpp@{main/libraries/RFID-\/RC522/accesoRFID.cpp}}
+
+\begin{DoxyCode}{0}
+\DoxyCodeLine{00001\ \textcolor{preprocessor}{\#include\ "{}accesoRFID.h"{}}}
+\DoxyCodeLine{00002\ }
+\DoxyCodeLine{00011\ \mbox{\hyperlink{classaccesoRFID_a76ec44dbd93eed875350296b46670f11}{accesoRFID::accesoRFID}}\ (\textcolor{keywordtype}{byte}\ ssPin,\ \textcolor{keywordtype}{byte}\ rstPin,\ String\ ID):\ rdif(ssPin,\ rstPin),\ autorizarID(ID)\ \{\}}
+\DoxyCodeLine{00012\ }
+\DoxyCodeLine{00013\ }
+\DoxyCodeLine{00018\ \textcolor{keywordtype}{void}\ \mbox{\hyperlink{classaccesoRFID_a3bc744bb024b8bfbe459092a36f9cd68}{accesoRFID::start}}()\{}
+\DoxyCodeLine{00019\ \ \ SPI.begin();}
+\DoxyCodeLine{00020\ \ \ rdif.\mbox{\hyperlink{classMFRC522_ad681e424fc68a57941bea5702cee05eb}{PCD\_Init}}();}
+\DoxyCodeLine{00021\ \}}
+\DoxyCodeLine{00022\ }
+\DoxyCodeLine{00028\ \textcolor{keywordtype}{bool}\ \mbox{\hyperlink{classaccesoRFID_abadde807c97ccaa1a49182292d43d8e1}{accesoRFID::autorizar}}()\ \{}
+\DoxyCodeLine{00029\ \ \ \ \ String\ content\ =\ \textcolor{stringliteral}{"{}"{}};}
+\DoxyCodeLine{00030\ }
+\DoxyCodeLine{00031\ \ \ \ \ \textcolor{keywordflow}{if}\ (!rdif.\mbox{\hyperlink{classMFRC522_a3adca9d3b455c680ebcde3b74c4e567b}{PICC\_IsNewCardPresent}}())\ \{}
+\DoxyCodeLine{00032\ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{return}\ \textcolor{keyword}{false};}
+\DoxyCodeLine{00033\ \ \ \ \ \}}
+\DoxyCodeLine{00034\ }
+\DoxyCodeLine{00035\ \ \ \ \ \textcolor{keywordflow}{if}\ (!rdif.\mbox{\hyperlink{classMFRC522_aab1218c71cec9cc17ee3ac8a683df106}{PICC\_ReadCardSerial}}())\ \{}
+\DoxyCodeLine{00036\ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{return}\ \textcolor{keyword}{false};}
+\DoxyCodeLine{00037\ \ \ \ \ \}}
+\DoxyCodeLine{00038\ }
+\DoxyCodeLine{00039\ \ \ \ \ \textcolor{keywordflow}{for}\ (\textcolor{keywordtype}{byte}\ i\ =\ 0;\ i\ <\ rdif.uid.size;\ ++i)\ \{}
+\DoxyCodeLine{00040\ \ \ \ \ \ \ \ \ content.concat(String(rdif.uid.uidByte[i]\ <\ 0x10\ ?\ \textcolor{stringliteral}{"{}\ 0"{}}\ :\ \textcolor{stringliteral}{"{}\ "{}}));}
+\DoxyCodeLine{00041\ \ \ \ \ \ \ \ \ content.concat(String(rdif.uid.uidByte[i],\ HEX));}
+\DoxyCodeLine{00042\ \ \ \ \ \}}
+\DoxyCodeLine{00043\ }
+\DoxyCodeLine{00044\ \ \ \ \ content.toUpperCase();}
+\DoxyCodeLine{00045\ \ \ \ \ \textcolor{keywordflow}{return}\ content.substring(1)\ ==\ autorizarID;}
+\DoxyCodeLine{00046\ \}}
+\DoxyCodeLine{00047\ }
+\DoxyCodeLine{00054\ \textcolor{keywordtype}{void}\ \mbox{\hyperlink{classaccesoRFID_a0274f257c332f825bdb079d4b4e6efd6}{accesoRFID::mostrarID}}()\ \{}
+\DoxyCodeLine{00055\ \ \ Serial.print(\textcolor{stringliteral}{"{}UID\ de\ la\ llave:\ "{}});}
+\DoxyCodeLine{00056\ }
+\DoxyCodeLine{00057\ \ \ \textcolor{keywordflow}{for}\ (\textcolor{keywordtype}{byte}\ i\ =\ 0;\ i\ <\ rdif.uid.size;\ ++i)\ \{}
+\DoxyCodeLine{00058\ \ \ \ \ Serial.print(rdif.uid.uidByte[i]\ <\ 0x10\ ?\ \textcolor{stringliteral}{"{}\ 0"{}}\ :\ \textcolor{stringliteral}{"{}\ "{}});}
+\DoxyCodeLine{00059\ \ \ \ \ Serial.print(rdif.uid.uidByte[i],\ HEX);}
+\DoxyCodeLine{00060\ \ \ \}}
+\DoxyCodeLine{00061\ }
+\DoxyCodeLine{00062\ \ \ Serial.println();}
+\DoxyCodeLine{00063\ }
+\DoxyCodeLine{00064\ \}}
+\DoxyCodeLine{00070\ \textcolor{keywordtype}{bool}\ \mbox{\hyperlink{classaccesoRFID_a796d502e70c965524f20c277278e2fc8}{accesoRFID::detectarTarjeta}}()\ \{}
+\DoxyCodeLine{00071\ \ \ \textcolor{keywordflow}{if}\ (!rdif.\mbox{\hyperlink{classMFRC522_a3adca9d3b455c680ebcde3b74c4e567b}{PICC\_IsNewCardPresent}}())\ \{}
+\DoxyCodeLine{00072\ \ \ \ \ \textcolor{keywordflow}{return}\ \textcolor{keyword}{false};}
+\DoxyCodeLine{00073\ \ \ \}}
+\DoxyCodeLine{00074\ }
+\DoxyCodeLine{00075\ \ \ \textcolor{keywordflow}{if}\ (!rdif.\mbox{\hyperlink{classMFRC522_aab1218c71cec9cc17ee3ac8a683df106}{PICC\_ReadCardSerial}}())\ \{}
+\DoxyCodeLine{00076\ \ \ \ \ \textcolor{keywordflow}{return}\ \textcolor{keyword}{false};}
+\DoxyCodeLine{00077\ \ \ \}}
+\DoxyCodeLine{00078\ }
+\DoxyCodeLine{00079\ \ \ \textcolor{keywordflow}{return}\ \textcolor{keyword}{true};}
+\DoxyCodeLine{00080\ }
+\DoxyCodeLine{00081\ \}}
+
+\end{DoxyCode}

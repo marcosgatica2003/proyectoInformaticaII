@@ -1,0 +1,25 @@
+var classMFRC522Extended =
+[
+    [ "Ats", "classMFRC522Extended.html#structMFRC522Extended_1_1Ats", null ],
+    [ "Ats.ta1", "classMFRC522Extended.html#structMFRC522Extended_1_1Ats_8ta1", null ],
+    [ "Ats.tb1", "classMFRC522Extended.html#structMFRC522Extended_1_1Ats_8tb1", null ],
+    [ "Ats.tc1", "classMFRC522Extended.html#structMFRC522Extended_1_1Ats_8tc1", null ],
+    [ "PcbBlock", "classMFRC522Extended.html#structMFRC522Extended_1_1PcbBlock", null ],
+    [ "PcbBlock.inf", "classMFRC522Extended.html#structMFRC522Extended_1_1PcbBlock_8inf", null ],
+    [ "PcbBlock.prologue", "classMFRC522Extended.html#structMFRC522Extended_1_1PcbBlock_8prologue", null ],
+    [ "TagInfo", "classMFRC522Extended.html#structMFRC522Extended_1_1TagInfo", null ],
+    [ "PICC_DumpDetailsToSerial", "classMFRC522Extended.html#a456d810cdd67f28aa319746d277841b8", null ],
+    [ "PICC_DumpDetailsToSerial", "classMFRC522Extended.html#a3b9a2c6da6505e0ff7b58c37d7aeff37", null ],
+    [ "PICC_DumpISO14443_4", "classMFRC522Extended.html#a8bb3b09bd19eb99430730af0fbb1565f", null ],
+    [ "PICC_DumpToSerial", "classMFRC522Extended.html#a1739931b517243305c765d547d819968", null ],
+    [ "PICC_DumpToSerial", "classMFRC522Extended.html#a6f324d43c6fbbd0e260b171747186037", null ],
+    [ "PICC_IsNewCardPresent", "classMFRC522Extended.html#afaa1289052274755acec885017507b64", null ],
+    [ "PICC_PPS", "classMFRC522Extended.html#acb69d5c429b8e06ecec8dc1e34c02d65", null ],
+    [ "PICC_PPS", "classMFRC522Extended.html#a9db408d811b5467517a1c92e37f62c6f", null ],
+    [ "PICC_ReadCardSerial", "classMFRC522Extended.html#ae68a2f90cec039dc856089aee08119ee", null ],
+    [ "PICC_RequestATS", "classMFRC522Extended.html#a2671f1de35a0cac5da87e4300b7df74d", null ],
+    [ "PICC_Select", "classMFRC522Extended.html#a0740187cc7f336b0aaea2db432185cb5", null ],
+    [ "TCL_Deselect", "classMFRC522Extended.html#a2de7e4ead4065d896d7ee39e9e2040dd", null ],
+    [ "TCL_Transceive", "classMFRC522Extended.html#a4a0e94f11a21101fd4d5b0ea0e3393c9", null ],
+    [ "TCL_TransceiveRBlock", "classMFRC522Extended.html#aebbf1bbae99dea09128a6bcc4cf27f9d", null ]
+];
