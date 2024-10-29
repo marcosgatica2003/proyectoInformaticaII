@@ -1,0 +1,383 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "https://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" lang="es">
+<head>
+<meta http-equiv="Content-Type" content="text/xhtml;charset=UTF-8"/>
+<meta http-equiv="X-UA-Compatible" content="IE=11"/>
+<meta name="generator" content="Doxygen 1.12.0"/>
+<meta name="viewport" content="width=device-width, initial-scale=1"/>
+<title>Sistema de seguridad en cámaras frigoríficas: Referencia de la clase accesoRFID</title>
+<link href="tabs.css" rel="stylesheet" type="text/css"/>
+<script type="text/javascript" src="jquery.js"></script>
+<script type="text/javascript" src="dynsections.js"></script>
+<script type="text/javascript" src="clipboard.js"></script>
+<link href="navtree.css" rel="stylesheet" type="text/css"/>
+<script type="text/javascript" src="navtreedata.js"></script>
+<script type="text/javascript" src="navtree.js"></script>
+<script type="text/javascript" src="resize.js"></script>
+<script type="text/javascript" src="cookie.js"></script>
+<link href="search/search.css" rel="stylesheet" type="text/css"/>
+<script type="text/javascript" src="search/searchdata.js"></script>
+<script type="text/javascript" src="search/search.js"></script>
+<link href="doxygen.css" rel="stylesheet" type="text/css" />
+</head>
+<body>
+<div id="top"><!-- do not remove this div, it is closed by doxygen! -->
+<div id="titlearea">
+<table cellspacing="0" cellpadding="0">
+ <tbody>
+ <tr id="projectrow">
+  <td id="projectalign">
+   <div id="projectname">Sistema de seguridad en cámaras frigoríficas
+   </div>
+  </td>
+ </tr>
+ </tbody>
+</table>
+</div>
+<!-- end header part -->
+<!-- Generado por Doxygen 1.12.0 -->
+<script type="text/javascript">
+/* @license magnet:?xt=urn:btih:d3d9a9a6595521f9666a5e94cc830dab83b65699&amp;dn=expat.txt MIT */
+var searchBox = new SearchBox("searchBox", "search/",'.html');
+/* @license-end */
+</script>
+<script type="text/javascript">
+/* @license magnet:?xt=urn:btih:d3d9a9a6595521f9666a5e94cc830dab83b65699&amp;dn=expat.txt MIT */
+$(function() { codefold.init(0); });
+/* @license-end */
+</script>
+<script type="text/javascript" src="menudata.js"></script>
+<script type="text/javascript" src="menu.js"></script>
+<script type="text/javascript">
+/* @license magnet:?xt=urn:btih:d3d9a9a6595521f9666a5e94cc830dab83b65699&amp;dn=expat.txt MIT */
+$(function() {
+  initMenu('',true,false,'search.php','Buscar',true);
+  $(function() { init_search(); });
+});
+/* @license-end */
+</script>
+<div id="main-nav"></div>
+</div><!-- top -->
+<div id="side-nav" class="ui-resizable side-nav-resizable">
+  <div id="nav-tree">
+    <div id="nav-tree-contents">
+      <div id="nav-sync" class="sync"></div>
+    </div>
+  </div>
+  <div id="splitbar" style="-moz-user-select:none;" 
+       class="ui-resizable-handle">
+  </div>
+</div>
+<script type="text/javascript">
+/* @license magnet:?xt=urn:btih:d3d9a9a6595521f9666a5e94cc830dab83b65699&amp;dn=expat.txt MIT */
+$(function(){initNavTree('classaccesoRFID.html',''); initResizable(true); });
+/* @license-end */
+</script>
+<div id="doc-content">
+<!-- window showing the filter options -->
+<div id="MSearchSelectWindow"
+     onmouseover="return searchBox.OnSearchSelectShow()"
+     onmouseout="return searchBox.OnSearchSelectHide()"
+     onkeydown="return searchBox.OnSearchSelectKey(event)">
+</div>
+
+<!-- iframe showing the search results (closed by default) -->
+<div id="MSearchResultsWindow">
+<div id="MSearchResults">
+<div class="SRPage">
+<div id="SRIndex">
+<div id="SRResults"></div>
+<div class="SRStatus" id="Loading">Cargando...</div>
+<div class="SRStatus" id="Searching">Buscando...</div>
+<div class="SRStatus" id="NoMatches">Nada coincide</div>
+</div>
+</div>
+</div>
+</div>
+
+<div class="header">
+  <div class="summary">
+<a href="#pub-methods">Métodos públicos</a>  </div>
+  <div class="headertitle"><div class="title">Referencia de la clase accesoRFID</div></div>
+</div><!--header-->
+<div class="contents">
+
+<p>Clase para manejar el acceso usando el módulo RFID-RC522.  
+ <a href="#details">Más...</a></p>
+
+<p><code>#include &lt;<a class="el" href="accesoRFID_8h_source.html">accesoRFID.h</a>&gt;</code></p>
+<div class="dynheader">
+Diagrama de colaboración de accesoRFID:</div>
+<div class="dyncontent">
+<div class="center"><img src="classaccesoRFID__coll__graph.png" border="0" usemap="#aaccesoRFID_coll__map" alt="Collaboration graph"/></div>
+<map name="aaccesoRFID_coll__map" id="aaccesoRFID_coll__map">
+<area shape="rect" title="Clase para manejar el acceso usando el módulo RFID&#45;RC522." alt="" coords="5,5,140,160"/>
+</map>
+</div>
+<table class="memberdecls">
+<tr class="heading"><td colspan="2"><h2 class="groupheader"><a id="pub-methods" name="pub-methods"></a>
+Métodos públicos</h2></td></tr>
+<tr class="memitem:a76ec44dbd93eed875350296b46670f11" id="r_a76ec44dbd93eed875350296b46670f11"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#a76ec44dbd93eed875350296b46670f11">accesoRFID</a> (byte ssPin, byte rstPin, String autorizarID)</td></tr>
+<tr class="memdesc:a76ec44dbd93eed875350296b46670f11"><td class="mdescLeft">&#160;</td><td class="mdescRight">Constructor de la clase <a class="el" href="classaccesoRFID.html" title="Clase para manejar el acceso usando el módulo RFID-RC522.">accesoRFID</a>.  <br /></td></tr>
+<tr class="separator:a76ec44dbd93eed875350296b46670f11"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a3bc744bb024b8bfbe459092a36f9cd68" id="r_a3bc744bb024b8bfbe459092a36f9cd68"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#a3bc744bb024b8bfbe459092a36f9cd68">start</a> ()</td></tr>
+<tr class="memdesc:a3bc744bb024b8bfbe459092a36f9cd68"><td class="mdescLeft">&#160;</td><td class="mdescRight">void <a class="el" href="#a3bc744bb024b8bfbe459092a36f9cd68" title="void start(); Inicia la comunicación SPI con el módulo RFID (usando sus métodos).">start()</a>; Inicia la comunicación SPI con el módulo RFID (usando sus métodos).  <br /></td></tr>
+<tr class="separator:a3bc744bb024b8bfbe459092a36f9cd68"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a0274f257c332f825bdb079d4b4e6efd6" id="r_a0274f257c332f825bdb079d4b4e6efd6"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#a0274f257c332f825bdb079d4b4e6efd6">mostrarID</a> ()</td></tr>
+<tr class="memdesc:a0274f257c332f825bdb079d4b4e6efd6"><td class="mdescLeft">&#160;</td><td class="mdescRight">void <a class="el" href="#a0274f257c332f825bdb079d4b4e6efd6" title="void mostrarID(); Imprime por puerto serie el UID de la tarjeta detectada por el RFID">mostrarID()</a>; Imprime por puerto serie el UID de la tarjeta detectada por el RFID  <br /></td></tr>
+<tr class="separator:a0274f257c332f825bdb079d4b4e6efd6"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:abadde807c97ccaa1a49182292d43d8e1" id="r_abadde807c97ccaa1a49182292d43d8e1"><td class="memItemLeft" align="right" valign="top">bool&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#abadde807c97ccaa1a49182292d43d8e1">autorizar</a> ()</td></tr>
+<tr class="memdesc:abadde807c97ccaa1a49182292d43d8e1"><td class="mdescLeft">&#160;</td><td class="mdescRight">bool <a class="el" href="#abadde807c97ccaa1a49182292d43d8e1" title="bool autorizar(); Compara el UID de la tarjeta con el UID autorizado. Devuelve true (acceso permitido...">autorizar()</a>; Compara el UID de la tarjeta con el UID autorizado. Devuelve true (acceso permitido) o un false (acceso denegado).  <br /></td></tr>
+<tr class="separator:abadde807c97ccaa1a49182292d43d8e1"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a796d502e70c965524f20c277278e2fc8" id="r_a796d502e70c965524f20c277278e2fc8"><td class="memItemLeft" align="right" valign="top">bool&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#a796d502e70c965524f20c277278e2fc8">detectarTarjeta</a> ()</td></tr>
+<tr class="memdesc:a796d502e70c965524f20c277278e2fc8"><td class="mdescLeft">&#160;</td><td class="mdescRight">bool <a class="el" href="#a796d502e70c965524f20c277278e2fc8" title="bool detectarTarjeta(); Lee el UID de la tarjeta para implementarla en el sistema.">detectarTarjeta()</a>; Lee el UID de la tarjeta para implementarla en el sistema.  <br /></td></tr>
+<tr class="separator:a796d502e70c965524f20c277278e2fc8"><td class="memSeparator" colspan="2">&#160;</td></tr>
+</table>
+<a name="details" id="details"></a><h2 class="groupheader">Descripción detallada</h2>
+<div class="textblock"><p>Clase para manejar el acceso usando el módulo RFID-RC522. </p>
+<p>Esta clase permite inicializar el lector RFID y verificar si una tarjeta tiene autorización para entrar. </p>
+</div><h2 class="groupheader">Documentación de constructores y destructores</h2>
+<a id="a76ec44dbd93eed875350296b46670f11" name="a76ec44dbd93eed875350296b46670f11"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a76ec44dbd93eed875350296b46670f11">&#9670;&#160;</a></span>accesoRFID()</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">accesoRFID::accesoRFID </td>
+          <td>(</td>
+          <td class="paramtype">byte</td>          <td class="paramname"><span class="paramname"><em>ssPin</em></span>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">byte</td>          <td class="paramname"><span class="paramname"><em>rstPin</em></span>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">String</td>          <td class="paramname"><span class="paramname"><em>ID</em></span>&#160;)</td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p>Constructor de la clase <a class="el" href="classaccesoRFID.html" title="Clase para manejar el acceso usando el módulo RFID-RC522.">accesoRFID</a>. </p>
+<dl class="params"><dt>Parámetros</dt><dd>
+  <table class="params">
+    <tr><td class="paramname">ssPin</td><td>El pin SS (Slave Select) para la comunicación SPI. </td></tr>
+    <tr><td class="paramname">rstPin</td><td>es el pin de Reset para el módulo RFID. </td></tr>
+    <tr><td class="paramname">autorizarID</td><td>El UID de la tarjeta autorizada para el acceso. </td></tr>
+  </table>
+  </dd>
+</dl>
+
+</div>
+</div>
+<h2 class="groupheader">Documentación de funciones miembro</h2>
+<a id="abadde807c97ccaa1a49182292d43d8e1" name="abadde807c97ccaa1a49182292d43d8e1"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#abadde807c97ccaa1a49182292d43d8e1">&#9670;&#160;</a></span>autorizar()</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">bool accesoRFID::autorizar </td>
+          <td>(</td>
+          <td class="paramname"><span class="paramname"><em></em></span></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p>bool <a class="el" href="#abadde807c97ccaa1a49182292d43d8e1" title="bool autorizar(); Compara el UID de la tarjeta con el UID autorizado. Devuelve true (acceso permitido...">autorizar()</a>; Compara el UID de la tarjeta con el UID autorizado. Devuelve true (acceso permitido) o un false (acceso denegado). </p>
+<p>bool <a class="el" href="#abadde807c97ccaa1a49182292d43d8e1" title="bool autorizar(); Compara el UID de la tarjeta con el UID autorizado. Devuelve true (acceso permitido...">autorizar()</a>;</p>
+<dl class="section return"><dt>Devuelve</dt><dd>true si el UID coincide con el autorizado, false en caso contrario. </dd></dl>
+<div class="dynheader">
+Gráfico de llamadas de esta función:</div>
+<div class="dyncontent">
+<div class="center"><img src="classaccesoRFID_abadde807c97ccaa1a49182292d43d8e1_cgraph.png" border="0" usemap="#aclassaccesoRFID_abadde807c97ccaa1a49182292d43d8e1_cgraph" alt=""/></div>
+<map name="aclassaccesoRFID_abadde807c97ccaa1a49182292d43d8e1_cgraph" id="aclassaccesoRFID_abadde807c97ccaa1a49182292d43d8e1_cgraph">
+<area shape="rect" title="bool autorizar(); Compara el UID de la tarjeta con el UID autorizado. Devuelve true (acceso permitido..." alt="" coords="5,181,169,208"/>
+<area shape="rect" href="classMFRC522.html#a3adca9d3b455c680ebcde3b74c4e567b" title=" " alt="" coords="217,153,464,180"/>
+<area shape="poly" title=" " alt="" coords="169,183,201,179,201,185,169,188"/>
+<area shape="rect" href="classMFRC522.html#aab1218c71cec9cc17ee3ac8a683df106" title=" " alt="" coords="226,206,454,234"/>
+<area shape="poly" title=" " alt="" coords="169,200,211,204,210,210,169,205"/>
+<area shape="rect" href="classMFRC522.html#aa5e5825adb4c784d8a5a60242c135fb7" title=" " alt="" coords="1766,124,1980,151"/>
+<area shape="poly" title=" " alt="" coords="365,150,441,110,555,62,621,39,690,20,762,7,833,3,1350,3,1455,5,1537,13,1617,30,1719,60,1782,85,1836,113,1833,118,1779,90,1717,65,1616,35,1536,18,1455,10,1349,8,833,8,762,13,692,25,622,44,557,67,444,115,368,155"/>
+<area shape="rect" href="classMFRC522.html#a4e0ac6edf5e8f6ade351b009278fbbc7" title=" " alt="" coords="512,153,702,180"/>
+<area shape="poly" title=" " alt="" coords="464,164,496,164,496,169,464,169"/>
+<area shape="rect" href="classMFRC522.html#a639d27ac072bc0dfa478d0957591afcc" title=" " alt="" coords="752,144,917,189"/>
+<area shape="poly" title=" " alt="" coords="702,164,736,164,736,169,702,169"/>
+<area shape="rect" href="classMFRC522.html#a76193f4f8916f688fe2b7976d0fd1dc2" title=" " alt="" coords="1242,284,1455,329"/>
+<area shape="poly" title=" " alt="" coords="918,186,1250,277,1248,282,916,191"/>
+<area shape="rect" href="classMFRC522.html#aaa96aa7ec4f95e0835cb758ad0450d74" title=" " alt="" coords="967,153,1192,180"/>
+<area shape="poly" title=" " alt="" coords="917,164,951,164,951,169,917,169"/>
+<area shape="poly" title=" " alt="" coords="1455,302,1516,297,1583,287,1651,272,1717,250,1754,231,1789,207,1845,160,1848,164,1792,211,1757,235,1719,254,1653,277,1584,292,1517,302,1455,307"/>
+<area shape="rect" href="classMFRC522.html#a4289838c6f24f2d62eb8dc0e7a6647d1" title=" " alt="" coords="1767,314,1979,342"/>
+<area shape="poly" title=" " alt="" coords="1423,327,1505,344,1569,349,1635,350,1757,341,1758,347,1635,355,1569,355,1504,349,1422,332"/>
+<area shape="rect" href="classMFRC522.html#acb2b1e74bc49fda2704450a684faa845" title=" " alt="" coords="1240,144,1456,189"/>
+<area shape="poly" title=" " alt="" coords="1192,164,1225,164,1225,169,1192,169"/>
+<area shape="poly" title=" " alt="" coords="1436,141,1504,129,1631,123,1750,125,1750,131,1631,128,1505,135,1437,146"/>
+<area shape="poly" title=" " alt="" coords="1385,187,1440,220,1505,250,1567,270,1631,286,1752,310,1751,315,1630,292,1566,275,1503,254,1438,224,1382,192"/>
+<area shape="rect" href="classMFRC522.html#a7c65647b1d72b6ee7557797322030643" title=" " alt="" coords="1504,213,1718,240"/>
+<area shape="poly" title=" " alt="" coords="1450,187,1533,206,1532,211,1448,192"/>
+<area shape="rect" href="classMFRC522.html#acebb9a90249419f2a53281c4a13727d1" title=" " alt="" coords="1511,144,1711,189"/>
+<area shape="poly" title=" " alt="" coords="1457,164,1496,164,1496,169,1457,169"/>
+<area shape="poly" title=" " alt="" coords="1678,210,1717,199,1826,156,1828,161,1719,204,1680,215"/>
+<area shape="poly" title=" " alt="" coords="1650,238,1821,306,1820,311,1648,243"/>
+<area shape="poly" title=" " alt="" coords="1711,153,1750,148,1751,154,1712,158"/>
+<area shape="poly" title=" " alt="" coords="1694,187,1719,199,1757,223,1793,250,1849,301,1846,305,1789,254,1754,227,1716,204,1691,192"/>
+<area shape="rect" href="classMFRC522.html#a7a78c629cb4e1d90cc2d7526b17d6c22" title=" " alt="" coords="750,213,919,240"/>
+<area shape="poly" title=" " alt="" coords="455,219,735,223,735,228,455,224"/>
+<area shape="poly" title=" " alt="" coords="897,210,917,199,932,185,940,169,948,153,965,139,1020,114,1077,94,1136,79,1195,68,1316,56,1435,57,1548,67,1651,82,1739,100,1808,116,1807,122,1738,105,1650,87,1548,72,1435,63,1316,62,1196,73,1137,84,1079,99,1022,119,968,144,952,156,944,171,936,188,920,203,899,215"/>
+<area shape="poly" title=" " alt="" coords="857,239,906,268,936,283,967,293,1033,307,1100,313,1226,315,1226,320,1099,319,1032,312,966,299,934,288,903,273,855,243"/>
+<area shape="poly" title=" " alt="" coords="851,239,899,282,932,304,968,322,1079,354,1194,374,1311,383,1426,383,1534,377,1634,367,1790,343,1791,348,1634,373,1535,383,1426,389,1311,388,1194,379,1077,359,966,326,929,309,896,286,847,243"/>
+<area shape="poly" title=" " alt="" coords="893,210,1004,182,1005,187,894,215"/>
+<area shape="poly" title=" " alt="" coords="919,224,1489,224,1489,229,919,229"/>
+</map>
+</div>
+
+</div>
+</div>
+<a id="a796d502e70c965524f20c277278e2fc8" name="a796d502e70c965524f20c277278e2fc8"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a796d502e70c965524f20c277278e2fc8">&#9670;&#160;</a></span>detectarTarjeta()</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">bool accesoRFID::detectarTarjeta </td>
+          <td>(</td>
+          <td class="paramname"><span class="paramname"><em></em></span></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p>bool <a class="el" href="#a796d502e70c965524f20c277278e2fc8" title="bool detectarTarjeta(); Lee el UID de la tarjeta para implementarla en el sistema.">detectarTarjeta()</a>; Lee el UID de la tarjeta para implementarla en el sistema. </p>
+<p>bool <a class="el" href="#a796d502e70c965524f20c277278e2fc8" title="bool detectarTarjeta(); Lee el UID de la tarjeta para implementarla en el sistema.">detectarTarjeta()</a>;</p>
+<p>Este método detecta si hay una tarjeta para poder leerla. </p>
+<div class="dynheader">
+Gráfico de llamadas de esta función:</div>
+<div class="dyncontent">
+<div class="center"><img src="classaccesoRFID_a796d502e70c965524f20c277278e2fc8_cgraph.png" border="0" usemap="#aclassaccesoRFID_a796d502e70c965524f20c277278e2fc8_cgraph" alt=""/></div>
+<map name="aclassaccesoRFID_a796d502e70c965524f20c277278e2fc8_cgraph" id="aclassaccesoRFID_a796d502e70c965524f20c277278e2fc8_cgraph">
+<area shape="rect" title="bool detectarTarjeta(); Lee el UID de la tarjeta para implementarla en el sistema." alt="" coords="5,181,209,208"/>
+<area shape="rect" href="classMFRC522.html#a3adca9d3b455c680ebcde3b74c4e567b" title=" " alt="" coords="257,153,504,180"/>
+<area shape="poly" title=" " alt="" coords="209,182,241,178,241,184,209,187"/>
+<area shape="rect" href="classMFRC522.html#aab1218c71cec9cc17ee3ac8a683df106" title=" " alt="" coords="266,206,494,234"/>
+<area shape="poly" title=" " alt="" coords="209,201,251,205,250,211,209,207"/>
+<area shape="rect" href="classMFRC522.html#aa5e5825adb4c784d8a5a60242c135fb7" title=" " alt="" coords="1806,124,2020,151"/>
+<area shape="poly" title=" " alt="" coords="405,150,481,110,595,62,661,39,730,20,802,7,873,3,1390,3,1495,5,1577,13,1657,30,1759,60,1822,85,1876,113,1873,118,1819,90,1757,65,1656,35,1576,18,1495,10,1389,8,873,8,802,13,732,25,662,44,597,67,484,115,408,155"/>
+<area shape="rect" href="classMFRC522.html#a4e0ac6edf5e8f6ade351b009278fbbc7" title=" " alt="" coords="552,153,742,180"/>
+<area shape="poly" title=" " alt="" coords="504,164,536,164,536,169,504,169"/>
+<area shape="rect" href="classMFRC522.html#a639d27ac072bc0dfa478d0957591afcc" title=" " alt="" coords="792,144,957,189"/>
+<area shape="poly" title=" " alt="" coords="742,164,776,164,776,169,742,169"/>
+<area shape="rect" href="classMFRC522.html#a76193f4f8916f688fe2b7976d0fd1dc2" title=" " alt="" coords="1282,284,1495,329"/>
+<area shape="poly" title=" " alt="" coords="958,186,1290,277,1288,282,956,191"/>
+<area shape="rect" href="classMFRC522.html#aaa96aa7ec4f95e0835cb758ad0450d74" title=" " alt="" coords="1007,153,1232,180"/>
+<area shape="poly" title=" " alt="" coords="957,164,991,164,991,169,957,169"/>
+<area shape="poly" title=" " alt="" coords="1495,302,1556,297,1623,287,1691,272,1757,250,1794,231,1829,207,1885,160,1888,164,1832,211,1797,235,1759,254,1693,277,1624,292,1557,302,1495,307"/>
+<area shape="rect" href="classMFRC522.html#a4289838c6f24f2d62eb8dc0e7a6647d1" title=" " alt="" coords="1807,314,2019,342"/>
+<area shape="poly" title=" " alt="" coords="1463,327,1545,344,1609,349,1675,350,1797,341,1798,347,1675,355,1609,355,1544,349,1462,332"/>
+<area shape="rect" href="classMFRC522.html#acb2b1e74bc49fda2704450a684faa845" title=" " alt="" coords="1280,144,1496,189"/>
+<area shape="poly" title=" " alt="" coords="1232,164,1265,164,1265,169,1232,169"/>
+<area shape="poly" title=" " alt="" coords="1476,141,1544,129,1671,123,1790,125,1790,131,1671,128,1545,135,1477,146"/>
+<area shape="poly" title=" " alt="" coords="1425,187,1480,220,1545,250,1607,270,1671,286,1792,310,1791,315,1670,292,1606,275,1543,254,1478,224,1422,192"/>
+<area shape="rect" href="classMFRC522.html#a7c65647b1d72b6ee7557797322030643" title=" " alt="" coords="1544,213,1758,240"/>
+<area shape="poly" title=" " alt="" coords="1490,187,1573,206,1572,211,1488,192"/>
+<area shape="rect" href="classMFRC522.html#acebb9a90249419f2a53281c4a13727d1" title=" " alt="" coords="1551,144,1751,189"/>
+<area shape="poly" title=" " alt="" coords="1497,164,1536,164,1536,169,1497,169"/>
+<area shape="poly" title=" " alt="" coords="1718,210,1757,199,1866,156,1868,161,1759,204,1720,215"/>
+<area shape="poly" title=" " alt="" coords="1690,238,1861,306,1860,311,1688,243"/>
+<area shape="poly" title=" " alt="" coords="1751,153,1790,148,1791,154,1752,158"/>
+<area shape="poly" title=" " alt="" coords="1734,187,1759,199,1797,223,1833,250,1889,301,1886,305,1829,254,1794,227,1756,204,1731,192"/>
+<area shape="rect" href="classMFRC522.html#a7a78c629cb4e1d90cc2d7526b17d6c22" title=" " alt="" coords="790,213,959,240"/>
+<area shape="poly" title=" " alt="" coords="495,219,775,223,775,228,495,224"/>
+<area shape="poly" title=" " alt="" coords="937,210,957,199,972,185,980,169,988,153,1005,139,1060,114,1117,94,1176,79,1235,68,1356,56,1475,57,1588,67,1691,82,1779,100,1848,116,1847,122,1778,105,1690,87,1588,72,1475,63,1356,62,1236,73,1177,84,1119,99,1062,119,1008,144,992,156,984,171,976,188,960,203,939,215"/>
+<area shape="poly" title=" " alt="" coords="897,239,946,268,976,283,1007,293,1073,307,1140,313,1266,315,1266,320,1139,319,1072,312,1006,299,974,288,943,273,895,243"/>
+<area shape="poly" title=" " alt="" coords="891,239,939,282,972,304,1008,322,1119,354,1234,374,1351,383,1466,383,1574,377,1674,367,1830,343,1831,348,1674,373,1575,383,1466,389,1351,388,1234,379,1117,359,1006,326,969,309,936,286,887,243"/>
+<area shape="poly" title=" " alt="" coords="933,210,1044,182,1045,187,934,215"/>
+<area shape="poly" title=" " alt="" coords="959,224,1529,224,1529,229,959,229"/>
+</map>
+</div>
+
+</div>
+</div>
+<a id="a0274f257c332f825bdb079d4b4e6efd6" name="a0274f257c332f825bdb079d4b4e6efd6"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a0274f257c332f825bdb079d4b4e6efd6">&#9670;&#160;</a></span>mostrarID()</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">void accesoRFID::mostrarID </td>
+          <td>(</td>
+          <td class="paramname"><span class="paramname"><em></em></span></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p>void <a class="el" href="#a0274f257c332f825bdb079d4b4e6efd6" title="void mostrarID(); Imprime por puerto serie el UID de la tarjeta detectada por el RFID">mostrarID()</a>; Imprime por puerto serie el UID de la tarjeta detectada por el RFID </p>
+<p>void <a class="el" href="#a0274f257c332f825bdb079d4b4e6efd6" title="void mostrarID(); Imprime por puerto serie el UID de la tarjeta detectada por el RFID">mostrarID()</a>;</p>
+<p>Este método imprime el UID de la tarjeta detectada por el lector RFID en formato hexadecimal. </p>
+
+</div>
+</div>
+<a id="a3bc744bb024b8bfbe459092a36f9cd68" name="a3bc744bb024b8bfbe459092a36f9cd68"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a3bc744bb024b8bfbe459092a36f9cd68">&#9670;&#160;</a></span>start()</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">void accesoRFID::start </td>
+          <td>(</td>
+          <td class="paramname"><span class="paramname"><em></em></span></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p>void <a class="el" href="#a3bc744bb024b8bfbe459092a36f9cd68" title="void start(); Inicia la comunicación SPI con el módulo RFID (usando sus métodos).">start()</a>; Inicia la comunicación SPI con el módulo RFID (usando sus métodos). </p>
+<p>void <a class="el" href="#a3bc744bb024b8bfbe459092a36f9cd68" title="void start(); Inicia la comunicación SPI con el módulo RFID (usando sus métodos).">start()</a>; Este método llamada a otros dos de <a class="el" href="MFRC522_8h_source.html">MFRC522.h</a> y SPI.h para iniciar la comunicación entre el RFID (rfid.PCD_Init()) y el SPI (SPI_begin()). </p>
+<div class="dynheader">
+Gráfico de llamadas de esta función:</div>
+<div class="dyncontent">
+<div class="center"><img src="classaccesoRFID_a3bc744bb024b8bfbe459092a36f9cd68_cgraph.png" border="0" usemap="#aclassaccesoRFID_a3bc744bb024b8bfbe459092a36f9cd68_cgraph" alt=""/></div>
+<map name="aclassaccesoRFID_a3bc744bb024b8bfbe459092a36f9cd68_cgraph" id="aclassaccesoRFID_a3bc744bb024b8bfbe459092a36f9cd68_cgraph">
+<area shape="rect" title="void start(); Inicia la comunicación SPI con el módulo RFID (usando sus métodos)." alt="" coords="5,57,141,85"/>
+<area shape="rect" href="classMFRC522.html#ad681e424fc68a57941bea5702cee05eb" title=" " alt="" coords="189,57,335,85"/>
+<area shape="poly" title=" " alt="" coords="141,68,173,68,173,74,141,74"/>
+<area shape="rect" href="classMFRC522.html#a044be037a5f172e9cea7d8ce1dcf32e0" title=" " alt="" coords="383,57,580,85"/>
+<area shape="poly" title=" " alt="" coords="335,68,367,68,367,74,335,74"/>
+<area shape="rect" href="classMFRC522.html#aa5e5825adb4c784d8a5a60242c135fb7" title=" " alt="" coords="628,57,843,85"/>
+<area shape="poly" title=" " alt="" coords="320,83,383,94,482,100,580,94,647,85,647,91,581,99,482,105,383,99,319,88"/>
+<area shape="rect" href="classMFRC522.html#a9886678ea0a65021bf602cfb110caa15" title=" " alt="" coords="400,5,563,33"/>
+<area shape="poly" title=" " alt="" coords="323,54,404,35,406,40,324,59"/>
+<area shape="rect" href="classMFRC522.html#a4289838c6f24f2d62eb8dc0e7a6647d1" title=" " alt="" coords="629,5,842,33"/>
+<area shape="poly" title=" " alt="" coords="552,54,649,34,650,39,554,59"/>
+<area shape="poly" title=" " alt="" coords="581,68,613,68,613,74,581,74"/>
+<area shape="poly" title=" " alt="" coords="563,16,614,16,614,22,563,22"/>
+<area shape="poly" title=" " alt="" coords="554,31,650,51,649,56,552,36"/>
+</map>
+</div>
+
+</div>
+</div>
+<hr/>La documentación de esta clase está generada de los siguientes archivos:<ul>
+<li>main/libraries/RFID-RC522/<a class="el" href="accesoRFID_8h_source.html">accesoRFID.h</a></li>
+<li>main/libraries/RFID-RC522/<a class="el" href="accesoRFID_8cpp_source.html">accesoRFID.cpp</a></li>
+</ul>
+</div><!-- contents -->
+</div><!-- doc-content -->
+<!-- start footer part -->
+<div id="nav-path" class="navpath"><!-- id is needed for treeview function! -->
+  <ul>
+    <li class="navelem"><a class="el" href="classaccesoRFID.html">accesoRFID</a></li>
+    <li class="footer">Generado por <a href="https://www.doxygen.org/index.html"><img class="footer" src="doxygen.svg" width="104" height="31" alt="doxygen"/></a> 1.12.0 </li>
+  </ul>
+</div>
+</body>
+</html>

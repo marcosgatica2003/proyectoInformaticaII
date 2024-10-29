@@ -1,0 +1,22 @@
+<map id="MFRC522::MIFARE_Restore" name="MFRC522::MIFARE_Restore">
+<area shape="rect" id="Node000001" title=" " alt="" coords="5,120,202,148"/>
+<area shape="rect" id="Node000002" href="$classMFRC522.html#a86cb4ad38f61b823dfe97103b1b1f9d6" title=" " alt="" coords="250,120,493,148"/>
+<area shape="poly" id="edge1_Node000001_Node000002" title=" " alt="" coords="202,132,234,132,234,137,202,137"/>
+<area shape="rect" id="Node000003" href="$classMFRC522.html#aa88d28676b3ffb5985af8db35d39077b" title=" " alt="" coords="541,112,714,157"/>
+<area shape="poly" id="edge2_Node000002_Node000003" title=" " alt="" coords="494,132,525,132,525,137,494,137"/>
+<area shape="rect" id="Node000004" href="$classMFRC522.html#a7c65647b1d72b6ee7557797322030643" title=" " alt="" coords="1027,150,1240,177"/>
+<area shape="poly" id="edge3_Node000003_Node000004" title=" " alt="" coords="715,137,1012,154,1011,159,715,142"/>
+<area shape="rect" id="Node000007" href="$classMFRC522.html#acb2b1e74bc49fda2704450a684faa845" title=" " alt="" coords="762,81,979,126"/>
+<area shape="poly" id="edge6_Node000003_Node000007" title=" " alt="" coords="714,121,746,117,747,122,715,126"/>
+<area shape="rect" id="Node000005" href="$classMFRC522.html#a4289838c6f24f2d62eb8dc0e7a6647d1" title=" " alt="" coords="1289,99,1501,127"/>
+<area shape="poly" id="edge4_Node000004_Node000005" title=" " alt="" coords="1208,146,1305,128,1306,133,1209,152"/>
+<area shape="rect" id="Node000006" href="$classMFRC522.html#aa5e5825adb4c784d8a5a60242c135fb7" title=" " alt="" coords="1288,39,1502,67"/>
+<area shape="poly" id="edge5_Node000004_Node000006" title=" " alt="" coords="1160,147,1217,117,1287,85,1330,69,1331,74,1289,90,1220,122,1162,152"/>
+<area shape="poly" id="edge7_Node000007_Node000004" title=" " alt="" coords="972,124,1055,143,1054,148,971,129"/>
+<area shape="poly" id="edge8_Node000007_Node000005" title=" " alt="" coords="979,103,1273,108,1273,113,979,108"/>
+<area shape="poly" id="edge12_Node000007_Node000006" title=" " alt="" coords="900,79,957,44,991,28,1026,16,1067,8,1108,4,1192,6,1269,17,1333,32,1332,37,1268,23,1191,12,1109,9,1067,13,1027,21,993,33,959,49,903,83"/>
+<area shape="rect" id="Node000008" href="$classMFRC522.html#acebb9a90249419f2a53281c4a13727d1" title=" " alt="" coords="1033,31,1234,75"/>
+<area shape="poly" id="edge9_Node000007_Node000008" title=" " alt="" coords="979,80,1017,72,1018,78,980,85"/>
+<area shape="poly" id="edge10_Node000008_Node000005" title=" " alt="" coords="1234,73,1317,92,1316,98,1233,78"/>
+<area shape="poly" id="edge11_Node000008_Node000006" title=" " alt="" coords="1234,50,1273,50,1273,56,1234,56"/>
+</map>

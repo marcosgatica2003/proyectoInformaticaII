@@ -18,10 +18,9 @@
  * Provides methods to read temperature and humidity data from the DHT11 sensor.
  */
 
-class sensorTemp;
 class DHT11
 {
-friend class sensorTemp;
+
 public:
   /**
    * Constructor
@@ -106,6 +105,9 @@ private:
    * and finally setting it to input mode to read the data.
    */
   void startSignal();
+
+  friend void setPinDHT11(DHT11& sensor, int pin);
+
 };
 
 #endif

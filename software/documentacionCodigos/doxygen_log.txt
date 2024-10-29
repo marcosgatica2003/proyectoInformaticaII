@@ -1,0 +1,716 @@
+warning: The selected output language "spanish" has not been updated
+since release 1.9.6.  As a result some sentences may appear in English.
+
+Doxygen version used: 1.12.0
+Notice: Output directory './documentacionCodigos/' does not exist. I have created it for you.
+Searching for include files...
+Searching for example files...
+Searching for images...
+Searching for dot files...
+Searching for msc files...
+Searching for dia files...
+Searching for files to exclude
+Searching INPUT for files to process...
+Searching for files in directory /home/marcosgatica/Escritorio/facultadUTN/informáticaii/proyectoInformaticaII/software/main
+Searching for files in directory /home/marcosgatica/Escritorio/facultadUTN/informáticaii/proyectoInformaticaII/software/main/libraries
+Searching for files in directory /home/marcosgatica/Escritorio/facultadUTN/informáticaii/proyectoInformaticaII/software/main/libraries/buzzer CLDZ
+Searching for files in directory /home/marcosgatica/Escritorio/facultadUTN/informáticaii/proyectoInformaticaII/software/main/libraries/DHT11-HW-481
+Searching for files in directory /home/marcosgatica/Escritorio/facultadUTN/informáticaii/proyectoInformaticaII/software/main/libraries/RFID-RC522
+Reading and parsing tag files
+Parsing files
+Preprocessing /home/marcosgatica/Escritorio/facultadUTN/informáticaii/proyectoInformaticaII/software/main/libraries/buzzer CLDZ/buzzer.cpp...
+Parsing file /home/marcosgatica/Escritorio/facultadUTN/informáticaii/proyectoInformaticaII/software/main/libraries/buzzer CLDZ/buzzer.cpp...
+Preprocessing /home/marcosgatica/Escritorio/facultadUTN/informáticaii/proyectoInformaticaII/software/main/libraries/buzzer CLDZ/buzzer.h...
+Parsing file /home/marcosgatica/Escritorio/facultadUTN/informáticaii/proyectoInformaticaII/software/main/libraries/buzzer CLDZ/buzzer.h...
+Preprocessing /home/marcosgatica/Escritorio/facultadUTN/informáticaii/proyectoInformaticaII/software/main/libraries/DHT11-HW-481/DHT11.cpp...
+Parsing file /home/marcosgatica/Escritorio/facultadUTN/informáticaii/proyectoInformaticaII/software/main/libraries/DHT11-HW-481/DHT11.cpp...
+Preprocessing /home/marcosgatica/Escritorio/facultadUTN/informáticaii/proyectoInformaticaII/software/main/libraries/DHT11-HW-481/DHT11.h...
+Parsing file /home/marcosgatica/Escritorio/facultadUTN/informáticaii/proyectoInformaticaII/software/main/libraries/DHT11-HW-481/DHT11.h...
+Preprocessing /home/marcosgatica/Escritorio/facultadUTN/informáticaii/proyectoInformaticaII/software/main/libraries/DHT11-HW-481/DHT11Libs.h...
+Parsing file /home/marcosgatica/Escritorio/facultadUTN/informáticaii/proyectoInformaticaII/software/main/libraries/DHT11-HW-481/DHT11Libs.h...
+Preprocessing /home/marcosgatica/Escritorio/facultadUTN/informáticaii/proyectoInformaticaII/software/main/libraries/DHT11-HW-481/setPin.cpp...
+Parsing file /home/marcosgatica/Escritorio/facultadUTN/informáticaii/proyectoInformaticaII/software/main/libraries/DHT11-HW-481/setPin.cpp...
+Preprocessing /home/marcosgatica/Escritorio/facultadUTN/informáticaii/proyectoInformaticaII/software/main/libraries/DHT11-HW-481/setPin.h...
+Parsing file /home/marcosgatica/Escritorio/facultadUTN/informáticaii/proyectoInformaticaII/software/main/libraries/DHT11-HW-481/setPin.h...
+Preprocessing /home/marcosgatica/Escritorio/facultadUTN/informáticaii/proyectoInformaticaII/software/main/libraries/RFID-RC522/accesoRFID.cpp...
+Parsing file /home/marcosgatica/Escritorio/facultadUTN/informáticaii/proyectoInformaticaII/software/main/libraries/RFID-RC522/accesoRFID.cpp...
+Preprocessing /home/marcosgatica/Escritorio/facultadUTN/informáticaii/proyectoInformaticaII/software/main/libraries/RFID-RC522/accesoRFID.h...
+Parsing file /home/marcosgatica/Escritorio/facultadUTN/informáticaii/proyectoInformaticaII/software/main/libraries/RFID-RC522/accesoRFID.h...
+Preprocessing /home/marcosgatica/Escritorio/facultadUTN/informáticaii/proyectoInformaticaII/software/main/libraries/RFID-RC522/deprecated.h...
+Parsing file /home/marcosgatica/Escritorio/facultadUTN/informáticaii/proyectoInformaticaII/software/main/libraries/RFID-RC522/deprecated.h...
+Preprocessing /home/marcosgatica/Escritorio/facultadUTN/informáticaii/proyectoInformaticaII/software/main/libraries/RFID-RC522/MFRC522.cpp...
+Parsing file /home/marcosgatica/Escritorio/facultadUTN/informáticaii/proyectoInformaticaII/software/main/libraries/RFID-RC522/MFRC522.cpp...
+Preprocessing /home/marcosgatica/Escritorio/facultadUTN/informáticaii/proyectoInformaticaII/software/main/libraries/RFID-RC522/MFRC522.h...
+Parsing file /home/marcosgatica/Escritorio/facultadUTN/informáticaii/proyectoInformaticaII/software/main/libraries/RFID-RC522/MFRC522.h...
+Preprocessing /home/marcosgatica/Escritorio/facultadUTN/informáticaii/proyectoInformaticaII/software/main/libraries/RFID-RC522/MFRC522Extended.cpp...
+Parsing file /home/marcosgatica/Escritorio/facultadUTN/informáticaii/proyectoInformaticaII/software/main/libraries/RFID-RC522/MFRC522Extended.cpp...
+Preprocessing /home/marcosgatica/Escritorio/facultadUTN/informáticaii/proyectoInformaticaII/software/main/libraries/RFID-RC522/MFRC522Extended.h...
+Parsing file /home/marcosgatica/Escritorio/facultadUTN/informáticaii/proyectoInformaticaII/software/main/libraries/RFID-RC522/MFRC522Extended.h...
+Preprocessing /home/marcosgatica/Escritorio/facultadUTN/informáticaii/proyectoInformaticaII/software/main/libraries/RFID-RC522/require_cpp11.h...
+Parsing file /home/marcosgatica/Escritorio/facultadUTN/informáticaii/proyectoInformaticaII/software/main/libraries/RFID-RC522/require_cpp11.h...
+Preprocessing /home/marcosgatica/Escritorio/facultadUTN/informáticaii/proyectoInformaticaII/software/main/libraries/RFID-RC522/RFIDLibs.h...
+Parsing file /home/marcosgatica/Escritorio/facultadUTN/informáticaii/proyectoInformaticaII/software/main/libraries/RFID-RC522/RFIDLibs.h...
+Building macro definition list...
+Building group list...
+Building directory list...
+Building namespace list...
+Building file list...
+Building class list...
+Building concept list...
+Computing nesting relations for classes...
+Associating documentation with classes...
+Associating documentation with concepts...
+Associating documentation with modules...
+Building example list...
+Searching for enumerations...
+Searching for documented typedefs...
+Searching for members imported via using declarations...
+Searching for included using directives...
+Searching for documented variables...
+Building interface member list...
+Building member list...
+Searching for friends...
+Searching for documented defines...
+Computing class inheritance relations...
+Computing class usage relations...
+Searching for tag less structs...
+Flushing cached template relations that have become invalid...
+Computing class relations...
+/home/marcosgatica/Escritorio/facultadUTN/informáticaii/proyectoInformaticaII/software/main/libraries/buzzer CLDZ/buzzer.h:6: warning: Compound Buzzer is not documented.
+/home/marcosgatica/Escritorio/facultadUTN/informáticaii/proyectoInformaticaII/software/main/libraries/RFID-RC522/MFRC522.h:78: warning: Compound MFRC522 is not documented.
+/home/marcosgatica/Escritorio/facultadUTN/informáticaii/proyectoInformaticaII/software/main/libraries/RFID-RC522/MFRC522.h:262: warning: Compound MFRC522::MIFARE_Key is not documented.
+/home/marcosgatica/Escritorio/facultadUTN/informáticaii/proyectoInformaticaII/software/main/libraries/RFID-RC522/MFRC522.h:255: warning: Compound MFRC522::Uid is not documented.
+/home/marcosgatica/Escritorio/facultadUTN/informáticaii/proyectoInformaticaII/software/main/libraries/RFID-RC522/MFRC522Extended.h:24: warning: Compound MFRC522Extended::Ats is not documented.
+/home/marcosgatica/Escritorio/facultadUTN/informáticaii/proyectoInformaticaII/software/main/libraries/RFID-RC522/MFRC522Extended.h:62: warning: Compound MFRC522Extended::PcbBlock is not documented.
+/home/marcosgatica/Escritorio/facultadUTN/informáticaii/proyectoInformaticaII/software/main/libraries/RFID-RC522/MFRC522Extended.h:52: warning: Compound MFRC522Extended::TagInfo is not documented.
+Add enum values to enums...
+Searching for member function documentation...
+/home/marcosgatica/Escritorio/facultadUTN/informáticaii/proyectoInformaticaII/software/main/libraries/RFID-RC522/MFRC522.h:43: warning: documented symbol 'const byte MFRC522_firmware_referenceV1_0' was not declared or defined.
+/home/marcosgatica/Escritorio/facultadUTN/informáticaii/proyectoInformaticaII/software/main/libraries/RFID-RC522/MFRC522.h:55: warning: documented symbol 'const byte MFRC522_firmware_referenceV2_0' was not declared or defined.
+/home/marcosgatica/Escritorio/facultadUTN/informáticaii/proyectoInformaticaII/software/main/libraries/RFID-RC522/MFRC522.h:67: warning: documented symbol 'const byte FM17522_firmware_reference' was not declared or defined.
+Creating members for template instances...
+Building page list...
+Search for main page...
+Computing page relations...
+Determining the scope of groups...
+Computing module relations...
+Sorting lists...
+Determining which enums are documented
+Computing member relations...
+Building full member lists recursively...
+Adding members to member groups.
+Computing member references...
+Inheriting documentation...
+Generating disk names...
+Adding source references...
+Adding xrefitems...
+Sorting member lists...
+Setting anonymous enum type...
+Computing dependencies between directories...
+Generating citations page...
+Counting members...
+Counting data structures...
+Resolving user defined references...
+Finding anchors and sections in the documentation...
+Transferring function references...
+Combining using relations...
+Adding members to index pages...
+Correcting members for VHDL...
+Computing tooltip texts...
+Generating style sheet...
+Generating search indices...
+Generating example documentation...
+Generating file sources...
+Parsing code for file main/libraries/buzzer CLDZ/buzzer.cpp...
+Generating code for file main/libraries/buzzer CLDZ/buzzer.h...
+Generating code for file main/libraries/DHT11-HW-481/DHT11.cpp...
+Generating code for file main/libraries/DHT11-HW-481/DHT11.h...
+Generating code for file main/libraries/DHT11-HW-481/DHT11Libs.h...
+Generating code for file main/libraries/DHT11-HW-481/setPin.cpp...
+Generating code for file main/libraries/DHT11-HW-481/setPin.h...
+Generating code for file main/libraries/RFID-RC522/accesoRFID.cpp...
+Generating code for file main/libraries/RFID-RC522/accesoRFID.h...
+Generating code for file main/libraries/RFID-RC522/deprecated.h...
+Generating code for file main/libraries/RFID-RC522/MFRC522.cpp...
+Generating code for file main/libraries/RFID-RC522/MFRC522.h...
+Generating code for file main/libraries/RFID-RC522/MFRC522Extended.cpp...
+Generating code for file main/libraries/RFID-RC522/MFRC522Extended.h...
+Generating code for file main/libraries/RFID-RC522/require_cpp11.h...
+Generating code for file main/libraries/RFID-RC522/RFIDLibs.h...
+Generating file documentation...
+Generating docs for file main/libraries/DHT11-HW-481/setPin.cpp...
+Generating docs for file main/libraries/DHT11-HW-481/setPin.h...
+Generating page documentation...
+Generating group documentation...
+Generating class documentation...
+Generating docs for compound accesoRFID...
+/home/marcosgatica/Escritorio/facultadUTN/informáticaii/proyectoInformaticaII/software/main/libraries/RFID-RC522/accesoRFID.h:22: warning: argument 'autorizarID' of command @param is not found in the argument list of accesoRFID::accesoRFID(byte ssPin, byte rstPin, String ID)
+/home/marcosgatica/Escritorio/facultadUTN/informáticaii/proyectoInformaticaII/software/main/libraries/RFID-RC522/accesoRFID.h:22: warning: The following parameter of accesoRFID::accesoRFID(byte ssPin, byte rstPin, String ID) is not documented:
+  parameter 'ID'
+Generating call graph for function accesoRFID::autorizar
+Generating call graph for function accesoRFID::detectarTarjeta
+Generating call graph for function accesoRFID::start
+Generating docs for compound Buzzer...
+/home/marcosgatica/Escritorio/facultadUTN/informáticaii/proyectoInformaticaII/software/main/libraries/buzzer CLDZ/buzzer.h:8: warning: Member Buzzer(int buzzPin, int potPin) (function) of class Buzzer is not documented.
+/home/marcosgatica/Escritorio/facultadUTN/informáticaii/proyectoInformaticaII/software/main/libraries/buzzer CLDZ/buzzer.h:9: warning: Member setup() (function) of class Buzzer is not documented.
+/home/marcosgatica/Escritorio/facultadUTN/informáticaii/proyectoInformaticaII/software/main/libraries/buzzer CLDZ/buzzer.h:10: warning: Member update() (function) of class Buzzer is not documented.
+Generating docs for compound DHT11...
+/home/marcosgatica/Escritorio/facultadUTN/informáticaii/proyectoInformaticaII/software/main/libraries/DHT11-HW-481/DHT11.h:67: warning: Member ERROR_CHECKSUM (variable) of class DHT11 is not documented.
+/home/marcosgatica/Escritorio/facultadUTN/informáticaii/proyectoInformaticaII/software/main/libraries/DHT11-HW-481/DHT11.h:68: warning: Member ERROR_TIMEOUT (variable) of class DHT11 is not documented.
+/home/marcosgatica/Escritorio/facultadUTN/informáticaii/proyectoInformaticaII/software/main/libraries/DHT11-HW-481/DHT11.h:69: warning: Member TIMEOUT_DURATION (variable) of class DHT11 is not documented.
+/home/marcosgatica/Escritorio/facultadUTN/informáticaii/proyectoInformaticaII/software/main/libraries/DHT11-HW-481/DHT11.cpp:13: warning: argument 'pin' from the argument list of DHT11::DHT11 has multiple @param documentation sections
+/home/marcosgatica/Escritorio/facultadUTN/informáticaii/proyectoInformaticaII/software/main/libraries/DHT11-HW-481/DHT11.cpp:166: warning: argument 'temperature' from the argument list of DHT11::readTemperatureHumidity has multiple @param documentation sections
+/home/marcosgatica/Escritorio/facultadUTN/informáticaii/proyectoInformaticaII/software/main/libraries/DHT11-HW-481/DHT11.cpp:166: warning: argument 'humidity' from the argument list of DHT11::readTemperatureHumidity has multiple @param documentation sections
+Generating docs for compound MFRC522...
+/home/marcosgatica/Escritorio/facultadUTN/informáticaii/proyectoInformaticaII/software/main/libraries/RFID-RC522/MFRC522.h:87: warning: Member PCD_Register (enumeration) of class MFRC522 is not documented.
+/home/marcosgatica/Escritorio/facultadUTN/informáticaii/proyectoInformaticaII/software/main/libraries/RFID-RC522/MFRC522.h:162: warning: Member PCD_Command (enumeration) of class MFRC522 is not documented.
+/home/marcosgatica/Escritorio/facultadUTN/informáticaii/proyectoInformaticaII/software/main/libraries/RFID-RC522/MFRC522.h:177: warning: Member PCD_RxGain (enumeration) of class MFRC522 is not documented.
+/home/marcosgatica/Escritorio/facultadUTN/informáticaii/proyectoInformaticaII/software/main/libraries/RFID-RC522/MFRC522.h:192: warning: Member PICC_Command (enumeration) of class MFRC522 is not documented.
+/home/marcosgatica/Escritorio/facultadUTN/informáticaii/proyectoInformaticaII/software/main/libraries/RFID-RC522/MFRC522.h:219: warning: Member MIFARE_Misc (enumeration) of class MFRC522 is not documented.
+/home/marcosgatica/Escritorio/facultadUTN/informáticaii/proyectoInformaticaII/software/main/libraries/RFID-RC522/MFRC522.h:226: warning: Member PICC_Type (enumeration) of class MFRC522 is not documented.
+/home/marcosgatica/Escritorio/facultadUTN/informáticaii/proyectoInformaticaII/software/main/libraries/RFID-RC522/MFRC522.h:242: warning: Member StatusCode (enumeration) of class MFRC522 is not documented.
+/home/marcosgatica/Escritorio/facultadUTN/informáticaii/proyectoInformaticaII/software/main/libraries/RFID-RC522/MFRC522.h:303: warning: Member PCD_SoftPowerDown() (function) of class MFRC522 is not documented.
+/home/marcosgatica/Escritorio/facultadUTN/informáticaii/proyectoInformaticaII/software/main/libraries/RFID-RC522/MFRC522.h:304: warning: Member PCD_SoftPowerUp() (function) of class MFRC522 is not documented.
+/home/marcosgatica/Escritorio/facultadUTN/informáticaii/proyectoInformaticaII/software/main/libraries/RFID-RC522/MFRC522.h:267: warning: Member uid (variable) of class MFRC522 is not documented.
+/home/marcosgatica/Escritorio/facultadUTN/informáticaii/proyectoInformaticaII/software/main/libraries/RFID-RC522/MFRC522.h:81: warning: Member FIFO_SIZE (variable) of class MFRC522 is not documented.
+/home/marcosgatica/Escritorio/facultadUTN/informáticaii/proyectoInformaticaII/software/main/libraries/RFID-RC522/MFRC522.h:83: warning: Member UNUSED_PIN (variable) of class MFRC522 is not documented.
+/home/marcosgatica/Escritorio/facultadUTN/informáticaii/proyectoInformaticaII/software/main/libraries/RFID-RC522/MFRC522.h:366: warning: Member _chipSelectPin (variable) of class MFRC522 is not documented.
+/home/marcosgatica/Escritorio/facultadUTN/informáticaii/proyectoInformaticaII/software/main/libraries/RFID-RC522/MFRC522.h:367: warning: Member _resetPowerDownPin (variable) of class MFRC522 is not documented.
+Generating caller graph for function MFRC522::GetStatusCodeName
+Generating call graph for function MFRC522::MIFARE_Decrement
+Generating call graph for function MFRC522::MIFARE_GetValue
+Generating call graph for function MFRC522::MIFARE_Increment
+Generating call graph for function MFRC522::MIFARE_OpenUidBackdoor
+Generating caller graph for function MFRC522::MIFARE_OpenUidBackdoor
+Generating call graph for function MFRC522::MIFARE_Read
+Generating caller graph for function MFRC522::MIFARE_Read
+Generating call graph for function MFRC522::MIFARE_Restore
+Generating call graph for function MFRC522::MIFARE_SetUid
+Generating call graph for function MFRC522::MIFARE_SetValue
+Generating call graph for function MFRC522::MIFARE_Transfer
+Generating call graph for function MFRC522::MIFARE_TwoStepHelper
+Generating caller graph for function MFRC522::MIFARE_TwoStepHelper
+Generating call graph for function MFRC522::MIFARE_Ultralight_Write
+Generating call graph for function MFRC522::MIFARE_UnbrickUidSector
+Generating call graph for function MFRC522::MIFARE_Write
+Generating caller graph for function MFRC522::MIFARE_Write
+Generating call graph for function MFRC522::PCD_AntennaOff
+Generating call graph for function MFRC522::PCD_AntennaOn
+Generating caller graph for function MFRC522::PCD_AntennaOn
+Generating call graph for function MFRC522::PCD_Authenticate
+Generating caller graph for function MFRC522::PCD_Authenticate
+Generating call graph for function MFRC522::PCD_CalculateCRC
+Generating caller graph for function MFRC522::PCD_CalculateCRC
+Generating call graph for function MFRC522::PCD_ClearRegisterBitMask
+Generating caller graph for function MFRC522::PCD_ClearRegisterBitMask
+Generating call graph for function MFRC522::PCD_CommunicateWithPICC
+Generating caller graph for function MFRC522::PCD_CommunicateWithPICC
+Generating call graph for function MFRC522::PCD_DumpVersionToSerial
+Generating call graph for function MFRC522::PCD_GetAntennaGain
+Generating caller graph for function MFRC522::PCD_GetAntennaGain
+Generating call graph for function MFRC522::PCD_Init
+Generating caller graph for function MFRC522::PCD_Init
+Generating call graph for function MFRC522::PCD_Init
+Generating call graph for function MFRC522::PCD_Init
+Generating call graph for function MFRC522::PCD_MIFARE_Transceive
+Generating caller graph for function MFRC522::PCD_MIFARE_Transceive
+Generating call graph for function MFRC522::PCD_NTAG216_AUTH
+Generating call graph for function MFRC522::PCD_PerformSelfTest
+Generating caller graph for function MFRC522::PCD_ReadRegister
+Generating call graph for function MFRC522::PCD_Reset
+Generating caller graph for function MFRC522::PCD_Reset
+Generating call graph for function MFRC522::PCD_SetAntennaGain
+Generating call graph for function MFRC522::PCD_SetRegisterBitMask
+Generating caller graph for function MFRC522::PCD_SetRegisterBitMask
+Generating call graph for function MFRC522::PCD_StopCrypto1
+Generating caller graph for function MFRC522::PCD_StopCrypto1
+Generating call graph for function MFRC522::PCD_TransceiveData
+Generating caller graph for function MFRC522::PCD_TransceiveData
+Generating caller graph for function MFRC522::PCD_WriteRegister
+Generating call graph for function MFRC522::PICC_DumpDetailsToSerial
+Generating caller graph for function MFRC522::PICC_DumpDetailsToSerial
+Generating call graph for function MFRC522::PICC_DumpMifareClassicSectorToSerial
+Generating caller graph for function MFRC522::PICC_DumpMifareClassicSectorToSerial
+Generating call graph for function MFRC522::PICC_DumpMifareClassicToSerial
+Generating caller graph for function MFRC522::PICC_DumpMifareClassicToSerial
+Generating call graph for function MFRC522::PICC_DumpMifareUltralightToSerial
+Generating caller graph for function MFRC522::PICC_DumpMifareUltralightToSerial
+Generating call graph for function MFRC522::PICC_DumpToSerial
+Generating caller graph for function MFRC522::PICC_GetType
+Generating caller graph for function MFRC522::PICC_GetTypeName
+Generating call graph for function MFRC522::PICC_HaltA
+Generating caller graph for function MFRC522::PICC_HaltA
+Generating call graph for function MFRC522::PICC_IsNewCardPresent
+Generating caller graph for function MFRC522::PICC_IsNewCardPresent
+Generating call graph for function MFRC522::PICC_ReadCardSerial
+Generating caller graph for function MFRC522::PICC_ReadCardSerial
+Generating call graph for function MFRC522::PICC_REQA_or_WUPA
+Generating caller graph for function MFRC522::PICC_REQA_or_WUPA
+Generating call graph for function MFRC522::PICC_RequestA
+Generating caller graph for function MFRC522::PICC_RequestA
+Generating call graph for function MFRC522::PICC_Select
+Generating caller graph for function MFRC522::PICC_Select
+Generating call graph for function MFRC522::PICC_WakeupA
+Generating caller graph for function MFRC522::PICC_WakeupA
+Generating docs for compound MFRC522Extended...
+/home/marcosgatica/Escritorio/facultadUTN/informáticaii/proyectoInformaticaII/software/main/libraries/RFID-RC522/MFRC522Extended.h:16: warning: Member TagBitRates (enumeration) of class MFRC522Extended is not documented.
+/home/marcosgatica/Escritorio/facultadUTN/informáticaii/proyectoInformaticaII/software/main/libraries/RFID-RC522/MFRC522.h:87: warning: Member PCD_Register (enumeration) of class MFRC522 is not documented.
+/home/marcosgatica/Escritorio/facultadUTN/informáticaii/proyectoInformaticaII/software/main/libraries/RFID-RC522/MFRC522.h:162: warning: Member PCD_Command (enumeration) of class MFRC522 is not documented.
+/home/marcosgatica/Escritorio/facultadUTN/informáticaii/proyectoInformaticaII/software/main/libraries/RFID-RC522/MFRC522.h:177: warning: Member PCD_RxGain (enumeration) of class MFRC522 is not documented.
+/home/marcosgatica/Escritorio/facultadUTN/informáticaii/proyectoInformaticaII/software/main/libraries/RFID-RC522/MFRC522.h:192: warning: Member PICC_Command (enumeration) of class MFRC522 is not documented.
+/home/marcosgatica/Escritorio/facultadUTN/informáticaii/proyectoInformaticaII/software/main/libraries/RFID-RC522/MFRC522.h:219: warning: Member MIFARE_Misc (enumeration) of class MFRC522 is not documented.
+/home/marcosgatica/Escritorio/facultadUTN/informáticaii/proyectoInformaticaII/software/main/libraries/RFID-RC522/MFRC522.h:226: warning: Member PICC_Type (enumeration) of class MFRC522 is not documented.
+/home/marcosgatica/Escritorio/facultadUTN/informáticaii/proyectoInformaticaII/software/main/libraries/RFID-RC522/MFRC522.h:242: warning: Member StatusCode (enumeration) of class MFRC522 is not documented.
+/home/marcosgatica/Escritorio/facultadUTN/informáticaii/proyectoInformaticaII/software/main/libraries/RFID-RC522/MFRC522Extended.h:81: warning: Member MFRC522Extended(uint8_t rst) (function) of class MFRC522Extended is not documented.
+/home/marcosgatica/Escritorio/facultadUTN/informáticaii/proyectoInformaticaII/software/main/libraries/RFID-RC522/MFRC522Extended.h:82: warning: Member MFRC522Extended(uint8_t ss, uint8_t rst) (function) of class MFRC522Extended is not documented.
+/home/marcosgatica/Escritorio/facultadUTN/informáticaii/proyectoInformaticaII/software/main/libraries/RFID-RC522/MFRC522Extended.h:95: warning: Member TCL_Transceive(PcbBlock *send, PcbBlock *back) (function) of class MFRC522Extended is not documented.
+/home/marcosgatica/Escritorio/facultadUTN/informáticaii/proyectoInformaticaII/software/main/libraries/RFID-RC522/MFRC522.h:303: warning: Member PCD_SoftPowerDown() (function) of class MFRC522 is not documented.
+/home/marcosgatica/Escritorio/facultadUTN/informáticaii/proyectoInformaticaII/software/main/libraries/RFID-RC522/MFRC522.h:304: warning: Member PCD_SoftPowerUp() (function) of class MFRC522 is not documented.
+/home/marcosgatica/Escritorio/facultadUTN/informáticaii/proyectoInformaticaII/software/main/libraries/RFID-RC522/MFRC522Extended.h:75: warning: Member tag (variable) of class MFRC522Extended is not documented.
+/home/marcosgatica/Escritorio/facultadUTN/informáticaii/proyectoInformaticaII/software/main/libraries/RFID-RC522/MFRC522.h:267: warning: Member uid (variable) of class MFRC522 is not documented.
+/home/marcosgatica/Escritorio/facultadUTN/informáticaii/proyectoInformaticaII/software/main/libraries/RFID-RC522/MFRC522.h:81: warning: Member FIFO_SIZE (variable) of class MFRC522 is not documented.
+/home/marcosgatica/Escritorio/facultadUTN/informáticaii/proyectoInformaticaII/software/main/libraries/RFID-RC522/MFRC522.h:83: warning: Member UNUSED_PIN (variable) of class MFRC522 is not documented.
+/home/marcosgatica/Escritorio/facultadUTN/informáticaii/proyectoInformaticaII/software/main/libraries/RFID-RC522/MFRC522.h:366: warning: Member _chipSelectPin (variable) of class MFRC522 is not documented.
+/home/marcosgatica/Escritorio/facultadUTN/informáticaii/proyectoInformaticaII/software/main/libraries/RFID-RC522/MFRC522.h:367: warning: Member _resetPowerDownPin (variable) of class MFRC522 is not documented.
+Generating call graph for function MFRC522Extended::PICC_DumpDetailsToSerial
+Generating caller graph for function MFRC522Extended::PICC_DumpDetailsToSerial
+Generating call graph for function MFRC522Extended::PICC_DumpDetailsToSerial
+Generating caller graph for function MFRC522Extended::PICC_DumpISO14443_4
+Generating call graph for function MFRC522Extended::PICC_DumpToSerial
+Generating caller graph for function MFRC522Extended::PICC_GetType
+Generating call graph for function MFRC522Extended::PICC_IsNewCardPresent
+Generating call graph for function MFRC522Extended::PICC_PPS
+Generating caller graph for function MFRC522Extended::PICC_PPS
+Generating call graph for function MFRC522Extended::PICC_PPS
+Generating call graph for function MFRC522Extended::PICC_ReadCardSerial
+Generating call graph for function MFRC522Extended::PICC_RequestATS
+Generating caller graph for function MFRC522Extended::PICC_RequestATS
+Generating call graph for function MFRC522Extended::PICC_Select
+Generating caller graph for function MFRC522Extended::PICC_Select
+Generating call graph for function MFRC522Extended::TCL_Deselect
+Generating call graph for function MFRC522Extended::TCL_Transceive
+Generating caller graph for function MFRC522Extended::TCL_TransceiveRBlock
+Generating concept documentation...
+Generating module documentation...
+Generating namespace documentation...
+Generating graph info page...
+Generating directory documentation...
+Generating dependency graph for directory main/libraries/buzzer CLDZ
+Generating dependency graph for directory main/libraries/DHT11-HW-481
+Generating dependency graph for directory main/libraries
+Generating dependency graph for directory main/libraries/RFID-RC522
+Generating index page...
+Generating page index...
+Generating topic index...
+Generating module index...
+Generating module member index...
+Generating namespace index...
+Generating namespace member index...
+Generating concept index...
+Generating annotated compound index...
+Generating alphabetical compound index...
+Generating hierarchical class index...
+Generating graphical class hierarchy...
+Generating member index...
+Generating file index...
+Generating file member index...
+Generating example index...
+finalizing index lists...
+writing tag file...
+Running plantuml with JAVA...
+Running dot...
+Generating dot graphs using 13 parallel threads...
+Running dot for graph 1/370
+Running dot for graph 2/370
+Running dot for graph 3/370
+Running dot for graph 4/370
+Running dot for graph 5/370
+Running dot for graph 6/370
+Running dot for graph 7/370
+Running dot for graph 8/370
+Running dot for graph 9/370
+Running dot for graph 10/370
+Running dot for graph 11/370
+Running dot for graph 12/370
+Running dot for graph 13/370
+Running dot for graph 14/370
+Running dot for graph 15/370
+Running dot for graph 16/370
+Running dot for graph 17/370
+Running dot for graph 18/370
+Running dot for graph 19/370
+Running dot for graph 20/370
+Running dot for graph 21/370
+Running dot for graph 22/370
+Running dot for graph 23/370
+Running dot for graph 24/370
+Running dot for graph 25/370
+Running dot for graph 26/370
+Running dot for graph 27/370
+Running dot for graph 28/370
+Running dot for graph 29/370
+Running dot for graph 30/370
+Running dot for graph 31/370
+Running dot for graph 32/370
+Running dot for graph 33/370
+Running dot for graph 34/370
+Running dot for graph 35/370
+Running dot for graph 36/370
+Running dot for graph 37/370
+Running dot for graph 38/370
+Running dot for graph 39/370
+Running dot for graph 40/370
+Running dot for graph 41/370
+Running dot for graph 42/370
+Running dot for graph 43/370
+Running dot for graph 44/370
+Running dot for graph 45/370
+Running dot for graph 46/370
+Running dot for graph 47/370
+Running dot for graph 48/370
+Running dot for graph 49/370
+Running dot for graph 50/370
+Running dot for graph 51/370
+Running dot for graph 52/370
+Running dot for graph 53/370
+Running dot for graph 54/370
+Running dot for graph 55/370
+Running dot for graph 56/370
+Running dot for graph 57/370
+Running dot for graph 58/370
+Running dot for graph 59/370
+Running dot for graph 60/370
+Running dot for graph 61/370
+Running dot for graph 62/370
+Running dot for graph 63/370
+Running dot for graph 64/370
+Running dot for graph 65/370
+Running dot for graph 66/370
+Running dot for graph 67/370
+Running dot for graph 68/370
+Running dot for graph 69/370
+Running dot for graph 70/370
+Running dot for graph 71/370
+Running dot for graph 72/370
+Running dot for graph 73/370
+Running dot for graph 74/370
+Running dot for graph 75/370
+Running dot for graph 76/370
+Running dot for graph 77/370
+Running dot for graph 78/370
+Running dot for graph 79/370
+Running dot for graph 80/370
+Running dot for graph 81/370
+Running dot for graph 82/370
+Running dot for graph 83/370
+Running dot for graph 84/370
+Running dot for graph 85/370
+Running dot for graph 86/370
+Running dot for graph 87/370
+Running dot for graph 88/370
+Running dot for graph 89/370
+Running dot for graph 90/370
+Running dot for graph 91/370
+Running dot for graph 92/370
+Running dot for graph 93/370
+Running dot for graph 94/370
+Running dot for graph 95/370
+Running dot for graph 96/370
+Running dot for graph 97/370
+Running dot for graph 98/370
+Running dot for graph 99/370
+Running dot for graph 100/370
+Running dot for graph 101/370
+Running dot for graph 102/370
+Running dot for graph 103/370
+Running dot for graph 104/370
+Running dot for graph 105/370
+Running dot for graph 106/370
+Running dot for graph 107/370
+Running dot for graph 108/370
+Running dot for graph 109/370
+Running dot for graph 110/370
+Running dot for graph 111/370
+Running dot for graph 112/370
+Running dot for graph 113/370
+Running dot for graph 114/370
+Running dot for graph 115/370
+Running dot for graph 116/370
+Running dot for graph 117/370
+Running dot for graph 118/370
+Running dot for graph 119/370
+Running dot for graph 120/370
+Running dot for graph 121/370
+Running dot for graph 122/370
+Running dot for graph 123/370
+Running dot for graph 124/370
+Running dot for graph 125/370
+Running dot for graph 126/370
+Running dot for graph 127/370
+Running dot for graph 128/370
+Running dot for graph 129/370
+Running dot for graph 130/370
+Running dot for graph 131/370
+Running dot for graph 132/370
+Running dot for graph 133/370
+Running dot for graph 134/370
+Running dot for graph 135/370
+Running dot for graph 136/370
+Running dot for graph 137/370
+Running dot for graph 138/370
+Running dot for graph 139/370
+Running dot for graph 140/370
+Running dot for graph 141/370
+Running dot for graph 142/370
+Running dot for graph 143/370
+Running dot for graph 144/370
+Running dot for graph 145/370
+Running dot for graph 146/370
+Running dot for graph 147/370
+Running dot for graph 148/370
+Running dot for graph 149/370
+Running dot for graph 150/370
+Running dot for graph 151/370
+Running dot for graph 152/370
+Running dot for graph 153/370
+Running dot for graph 154/370
+Running dot for graph 155/370
+Running dot for graph 156/370
+Running dot for graph 157/370
+Running dot for graph 158/370
+Running dot for graph 159/370
+Running dot for graph 160/370
+Running dot for graph 161/370
+Running dot for graph 162/370
+Running dot for graph 163/370
+Running dot for graph 164/370
+Running dot for graph 165/370
+Running dot for graph 166/370
+Running dot for graph 167/370
+Running dot for graph 168/370
+Running dot for graph 169/370
+Running dot for graph 170/370
+Running dot for graph 171/370
+Running dot for graph 172/370
+Running dot for graph 173/370
+Running dot for graph 174/370
+Running dot for graph 175/370
+Running dot for graph 176/370
+Running dot for graph 177/370
+Running dot for graph 178/370
+Running dot for graph 179/370
+Running dot for graph 180/370
+Running dot for graph 181/370
+Running dot for graph 182/370
+Running dot for graph 183/370
+Running dot for graph 184/370
+Running dot for graph 185/370
+Running dot for graph 186/370
+Running dot for graph 187/370
+Running dot for graph 188/370
+Running dot for graph 189/370
+Running dot for graph 190/370
+Running dot for graph 191/370
+Running dot for graph 192/370
+Running dot for graph 193/370
+Running dot for graph 194/370
+Running dot for graph 195/370
+Running dot for graph 196/370
+Running dot for graph 197/370
+Running dot for graph 198/370
+Running dot for graph 199/370
+Running dot for graph 200/370
+Running dot for graph 201/370
+Running dot for graph 202/370
+Running dot for graph 203/370
+Running dot for graph 204/370
+Running dot for graph 205/370
+Running dot for graph 206/370
+Running dot for graph 207/370
+Running dot for graph 208/370
+Running dot for graph 209/370
+Running dot for graph 210/370
+Running dot for graph 211/370
+Running dot for graph 212/370
+Running dot for graph 213/370
+Running dot for graph 214/370
+Running dot for graph 215/370
+Running dot for graph 216/370
+Running dot for graph 217/370
+Running dot for graph 218/370
+Running dot for graph 219/370
+Running dot for graph 220/370
+Running dot for graph 221/370
+Running dot for graph 222/370
+Running dot for graph 223/370
+Running dot for graph 224/370
+Running dot for graph 225/370
+Running dot for graph 226/370
+Running dot for graph 227/370
+Running dot for graph 228/370
+Running dot for graph 229/370
+Running dot for graph 230/370
+Running dot for graph 231/370
+Running dot for graph 232/370
+Running dot for graph 233/370
+Running dot for graph 234/370
+Running dot for graph 235/370
+Running dot for graph 236/370
+Running dot for graph 237/370
+Running dot for graph 238/370
+Running dot for graph 239/370
+Running dot for graph 240/370
+Running dot for graph 241/370
+Running dot for graph 242/370
+Running dot for graph 243/370
+Running dot for graph 244/370
+Running dot for graph 245/370
+Running dot for graph 246/370
+Running dot for graph 247/370
+Running dot for graph 248/370
+Running dot for graph 249/370
+Running dot for graph 250/370
+Running dot for graph 251/370
+Running dot for graph 252/370
+Running dot for graph 253/370
+Running dot for graph 254/370
+Running dot for graph 255/370
+Running dot for graph 256/370
+Running dot for graph 257/370
+Running dot for graph 258/370
+Running dot for graph 259/370
+Running dot for graph 260/370
+Running dot for graph 261/370
+Running dot for graph 262/370
+Running dot for graph 263/370
+Running dot for graph 264/370
+Running dot for graph 265/370
+Running dot for graph 266/370
+Running dot for graph 267/370
+Running dot for graph 268/370
+Running dot for graph 269/370
+Running dot for graph 270/370
+Running dot for graph 271/370
+Running dot for graph 272/370
+Running dot for graph 273/370
+Running dot for graph 274/370
+Running dot for graph 275/370
+Running dot for graph 276/370
+Running dot for graph 277/370
+Running dot for graph 278/370
+Running dot for graph 279/370
+Running dot for graph 280/370
+Running dot for graph 281/370
+Running dot for graph 282/370
+Running dot for graph 283/370
+Running dot for graph 284/370
+Running dot for graph 285/370
+Running dot for graph 286/370
+Running dot for graph 287/370
+Running dot for graph 288/370
+Running dot for graph 289/370
+Running dot for graph 290/370
+Running dot for graph 291/370
+Running dot for graph 292/370
+Running dot for graph 293/370
+Running dot for graph 294/370
+Running dot for graph 295/370
+Running dot for graph 296/370
+Running dot for graph 297/370
+Running dot for graph 298/370
+Running dot for graph 299/370
+Running dot for graph 300/370
+Running dot for graph 301/370
+Running dot for graph 302/370
+Running dot for graph 303/370
+Running dot for graph 304/370
+Running dot for graph 305/370
+Running dot for graph 306/370
+Running dot for graph 307/370
+Running dot for graph 308/370
+Running dot for graph 309/370
+Running dot for graph 310/370
+Running dot for graph 311/370
+Running dot for graph 312/370
+Running dot for graph 313/370
+Running dot for graph 314/370
+Running dot for graph 315/370
+Running dot for graph 316/370
+Running dot for graph 317/370
+Running dot for graph 318/370
+Running dot for graph 319/370
+Running dot for graph 320/370
+Running dot for graph 321/370
+Running dot for graph 322/370
+Running dot for graph 323/370
+Running dot for graph 324/370
+Running dot for graph 325/370
+Running dot for graph 326/370
+Running dot for graph 327/370
+Running dot for graph 328/370
+Running dot for graph 329/370
+Running dot for graph 330/370
+Running dot for graph 331/370
+Running dot for graph 332/370
+Running dot for graph 333/370
+Running dot for graph 334/370
+Running dot for graph 335/370
+Running dot for graph 336/370
+Running dot for graph 337/370
+Running dot for graph 338/370
+Running dot for graph 339/370
+Running dot for graph 340/370
+Running dot for graph 341/370
+Running dot for graph 342/370
+Running dot for graph 343/370
+Running dot for graph 344/370
+Running dot for graph 345/370
+Running dot for graph 346/370
+Running dot for graph 347/370
+Running dot for graph 348/370
+Running dot for graph 349/370
+Running dot for graph 350/370
+Running dot for graph 351/370
+Running dot for graph 352/370
+Running dot for graph 353/370
+Running dot for graph 354/370
+Running dot for graph 355/370
+Running dot for graph 356/370
+Running dot for graph 357/370
+Running dot for graph 358/370
+Running dot for graph 359/370
+Running dot for graph 360/370
+Running dot for graph 361/370
+Running dot for graph 362/370
+Running dot for graph 363/370
+Running dot for graph 364/370
+Running dot for graph 365/370
+Running dot for graph 366/370
+Running dot for graph 367/370
+Running dot for graph 368/370
+Running dot for graph 369/370
+Running dot for graph 370/370
+Patching output file 1/19
+Patching output file 2/19
+Patching output file 3/19
+Patching output file 4/19
+Patching output file 5/19
+Patching output file 6/19
+Patching output file 7/19
+Patching output file 8/19
+Patching output file 9/19
+Patching output file 10/19
+Patching output file 11/19
+Patching output file 12/19
+Patching output file 13/19
+Patching output file 14/19
+Patching output file 15/19
+Patching output file 16/19
+Patching output file 17/19
+Patching output file 18/19
+Patching output file 19/19
+type lookup cache used 395/65536 hits=1974 misses=409
+symbol lookup cache used 522/65536 hits=5967 misses=522
+finished...
+
+*** Doxygen has finished

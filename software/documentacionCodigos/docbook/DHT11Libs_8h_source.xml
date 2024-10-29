@@ -1,0 +1,13 @@
+<?xml version='1.0' encoding='UTF-8' standalone='no'?>
+<section xmlns="http://docbook.org/ns/docbook" version="5.0" xmlns:xlink="http://www.w3.org/1999/xlink" xml:id="_DHT11Libs_8h_source" xml:lang="es">
+<title>DHT11Libs.h</title>
+<indexterm><primary>main/libraries/DHT11-HW-481/DHT11Libs.h</primary></indexterm>
+<programlisting linenumbering="unnumbered">1 <emphasis role="preprocessor">#ifndef&#32;DHT11LIBS_H</emphasis>
+2 <emphasis role="preprocessor">#define&#32;DHT11LIBS_H</emphasis>
+3 
+4 <emphasis role="preprocessor">#include&#32;&quot;DHT11.h&quot;</emphasis>
+5 <emphasis role="preprocessor">#include&#32;&quot;<link linkend="_setPin_8h">setPin.h</link>&quot;</emphasis>
+6 <emphasis role="preprocessor">#include&#32;&quot;DHT11.cpp&quot;</emphasis>
+7 <emphasis role="preprocessor">#include&#32;&quot;<link linkend="_setPin_8cpp">setPin.cpp</link>&quot;</emphasis>
+8 <emphasis role="preprocessor">#endif</emphasis>
+</programlisting></section>

@@ -1,0 +1,1085 @@
+\doxysection{MFRC522\+Extended.\+cpp}
+\hypertarget{MFRC522Extended_8cpp_source}{}\label{MFRC522Extended_8cpp_source}\index{main/libraries/RFID-\/RC522/MFRC522Extended.cpp@{main/libraries/RFID-\/RC522/MFRC522Extended.cpp}}
+
+\begin{DoxyCode}{0}
+\DoxyCodeLine{00001\ \textcolor{comment}{/*}}
+\DoxyCodeLine{00002\ \textcolor{comment}{\ *\ Library\ extends\ MFRC522.h\ to\ support\ RATS\ for\ ISO-\/14443-\/4\ PICC.}}
+\DoxyCodeLine{00003\ \textcolor{comment}{\ *\ RATS\ -\/\ Request\ for\ Answer\ To\ Select.}}
+\DoxyCodeLine{00004\ \textcolor{comment}{\ *\ NOTE:\ Please\ also\ check\ the\ comments\ in\ MFRC522Extended.h}}
+\DoxyCodeLine{00005\ \textcolor{comment}{\ *\ @author\ JPG-\/Consulting}}
+\DoxyCodeLine{00006\ \textcolor{comment}{*/}}
+\DoxyCodeLine{00007\ }
+\DoxyCodeLine{00008\ \textcolor{preprocessor}{\#include\ "{}MFRC522Extended.h"{}}}
+\DoxyCodeLine{00009\ }
+\DoxyCodeLine{00011\ \textcolor{comment}{//\ Functions\ for\ communicating\ with\ PICCs}}
+\DoxyCodeLine{00013\ }
+\DoxyCodeLine{00031\ MFRC522::StatusCode\ \mbox{\hyperlink{classMFRC522Extended_a0740187cc7f336b0aaea2db432185cb5}{MFRC522Extended::PICC\_Select}}(\ \ \ \mbox{\hyperlink{classMFRC522_structMFRC522_1_1Uid}{Uid}}\ *uid,\ \ \ \ \ \ \ \ \ \ \ \ }
+\DoxyCodeLine{00032\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordtype}{byte}\ validBits\ \ \ \ \ \ }
+\DoxyCodeLine{00033\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ )\ \{}
+\DoxyCodeLine{00034\ \ \ \ \ \textcolor{keywordtype}{bool}\ uidComplete;}
+\DoxyCodeLine{00035\ \ \ \ \ \textcolor{keywordtype}{bool}\ selectDone;}
+\DoxyCodeLine{00036\ \ \ \ \ \textcolor{keywordtype}{bool}\ useCascadeTag;}
+\DoxyCodeLine{00037\ \ \ \ \ \textcolor{keywordtype}{byte}\ cascadeLevel\ =\ 1;}
+\DoxyCodeLine{00038\ \ \ \ \ MFRC522::StatusCode\ result;}
+\DoxyCodeLine{00039\ \ \ \ \ \textcolor{keywordtype}{byte}\ count;}
+\DoxyCodeLine{00040\ \ \ \ \ \textcolor{keywordtype}{byte}\ index;}
+\DoxyCodeLine{00041\ \ \ \ \ \textcolor{keywordtype}{byte}\ uidIndex;\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{comment}{//\ The\ first\ index\ in\ uid-\/>uidByte[]\ that\ is\ used\ in\ the\ current\ Cascade\ Level.}}
+\DoxyCodeLine{00042\ \ \ \ \ int8\_t\ currentLevelKnownBits;\ \ \ \ \ \ \ \textcolor{comment}{//\ The\ number\ of\ known\ UID\ bits\ in\ the\ current\ Cascade\ Level.}}
+\DoxyCodeLine{00043\ \ \ \ \ \textcolor{keywordtype}{byte}\ buffer[9];\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{comment}{//\ The\ SELECT/ANTICOLLISION\ commands\ uses\ a\ 7\ byte\ standard\ frame\ +\ 2\ bytes\ CRC\_A}}
+\DoxyCodeLine{00044\ \ \ \ \ \textcolor{keywordtype}{byte}\ bufferUsed;\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{comment}{//\ The\ number\ of\ bytes\ used\ in\ the\ buffer,\ ie\ the\ number\ of\ bytes\ to\ transfer\ to\ the\ FIFO.}}
+\DoxyCodeLine{00045\ \ \ \ \ \textcolor{keywordtype}{byte}\ rxAlign;\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{comment}{//\ Used\ in\ BitFramingReg.\ Defines\ the\ bit\ position\ for\ the\ first\ bit\ received.}}
+\DoxyCodeLine{00046\ \ \ \ \ \textcolor{keywordtype}{byte}\ txLastBits;\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{comment}{//\ Used\ in\ BitFramingReg.\ The\ number\ of\ valid\ bits\ in\ the\ last\ transmitted\ byte.\ }}
+\DoxyCodeLine{00047\ \ \ \ \ \textcolor{keywordtype}{byte}\ *responseBuffer;}
+\DoxyCodeLine{00048\ \ \ \ \ \textcolor{keywordtype}{byte}\ responseLength;}
+\DoxyCodeLine{00049\ \ \ \ \ }
+\DoxyCodeLine{00050\ \ \ \ \ \textcolor{comment}{//\ Description\ of\ buffer\ structure:}}
+\DoxyCodeLine{00051\ \ \ \ \ \textcolor{comment}{//\ \ \ \ \ \ Byte\ 0:\ SEL\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ Indicates\ the\ Cascade\ Level:\ PICC\_CMD\_SEL\_CL1,\ PICC\_CMD\_SEL\_CL2\ or\ PICC\_CMD\_SEL\_CL3}}
+\DoxyCodeLine{00052\ \ \ \ \ \textcolor{comment}{//\ \ \ \ \ \ Byte\ 1:\ NVB\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ Number\ of\ Valid\ Bits\ (in\ complete\ command,\ not\ just\ the\ UID):\ High\ nibble:\ complete\ bytes,\ Low\ nibble:\ Extra\ bits.\ }}
+\DoxyCodeLine{00053\ \ \ \ \ \textcolor{comment}{//\ \ \ \ \ \ Byte\ 2:\ UID-\/data\ or\ CT\ \ \ \ \ \ See\ explanation\ below.\ CT\ means\ Cascade\ Tag.}}
+\DoxyCodeLine{00054\ \ \ \ \ \textcolor{comment}{//\ \ \ \ \ \ Byte\ 3:\ UID-\/data}}
+\DoxyCodeLine{00055\ \ \ \ \ \textcolor{comment}{//\ \ \ \ \ \ Byte\ 4:\ UID-\/data}}
+\DoxyCodeLine{00056\ \ \ \ \ \textcolor{comment}{//\ \ \ \ \ \ Byte\ 5:\ UID-\/data}}
+\DoxyCodeLine{00057\ \ \ \ \ \textcolor{comment}{//\ \ \ \ \ \ Byte\ 6:\ BCC\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ Block\ Check\ Character\ -\/\ XOR\ of\ bytes\ 2-\/5}}
+\DoxyCodeLine{00058\ \ \ \ \ \textcolor{comment}{//\ \ \ \ \ \ Byte\ 7:\ CRC\_A}}
+\DoxyCodeLine{00059\ \ \ \ \ \textcolor{comment}{//\ \ \ \ \ \ Byte\ 8:\ CRC\_A}}
+\DoxyCodeLine{00060\ \ \ \ \ \textcolor{comment}{//\ The\ BCC\ and\ CRC\_A\ are\ only\ transmitted\ if\ we\ know\ all\ the\ UID\ bits\ of\ the\ current\ Cascade\ Level.}}
+\DoxyCodeLine{00061\ \ \ \ \ \textcolor{comment}{//}}
+\DoxyCodeLine{00062\ \ \ \ \ \textcolor{comment}{//\ Description\ of\ bytes\ 2-\/5:\ (Section\ 6.5.4\ of\ the\ ISO/IEC\ 14443-\/3\ draft:\ UID\ contents\ and\ cascade\ levels)}}
+\DoxyCodeLine{00063\ \ \ \ \ \textcolor{comment}{//\ \ \ \ \ \ UID\ size\ \ \ \ Cascade\ level\ \ \ Byte2\ \ \ Byte3\ \ \ Byte4\ \ \ Byte5}}
+\DoxyCodeLine{00064\ \ \ \ \ \textcolor{comment}{//\ \ \ \ \ \ ========\ \ \ \ =============\ \ \ =====\ \ \ =====\ \ \ =====\ \ \ =====}}
+\DoxyCodeLine{00065\ \ \ \ \ \textcolor{comment}{//\ \ \ \ \ \ \ 4\ bytes\ \ \ \ \ \ \ \ 1\ \ \ \ \ \ \ \ \ \ \ uid0\ \ \ \ uid1\ \ \ \ uid2\ \ \ \ uid3}}
+\DoxyCodeLine{00066\ \ \ \ \ \textcolor{comment}{//\ \ \ \ \ \ \ 7\ bytes\ \ \ \ \ \ \ \ 1\ \ \ \ \ \ \ \ \ \ \ CT\ \ \ \ \ \ uid0\ \ \ \ uid1\ \ \ \ uid2}}
+\DoxyCodeLine{00067\ \ \ \ \ \textcolor{comment}{//\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ 2\ \ \ \ \ \ \ \ \ \ \ uid3\ \ \ \ uid4\ \ \ \ uid5\ \ \ \ uid6}}
+\DoxyCodeLine{00068\ \ \ \ \ \textcolor{comment}{//\ \ \ \ \ \ 10\ bytes\ \ \ \ \ \ \ \ 1\ \ \ \ \ \ \ \ \ \ \ CT\ \ \ \ \ \ uid0\ \ \ \ uid1\ \ \ \ uid2}}
+\DoxyCodeLine{00069\ \ \ \ \ \textcolor{comment}{//\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ 2\ \ \ \ \ \ \ \ \ \ \ CT\ \ \ \ \ \ uid3\ \ \ \ uid4\ \ \ \ uid5}}
+\DoxyCodeLine{00070\ \ \ \ \ \textcolor{comment}{//\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ 3\ \ \ \ \ \ \ \ \ \ \ uid6\ \ \ \ uid7\ \ \ \ uid8\ \ \ \ uid9}}
+\DoxyCodeLine{00071\ \ \ \ \ }
+\DoxyCodeLine{00072\ \ \ \ \ \textcolor{comment}{//\ Sanity\ checks}}
+\DoxyCodeLine{00073\ \ \ \ \ \textcolor{keywordflow}{if}\ (validBits\ >\ 80)\ \{}
+\DoxyCodeLine{00074\ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{return}\ STATUS\_INVALID;}
+\DoxyCodeLine{00075\ \ \ \ \ \}}
+\DoxyCodeLine{00076\ \ \ \ \ }
+\DoxyCodeLine{00077\ \ \ \ \ \textcolor{comment}{//\ Prepare\ MFRC522}}
+\DoxyCodeLine{00078\ \ \ \ \ \mbox{\hyperlink{classMFRC522_a76193f4f8916f688fe2b7976d0fd1dc2}{PCD\_ClearRegisterBitMask}}(CollReg,\ 0x80);\ \ \ \ \ \ \ \ \textcolor{comment}{//\ ValuesAfterColl=1\ =>\ Bits\ received\ after\ collision\ are\ cleared.}}
+\DoxyCodeLine{00079\ \ \ \ \ }
+\DoxyCodeLine{00080\ \ \ \ \ \textcolor{comment}{//\ Repeat\ Cascade\ Level\ loop\ until\ we\ have\ a\ complete\ UID.}}
+\DoxyCodeLine{00081\ \ \ \ \ uidComplete\ =\ \textcolor{keyword}{false};}
+\DoxyCodeLine{00082\ \ \ \ \ \textcolor{keywordflow}{while}\ (!uidComplete)\ \{}
+\DoxyCodeLine{00083\ \ \ \ \ \ \ \ \ \textcolor{comment}{//\ Set\ the\ Cascade\ Level\ in\ the\ SEL\ byte,\ find\ out\ if\ we\ need\ to\ use\ the\ Cascade\ Tag\ in\ byte\ 2.}}
+\DoxyCodeLine{00084\ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{switch}\ (cascadeLevel)\ \{}
+\DoxyCodeLine{00085\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{case}\ 1:}
+\DoxyCodeLine{00086\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ buffer[0]\ =\ PICC\_CMD\_SEL\_CL1;}
+\DoxyCodeLine{00087\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ uidIndex\ =\ 0;}
+\DoxyCodeLine{00088\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ useCascadeTag\ =\ validBits\ \&\&\ uid-\/>size\ >\ 4;\ \textcolor{comment}{//\ When\ we\ know\ that\ the\ UID\ has\ more\ than\ 4\ bytes}}
+\DoxyCodeLine{00089\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{break};}
+\DoxyCodeLine{00090\ \ \ \ \ \ \ \ \ \ \ \ \ }
+\DoxyCodeLine{00091\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{case}\ 2:}
+\DoxyCodeLine{00092\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ buffer[0]\ =\ PICC\_CMD\_SEL\_CL2;}
+\DoxyCodeLine{00093\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ uidIndex\ =\ 3;}
+\DoxyCodeLine{00094\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ useCascadeTag\ =\ validBits\ \&\&\ uid-\/>size\ >\ 7;\ \textcolor{comment}{//\ When\ we\ know\ that\ the\ UID\ has\ more\ than\ 7\ bytes}}
+\DoxyCodeLine{00095\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{break};}
+\DoxyCodeLine{00096\ \ \ \ \ \ \ \ \ \ \ \ \ }
+\DoxyCodeLine{00097\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{case}\ 3:}
+\DoxyCodeLine{00098\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ buffer[0]\ =\ PICC\_CMD\_SEL\_CL3;}
+\DoxyCodeLine{00099\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ uidIndex\ =\ 6;}
+\DoxyCodeLine{00100\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ useCascadeTag\ =\ \textcolor{keyword}{false};\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{comment}{//\ Never\ used\ in\ CL3.}}
+\DoxyCodeLine{00101\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{break};}
+\DoxyCodeLine{00102\ \ \ \ \ \ \ \ \ \ \ \ \ }
+\DoxyCodeLine{00103\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{default}:}
+\DoxyCodeLine{00104\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{return}\ STATUS\_INTERNAL\_ERROR;}
+\DoxyCodeLine{00105\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{break};}
+\DoxyCodeLine{00106\ \ \ \ \ \ \ \ \ \}}
+\DoxyCodeLine{00107\ \ \ \ \ \ \ \ \ }
+\DoxyCodeLine{00108\ \ \ \ \ \ \ \ \ \textcolor{comment}{//\ How\ many\ UID\ bits\ are\ known\ in\ this\ Cascade\ Level?}}
+\DoxyCodeLine{00109\ \ \ \ \ \ \ \ \ currentLevelKnownBits\ =\ validBits\ -\/\ (8\ *\ uidIndex);}
+\DoxyCodeLine{00110\ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{if}\ (currentLevelKnownBits\ <\ 0)\ \{}
+\DoxyCodeLine{00111\ \ \ \ \ \ \ \ \ \ \ \ \ currentLevelKnownBits\ =\ 0;}
+\DoxyCodeLine{00112\ \ \ \ \ \ \ \ \ \}}
+\DoxyCodeLine{00113\ \ \ \ \ \ \ \ \ \textcolor{comment}{//\ Copy\ the\ known\ bits\ from\ uid-\/>uidByte[]\ to\ buffer[]}}
+\DoxyCodeLine{00114\ \ \ \ \ \ \ \ \ index\ =\ 2;\ \textcolor{comment}{//\ destination\ index\ in\ buffer[]}}
+\DoxyCodeLine{00115\ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{if}\ (useCascadeTag)\ \{}
+\DoxyCodeLine{00116\ \ \ \ \ \ \ \ \ \ \ \ \ buffer[index++]\ =\ PICC\_CMD\_CT;}
+\DoxyCodeLine{00117\ \ \ \ \ \ \ \ \ \}}
+\DoxyCodeLine{00118\ \ \ \ \ \ \ \ \ \textcolor{keywordtype}{byte}\ bytesToCopy\ =\ currentLevelKnownBits\ /\ 8\ +\ (currentLevelKnownBits\ \%\ 8\ ?\ 1\ :\ 0);\ \textcolor{comment}{//\ The\ number\ of\ bytes\ needed\ to\ represent\ the\ known\ bits\ for\ this\ level.}}
+\DoxyCodeLine{00119\ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{if}\ (bytesToCopy)\ \{}
+\DoxyCodeLine{00120\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordtype}{byte}\ maxBytes\ =\ useCascadeTag\ ?\ 3\ :\ 4;\ \textcolor{comment}{//\ Max\ 4\ bytes\ in\ each\ Cascade\ Level.\ Only\ 3\ left\ if\ we\ use\ the\ Cascade\ Tag}}
+\DoxyCodeLine{00121\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{if}\ (bytesToCopy\ >\ maxBytes)\ \{}
+\DoxyCodeLine{00122\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ bytesToCopy\ =\ maxBytes;}
+\DoxyCodeLine{00123\ \ \ \ \ \ \ \ \ \ \ \ \ \}}
+\DoxyCodeLine{00124\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{for}\ (count\ =\ 0;\ count\ <\ bytesToCopy;\ count++)\ \{}
+\DoxyCodeLine{00125\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ buffer[index++]\ =\ uid-\/>uidByte[uidIndex\ +\ count];}
+\DoxyCodeLine{00126\ \ \ \ \ \ \ \ \ \ \ \ \ \}}
+\DoxyCodeLine{00127\ \ \ \ \ \ \ \ \ \}}
+\DoxyCodeLine{00128\ \ \ \ \ \ \ \ \ \textcolor{comment}{//\ Now\ that\ the\ data\ has\ been\ copied\ we\ need\ to\ include\ the\ 8\ bits\ in\ CT\ in\ currentLevelKnownBits}}
+\DoxyCodeLine{00129\ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{if}\ (useCascadeTag)\ \{}
+\DoxyCodeLine{00130\ \ \ \ \ \ \ \ \ \ \ \ \ currentLevelKnownBits\ +=\ 8;}
+\DoxyCodeLine{00131\ \ \ \ \ \ \ \ \ \}}
+\DoxyCodeLine{00132\ \ \ \ \ \ \ \ \ }
+\DoxyCodeLine{00133\ \ \ \ \ \ \ \ \ \textcolor{comment}{//\ Repeat\ anti\ collision\ loop\ until\ we\ can\ transmit\ all\ UID\ bits\ +\ BCC\ and\ receive\ a\ SAK\ -\/\ max\ 32\ iterations.}}
+\DoxyCodeLine{00134\ \ \ \ \ \ \ \ \ selectDone\ =\ \textcolor{keyword}{false};}
+\DoxyCodeLine{00135\ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{while}\ (!selectDone)\ \{}
+\DoxyCodeLine{00136\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{comment}{//\ Find\ out\ how\ many\ bits\ and\ bytes\ to\ send\ and\ receive.}}
+\DoxyCodeLine{00137\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{if}\ (currentLevelKnownBits\ >=\ 32)\ \{\ \textcolor{comment}{//\ All\ UID\ bits\ in\ this\ Cascade\ Level\ are\ known.\ This\ is\ a\ SELECT.}}
+\DoxyCodeLine{00138\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{comment}{//Serial.print(F("{}SELECT:\ currentLevelKnownBits="{}));\ Serial.println(currentLevelKnownBits,\ DEC);}}
+\DoxyCodeLine{00139\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ buffer[1]\ =\ 0x70;\ \textcolor{comment}{//\ NVB\ -\/\ Number\ of\ Valid\ Bits:\ Seven\ whole\ bytes}}
+\DoxyCodeLine{00140\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{comment}{//\ Calculate\ BCC\ -\/\ Block\ Check\ Character}}
+\DoxyCodeLine{00141\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ buffer[6]\ =\ buffer[2]\ \string^\ buffer[3]\ \string^\ buffer[4]\ \string^\ buffer[5];}
+\DoxyCodeLine{00142\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{comment}{//\ Calculate\ CRC\_A}}
+\DoxyCodeLine{00143\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ result\ =\ \mbox{\hyperlink{classMFRC522_a7c65647b1d72b6ee7557797322030643}{PCD\_CalculateCRC}}(buffer,\ 7,\ \&buffer[7]);}
+\DoxyCodeLine{00144\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{if}\ (result\ !=\ STATUS\_OK)\ \{}
+\DoxyCodeLine{00145\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{return}\ result;}
+\DoxyCodeLine{00146\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \}}
+\DoxyCodeLine{00147\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ txLastBits\ \ \ \ \ \ =\ 0;\ \textcolor{comment}{//\ 0\ =>\ All\ 8\ bits\ are\ valid.}}
+\DoxyCodeLine{00148\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ bufferUsed\ \ \ \ \ \ =\ 9;}
+\DoxyCodeLine{00149\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{comment}{//\ Store\ response\ in\ the\ last\ 3\ bytes\ of\ buffer\ (BCC\ and\ CRC\_A\ -\/\ not\ needed\ after\ tx)}}
+\DoxyCodeLine{00150\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ responseBuffer\ \ =\ \&buffer[6];}
+\DoxyCodeLine{00151\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ responseLength\ \ =\ 3;}
+\DoxyCodeLine{00152\ \ \ \ \ \ \ \ \ \ \ \ \ \}}
+\DoxyCodeLine{00153\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{else}\ \{\ \textcolor{comment}{//\ This\ is\ an\ ANTICOLLISION.}}
+\DoxyCodeLine{00154\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{comment}{//Serial.print(F("{}ANTICOLLISION:\ currentLevelKnownBits="{}));\ Serial.println(currentLevelKnownBits,\ DEC);}}
+\DoxyCodeLine{00155\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ txLastBits\ \ \ \ \ \ =\ currentLevelKnownBits\ \%\ 8;}
+\DoxyCodeLine{00156\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ count\ \ \ \ \ \ \ \ \ \ \ =\ currentLevelKnownBits\ /\ 8;\ \ \ \ \textcolor{comment}{//\ Number\ of\ whole\ bytes\ in\ the\ UID\ part.}}
+\DoxyCodeLine{00157\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ index\ \ \ \ \ \ \ \ \ \ \ =\ 2\ +\ count;\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{comment}{//\ Number\ of\ whole\ bytes:\ SEL\ +\ NVB\ +\ UIDs}}
+\DoxyCodeLine{00158\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ buffer[1]\ \ \ \ \ \ \ =\ (index\ <<\ 4)\ +\ txLastBits;\ \ \ \ \textcolor{comment}{//\ NVB\ -\/\ Number\ of\ Valid\ Bits}}
+\DoxyCodeLine{00159\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ bufferUsed\ \ \ \ \ \ =\ index\ +\ (txLastBits\ ?\ 1\ :\ 0);}
+\DoxyCodeLine{00160\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{comment}{//\ Store\ response\ in\ the\ unused\ part\ of\ buffer}}
+\DoxyCodeLine{00161\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ responseBuffer\ \ =\ \&buffer[index];}
+\DoxyCodeLine{00162\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ responseLength\ \ =\ \textcolor{keyword}{sizeof}(buffer)\ -\/\ index;}
+\DoxyCodeLine{00163\ \ \ \ \ \ \ \ \ \ \ \ \ \}}
+\DoxyCodeLine{00164\ \ \ \ \ \ \ \ \ \ \ \ \ }
+\DoxyCodeLine{00165\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{comment}{//\ Set\ bit\ adjustments}}
+\DoxyCodeLine{00166\ \ \ \ \ \ \ \ \ \ \ \ \ rxAlign\ =\ txLastBits;\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{comment}{//\ Having\ a\ separate\ variable\ is\ overkill.\ But\ it\ makes\ the\ next\ line\ easier\ to\ read.}}
+\DoxyCodeLine{00167\ \ \ \ \ \ \ \ \ \ \ \ \ \mbox{\hyperlink{classMFRC522_aa5e5825adb4c784d8a5a60242c135fb7}{PCD\_WriteRegister}}(BitFramingReg,\ (rxAlign\ <<\ 4)\ +\ txLastBits);\ \textcolor{comment}{//\ RxAlign\ =\ BitFramingReg[6..4].\ TxLastBits\ =\ BitFramingReg[2..0]}}
+\DoxyCodeLine{00168\ \ \ \ \ \ \ \ \ \ \ \ \ }
+\DoxyCodeLine{00169\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{comment}{//\ Transmit\ the\ buffer\ and\ receive\ the\ response.}}
+\DoxyCodeLine{00170\ \ \ \ \ \ \ \ \ \ \ \ \ result\ =\ \mbox{\hyperlink{classMFRC522_aaa96aa7ec4f95e0835cb758ad0450d74}{PCD\_TransceiveData}}(buffer,\ bufferUsed,\ responseBuffer,\ \&responseLength,\ \&txLastBits,\ rxAlign);}
+\DoxyCodeLine{00171\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{if}\ (result\ ==\ STATUS\_COLLISION)\ \{\ \textcolor{comment}{//\ More\ than\ one\ PICC\ in\ the\ field\ =>\ collision.}}
+\DoxyCodeLine{00172\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordtype}{byte}\ valueOfCollReg\ =\ \mbox{\hyperlink{classMFRC522_a4289838c6f24f2d62eb8dc0e7a6647d1}{PCD\_ReadRegister}}(CollReg);\ \textcolor{comment}{//\ CollReg[7..0]\ bits\ are:\ ValuesAfterColl\ reserved\ CollPosNotValid\ CollPos[4:0]}}
+\DoxyCodeLine{00173\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{if}\ (valueOfCollReg\ \&\ 0x20)\ \{\ \textcolor{comment}{//\ CollPosNotValid}}
+\DoxyCodeLine{00174\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{return}\ STATUS\_COLLISION;\ \textcolor{comment}{//\ Without\ a\ valid\ collision\ position\ we\ cannot\ continue}}
+\DoxyCodeLine{00175\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \}}
+\DoxyCodeLine{00176\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordtype}{byte}\ collisionPos\ =\ valueOfCollReg\ \&\ 0x1F;\ \textcolor{comment}{//\ Values\ 0-\/31,\ 0\ means\ bit\ 32.}}
+\DoxyCodeLine{00177\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{if}\ (collisionPos\ ==\ 0)\ \{}
+\DoxyCodeLine{00178\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ collisionPos\ =\ 32;}
+\DoxyCodeLine{00179\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \}}
+\DoxyCodeLine{00180\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{if}\ (collisionPos\ <=\ currentLevelKnownBits)\ \{\ \textcolor{comment}{//\ No\ progress\ -\/\ should\ not\ happen\ }}
+\DoxyCodeLine{00181\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{return}\ STATUS\_INTERNAL\_ERROR;}
+\DoxyCodeLine{00182\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \}}
+\DoxyCodeLine{00183\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{comment}{//\ Choose\ the\ PICC\ with\ the\ bit\ set.}}
+\DoxyCodeLine{00184\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ currentLevelKnownBits\ =\ collisionPos;}
+\DoxyCodeLine{00185\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ count\ \ \ \ \ \ \ \ \ \ \ =\ (currentLevelKnownBits\ -\/\ 1)\ \%\ 8;\ \textcolor{comment}{//\ The\ bit\ to\ modify}}
+\DoxyCodeLine{00186\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ index\ \ \ \ \ \ \ \ \ \ \ =\ 1\ +\ (currentLevelKnownBits\ /\ 8)\ +\ (count\ ?\ 1\ :\ 0);\ \textcolor{comment}{//\ First\ byte\ is\ index\ 0.}}
+\DoxyCodeLine{00187\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ buffer[index]\ \ \ |=\ (1\ <<\ count);}
+\DoxyCodeLine{00188\ \ \ \ \ \ \ \ \ \ \ \ \ \}}
+\DoxyCodeLine{00189\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{else}\ \textcolor{keywordflow}{if}\ (result\ !=\ STATUS\_OK)\ \{}
+\DoxyCodeLine{00190\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{return}\ result;}
+\DoxyCodeLine{00191\ \ \ \ \ \ \ \ \ \ \ \ \ \}}
+\DoxyCodeLine{00192\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{else}\ \{\ \textcolor{comment}{//\ STATUS\_OK}}
+\DoxyCodeLine{00193\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{if}\ (currentLevelKnownBits\ >=\ 32)\ \{\ \textcolor{comment}{//\ This\ was\ a\ SELECT.}}
+\DoxyCodeLine{00194\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ selectDone\ =\ \textcolor{keyword}{true};\ \textcolor{comment}{//\ No\ more\ anticollision\ }}
+\DoxyCodeLine{00195\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{comment}{//\ We\ continue\ below\ outside\ the\ while.}}
+\DoxyCodeLine{00196\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \}}
+\DoxyCodeLine{00197\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{else}\ \{\ \textcolor{comment}{//\ This\ was\ an\ ANTICOLLISION.}}
+\DoxyCodeLine{00198\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{comment}{//\ We\ now\ have\ all\ 32\ bits\ of\ the\ UID\ in\ this\ Cascade\ Level}}
+\DoxyCodeLine{00199\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ currentLevelKnownBits\ =\ 32;}
+\DoxyCodeLine{00200\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{comment}{//\ Run\ loop\ again\ to\ do\ the\ SELECT.}}
+\DoxyCodeLine{00201\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \}}
+\DoxyCodeLine{00202\ \ \ \ \ \ \ \ \ \ \ \ \ \}}
+\DoxyCodeLine{00203\ \ \ \ \ \ \ \ \ \}\ \textcolor{comment}{//\ End\ of\ while\ (!selectDone)}}
+\DoxyCodeLine{00204\ \ \ \ \ \ \ \ \ }
+\DoxyCodeLine{00205\ \ \ \ \ \ \ \ \ \textcolor{comment}{//\ We\ do\ not\ check\ the\ CBB\ -\/\ it\ was\ constructed\ by\ us\ above.}}
+\DoxyCodeLine{00206\ \ \ \ \ \ \ \ \ }
+\DoxyCodeLine{00207\ \ \ \ \ \ \ \ \ \textcolor{comment}{//\ Copy\ the\ found\ UID\ bytes\ from\ buffer[]\ to\ uid-\/>uidByte[]}}
+\DoxyCodeLine{00208\ \ \ \ \ \ \ \ \ index\ \ \ \ \ \ \ \ \ \ \ =\ (buffer[2]\ ==\ PICC\_CMD\_CT)\ ?\ 3\ :\ 2;\ \textcolor{comment}{//\ source\ index\ in\ buffer[]}}
+\DoxyCodeLine{00209\ \ \ \ \ \ \ \ \ bytesToCopy\ \ \ \ \ =\ (buffer[2]\ ==\ PICC\_CMD\_CT)\ ?\ 3\ :\ 4;}
+\DoxyCodeLine{00210\ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{for}\ (count\ =\ 0;\ count\ <\ bytesToCopy;\ count++)\ \{}
+\DoxyCodeLine{00211\ \ \ \ \ \ \ \ \ \ \ \ \ uid-\/>uidByte[uidIndex\ +\ count]\ =\ buffer[index++];}
+\DoxyCodeLine{00212\ \ \ \ \ \ \ \ \ \}}
+\DoxyCodeLine{00213\ \ \ \ \ \ \ \ \ }
+\DoxyCodeLine{00214\ \ \ \ \ \ \ \ \ \textcolor{comment}{//\ Check\ response\ SAK\ (Select\ Acknowledge)}}
+\DoxyCodeLine{00215\ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{if}\ (responseLength\ !=\ 3\ ||\ txLastBits\ !=\ 0)\ \{\ \textcolor{comment}{//\ SAK\ must\ be\ exactly\ 24\ bits\ (1\ byte\ +\ CRC\_A).}}
+\DoxyCodeLine{00216\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{return}\ STATUS\_ERROR;}
+\DoxyCodeLine{00217\ \ \ \ \ \ \ \ \ \}}
+\DoxyCodeLine{00218\ \ \ \ \ \ \ \ \ \textcolor{comment}{//\ Verify\ CRC\_A\ -\/\ do\ our\ own\ calculation\ and\ store\ the\ control\ in\ buffer[2..3]\ -\/\ those\ bytes\ are\ not\ needed\ anymore.}}
+\DoxyCodeLine{00219\ \ \ \ \ \ \ \ \ result\ =\ \mbox{\hyperlink{classMFRC522_a7c65647b1d72b6ee7557797322030643}{PCD\_CalculateCRC}}(responseBuffer,\ 1,\ \&buffer[2]);}
+\DoxyCodeLine{00220\ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{if}\ (result\ !=\ STATUS\_OK)\ \{}
+\DoxyCodeLine{00221\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{return}\ result;}
+\DoxyCodeLine{00222\ \ \ \ \ \ \ \ \ \}}
+\DoxyCodeLine{00223\ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{if}\ ((buffer[2]\ !=\ responseBuffer[1])\ ||\ (buffer[3]\ !=\ responseBuffer[2]))\ \{}
+\DoxyCodeLine{00224\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{return}\ STATUS\_CRC\_WRONG;}
+\DoxyCodeLine{00225\ \ \ \ \ \ \ \ \ \}}
+\DoxyCodeLine{00226\ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{if}\ (responseBuffer[0]\ \&\ 0x04)\ \{\ \textcolor{comment}{//\ Cascade\ bit\ set\ -\/\ UID\ not\ complete\ yes}}
+\DoxyCodeLine{00227\ \ \ \ \ \ \ \ \ \ \ \ \ cascadeLevel++;}
+\DoxyCodeLine{00228\ \ \ \ \ \ \ \ \ \}}
+\DoxyCodeLine{00229\ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{else}\ \{}
+\DoxyCodeLine{00230\ \ \ \ \ \ \ \ \ \ \ \ \ uidComplete\ =\ \textcolor{keyword}{true};}
+\DoxyCodeLine{00231\ \ \ \ \ \ \ \ \ \ \ \ \ uid-\/>sak\ =\ responseBuffer[0];}
+\DoxyCodeLine{00232\ \ \ \ \ \ \ \ \ \}}
+\DoxyCodeLine{00233\ \ \ \ \ \}\ \textcolor{comment}{//\ End\ of\ while\ (!uidComplete)}}
+\DoxyCodeLine{00234\ \ \ \ \ }
+\DoxyCodeLine{00235\ \ \ \ \ \textcolor{comment}{//\ Set\ correct\ uid-\/>size}}
+\DoxyCodeLine{00236\ \ \ \ \ uid-\/>size\ =\ 3\ *\ cascadeLevel\ +\ 1;}
+\DoxyCodeLine{00237\ \ \ \ \ }
+\DoxyCodeLine{00238\ \ \ \ \ \textcolor{comment}{//\ IF\ SAK\ bit\ 6\ =\ 1\ then\ it\ is\ ISO/IEC\ 14443-\/4\ (T=CL)}}
+\DoxyCodeLine{00239\ \ \ \ \ \textcolor{comment}{//\ A\ Request\ ATS\ command\ should\ be\ sent}}
+\DoxyCodeLine{00240\ \ \ \ \ \textcolor{comment}{//\ We\ also\ check\ SAK\ bit\ 3\ is\ cero,\ as\ it\ stands\ for\ UID\ complete\ (1\ would\ tell\ us\ it\ is\ incomplete)}}
+\DoxyCodeLine{00241\ \ \ \ \ \textcolor{keywordflow}{if}\ ((uid-\/>sak\ \&\ 0x24)\ ==\ 0x20)\ \{}
+\DoxyCodeLine{00242\ \ \ \ \ \ \ \ \ \mbox{\hyperlink{classMFRC522Extended_structMFRC522Extended_1_1Ats}{Ats}}\ ats;}
+\DoxyCodeLine{00243\ \ \ \ \ \ \ \ \ result\ =\ \mbox{\hyperlink{classMFRC522Extended_a2671f1de35a0cac5da87e4300b7df74d}{PICC\_RequestATS}}(\&ats);}
+\DoxyCodeLine{00244\ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{if}\ (result\ ==\ STATUS\_OK)\ \{}
+\DoxyCodeLine{00245\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{comment}{//\ Check\ the\ ATS}}
+\DoxyCodeLine{00246\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{if}\ (ats.size\ >\ 0)}
+\DoxyCodeLine{00247\ \ \ \ \ \ \ \ \ \ \ \ \ \{}
+\DoxyCodeLine{00248\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{comment}{//\ TA1\ has\ been\ transmitted?}}
+\DoxyCodeLine{00249\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{comment}{//\ PPS\ must\ be\ supported...}}
+\DoxyCodeLine{00250\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{if}\ (ats.ta1.transmitted)}
+\DoxyCodeLine{00251\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \{}
+\DoxyCodeLine{00252\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{comment}{//\ TA1}}
+\DoxyCodeLine{00253\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{comment}{//\ \ 8\ |\ 7\ |\ 6\ |\ 5\ |\ 4\ |\ 3\ |\ 2\ |\ 1\ |\ Description}}
+\DoxyCodeLine{00254\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{comment}{//\ -\/-\/-\/+-\/-\/-\/+-\/-\/-\/+-\/-\/-\/+-\/-\/-\/+-\/-\/-\/+-\/-\/-\/+-\/-\/-\/+-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/}}
+\DoxyCodeLine{00255\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{comment}{//\ \ 0\ |\ -\/\ |\ -\/\ |\ -\/\ |\ 0\ |\ -\/\ |\ -\/\ |\ -\/\ |\ Different\ D\ for\ each\ direction\ supported}}
+\DoxyCodeLine{00256\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{comment}{//\ \ 1\ |\ -\/\ |\ -\/\ |\ -\/\ |\ 0\ |\ -\/\ |\ -\/\ |\ -\/\ |\ Only\ same\ D\ for\ both\ direction\ supported}}
+\DoxyCodeLine{00257\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{comment}{//\ \ -\/\ |\ x\ |\ x\ |\ x\ |\ 0\ |\ -\/\ |\ -\/\ |\ -\/\ |\ DS\ (Send\ D)}}
+\DoxyCodeLine{00258\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{comment}{//\ \ -\/\ |\ -\/\ |\ -\/\ |\ -\/\ |\ 0\ |\ x\ |\ x\ |\ x\ |\ DR\ (Receive\ D)}}
+\DoxyCodeLine{00259\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{comment}{//}}
+\DoxyCodeLine{00260\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{comment}{//\ D\ to\ bitrate\ table}}
+\DoxyCodeLine{00261\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{comment}{//\ \ 3\ |\ 2\ |\ 1\ |\ Value}}
+\DoxyCodeLine{00262\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{comment}{//\ -\/-\/-\/+-\/-\/-\/+-\/-\/-\/+-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/}}
+\DoxyCodeLine{00263\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{comment}{//\ \ 1\ |\ -\/\ |\ -\/\ |\ 848\ kBaud\ is\ supported}}
+\DoxyCodeLine{00264\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{comment}{//\ \ -\/\ |\ 1\ |\ -\/\ |\ 424\ kBaud\ is\ supported}}
+\DoxyCodeLine{00265\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{comment}{//\ \ -\/\ |\ -\/\ |\ 1\ |\ 212\ kBaud\ is\ supported}}
+\DoxyCodeLine{00266\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{comment}{//\ \ 0\ |\ 0\ |\ 0\ |\ Only\ 106\ kBaud\ is\ supported}}
+\DoxyCodeLine{00267\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{comment}{//}}
+\DoxyCodeLine{00268\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{comment}{//\ Note:\ 106\ kBaud\ is\ always\ supported}}
+\DoxyCodeLine{00269\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{comment}{//}}
+\DoxyCodeLine{00270\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{comment}{//\ I\ have\ almost\ constant\ timeouts\ when\ changing\ speeds\ :(}}
+\DoxyCodeLine{00271\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{comment}{//\ default\ never\ used,\ so\ only\ delarate}}
+\DoxyCodeLine{00272\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{comment}{//TagBitRates\ ds\ =\ BITRATE\_106KBITS;\ }}
+\DoxyCodeLine{00273\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{comment}{//TagBitRates\ dr\ =\ BITRATE\_106KBITS;}}
+\DoxyCodeLine{00274\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ TagBitRates\ ds;}
+\DoxyCodeLine{00275\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ TagBitRates\ dr;}
+\DoxyCodeLine{00276\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ }
+\DoxyCodeLine{00278\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{comment}{//if\ (ats.ta1.ds\ \&\ 0x04)\ }}
+\DoxyCodeLine{00279\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{comment}{//\{}}
+\DoxyCodeLine{00280\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{comment}{//\ \ ds\ =\ BITRATE\_848KBITS;}}
+\DoxyCodeLine{00281\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{comment}{//\}\ }}
+\DoxyCodeLine{00282\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{comment}{//else\ if\ (ats.ta1.ds\ \&\ 0x02)}}
+\DoxyCodeLine{00283\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{comment}{//\{}}
+\DoxyCodeLine{00284\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{comment}{//\ \ ds\ =\ BITRATE\_424KBITS;}}
+\DoxyCodeLine{00285\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{comment}{//\}}}
+\DoxyCodeLine{00286\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{comment}{//else\ if\ (ats.ta1.ds\ \&\ 0x01)}}
+\DoxyCodeLine{00287\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{comment}{//\{}}
+\DoxyCodeLine{00288\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{comment}{//\ \ ds\ =\ BITRATE\_212KBITS;}}
+\DoxyCodeLine{00289\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{comment}{//\}}}
+\DoxyCodeLine{00290\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{comment}{//else\ }}
+\DoxyCodeLine{00291\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{comment}{//\{}}
+\DoxyCodeLine{00292\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{comment}{//\ \ ds\ =\ BITRATE\_106KBITS;}}
+\DoxyCodeLine{00293\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{comment}{//\}}}
+\DoxyCodeLine{00294\ }
+\DoxyCodeLine{00295\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{if}\ (ats.ta1.ds\ \&\ 0x01)}
+\DoxyCodeLine{00296\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \{}
+\DoxyCodeLine{00297\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ ds\ =\ BITRATE\_212KBITS;}
+\DoxyCodeLine{00298\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \}}
+\DoxyCodeLine{00299\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{else}\ }
+\DoxyCodeLine{00300\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \{}
+\DoxyCodeLine{00301\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ ds\ =\ BITRATE\_106KBITS;}
+\DoxyCodeLine{00302\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \}}
+\DoxyCodeLine{00303\ }
+\DoxyCodeLine{00305\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{comment}{//if\ (ats.ta1.dr\ \&\ 0x04)\ }}
+\DoxyCodeLine{00306\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{comment}{//\{}}
+\DoxyCodeLine{00307\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{comment}{//\ \ dr\ =\ BITRATE\_848KBITS;}}
+\DoxyCodeLine{00308\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{comment}{//\}\ }}
+\DoxyCodeLine{00309\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{comment}{//else\ if\ (ats.ta1.dr\ \&\ 0x02)}}
+\DoxyCodeLine{00310\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{comment}{//\{}}
+\DoxyCodeLine{00311\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{comment}{//\ \ dr\ =\ BITRATE\_424KBITS;}}
+\DoxyCodeLine{00312\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{comment}{//\}}}
+\DoxyCodeLine{00313\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{comment}{//else\ if\ (ats.ta1.dr\ \&\ 0x01)}}
+\DoxyCodeLine{00314\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{comment}{//\{}}
+\DoxyCodeLine{00315\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{comment}{//\ \ dr\ =\ BITRATE\_212KBITS;}}
+\DoxyCodeLine{00316\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{comment}{//\}}}
+\DoxyCodeLine{00317\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{comment}{//else\ }}
+\DoxyCodeLine{00318\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{comment}{//\{}}
+\DoxyCodeLine{00319\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{comment}{//\ \ dr\ =\ BITRATE\_106KBITS;}}
+\DoxyCodeLine{00320\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{comment}{//\}}}
+\DoxyCodeLine{00321\ }
+\DoxyCodeLine{00322\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{if}\ (ats.ta1.dr\ \&\ 0x01)}
+\DoxyCodeLine{00323\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \{}
+\DoxyCodeLine{00324\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ dr\ =\ BITRATE\_212KBITS;}
+\DoxyCodeLine{00325\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \}}
+\DoxyCodeLine{00326\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{else}}
+\DoxyCodeLine{00327\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \{}
+\DoxyCodeLine{00328\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ dr\ =\ BITRATE\_106KBITS;}
+\DoxyCodeLine{00329\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \}}
+\DoxyCodeLine{00330\ }
+\DoxyCodeLine{00331\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \mbox{\hyperlink{classMFRC522Extended_acb69d5c429b8e06ecec8dc1e34c02d65}{PICC\_PPS}}(ds,\ dr);}
+\DoxyCodeLine{00332\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \}}
+\DoxyCodeLine{00333\ \ \ \ \ \ \ \ \ \ \ \ \ \}}
+\DoxyCodeLine{00334\ \ \ \ \ \ \ \ \ \}}
+\DoxyCodeLine{00335\ \ \ \ \ \}}
+\DoxyCodeLine{00336\ }
+\DoxyCodeLine{00337\ \ \ \ \ \textcolor{keywordflow}{return}\ STATUS\_OK;}
+\DoxyCodeLine{00338\ \}\ \textcolor{comment}{//\ End\ PICC\_Select()}}
+\DoxyCodeLine{00339\ }
+\DoxyCodeLine{00345\ MFRC522::StatusCode\ \mbox{\hyperlink{classMFRC522Extended_a2671f1de35a0cac5da87e4300b7df74d}{MFRC522Extended::PICC\_RequestATS}}(\mbox{\hyperlink{classMFRC522Extended_structMFRC522Extended_1_1Ats}{Ats}}\ *ats)\ }
+\DoxyCodeLine{00346\ \{}
+\DoxyCodeLine{00347\ \ \ \ \ \textcolor{comment}{//\ TODO\ unused\ variable}}
+\DoxyCodeLine{00348\ \ \ \ \ \textcolor{comment}{//byte\ count;}}
+\DoxyCodeLine{00349\ \ \ \ \ MFRC522::StatusCode\ result;}
+\DoxyCodeLine{00350\ }
+\DoxyCodeLine{00351\ \ \ \ \ \textcolor{keywordtype}{byte}\ bufferATS[FIFO\_SIZE];}
+\DoxyCodeLine{00352\ \ \ \ \ \textcolor{keywordtype}{byte}\ bufferSize\ =\ FIFO\_SIZE;}
+\DoxyCodeLine{00353\ }
+\DoxyCodeLine{00354\ \ \ \ \ memset(bufferATS,\ 0,\ FIFO\_SIZE);}
+\DoxyCodeLine{00355\ }
+\DoxyCodeLine{00356\ \ \ \ \ \textcolor{comment}{//\ Build\ command\ buffer}}
+\DoxyCodeLine{00357\ \ \ \ \ bufferATS[0]\ =\ PICC\_CMD\_RATS;}
+\DoxyCodeLine{00358\ \ \ \ \ }
+\DoxyCodeLine{00359\ \ \ \ \ \textcolor{comment}{//\ The\ CID\ defines\ the\ logical\ number\ of\ the\ addressed\ card\ and\ has\ a\ range\ of\ 0\ }}
+\DoxyCodeLine{00360\ \ \ \ \ \textcolor{comment}{//\ through\ 14;\ 15\ is\ reserved\ for\ future\ use\ (RFU).}}
+\DoxyCodeLine{00361\ \ \ \ \ \textcolor{comment}{//}}
+\DoxyCodeLine{00362\ \ \ \ \ \textcolor{comment}{//\ FSDI\ codes\ the\ maximum\ frame\ size\ (FSD)\ that\ the\ terminal\ can\ receive.}}
+\DoxyCodeLine{00363\ \ \ \ \ \textcolor{comment}{//}}
+\DoxyCodeLine{00364\ \ \ \ \ \textcolor{comment}{//\ FSDI\ \ \ \ \ \ \ \ |\ \ 0\ \ |\ \ 1\ \ |\ \ 2\ \ |\ \ 3\ \ |\ \ 4\ \ |\ \ 5\ \ |\ \ 6\ \ |\ \ 7\ \ |\ \ 8\ \ |\ \ 9-\/F}}
+\DoxyCodeLine{00365\ \ \ \ \ \textcolor{comment}{//\ -\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/+-\/-\/-\/-\/-\/+-\/-\/-\/-\/-\/+-\/-\/-\/-\/-\/+-\/-\/-\/-\/-\/+-\/-\/-\/-\/-\/+-\/-\/-\/-\/-\/+-\/-\/-\/-\/-\/+-\/-\/-\/-\/-\/+-\/-\/-\/-\/-\/+-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/}}
+\DoxyCodeLine{00366\ \ \ \ \ \textcolor{comment}{//\ FSD\ (bytes)\ |\ \ 16\ |\ \ 24\ |\ \ 32\ |\ \ 40\ |\ \ 48\ |\ \ 64\ |\ \ 96\ |\ 128\ |\ 256\ |\ RFU\ >\ 256}}
+\DoxyCodeLine{00367\ \ \ \ \ \textcolor{comment}{//}}
+\DoxyCodeLine{00368\ \ \ \ \ bufferATS[1]\ =\ 0x50;\ \textcolor{comment}{//\ FSD=64,\ CID=0}}
+\DoxyCodeLine{00369\ }
+\DoxyCodeLine{00370\ \ \ \ \ \textcolor{comment}{//\ Calculate\ CRC\_A}}
+\DoxyCodeLine{00371\ \ \ \ \ result\ =\ \mbox{\hyperlink{classMFRC522_a7c65647b1d72b6ee7557797322030643}{PCD\_CalculateCRC}}(bufferATS,\ 2,\ \&bufferATS[2]);}
+\DoxyCodeLine{00372\ \ \ \ \ \textcolor{keywordflow}{if}\ (result\ !=\ STATUS\_OK)\ \{}
+\DoxyCodeLine{00373\ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{return}\ result;}
+\DoxyCodeLine{00374\ \ \ \ \ \}}
+\DoxyCodeLine{00375\ }
+\DoxyCodeLine{00376\ \ \ \ \ \textcolor{comment}{//\ Transmit\ the\ buffer\ and\ receive\ the\ response,\ validate\ CRC\_A.}}
+\DoxyCodeLine{00377\ \ \ \ \ result\ =\ \mbox{\hyperlink{classMFRC522_aaa96aa7ec4f95e0835cb758ad0450d74}{PCD\_TransceiveData}}(bufferATS,\ 4,\ bufferATS,\ \&bufferSize,\ NULL,\ 0,\ \textcolor{keyword}{true});}
+\DoxyCodeLine{00378\ \ \ \ \ \textcolor{keywordflow}{if}\ (result\ !=\ STATUS\_OK)\ \{}
+\DoxyCodeLine{00379\ \ \ \ \ \ \ \ \ \mbox{\hyperlink{classMFRC522_a8874921b4ed26c5b73d89c90f76d4933}{PICC\_HaltA}}();}
+\DoxyCodeLine{00380\ \ \ \ \ \}}
+\DoxyCodeLine{00381\ }
+\DoxyCodeLine{00382\ \ \ \ \ \textcolor{comment}{//\ Set\ the\ ats\ structure\ data}}
+\DoxyCodeLine{00383\ \ \ \ \ ats-\/>size\ =\ bufferATS[0];}
+\DoxyCodeLine{00384\ }
+\DoxyCodeLine{00385\ \ \ \ \ \textcolor{comment}{//\ T0\ byte:}}
+\DoxyCodeLine{00386\ \ \ \ \ \textcolor{comment}{//}}
+\DoxyCodeLine{00387\ \ \ \ \ \textcolor{comment}{//\ b8\ |\ b7\ |\ b6\ |\ b5\ |\ b4\ |\ b3\ |\ b2\ |\ b1\ |\ Meaning}}
+\DoxyCodeLine{00388\ \ \ \ \ \textcolor{comment}{//-\/-\/-\/-\/+-\/-\/-\/-\/+-\/-\/-\/-\/+-\/-\/-\/-\/+-\/-\/-\/-\/+-\/-\/-\/-\/+-\/-\/-\/-\/+-\/-\/-\/-\/+-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/}}
+\DoxyCodeLine{00389\ \ \ \ \ \textcolor{comment}{//\ \ 0\ |\ ...|\ ...|\ ...|\ ...|...\ |\ ...|\ ...|\ Set\ to\ 0\ (RFU)}}
+\DoxyCodeLine{00390\ \ \ \ \ \textcolor{comment}{//\ \ 0\ |\ \ 1\ |\ x\ \ |\ \ x\ |\ ...|...\ |\ ...|\ ...|\ TC1\ transmitted}}
+\DoxyCodeLine{00391\ \ \ \ \ \textcolor{comment}{//\ \ 0\ |\ \ x\ |\ 1\ \ |\ \ x\ |\ ...|...\ |\ ...|\ ...|\ TB1\ transmitted}}
+\DoxyCodeLine{00392\ \ \ \ \ \textcolor{comment}{//\ \ 0\ |\ \ x\ |\ x\ \ |\ \ 1\ |\ ...|...\ |\ ...|\ ...|\ TA1\ transmitted}}
+\DoxyCodeLine{00393\ \ \ \ \ \textcolor{comment}{//\ \ 0\ |\ ...|\ ...|\ ...|\ \ x\ |\ \ x\ |\ \ x\ |\ x\ \ |\ Maximum\ frame\ size\ (FSCI)}}
+\DoxyCodeLine{00394\ \ \ \ \ \textcolor{comment}{//}}
+\DoxyCodeLine{00395\ \ \ \ \ \textcolor{comment}{//\ FSCI\ \ \ \ \ \ \ \ |\ \ 0\ \ |\ \ 1\ \ |\ \ 2\ \ |\ \ 3\ \ |\ \ 4\ \ |\ \ 5\ \ |\ \ 6\ \ |\ \ 7\ \ |\ \ 8\ \ |\ \ 9-\/F}}
+\DoxyCodeLine{00396\ \ \ \ \ \textcolor{comment}{//\ -\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/+-\/-\/-\/-\/-\/+-\/-\/-\/-\/-\/+-\/-\/-\/-\/-\/+-\/-\/-\/-\/-\/+-\/-\/-\/-\/-\/+-\/-\/-\/-\/-\/+-\/-\/-\/-\/-\/+-\/-\/-\/-\/-\/+-\/-\/-\/-\/-\/+-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/}}
+\DoxyCodeLine{00397\ \ \ \ \ \textcolor{comment}{//\ FSC\ (bytes)\ |\ \ 16\ |\ \ 24\ |\ \ 32\ |\ \ 40\ |\ \ 48\ |\ \ 64\ |\ \ 96\ |\ 128\ |\ 256\ |\ RFU\ >\ 256}}
+\DoxyCodeLine{00398\ \ \ \ \ \textcolor{comment}{//}}
+\DoxyCodeLine{00399\ \ \ \ \ \textcolor{comment}{//\ Default\ FSCI\ is\ 2\ (32\ bytes)}}
+\DoxyCodeLine{00400\ \ \ \ \ \textcolor{keywordflow}{if}\ (ats-\/>size\ >\ 0x01)}
+\DoxyCodeLine{00401\ \ \ \ \ \{}
+\DoxyCodeLine{00402\ \ \ \ \ \ \ \ \ \textcolor{comment}{//\ TC1,\ TB1\ and\ TA1\ where\ NOT\ transmitted}}
+\DoxyCodeLine{00403\ \ \ \ \ \ \ \ \ ats-\/>ta1.transmitted\ =\ (bool)(bufferATS[1]\ \&\ 0x40);}
+\DoxyCodeLine{00404\ \ \ \ \ \ \ \ \ ats-\/>tb1.transmitted\ =\ (bool)(bufferATS[1]\ \&\ 0x20);}
+\DoxyCodeLine{00405\ \ \ \ \ \ \ \ \ ats-\/>tc1.transmitted\ =\ (bool)(bufferATS[1]\ \&\ 0x10);}
+\DoxyCodeLine{00406\ }
+\DoxyCodeLine{00407\ \ \ \ \ \ \ \ \ \textcolor{comment}{//\ Decode\ FSCI}}
+\DoxyCodeLine{00408\ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{switch}\ (bufferATS[1]\ \&\ 0x0F)}
+\DoxyCodeLine{00409\ \ \ \ \ \ \ \ \ \{}
+\DoxyCodeLine{00410\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{case}\ 0x00:}
+\DoxyCodeLine{00411\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ ats-\/>fsc\ =\ 16;}
+\DoxyCodeLine{00412\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{break};}
+\DoxyCodeLine{00413\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{case}\ 0x01:}
+\DoxyCodeLine{00414\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ ats-\/>fsc\ =\ 24;}
+\DoxyCodeLine{00415\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{break};}
+\DoxyCodeLine{00416\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{case}\ 0x02:}
+\DoxyCodeLine{00417\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ ats-\/>fsc\ =\ 32;}
+\DoxyCodeLine{00418\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{break};}
+\DoxyCodeLine{00419\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{case}\ 0x03:}
+\DoxyCodeLine{00420\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ ats-\/>fsc\ =\ 40;}
+\DoxyCodeLine{00421\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{break};}
+\DoxyCodeLine{00422\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{case}\ 0x04:}
+\DoxyCodeLine{00423\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ ats-\/>fsc\ =\ 48;}
+\DoxyCodeLine{00424\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{break};}
+\DoxyCodeLine{00425\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{case}\ 0x05:}
+\DoxyCodeLine{00426\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ ats-\/>fsc\ =\ 64;}
+\DoxyCodeLine{00427\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{break};}
+\DoxyCodeLine{00428\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{case}\ 0x06:}
+\DoxyCodeLine{00429\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ ats-\/>fsc\ =\ 96;}
+\DoxyCodeLine{00430\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{break};}
+\DoxyCodeLine{00431\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{case}\ 0x07:}
+\DoxyCodeLine{00432\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ ats-\/>fsc\ =\ 128;}
+\DoxyCodeLine{00433\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{break};}
+\DoxyCodeLine{00434\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{case}\ 0x08:}
+\DoxyCodeLine{00435\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{comment}{//\ This\ value\ cannot\ be\ hold\ by\ a\ byte}}
+\DoxyCodeLine{00436\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{comment}{//\ The\ reason\ I\ ignore\ it\ is\ that\ MFRC255\ FIFO\ is\ 64\ bytes\ so\ this\ is\ not\ a\ possible\ value\ (or\ atleast\ it\ shouldn't)}}
+\DoxyCodeLine{00437\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{comment}{//ats-\/>fsc\ =\ 256;}}
+\DoxyCodeLine{00438\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{break};}
+\DoxyCodeLine{00439\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{comment}{//\ TODO:\ What\ to\ do\ with\ RFU\ (Reserved\ for\ future\ use)?}}
+\DoxyCodeLine{00440\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{default}:}
+\DoxyCodeLine{00441\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{break};}
+\DoxyCodeLine{00442\ \ \ \ \ \ \ \ \ \}}
+\DoxyCodeLine{00443\ }
+\DoxyCodeLine{00444\ \ \ \ \ \ \ \ \ \textcolor{comment}{//\ TA1}}
+\DoxyCodeLine{00445\ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{if}\ (ats-\/>ta1.transmitted)}
+\DoxyCodeLine{00446\ \ \ \ \ \ \ \ \ \{}
+\DoxyCodeLine{00447\ \ \ \ \ \ \ \ \ \ \ \ \ ats-\/>ta1.sameD\ =\ (bool)(bufferATS[2]\ \&\ 0x80);}
+\DoxyCodeLine{00448\ \ \ \ \ \ \ \ \ \ \ \ \ ats-\/>ta1.ds\ =\ (TagBitRates)((bufferATS[2]\ \&\ 0x70)\ >>\ 4);}
+\DoxyCodeLine{00449\ \ \ \ \ \ \ \ \ \ \ \ \ ats-\/>ta1.dr\ =\ (TagBitRates)(bufferATS[2]\ \&\ 0x07);}
+\DoxyCodeLine{00450\ \ \ \ \ \ \ \ \ \}}
+\DoxyCodeLine{00451\ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{else}}
+\DoxyCodeLine{00452\ \ \ \ \ \ \ \ \ \{}
+\DoxyCodeLine{00453\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{comment}{//\ Default\ TA1}}
+\DoxyCodeLine{00454\ \ \ \ \ \ \ \ \ \ \ \ \ ats-\/>ta1.ds\ =\ BITRATE\_106KBITS;}
+\DoxyCodeLine{00455\ \ \ \ \ \ \ \ \ \ \ \ \ ats-\/>ta1.dr\ =\ BITRATE\_106KBITS;}
+\DoxyCodeLine{00456\ \ \ \ \ \ \ \ \ \}}
+\DoxyCodeLine{00457\ }
+\DoxyCodeLine{00458\ \ \ \ \ \ \ \ \ \textcolor{comment}{//\ TB1}}
+\DoxyCodeLine{00459\ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{if}\ (ats-\/>tb1.transmitted)}
+\DoxyCodeLine{00460\ \ \ \ \ \ \ \ \ \{}
+\DoxyCodeLine{00461\ \ \ \ \ \ \ \ \ \ \ \ \ uint8\_t\ tb1Index\ =\ 2;}
+\DoxyCodeLine{00462\ }
+\DoxyCodeLine{00463\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{if}\ (ats-\/>ta1.transmitted)}
+\DoxyCodeLine{00464\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ tb1Index++;}
+\DoxyCodeLine{00465\ \ \ \ \ \ \ \ \ \ \ \ \ }
+\DoxyCodeLine{00466\ \ \ \ \ \ \ \ \ \ \ \ \ ats-\/>tb1.fwi\ =\ (bufferATS[tb1Index]\ \&\ 0xF0)\ >>\ 4;}
+\DoxyCodeLine{00467\ \ \ \ \ \ \ \ \ \ \ \ \ ats-\/>tb1.sfgi\ =\ bufferATS[tb1Index]\ \&\ 0x0F;}
+\DoxyCodeLine{00468\ \ \ \ \ \ \ \ \ \}}
+\DoxyCodeLine{00469\ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{else}}
+\DoxyCodeLine{00470\ \ \ \ \ \ \ \ \ \{}
+\DoxyCodeLine{00471\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{comment}{//\ Defaults\ for\ TB1}}
+\DoxyCodeLine{00472\ \ \ \ \ \ \ \ \ \ \ \ \ ats-\/>tb1.fwi\ =\ 0;\ \ \ \textcolor{comment}{//\ TODO:\ Don't\ know\ the\ default\ for\ this!}}
+\DoxyCodeLine{00473\ \ \ \ \ \ \ \ \ \ \ \ \ ats-\/>tb1.sfgi\ =\ 0;\ \ \textcolor{comment}{//\ The\ default\ value\ of\ SFGI\ is\ 0\ (meaning\ that\ the\ card\ does\ not\ need\ any\ particular\ SFGT)}}
+\DoxyCodeLine{00474\ \ \ \ \ \ \ \ \ \}}
+\DoxyCodeLine{00475\ }
+\DoxyCodeLine{00476\ \ \ \ \ \ \ \ \ \textcolor{comment}{//\ TC1}}
+\DoxyCodeLine{00477\ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{if}\ (ats-\/>tc1.transmitted)}
+\DoxyCodeLine{00478\ \ \ \ \ \ \ \ \ \{}
+\DoxyCodeLine{00479\ \ \ \ \ \ \ \ \ \ \ \ \ uint8\_t\ tc1Index\ =\ 2;}
+\DoxyCodeLine{00480\ }
+\DoxyCodeLine{00481\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{if}\ (ats-\/>ta1.transmitted)}
+\DoxyCodeLine{00482\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ tc1Index++;}
+\DoxyCodeLine{00483\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{if}\ (ats-\/>tb1.transmitted)}
+\DoxyCodeLine{00484\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ tc1Index++;}
+\DoxyCodeLine{00485\ }
+\DoxyCodeLine{00486\ \ \ \ \ \ \ \ \ \ \ \ \ ats-\/>tc1.supportsCID\ =\ (bool)(bufferATS[tc1Index]\ \&\ 0x02);}
+\DoxyCodeLine{00487\ \ \ \ \ \ \ \ \ \ \ \ \ ats-\/>tc1.supportsNAD\ =\ (bool)(bufferATS[tc1Index]\ \&\ 0x01);}
+\DoxyCodeLine{00488\ \ \ \ \ \ \ \ \ \}}
+\DoxyCodeLine{00489\ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{else}}
+\DoxyCodeLine{00490\ \ \ \ \ \ \ \ \ \{}
+\DoxyCodeLine{00491\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{comment}{//\ Defaults\ for\ TC1}}
+\DoxyCodeLine{00492\ \ \ \ \ \ \ \ \ \ \ \ \ ats-\/>tc1.supportsCID\ =\ \textcolor{keyword}{true};}
+\DoxyCodeLine{00493\ \ \ \ \ \ \ \ \ \ \ \ \ ats-\/>tc1.supportsNAD\ =\ \textcolor{keyword}{false};}
+\DoxyCodeLine{00494\ \ \ \ \ \ \ \ \ \}}
+\DoxyCodeLine{00495\ \ \ \ \ \}}
+\DoxyCodeLine{00496\ \ \ \ \ \textcolor{keywordflow}{else}}
+\DoxyCodeLine{00497\ \ \ \ \ \{}
+\DoxyCodeLine{00498\ \ \ \ \ \ \ \ \ \textcolor{comment}{//\ TC1,\ TB1\ and\ TA1\ where\ NOT\ transmitted}}
+\DoxyCodeLine{00499\ \ \ \ \ \ \ \ \ ats-\/>ta1.transmitted\ =\ \textcolor{keyword}{false};}
+\DoxyCodeLine{00500\ \ \ \ \ \ \ \ \ ats-\/>tb1.transmitted\ =\ \textcolor{keyword}{false};}
+\DoxyCodeLine{00501\ \ \ \ \ \ \ \ \ ats-\/>tc1.transmitted\ =\ \textcolor{keyword}{false};}
+\DoxyCodeLine{00502\ }
+\DoxyCodeLine{00503\ \ \ \ \ \ \ \ \ \textcolor{comment}{//\ Default\ FSCI}}
+\DoxyCodeLine{00504\ \ \ \ \ \ \ \ \ ats-\/>fsc\ =\ 32;\ \ \textcolor{comment}{//\ Defaults\ to\ FSCI\ 2\ (32\ bytes)}}
+\DoxyCodeLine{00505\ }
+\DoxyCodeLine{00506\ \ \ \ \ \ \ \ \ \textcolor{comment}{//\ Default\ TA1}}
+\DoxyCodeLine{00507\ \ \ \ \ \ \ \ \ ats-\/>ta1.sameD\ =\ \textcolor{keyword}{false};}
+\DoxyCodeLine{00508\ \ \ \ \ \ \ \ \ ats-\/>ta1.ds\ =\ BITRATE\_106KBITS;}
+\DoxyCodeLine{00509\ \ \ \ \ \ \ \ \ ats-\/>ta1.dr\ =\ BITRATE\_106KBITS;}
+\DoxyCodeLine{00510\ }
+\DoxyCodeLine{00511\ \ \ \ \ \ \ \ \ \textcolor{comment}{//\ Defaults\ for\ TB1}}
+\DoxyCodeLine{00512\ \ \ \ \ \ \ \ \ ats-\/>tb1.transmitted\ =\ \textcolor{keyword}{false};}
+\DoxyCodeLine{00513\ \ \ \ \ \ \ \ \ ats-\/>tb1.fwi\ =\ 0;\ \ \ \textcolor{comment}{//\ TODO:\ Don't\ know\ the\ default\ for\ this!}}
+\DoxyCodeLine{00514\ \ \ \ \ \ \ \ \ ats-\/>tb1.sfgi\ =\ 0;\ \ \textcolor{comment}{//\ The\ default\ value\ of\ SFGI\ is\ 0\ (meaning\ that\ the\ card\ does\ not\ need\ any\ particular\ SFGT)}}
+\DoxyCodeLine{00515\ }
+\DoxyCodeLine{00516\ \ \ \ \ \ \ \ \ \textcolor{comment}{//\ Defaults\ for\ TC1}}
+\DoxyCodeLine{00517\ \ \ \ \ \ \ \ \ ats-\/>tc1.transmitted\ =\ \textcolor{keyword}{false};}
+\DoxyCodeLine{00518\ \ \ \ \ \ \ \ \ ats-\/>tc1.supportsCID\ =\ \textcolor{keyword}{true};}
+\DoxyCodeLine{00519\ \ \ \ \ \ \ \ \ ats-\/>tc1.supportsNAD\ =\ \textcolor{keyword}{false};}
+\DoxyCodeLine{00520\ \ \ \ \ \}}
+\DoxyCodeLine{00521\ }
+\DoxyCodeLine{00522\ \ \ \ \ memcpy(ats-\/>data,\ bufferATS,\ bufferSize\ -\/\ 2);}
+\DoxyCodeLine{00523\ }
+\DoxyCodeLine{00524\ \ \ \ \ \textcolor{keywordflow}{return}\ result;}
+\DoxyCodeLine{00525\ \}\ \textcolor{comment}{//\ End\ PICC\_RequestATS()}}
+\DoxyCodeLine{00526\ }
+\DoxyCodeLine{00532\ MFRC522::StatusCode\ \mbox{\hyperlink{classMFRC522Extended_acb69d5c429b8e06ecec8dc1e34c02d65}{MFRC522Extended::PICC\_PPS}}()}
+\DoxyCodeLine{00533\ \{}
+\DoxyCodeLine{00534\ \ \ \ \ StatusCode\ result;}
+\DoxyCodeLine{00535\ }
+\DoxyCodeLine{00536\ \ \ \ \ \textcolor{keywordtype}{byte}\ ppsBuffer[4];}
+\DoxyCodeLine{00537\ \ \ \ \ \textcolor{keywordtype}{byte}\ ppsBufferSize\ =\ 4;}
+\DoxyCodeLine{00538\ \ \ \ \ \textcolor{comment}{//\ Start\ byte:\ The\ start\ byte\ (PPS)\ consists\ of\ two\ parts:}}
+\DoxyCodeLine{00539\ \ \ \ \ \textcolor{comment}{//\ \ –The\ upper\ nibble(b8–b5)\ is\ set\ to’D'to\ identify\ the\ PPS.\ All\ other\ values\ are\ RFU.}}
+\DoxyCodeLine{00540\ \ \ \ \ \textcolor{comment}{//\ \ -\/The\ lower\ nibble(b4–b1),\ which\ is\ called\ the\ ‘card\ identifier’\ (CID),\ defines\ the\ logical\ number\ of\ the\ addressed\ card.}}
+\DoxyCodeLine{00541\ \ \ \ \ ppsBuffer[0]\ =\ 0xD0;\ \ \ \ \textcolor{comment}{//\ CID\ is\ hardcoded\ as\ 0\ in\ RATS}}
+\DoxyCodeLine{00542\ \ \ \ \ ppsBuffer[1]\ =\ 0x00;\ \ \ \ \textcolor{comment}{//\ PPS0\ indicates\ whether\ PPS1\ is\ present}}
+\DoxyCodeLine{00543\ }
+\DoxyCodeLine{00544\ \ \ \ \ \textcolor{comment}{//\ Calculate\ CRC\_A}}
+\DoxyCodeLine{00545\ \ \ \ \ result\ =\ \mbox{\hyperlink{classMFRC522_a7c65647b1d72b6ee7557797322030643}{PCD\_CalculateCRC}}(ppsBuffer,\ 2,\ \&ppsBuffer[2]);}
+\DoxyCodeLine{00546\ \ \ \ \ \textcolor{keywordflow}{if}\ (result\ !=\ STATUS\_OK)\ \{}
+\DoxyCodeLine{00547\ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{return}\ result;}
+\DoxyCodeLine{00548\ \ \ \ \ \}}
+\DoxyCodeLine{00549\ }
+\DoxyCodeLine{00550\ \ \ \ \ \textcolor{comment}{//\ Transmit\ the\ buffer\ and\ receive\ the\ response,\ validate\ CRC\_A.}}
+\DoxyCodeLine{00551\ \ \ \ \ result\ =\ \mbox{\hyperlink{classMFRC522_aaa96aa7ec4f95e0835cb758ad0450d74}{PCD\_TransceiveData}}(ppsBuffer,\ 4,\ ppsBuffer,\ \&ppsBufferSize,\ NULL,\ 0,\ \textcolor{keyword}{true});}
+\DoxyCodeLine{00552\ \ \ \ \ \textcolor{keywordflow}{if}\ (result\ ==\ STATUS\_OK)}
+\DoxyCodeLine{00553\ \ \ \ \ \{}
+\DoxyCodeLine{00554\ \ \ \ \ \ \ \ \ \textcolor{comment}{//\ Enable\ CRC\ for\ T=CL}}
+\DoxyCodeLine{00555\ \ \ \ \ \ \ \ \ \textcolor{keywordtype}{byte}\ txReg\ =\ \mbox{\hyperlink{classMFRC522_a4289838c6f24f2d62eb8dc0e7a6647d1}{PCD\_ReadRegister}}(TxModeReg)\ |\ 0x80;}
+\DoxyCodeLine{00556\ \ \ \ \ \ \ \ \ \textcolor{keywordtype}{byte}\ rxReg\ =\ \mbox{\hyperlink{classMFRC522_a4289838c6f24f2d62eb8dc0e7a6647d1}{PCD\_ReadRegister}}(RxModeReg)\ |\ 0x80;}
+\DoxyCodeLine{00557\ }
+\DoxyCodeLine{00558\ \ \ \ \ \ \ \ \ \mbox{\hyperlink{classMFRC522_aa5e5825adb4c784d8a5a60242c135fb7}{PCD\_WriteRegister}}(TxModeReg,\ txReg);}
+\DoxyCodeLine{00559\ \ \ \ \ \ \ \ \ \mbox{\hyperlink{classMFRC522_aa5e5825adb4c784d8a5a60242c135fb7}{PCD\_WriteRegister}}(RxModeReg,\ rxReg);}
+\DoxyCodeLine{00560\ \ \ \ \ \}}
+\DoxyCodeLine{00561\ }
+\DoxyCodeLine{00562\ \ \ \ \ \textcolor{keywordflow}{return}\ result;}
+\DoxyCodeLine{00563\ \}\ \textcolor{comment}{//\ End\ PICC\_PPS()}}
+\DoxyCodeLine{00564\ }
+\DoxyCodeLine{00570\ MFRC522::StatusCode\ \mbox{\hyperlink{classMFRC522Extended_acb69d5c429b8e06ecec8dc1e34c02d65}{MFRC522Extended::PICC\_PPS}}(TagBitRates\ sendBitRate,\ \ \ \ \ \ \ \ \ \ \ }
+\DoxyCodeLine{00571\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ TagBitRates\ receiveBitRate\ \ \ \ \ \ \ \ \ \ }
+\DoxyCodeLine{00572\ )\ \{}
+\DoxyCodeLine{00573\ \ \ \ \ StatusCode\ result;}
+\DoxyCodeLine{00574\ }
+\DoxyCodeLine{00575\ \ \ \ \ \textcolor{comment}{//\ TODO\ not\ used}}
+\DoxyCodeLine{00576\ \ \ \ \ \textcolor{comment}{//byte\ txReg\ =\ PCD\_ReadRegister(TxModeReg)\ \&\ 0x8F;}}
+\DoxyCodeLine{00577\ \ \ \ \ \textcolor{comment}{//byte\ rxReg\ =\ PCD\_ReadRegister(RxModeReg)\ \&\ 0x8F;}}
+\DoxyCodeLine{00578\ }
+\DoxyCodeLine{00579\ \ \ \ \ \textcolor{keywordtype}{byte}\ ppsBuffer[5];}
+\DoxyCodeLine{00580\ \ \ \ \ \textcolor{keywordtype}{byte}\ ppsBufferSize\ =\ 5;}
+\DoxyCodeLine{00581\ \ \ \ \ \textcolor{comment}{//\ Start\ byte:\ The\ start\ byte\ (PPS)\ consists\ of\ two\ parts:}}
+\DoxyCodeLine{00582\ \ \ \ \ \textcolor{comment}{//\ \ –The\ upper\ nibble(b8–b5)\ is\ set\ to’D'to\ identify\ the\ PPS.\ All\ other\ values\ are\ RFU.}}
+\DoxyCodeLine{00583\ \ \ \ \ \textcolor{comment}{//\ \ -\/The\ lower\ nibble(b4–b1),\ which\ is\ called\ the\ ‘card\ identifier’\ (CID),\ defines\ the\ logical\ number\ of\ the\ addressed\ card.}}
+\DoxyCodeLine{00584\ \ \ \ \ ppsBuffer[0]\ =\ 0xD0;\ \ \ \ \textcolor{comment}{//\ CID\ is\ hardcoded\ as\ 0\ in\ RATS}}
+\DoxyCodeLine{00585\ \ \ \ \ ppsBuffer[1]\ =\ 0x11;\ \ \ \ \textcolor{comment}{//\ PPS0\ indicates\ whether\ PPS1\ is\ present}}
+\DoxyCodeLine{00586\ }
+\DoxyCodeLine{00587\ \ \ \ \ \textcolor{comment}{//\ Bit\ 8\ -\/\ Set\ to\ '0'\ as\ MFRC522\ allows\ different\ bit\ rates\ for\ send\ and\ receive}}
+\DoxyCodeLine{00588\ \ \ \ \ \textcolor{comment}{//\ Bit\ 4\ -\/\ Set\ to\ '0'\ as\ it\ is\ Reserved\ for\ future\ use.}}
+\DoxyCodeLine{00589\ \ \ \ \ \textcolor{comment}{//ppsBuffer[2]\ =\ (((sendBitRate\ \&\ 0x03)\ <<\ 4)\ |\ (receiveBitRate\ \&\ 0x03))\ \&\ 0xE7;}}
+\DoxyCodeLine{00590\ \ \ \ \ ppsBuffer[2]\ =\ (((sendBitRate\ \&\ 0x03)\ <<\ 2)\ |\ (receiveBitRate\ \&\ 0x03))\ \&\ 0xE7;}
+\DoxyCodeLine{00591\ }
+\DoxyCodeLine{00592\ \ \ \ \ \textcolor{comment}{//\ Calculate\ CRC\_A}}
+\DoxyCodeLine{00593\ \ \ \ \ result\ =\ \mbox{\hyperlink{classMFRC522_a7c65647b1d72b6ee7557797322030643}{PCD\_CalculateCRC}}(ppsBuffer,\ 3,\ \&ppsBuffer[3]);}
+\DoxyCodeLine{00594\ \ \ \ \ \textcolor{keywordflow}{if}\ (result\ !=\ STATUS\_OK)\ \{}
+\DoxyCodeLine{00595\ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{return}\ result;}
+\DoxyCodeLine{00596\ \ \ \ \ \}}
+\DoxyCodeLine{00597\ \ \ \ \ }
+\DoxyCodeLine{00598\ \ \ \ \ \textcolor{comment}{//\ Transmit\ the\ buffer\ and\ receive\ the\ response,\ validate\ CRC\_A.}}
+\DoxyCodeLine{00599\ \ \ \ \ result\ =\ \mbox{\hyperlink{classMFRC522_aaa96aa7ec4f95e0835cb758ad0450d74}{PCD\_TransceiveData}}(ppsBuffer,\ 5,\ ppsBuffer,\ \&ppsBufferSize,\ NULL,\ 0,\ \textcolor{keyword}{true});}
+\DoxyCodeLine{00600\ \ \ \ \ \textcolor{keywordflow}{if}\ (result\ ==\ STATUS\_OK)}
+\DoxyCodeLine{00601\ \ \ \ \ \{}
+\DoxyCodeLine{00602\ \ \ \ \ \ \ \ \ \textcolor{comment}{//\ Make\ sure\ it\ is\ an\ answer\ to\ our\ PPS}}
+\DoxyCodeLine{00603\ \ \ \ \ \ \ \ \ \textcolor{comment}{//\ We\ should\ receive\ our\ PPS\ byte\ and\ 2\ CRC\ bytes}}
+\DoxyCodeLine{00604\ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{if}\ ((ppsBufferSize\ ==\ 3)\ \&\&\ (ppsBuffer[0]\ ==\ 0xD0))\ \{}
+\DoxyCodeLine{00605\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordtype}{byte}\ txReg\ =\ \mbox{\hyperlink{classMFRC522_a4289838c6f24f2d62eb8dc0e7a6647d1}{PCD\_ReadRegister}}(TxModeReg)\ \&\ 0x8F;}
+\DoxyCodeLine{00606\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordtype}{byte}\ rxReg\ =\ \mbox{\hyperlink{classMFRC522_a4289838c6f24f2d62eb8dc0e7a6647d1}{PCD\_ReadRegister}}(RxModeReg)\ \&\ 0x8F;}
+\DoxyCodeLine{00607\ }
+\DoxyCodeLine{00608\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{comment}{//\ Set\ bit\ rate\ and\ enable\ CRC\ for\ T=CL}}
+\DoxyCodeLine{00609\ \ \ \ \ \ \ \ \ \ \ \ \ txReg\ =\ (txReg\ \&\ 0x8F)\ |\ ((receiveBitRate\ \&\ 0x03)\ <<\ 4)\ |\ 0x80;}
+\DoxyCodeLine{00610\ \ \ \ \ \ \ \ \ \ \ \ \ rxReg\ =\ (rxReg\ \&\ 0x8F)\ |\ ((sendBitRate\ \&\ 0x03)\ <<\ 4)\ |\ 0x80;}
+\DoxyCodeLine{00611\ \ \ \ \ \ \ \ \ \ \ \ \ rxReg\ \&=\ 0xF0;\ \textcolor{comment}{//Enforce\ although\ this\ should\ be\ set\ already}}
+\DoxyCodeLine{00612\ }
+\DoxyCodeLine{00613\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{comment}{//\ From\ ConfigIsoType}}
+\DoxyCodeLine{00614\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{comment}{//rxReg\ |=\ 0x06;}}
+\DoxyCodeLine{00615\ }
+\DoxyCodeLine{00616\ \ \ \ \ \ \ \ \ \ \ \ \ \mbox{\hyperlink{classMFRC522_aa5e5825adb4c784d8a5a60242c135fb7}{PCD\_WriteRegister}}(TxModeReg,\ txReg);}
+\DoxyCodeLine{00617\ \ \ \ \ \ \ \ \ \ \ \ \ \mbox{\hyperlink{classMFRC522_aa5e5825adb4c784d8a5a60242c135fb7}{PCD\_WriteRegister}}(RxModeReg,\ rxReg);}
+\DoxyCodeLine{00618\ }
+\DoxyCodeLine{00619\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{comment}{//\ At\ 212kBps}}
+\DoxyCodeLine{00620\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{switch}\ (sendBitRate)\ \{}
+\DoxyCodeLine{00621\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{case}\ BITRATE\_212KBITS:}
+\DoxyCodeLine{00622\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \{}
+\DoxyCodeLine{00623\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{comment}{//PCD\_WriteRegister(ModWidthReg,\ 0x13);}}
+\DoxyCodeLine{00624\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \mbox{\hyperlink{classMFRC522_aa5e5825adb4c784d8a5a60242c135fb7}{PCD\_WriteRegister}}(ModWidthReg,\ 0x15);}
+\DoxyCodeLine{00625\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \}}
+\DoxyCodeLine{00626\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{break};}
+\DoxyCodeLine{00627\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{case}\ BITRATE\_424KBITS:}
+\DoxyCodeLine{00628\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \{}
+\DoxyCodeLine{00629\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \mbox{\hyperlink{classMFRC522_aa5e5825adb4c784d8a5a60242c135fb7}{PCD\_WriteRegister}}(ModWidthReg,\ 0x0A);}
+\DoxyCodeLine{00630\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \}}
+\DoxyCodeLine{00631\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{break};}
+\DoxyCodeLine{00632\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{case}\ BITRATE\_848KBITS:}
+\DoxyCodeLine{00633\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \{}
+\DoxyCodeLine{00634\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \mbox{\hyperlink{classMFRC522_aa5e5825adb4c784d8a5a60242c135fb7}{PCD\_WriteRegister}}(ModWidthReg,\ 0x05);}
+\DoxyCodeLine{00635\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \}}
+\DoxyCodeLine{00636\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{break};}
+\DoxyCodeLine{00637\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{default}:}
+\DoxyCodeLine{00638\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \{}
+\DoxyCodeLine{00639\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \mbox{\hyperlink{classMFRC522_aa5e5825adb4c784d8a5a60242c135fb7}{PCD\_WriteRegister}}(ModWidthReg,\ 0x26);\ \textcolor{comment}{//\ Default\ value}}
+\DoxyCodeLine{00640\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \}}
+\DoxyCodeLine{00641\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{break};}
+\DoxyCodeLine{00642\ \ \ \ \ \ \ \ \ \ \ \ \ \}}
+\DoxyCodeLine{00643\ }
+\DoxyCodeLine{00644\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{comment}{//PCD\_WriteRegister(RxThresholdReg,\ 0x84);\ //\ ISO-\/14443.4\ Type\ A\ (default)}}
+\DoxyCodeLine{00645\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{comment}{//PCD\_WriteRegister(ControlReg,\ 0x10);}}
+\DoxyCodeLine{00646\ \ \ \ \ \ \ \ \ \ \ \ \ }
+\DoxyCodeLine{00647\ \ \ \ \ \ \ \ \ \ \ \ \ delayMicroseconds(10);}
+\DoxyCodeLine{00648\ \ \ \ \ \ \ \ \ \}}
+\DoxyCodeLine{00649\ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{else}\ }
+\DoxyCodeLine{00650\ \ \ \ \ \ \ \ \ \{}
+\DoxyCodeLine{00651\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{return}\ STATUS\_ERROR;}
+\DoxyCodeLine{00652\ \ \ \ \ \ \ \ \ \}}
+\DoxyCodeLine{00653\ \ \ \ \ \}}
+\DoxyCodeLine{00654\ }
+\DoxyCodeLine{00655\ \ \ \ \ \textcolor{keywordflow}{return}\ result;}
+\DoxyCodeLine{00656\ \}\ \textcolor{comment}{//\ End\ PICC\_PPS()}}
+\DoxyCodeLine{00657\ }
+\DoxyCodeLine{00658\ }
+\DoxyCodeLine{00660\ \textcolor{comment}{//\ Functions\ for\ communicating\ with\ ISO/IEC\ 14433-\/4\ cards}}
+\DoxyCodeLine{00662\ }
+\DoxyCodeLine{00663\ MFRC522::StatusCode\ MFRC522Extended::TCL\_Transceive(PcbBlock\ *send,\ PcbBlock\ *back)}
+\DoxyCodeLine{00664\ \{}
+\DoxyCodeLine{00665\ \ \ \ \ MFRC522::StatusCode\ result;}
+\DoxyCodeLine{00666\ \ \ \ \ \textcolor{keywordtype}{byte}\ inBuffer[FIFO\_SIZE];}
+\DoxyCodeLine{00667\ \ \ \ \ \textcolor{keywordtype}{byte}\ inBufferSize\ =\ FIFO\_SIZE;}
+\DoxyCodeLine{00668\ \ \ \ \ \textcolor{keywordtype}{byte}\ outBuffer[send-\/>inf.size\ +\ 5];\ \textcolor{comment}{//\ PCB\ +\ CID\ +\ NAD\ +\ INF\ +\ EPILOGUE\ (CRC)}}
+\DoxyCodeLine{00669\ \ \ \ \ \textcolor{keywordtype}{byte}\ outBufferOffset\ =\ 1;}
+\DoxyCodeLine{00670\ \ \ \ \ \textcolor{keywordtype}{byte}\ inBufferOffset\ =\ 1;}
+\DoxyCodeLine{00671\ }
+\DoxyCodeLine{00672\ \ \ \ \ \textcolor{comment}{//\ Set\ the\ PCB\ byte}}
+\DoxyCodeLine{00673\ \ \ \ \ outBuffer[0]\ =\ send-\/>prologue.pcb;}
+\DoxyCodeLine{00674\ }
+\DoxyCodeLine{00675\ \ \ \ \ \textcolor{comment}{//\ Set\ the\ CID\ byte\ if\ available}}
+\DoxyCodeLine{00676\ \ \ \ \ \textcolor{keywordflow}{if}\ (send-\/>prologue.pcb\ \&\ 0x08)\ \{}
+\DoxyCodeLine{00677\ \ \ \ \ \ \ \ \ outBuffer[outBufferOffset]\ =\ send-\/>prologue.cid;}
+\DoxyCodeLine{00678\ \ \ \ \ \ \ \ \ outBufferOffset++;}
+\DoxyCodeLine{00679\ \ \ \ \ \}}
+\DoxyCodeLine{00680\ }
+\DoxyCodeLine{00681\ \ \ \ \ \textcolor{comment}{//\ Set\ the\ NAD\ byte\ if\ available}}
+\DoxyCodeLine{00682\ \ \ \ \ \textcolor{keywordflow}{if}\ (send-\/>prologue.pcb\ \&\ 0x04)\ \{}
+\DoxyCodeLine{00683\ \ \ \ \ \ \ \ \ outBuffer[outBufferOffset]\ =\ send-\/>prologue.nad;}
+\DoxyCodeLine{00684\ \ \ \ \ \ \ \ \ outBufferOffset++;}
+\DoxyCodeLine{00685\ \ \ \ \ \}}
+\DoxyCodeLine{00686\ }
+\DoxyCodeLine{00687\ \ \ \ \ \textcolor{comment}{//\ Copy\ the\ INF\ field\ if\ available}}
+\DoxyCodeLine{00688\ \ \ \ \ \textcolor{keywordflow}{if}\ (send-\/>inf.size\ >\ 0)\ \{}
+\DoxyCodeLine{00689\ \ \ \ \ \ \ \ \ memcpy(\&outBuffer[outBufferOffset],\ send-\/>inf.data,\ send-\/>inf.size);}
+\DoxyCodeLine{00690\ \ \ \ \ \ \ \ \ outBufferOffset\ +=\ send-\/>inf.size;}
+\DoxyCodeLine{00691\ \ \ \ \ \}}
+\DoxyCodeLine{00692\ }
+\DoxyCodeLine{00693\ \ \ \ \ \textcolor{comment}{//\ Is\ the\ CRC\ enabled\ for\ transmission?}}
+\DoxyCodeLine{00694\ \ \ \ \ \textcolor{keywordtype}{byte}\ txModeReg\ =\ \mbox{\hyperlink{classMFRC522_a4289838c6f24f2d62eb8dc0e7a6647d1}{PCD\_ReadRegister}}(TxModeReg);}
+\DoxyCodeLine{00695\ \ \ \ \ \textcolor{keywordflow}{if}\ ((txModeReg\ \&\ 0x80)\ !=\ 0x80)\ \{}
+\DoxyCodeLine{00696\ \ \ \ \ \ \ \ \ \textcolor{comment}{//\ Calculate\ CRC\_A}}
+\DoxyCodeLine{00697\ \ \ \ \ \ \ \ \ result\ =\ \mbox{\hyperlink{classMFRC522_a7c65647b1d72b6ee7557797322030643}{PCD\_CalculateCRC}}(outBuffer,\ outBufferOffset,\ \&outBuffer[outBufferOffset]);}
+\DoxyCodeLine{00698\ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{if}\ (result\ !=\ STATUS\_OK)\ \{}
+\DoxyCodeLine{00699\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{return}\ result;}
+\DoxyCodeLine{00700\ \ \ \ \ \ \ \ \ \}}
+\DoxyCodeLine{00701\ }
+\DoxyCodeLine{00702\ \ \ \ \ \ \ \ \ outBufferOffset\ +=\ 2;}
+\DoxyCodeLine{00703\ \ \ \ \ \}}
+\DoxyCodeLine{00704\ }
+\DoxyCodeLine{00705\ \ \ \ \ \textcolor{comment}{//\ Transceive\ the\ block}}
+\DoxyCodeLine{00706\ \ \ \ \ result\ =\ \mbox{\hyperlink{classMFRC522_aaa96aa7ec4f95e0835cb758ad0450d74}{PCD\_TransceiveData}}(outBuffer,\ outBufferOffset,\ inBuffer,\ \&inBufferSize);}
+\DoxyCodeLine{00707\ \ \ \ \ \textcolor{keywordflow}{if}\ (result\ !=\ STATUS\_OK)\ \{}
+\DoxyCodeLine{00708\ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{return}\ result;}
+\DoxyCodeLine{00709\ \ \ \ \ \}}
+\DoxyCodeLine{00710\ }
+\DoxyCodeLine{00711\ \ \ \ \ \textcolor{comment}{//\ We\ want\ to\ turn\ the\ received\ array\ back\ to\ a\ PcbBlock}}
+\DoxyCodeLine{00712\ \ \ \ \ back-\/>prologue.pcb\ =\ inBuffer[0];}
+\DoxyCodeLine{00713\ }
+\DoxyCodeLine{00714\ \ \ \ \ \textcolor{comment}{//\ CID\ byte\ is\ present?}}
+\DoxyCodeLine{00715\ \ \ \ \ \textcolor{keywordflow}{if}\ (send-\/>prologue.pcb\ \&\ 0x08)\ \{}
+\DoxyCodeLine{00716\ \ \ \ \ \ \ \ \ back-\/>prologue.cid\ =\ inBuffer[inBufferOffset];}
+\DoxyCodeLine{00717\ \ \ \ \ \ \ \ \ inBufferOffset++;}
+\DoxyCodeLine{00718\ \ \ \ \ \}}
+\DoxyCodeLine{00719\ }
+\DoxyCodeLine{00720\ \ \ \ \ \textcolor{comment}{//\ NAD\ byte\ is\ present?}}
+\DoxyCodeLine{00721\ \ \ \ \ \textcolor{keywordflow}{if}\ (send-\/>prologue.pcb\ \&\ 0x04)\ \{}
+\DoxyCodeLine{00722\ \ \ \ \ \ \ \ \ back-\/>prologue.nad\ =\ inBuffer[inBufferOffset];}
+\DoxyCodeLine{00723\ \ \ \ \ \ \ \ \ inBufferOffset++;}
+\DoxyCodeLine{00724\ \ \ \ \ \}}
+\DoxyCodeLine{00725\ }
+\DoxyCodeLine{00726\ \ \ \ \ \textcolor{comment}{//\ Check\ if\ CRC\ is\ taken\ care\ of\ by\ MFRC522}}
+\DoxyCodeLine{00727\ \ \ \ \ \textcolor{keywordtype}{byte}\ rxModeReg\ =\ \mbox{\hyperlink{classMFRC522_a4289838c6f24f2d62eb8dc0e7a6647d1}{PCD\_ReadRegister}}(TxModeReg);}
+\DoxyCodeLine{00728\ \ \ \ \ \textcolor{keywordflow}{if}\ ((rxModeReg\ \&\ 0x80)\ !=\ 0x80)\ \{}
+\DoxyCodeLine{00729\ \ \ \ \ \ \ \ \ Serial.print(\textcolor{stringliteral}{"{}CRC\ is\ not\ taken\ care\ of\ by\ MFRC522:\ "{}});}
+\DoxyCodeLine{00730\ \ \ \ \ \ \ \ \ Serial.println(rxModeReg,\ HEX);}
+\DoxyCodeLine{00731\ }
+\DoxyCodeLine{00732\ \ \ \ \ \ \ \ \ \textcolor{comment}{//\ Check\ the\ CRC}}
+\DoxyCodeLine{00733\ \ \ \ \ \ \ \ \ \textcolor{comment}{//\ We\ need\ at\ least\ the\ CRC\_A\ value.}}
+\DoxyCodeLine{00734\ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{if}\ ((\textcolor{keywordtype}{int})(inBufferSize\ -\/\ inBufferOffset)\ <\ 2)\ \{}
+\DoxyCodeLine{00735\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{return}\ STATUS\_CRC\_WRONG;}
+\DoxyCodeLine{00736\ \ \ \ \ \ \ \ \ \}}
+\DoxyCodeLine{00737\ }
+\DoxyCodeLine{00738\ \ \ \ \ \ \ \ \ \textcolor{comment}{//\ Verify\ CRC\_A\ -\/\ do\ our\ own\ calculation\ and\ store\ the\ control\ in\ controlBuffer.}}
+\DoxyCodeLine{00739\ \ \ \ \ \ \ \ \ \textcolor{keywordtype}{byte}\ controlBuffer[2];}
+\DoxyCodeLine{00740\ \ \ \ \ \ \ \ \ MFRC522::StatusCode\ status\ =\ \mbox{\hyperlink{classMFRC522_a7c65647b1d72b6ee7557797322030643}{PCD\_CalculateCRC}}(inBuffer,\ inBufferSize\ -\/\ 2,\ controlBuffer);}
+\DoxyCodeLine{00741\ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{if}\ (status\ !=\ STATUS\_OK)\ \{}
+\DoxyCodeLine{00742\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{return}\ status;}
+\DoxyCodeLine{00743\ \ \ \ \ \ \ \ \ \}}
+\DoxyCodeLine{00744\ }
+\DoxyCodeLine{00745\ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{if}\ ((inBuffer[inBufferSize\ -\/\ 2]\ !=\ controlBuffer[0])\ ||\ (inBuffer[inBufferSize\ -\/\ 1]\ !=\ controlBuffer[1]))\ \{}
+\DoxyCodeLine{00746\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{return}\ STATUS\_CRC\_WRONG;}
+\DoxyCodeLine{00747\ \ \ \ \ \ \ \ \ \}}
+\DoxyCodeLine{00748\ }
+\DoxyCodeLine{00749\ \ \ \ \ \ \ \ \ \textcolor{comment}{//\ Take\ away\ the\ CRC\ bytes}}
+\DoxyCodeLine{00750\ \ \ \ \ \ \ \ \ inBufferSize\ -\/=\ 2;}
+\DoxyCodeLine{00751\ \ \ \ \ \}}
+\DoxyCodeLine{00752\ }
+\DoxyCodeLine{00753\ \ \ \ \ \textcolor{comment}{//\ Got\ more\ data?}}
+\DoxyCodeLine{00754\ \ \ \ \ \textcolor{keywordflow}{if}\ (inBufferSize\ >\ inBufferOffset)\ \{}
+\DoxyCodeLine{00755\ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{if}\ ((inBufferSize\ -\/\ inBufferOffset)\ >\ back-\/>inf.size)\ \{}
+\DoxyCodeLine{00756\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{return}\ STATUS\_NO\_ROOM;}
+\DoxyCodeLine{00757\ \ \ \ \ \ \ \ \ \}}
+\DoxyCodeLine{00758\ }
+\DoxyCodeLine{00759\ \ \ \ \ \ \ \ \ memcpy(back-\/>inf.data,\ \&inBuffer[inBufferOffset],\ inBufferSize\ -\/\ inBufferOffset);}
+\DoxyCodeLine{00760\ \ \ \ \ \ \ \ \ back-\/>inf.size\ =\ inBufferSize\ -\/\ inBufferOffset;}
+\DoxyCodeLine{00761\ \ \ \ \ \}\ \textcolor{keywordflow}{else}\ \{}
+\DoxyCodeLine{00762\ \ \ \ \ \ \ \ \ back-\/>inf.size\ =\ 0;}
+\DoxyCodeLine{00763\ \ \ \ \ \}}
+\DoxyCodeLine{00764\ }
+\DoxyCodeLine{00765\ \ \ \ \ \textcolor{comment}{//\ If\ the\ response\ is\ a\ R-\/Block\ check\ NACK}}
+\DoxyCodeLine{00766\ \ \ \ \ \textcolor{keywordflow}{if}\ (((inBuffer[0]\ \&\ 0xC0)\ ==\ 0x80)\ \&\&\ (inBuffer[0]\ \&\ 0x20))\ \{}
+\DoxyCodeLine{00767\ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{return}\ STATUS\_MIFARE\_NACK;}
+\DoxyCodeLine{00768\ \ \ \ \ \}}
+\DoxyCodeLine{00769\ \ \ \ \ }
+\DoxyCodeLine{00770\ \ \ \ \ \textcolor{keywordflow}{return}\ result;}
+\DoxyCodeLine{00771\ \}}
+\DoxyCodeLine{00775\ MFRC522::StatusCode\ MFRC522Extended::TCL\_Transceive(\mbox{\hyperlink{classMFRC522Extended_structMFRC522Extended_1_1TagInfo}{TagInfo}}\ *tag,\ \textcolor{keywordtype}{byte}\ *sendData,\ \textcolor{keywordtype}{byte}\ sendLen,\ \textcolor{keywordtype}{byte}\ *backData,\ \textcolor{keywordtype}{byte}\ *backLen)}
+\DoxyCodeLine{00776\ \{}
+\DoxyCodeLine{00777\ \ \ \ \ MFRC522::StatusCode\ result;}
+\DoxyCodeLine{00778\ }
+\DoxyCodeLine{00779\ \ \ \ \ \mbox{\hyperlink{classMFRC522Extended_structMFRC522Extended_1_1PcbBlock}{PcbBlock}}\ out;}
+\DoxyCodeLine{00780\ \ \ \ \ \mbox{\hyperlink{classMFRC522Extended_structMFRC522Extended_1_1PcbBlock}{PcbBlock}}\ in;}
+\DoxyCodeLine{00781\ \ \ \ \ \textcolor{keywordtype}{byte}\ outBuffer[FIFO\_SIZE];}
+\DoxyCodeLine{00782\ \ \ \ \ \textcolor{keywordtype}{byte}\ outBufferSize\ =\ FIFO\_SIZE;}
+\DoxyCodeLine{00783\ \ \ \ \ \textcolor{keywordtype}{byte}\ totalBackLen\ =\ *backLen;}
+\DoxyCodeLine{00784\ }
+\DoxyCodeLine{00785\ \ \ \ \ \textcolor{comment}{//\ This\ command\ sends\ an\ I-\/Block}}
+\DoxyCodeLine{00786\ \ \ \ \ out.prologue.pcb\ =\ 0x02;}
+\DoxyCodeLine{00787\ }
+\DoxyCodeLine{00788\ \ \ \ \ \textcolor{keywordflow}{if}\ (tag-\/>ats.tc1.supportsCID)\ \{}
+\DoxyCodeLine{00789\ \ \ \ \ \ \ \ \ out.prologue.pcb\ |=\ 0x08;}
+\DoxyCodeLine{00790\ \ \ \ \ \ \ \ \ out.prologue.cid\ =\ 0x00;\ \ \ \ \textcolor{comment}{//\ CID\ is\ curentlly\ hardcoded\ as\ 0x00}}
+\DoxyCodeLine{00791\ \ \ \ \ \}}
+\DoxyCodeLine{00792\ }
+\DoxyCodeLine{00793\ \ \ \ \ \textcolor{comment}{//\ This\ command\ doe\ not\ support\ NAD}}
+\DoxyCodeLine{00794\ \ \ \ \ out.prologue.pcb\ \&=\ 0xFB;}
+\DoxyCodeLine{00795\ \ \ \ \ out.prologue.nad\ =\ 0x00;}
+\DoxyCodeLine{00796\ }
+\DoxyCodeLine{00797\ \ \ \ \ \textcolor{comment}{//\ Set\ the\ block\ number}}
+\DoxyCodeLine{00798\ \ \ \ \ \textcolor{keywordflow}{if}\ (tag-\/>blockNumber)\ \{}
+\DoxyCodeLine{00799\ \ \ \ \ \ \ \ \ out.prologue.pcb\ |=\ 0x01;}
+\DoxyCodeLine{00800\ \ \ \ \ \}}
+\DoxyCodeLine{00801\ }
+\DoxyCodeLine{00802\ \ \ \ \ \textcolor{comment}{//\ Do\ we\ have\ data\ to\ send?}}
+\DoxyCodeLine{00803\ \ \ \ \ \textcolor{keywordflow}{if}\ (sendData\ \&\&\ (sendLen\ >\ 0))\ \{}
+\DoxyCodeLine{00804\ \ \ \ \ \ \ \ \ out.inf.size\ =\ sendLen;}
+\DoxyCodeLine{00805\ \ \ \ \ \ \ \ \ out.inf.data\ =\ sendData;}
+\DoxyCodeLine{00806\ \ \ \ \ \}\ \textcolor{keywordflow}{else}\ \{}
+\DoxyCodeLine{00807\ \ \ \ \ \ \ \ \ out.inf.size\ =\ 0;}
+\DoxyCodeLine{00808\ \ \ \ \ \ \ \ \ out.inf.data\ =\ NULL;}
+\DoxyCodeLine{00809\ \ \ \ \ \}}
+\DoxyCodeLine{00810\ }
+\DoxyCodeLine{00811\ \ \ \ \ \textcolor{comment}{//\ Initialize\ the\ receiving\ data}}
+\DoxyCodeLine{00812\ \ \ \ \ \textcolor{comment}{//\ TODO\ Warning:\ Value\ escapes\ the\ local\ scope}}
+\DoxyCodeLine{00813\ \ \ \ \ in.inf.data\ =\ outBuffer;}
+\DoxyCodeLine{00814\ \ \ \ \ in.inf.size\ =\ outBufferSize;}
+\DoxyCodeLine{00815\ }
+\DoxyCodeLine{00816\ \ \ \ \ result\ =\ TCL\_Transceive(\&out,\ \&in);}
+\DoxyCodeLine{00817\ \ \ \ \ \textcolor{keywordflow}{if}\ (result\ !=\ STATUS\_OK)\ \{}
+\DoxyCodeLine{00818\ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{return}\ result;}
+\DoxyCodeLine{00819\ \ \ \ \ \}}
+\DoxyCodeLine{00820\ }
+\DoxyCodeLine{00821\ \ \ \ \ \textcolor{comment}{//\ Swap\ block\ number\ on\ success}}
+\DoxyCodeLine{00822\ \ \ \ \ tag-\/>blockNumber\ =\ !tag-\/>blockNumber;}
+\DoxyCodeLine{00823\ }
+\DoxyCodeLine{00824\ \ \ \ \ \textcolor{keywordflow}{if}\ (backData\ !=\ \textcolor{keyword}{nullptr}\ \&\&\ backLen\ !=\textcolor{keyword}{nullptr})\ \{}
+\DoxyCodeLine{00825\ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{if}\ (*backLen\ <\ in.inf.size)}
+\DoxyCodeLine{00826\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{return}\ STATUS\_NO\_ROOM;}
+\DoxyCodeLine{00827\ }
+\DoxyCodeLine{00828\ \ \ \ \ \ \ \ \ *backLen\ =\ in.inf.size;}
+\DoxyCodeLine{00829\ \ \ \ \ \ \ \ \ memcpy(backData,\ in.inf.data,\ in.inf.size);}
+\DoxyCodeLine{00830\ \ \ \ \ \}}
+\DoxyCodeLine{00831\ }
+\DoxyCodeLine{00832\ \ \ \ \ \textcolor{comment}{//\ Check\ chaining}}
+\DoxyCodeLine{00833\ \ \ \ \ \textcolor{keywordflow}{if}\ ((in.prologue.pcb\ \&\ 0x10)\ ==\ 0x00)}
+\DoxyCodeLine{00834\ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{return}\ result;}
+\DoxyCodeLine{00835\ }
+\DoxyCodeLine{00836\ \ \ \ \ \textcolor{comment}{//\ Result\ is\ chained}}
+\DoxyCodeLine{00837\ \ \ \ \ \textcolor{comment}{//\ Send\ an\ ACK\ to\ receive\ more\ data}}
+\DoxyCodeLine{00838\ \ \ \ \ \textcolor{comment}{//\ TODO:\ Should\ be\ checked\ I've\ never\ needed\ to\ send\ an\ ACK}}
+\DoxyCodeLine{00839\ \ \ \ \ \textcolor{keywordflow}{while}\ (in.prologue.pcb\ \&\ 0x10)\ \{}
+\DoxyCodeLine{00840\ \ \ \ \ \ \ \ \ \textcolor{keywordtype}{byte}\ ackData[FIFO\_SIZE];}
+\DoxyCodeLine{00841\ \ \ \ \ \ \ \ \ \textcolor{keywordtype}{byte}\ ackDataSize\ =\ FIFO\_SIZE;}
+\DoxyCodeLine{00842\ }
+\DoxyCodeLine{00843\ \ \ \ \ \ \ \ \ result\ =\ \mbox{\hyperlink{classMFRC522Extended_aebbf1bbae99dea09128a6bcc4cf27f9d}{TCL\_TransceiveRBlock}}(tag,\ \textcolor{keyword}{true},\ ackData,\ \&ackDataSize);}
+\DoxyCodeLine{00844\ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{if}\ (result\ !=\ STATUS\_OK)}
+\DoxyCodeLine{00845\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{return}\ result;}
+\DoxyCodeLine{00846\ }
+\DoxyCodeLine{00847\ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{if}\ (backData\ !=\ \textcolor{keyword}{nullptr}\ \&\&\ backLen\ !=\ \textcolor{keyword}{nullptr})\ \{}
+\DoxyCodeLine{00848\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{if}\ ((*backLen\ +\ ackDataSize)\ >\ totalBackLen)}
+\DoxyCodeLine{00849\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{return}\ STATUS\_NO\_ROOM;}
+\DoxyCodeLine{00850\ }
+\DoxyCodeLine{00851\ \ \ \ \ \ \ \ \ \ \ \ \ memcpy(\&(backData[*backLen]),\ ackData,\ ackDataSize);}
+\DoxyCodeLine{00852\ \ \ \ \ \ \ \ \ \ \ \ \ *backLen\ +=\ ackDataSize;}
+\DoxyCodeLine{00853\ \ \ \ \ \ \ \ \ \}}
+\DoxyCodeLine{00854\ \ \ \ \ \}}
+\DoxyCodeLine{00855\ \ \ \ \ }
+\DoxyCodeLine{00856\ \ \ \ \ \textcolor{keywordflow}{return}\ result;}
+\DoxyCodeLine{00857\ \}\ \textcolor{comment}{//\ End\ TCL\_Transceive()}}
+\DoxyCodeLine{00858\ }
+\DoxyCodeLine{00862\ MFRC522::StatusCode\ \mbox{\hyperlink{classMFRC522Extended_aebbf1bbae99dea09128a6bcc4cf27f9d}{MFRC522Extended::TCL\_TransceiveRBlock}}(\mbox{\hyperlink{classMFRC522Extended_structMFRC522Extended_1_1TagInfo}{TagInfo}}\ *tag,\ \textcolor{keywordtype}{bool}\ ack,\ \textcolor{keywordtype}{byte}\ *backData,\ \textcolor{keywordtype}{byte}\ *backLen)}
+\DoxyCodeLine{00863\ \{}
+\DoxyCodeLine{00864\ \ \ \ \ MFRC522::StatusCode\ result;}
+\DoxyCodeLine{00865\ }
+\DoxyCodeLine{00866\ \ \ \ \ \mbox{\hyperlink{classMFRC522Extended_structMFRC522Extended_1_1PcbBlock}{PcbBlock}}\ out;}
+\DoxyCodeLine{00867\ \ \ \ \ \mbox{\hyperlink{classMFRC522Extended_structMFRC522Extended_1_1PcbBlock}{PcbBlock}}\ in;}
+\DoxyCodeLine{00868\ \ \ \ \ \textcolor{keywordtype}{byte}\ outBuffer[FIFO\_SIZE];}
+\DoxyCodeLine{00869\ \ \ \ \ \textcolor{keywordtype}{byte}\ outBufferSize\ =\ FIFO\_SIZE;}
+\DoxyCodeLine{00870\ }
+\DoxyCodeLine{00871\ \ \ \ \ \textcolor{comment}{//\ This\ command\ sends\ an\ R-\/Block}}
+\DoxyCodeLine{00872\ \ \ \ \ \textcolor{keywordflow}{if}\ (ack)}
+\DoxyCodeLine{00873\ \ \ \ \ \ \ \ \ out.prologue.pcb\ =\ 0xA2;\ \ \ \ \textcolor{comment}{//\ ACK}}
+\DoxyCodeLine{00874\ \ \ \ \ \textcolor{keywordflow}{else}\ }
+\DoxyCodeLine{00875\ \ \ \ \ \ \ \ \ out.prologue.pcb\ =\ 0xB2;\ \ \ \ \textcolor{comment}{//\ NAK}}
+\DoxyCodeLine{00876\ \ \ \ \ }
+\DoxyCodeLine{00877\ }
+\DoxyCodeLine{00878\ \ \ \ \ \textcolor{keywordflow}{if}\ (tag-\/>ats.tc1.supportsCID)\ \{}
+\DoxyCodeLine{00879\ \ \ \ \ \ \ \ \ out.prologue.pcb\ |=\ 0x08;}
+\DoxyCodeLine{00880\ \ \ \ \ \ \ \ \ out.prologue.cid\ =\ 0x00;\ \ \ \ \textcolor{comment}{//\ CID\ is\ curentlly\ hardcoded\ as\ 0x00}}
+\DoxyCodeLine{00881\ \ \ \ \ \}}
+\DoxyCodeLine{00882\ }
+\DoxyCodeLine{00883\ \ \ \ \ \textcolor{comment}{//\ This\ command\ doe\ not\ support\ NAD}}
+\DoxyCodeLine{00884\ \ \ \ \ out.prologue.pcb\ \&=\ 0xFB;}
+\DoxyCodeLine{00885\ \ \ \ \ out.prologue.nad\ =\ 0x00;}
+\DoxyCodeLine{00886\ }
+\DoxyCodeLine{00887\ \ \ \ \ \textcolor{comment}{//\ Set\ the\ block\ number}}
+\DoxyCodeLine{00888\ \ \ \ \ \textcolor{keywordflow}{if}\ (tag-\/>blockNumber)\ \{}
+\DoxyCodeLine{00889\ \ \ \ \ \ \ \ \ out.prologue.pcb\ |=\ 0x01;}
+\DoxyCodeLine{00890\ \ \ \ \ \}}
+\DoxyCodeLine{00891\ }
+\DoxyCodeLine{00892\ \ \ \ \ \textcolor{comment}{//\ No\ INF\ data\ for\ R-\/Block}}
+\DoxyCodeLine{00893\ \ \ \ \ out.inf.size\ =\ 0;}
+\DoxyCodeLine{00894\ \ \ \ \ out.inf.data\ =\ NULL;}
+\DoxyCodeLine{00895\ }
+\DoxyCodeLine{00896\ \ \ \ \ \textcolor{comment}{//\ Initialize\ the\ receiving\ data}}
+\DoxyCodeLine{00897\ \ \ \ \ \textcolor{comment}{//\ TODO\ Warning:\ Value\ escapes\ the\ local\ scope}}
+\DoxyCodeLine{00898\ \ \ \ \ in.inf.data\ =\ outBuffer;}
+\DoxyCodeLine{00899\ \ \ \ \ in.inf.size\ =\ outBufferSize;}
+\DoxyCodeLine{00900\ }
+\DoxyCodeLine{00901\ \ \ \ \ result\ =\ TCL\_Transceive(\&out,\ \&in);}
+\DoxyCodeLine{00902\ \ \ \ \ \textcolor{keywordflow}{if}\ (result\ !=\ STATUS\_OK)\ \{}
+\DoxyCodeLine{00903\ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{return}\ result;}
+\DoxyCodeLine{00904\ \ \ \ \ \}}
+\DoxyCodeLine{00905\ }
+\DoxyCodeLine{00906\ \ \ \ \ \textcolor{comment}{//\ Swap\ block\ number\ on\ success}}
+\DoxyCodeLine{00907\ \ \ \ \ tag-\/>blockNumber\ =\ !tag-\/>blockNumber;}
+\DoxyCodeLine{00908\ }
+\DoxyCodeLine{00909\ \ \ \ \ \textcolor{keywordflow}{if}\ (backData\ \&\&\ backLen)\ \{}
+\DoxyCodeLine{00910\ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{if}\ (*backLen\ <\ in.inf.size)}
+\DoxyCodeLine{00911\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{return}\ STATUS\_NO\_ROOM;}
+\DoxyCodeLine{00912\ }
+\DoxyCodeLine{00913\ \ \ \ \ \ \ \ \ *backLen\ =\ in.inf.size;}
+\DoxyCodeLine{00914\ \ \ \ \ \ \ \ \ memcpy(backData,\ in.inf.data,\ in.inf.size);}
+\DoxyCodeLine{00915\ \ \ \ \ \}}
+\DoxyCodeLine{00916\ \ \ \ \ }
+\DoxyCodeLine{00917\ \ \ \ \ \textcolor{keywordflow}{return}\ result;}
+\DoxyCodeLine{00918\ \}\ \textcolor{comment}{//\ End\ TCL\_TransceiveRBlock()}}
+\DoxyCodeLine{00919\ }
+\DoxyCodeLine{00923\ MFRC522::StatusCode\ \mbox{\hyperlink{classMFRC522Extended_a2de7e4ead4065d896d7ee39e9e2040dd}{MFRC522Extended::TCL\_Deselect}}(\mbox{\hyperlink{classMFRC522Extended_structMFRC522Extended_1_1TagInfo}{TagInfo}}\ *tag)}
+\DoxyCodeLine{00924\ \{}
+\DoxyCodeLine{00925\ \ \ \ \ MFRC522::StatusCode\ result;}
+\DoxyCodeLine{00926\ \ \ \ \ \textcolor{keywordtype}{byte}\ outBuffer[4];}
+\DoxyCodeLine{00927\ \ \ \ \ \textcolor{keywordtype}{byte}\ outBufferSize\ =\ 1;}
+\DoxyCodeLine{00928\ \ \ \ \ \textcolor{keywordtype}{byte}\ inBuffer[FIFO\_SIZE];}
+\DoxyCodeLine{00929\ \ \ \ \ \textcolor{keywordtype}{byte}\ inBufferSize\ =\ FIFO\_SIZE;}
+\DoxyCodeLine{00930\ }
+\DoxyCodeLine{00931\ \ \ \ \ outBuffer[0]\ =\ 0xC2;}
+\DoxyCodeLine{00932\ \ \ \ \ \textcolor{keywordflow}{if}\ (tag-\/>ats.tc1.supportsCID)}
+\DoxyCodeLine{00933\ \ \ \ \ \{}
+\DoxyCodeLine{00934\ \ \ \ \ \ \ \ \ outBuffer[0]\ |=\ 0x08;}
+\DoxyCodeLine{00935\ \ \ \ \ \ \ \ \ outBuffer[1]\ =\ 0x00;\ \ \textcolor{comment}{//\ CID\ is\ hardcoded}}
+\DoxyCodeLine{00936\ \ \ \ \ \ \ \ \ outBufferSize\ =\ 2;}
+\DoxyCodeLine{00937\ \ \ \ \ \}}
+\DoxyCodeLine{00938\ }
+\DoxyCodeLine{00939\ \ \ \ \ result\ =\ \mbox{\hyperlink{classMFRC522_aaa96aa7ec4f95e0835cb758ad0450d74}{PCD\_TransceiveData}}(outBuffer,\ outBufferSize,\ inBuffer,\ \&inBufferSize);}
+\DoxyCodeLine{00940\ \ \ \ \ \textcolor{keywordflow}{if}\ (result\ !=\ STATUS\_OK)\ \{}
+\DoxyCodeLine{00941\ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{return}\ result;}
+\DoxyCodeLine{00942\ \ \ \ \ \}}
+\DoxyCodeLine{00943\ }
+\DoxyCodeLine{00944\ \ \ \ \ \textcolor{comment}{//\ TODO:Maybe\ do\ some\ checks?\ In\ my\ test\ it\ returns:\ CA\ 00\ (Same\ data\ as\ I\ sent\ to\ my\ card)}}
+\DoxyCodeLine{00945\ }
+\DoxyCodeLine{00946\ \ \ \ \ \textcolor{keywordflow}{return}\ result;}
+\DoxyCodeLine{00947\ \}\ \textcolor{comment}{//\ End\ TCL\_Deselect()}}
+\DoxyCodeLine{00948\ }
+\DoxyCodeLine{00950\ \textcolor{comment}{//\ Support\ functions}}
+\DoxyCodeLine{00952\ }
+\DoxyCodeLine{00958\ MFRC522::PICC\_Type\ \mbox{\hyperlink{classMFRC522Extended_addf00efdd2de1002a4f4b34ebe0e1fb2}{MFRC522Extended::PICC\_GetType}}(\mbox{\hyperlink{classMFRC522Extended_structMFRC522Extended_1_1TagInfo}{TagInfo}}\ *tag\ \ \ \ \ \ \ }
+\DoxyCodeLine{00959\ )\ \{}
+\DoxyCodeLine{00960\ \ \ \ \ \textcolor{comment}{//\ http://www.nxp.com/documents/application\_note/AN10833.pdf\ }}
+\DoxyCodeLine{00961\ \ \ \ \ \textcolor{comment}{//\ 3.2\ Coding\ of\ Select\ Acknowledge\ (SAK)}}
+\DoxyCodeLine{00962\ \ \ \ \ \textcolor{comment}{//\ ignore\ 8-\/bit\ (iso14443\ starts\ with\ LSBit\ =\ bit\ 1)}}
+\DoxyCodeLine{00963\ \ \ \ \ \textcolor{comment}{//\ fixes\ wrong\ type\ for\ manufacturer\ Infineon\ (http://nfc-\/tools.org/index.php?title=ISO14443A)}}
+\DoxyCodeLine{00964\ \ \ \ \ \textcolor{keywordtype}{byte}\ sak\ =\ tag-\/>uid.sak\ \&\ 0x7F;}
+\DoxyCodeLine{00965\ \ \ \ \ \textcolor{keywordflow}{switch}\ (sak)\ \{}
+\DoxyCodeLine{00966\ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{case}\ 0x04:\ \ \textcolor{keywordflow}{return}\ PICC\_TYPE\_NOT\_COMPLETE;\ \ \textcolor{comment}{//\ UID\ not\ complete}}
+\DoxyCodeLine{00967\ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{case}\ 0x09:\ \ \textcolor{keywordflow}{return}\ PICC\_TYPE\_MIFARE\_MINI;}
+\DoxyCodeLine{00968\ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{case}\ 0x08:\ \ \textcolor{keywordflow}{return}\ PICC\_TYPE\_MIFARE\_1K;}
+\DoxyCodeLine{00969\ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{case}\ 0x18:\ \ \textcolor{keywordflow}{return}\ PICC\_TYPE\_MIFARE\_4K;}
+\DoxyCodeLine{00970\ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{case}\ 0x00:\ \ \textcolor{keywordflow}{return}\ PICC\_TYPE\_MIFARE\_UL;}
+\DoxyCodeLine{00971\ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{case}\ 0x10:}
+\DoxyCodeLine{00972\ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{case}\ 0x11:\ \ \textcolor{keywordflow}{return}\ PICC\_TYPE\_MIFARE\_PLUS;}
+\DoxyCodeLine{00973\ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{case}\ 0x01:\ \ \textcolor{keywordflow}{return}\ PICC\_TYPE\_TNP3XXX;}
+\DoxyCodeLine{00974\ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{case}\ 0x20:}
+\DoxyCodeLine{00975\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{if}\ (tag-\/>atqa\ ==\ 0x0344)}
+\DoxyCodeLine{00976\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{return}\ PICC\_TYPE\_MIFARE\_DESFIRE;}
+\DoxyCodeLine{00977\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{return}\ PICC\_TYPE\_ISO\_14443\_4;}
+\DoxyCodeLine{00978\ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{case}\ 0x40:\ \ \textcolor{keywordflow}{return}\ PICC\_TYPE\_ISO\_18092;}
+\DoxyCodeLine{00979\ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{default}:\ \ \ \ \textcolor{keywordflow}{return}\ PICC\_TYPE\_UNKNOWN;}
+\DoxyCodeLine{00980\ \ \ \ \ \}}
+\DoxyCodeLine{00981\ \}\ \textcolor{comment}{//\ End\ PICC\_GetType()}}
+\DoxyCodeLine{00982\ }
+\DoxyCodeLine{00988\ \textcolor{keywordtype}{void}\ \mbox{\hyperlink{classMFRC522Extended_a1739931b517243305c765d547d819968}{MFRC522Extended::PICC\_DumpToSerial}}(\mbox{\hyperlink{classMFRC522Extended_structMFRC522Extended_1_1TagInfo}{TagInfo}}\ *tag)}
+\DoxyCodeLine{00989\ \{}
+\DoxyCodeLine{00990\ \ \ \ \ \mbox{\hyperlink{classMFRC522_structMFRC522_1_1MIFARE__Key}{MIFARE\_Key}}\ key;}
+\DoxyCodeLine{00991\ }
+\DoxyCodeLine{00992\ \ \ \ \ \textcolor{comment}{//\ Dump\ UID,\ SAK\ and\ Type}}
+\DoxyCodeLine{00993\ \ \ \ \ \mbox{\hyperlink{classMFRC522Extended_a456d810cdd67f28aa319746d277841b8}{PICC\_DumpDetailsToSerial}}(tag);}
+\DoxyCodeLine{00994\ }
+\DoxyCodeLine{00995\ \ \ \ \ \textcolor{comment}{//\ Dump\ contents}}
+\DoxyCodeLine{00996\ \ \ \ \ PICC\_Type\ piccType\ =\ \mbox{\hyperlink{classMFRC522_ac80a18228260bdde07dff5d4ac23bb53}{MFRC522::PICC\_GetType}}(tag-\/>uid.sak);}
+\DoxyCodeLine{00997\ \ \ \ \ \textcolor{keywordflow}{switch}\ (piccType)\ \{}
+\DoxyCodeLine{00998\ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{case}\ PICC\_TYPE\_MIFARE\_MINI:}
+\DoxyCodeLine{00999\ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{case}\ PICC\_TYPE\_MIFARE\_1K:}
+\DoxyCodeLine{01000\ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{case}\ PICC\_TYPE\_MIFARE\_4K:}
+\DoxyCodeLine{01001\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{comment}{//\ All\ keys\ are\ set\ to\ FFFFFFFFFFFFh\ at\ chip\ delivery\ from\ the\ factory.}}
+\DoxyCodeLine{01002\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{for}\ (\textcolor{keywordtype}{byte}\ i\ =\ 0;\ i\ <\ 6;\ i++)\ \{}
+\DoxyCodeLine{01003\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ key.keyByte[i]\ =\ 0xFF;}
+\DoxyCodeLine{01004\ \ \ \ \ \ \ \ \ \ \ \ \ \}}
+\DoxyCodeLine{01005\ \ \ \ \ \ \ \ \ \ \ \ \ \mbox{\hyperlink{classMFRC522_aafba2e74124efa2d736c1672ea104190}{PICC\_DumpMifareClassicToSerial}}(\&tag-\/>uid,\ piccType,\ \&key);}
+\DoxyCodeLine{01006\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{break};}
+\DoxyCodeLine{01007\ \ \ \ \ \ \ \ \ }
+\DoxyCodeLine{01008\ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{case}\ PICC\_TYPE\_MIFARE\_UL:}
+\DoxyCodeLine{01009\ \ \ \ \ \ \ \ \ \ \ \ \ \mbox{\hyperlink{classMFRC522_ac148d28877dd577606a28e9e7e4b6809}{PICC\_DumpMifareUltralightToSerial}}();}
+\DoxyCodeLine{01010\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{break};}
+\DoxyCodeLine{01011\ \ \ \ \ \ \ \ \ }
+\DoxyCodeLine{01012\ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{case}\ PICC\_TYPE\_ISO\_14443\_4:}
+\DoxyCodeLine{01013\ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{case}\ PICC\_TYPE\_MIFARE\_DESFIRE:}
+\DoxyCodeLine{01014\ \ \ \ \ \ \ \ \ \ \ \ \ \mbox{\hyperlink{classMFRC522Extended_a8bb3b09bd19eb99430730af0fbb1565f}{PICC\_DumpISO14443\_4}}(tag);}
+\DoxyCodeLine{01015\ \ \ \ \ \ \ \ \ \ \ \ \ Serial.println(F(\textcolor{stringliteral}{"{}Dumping\ memory\ contents\ not\ implemented\ for\ that\ PICC\ type."{}}));}
+\DoxyCodeLine{01016\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{break};}
+\DoxyCodeLine{01017\ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{case}\ PICC\_TYPE\_ISO\_18092:}
+\DoxyCodeLine{01018\ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{case}\ PICC\_TYPE\_MIFARE\_PLUS:}
+\DoxyCodeLine{01019\ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{case}\ PICC\_TYPE\_TNP3XXX:}
+\DoxyCodeLine{01020\ \ \ \ \ \ \ \ \ \ \ \ \ Serial.println(F(\textcolor{stringliteral}{"{}Dumping\ memory\ contents\ not\ implemented\ for\ that\ PICC\ type."{}}));}
+\DoxyCodeLine{01021\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{break};}
+\DoxyCodeLine{01022\ \ \ \ \ \ \ \ \ }
+\DoxyCodeLine{01023\ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{case}\ PICC\_TYPE\_UNKNOWN:}
+\DoxyCodeLine{01024\ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{case}\ PICC\_TYPE\_NOT\_COMPLETE:}
+\DoxyCodeLine{01025\ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{default}:}
+\DoxyCodeLine{01026\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{break};\ \textcolor{comment}{//\ No\ memory\ dump\ here}}
+\DoxyCodeLine{01027\ \ \ \ \ \}}
+\DoxyCodeLine{01028\ }
+\DoxyCodeLine{01029\ \ \ \ \ Serial.println();}
+\DoxyCodeLine{01030\ \ \ \ \ \mbox{\hyperlink{classMFRC522_a8874921b4ed26c5b73d89c90f76d4933}{PICC\_HaltA}}();\ \textcolor{comment}{//\ Already\ done\ if\ it\ was\ a\ MIFARE\ Classic\ PICC.}}
+\DoxyCodeLine{01031\ \}}
+\DoxyCodeLine{01032\ }
+\DoxyCodeLine{01036\ \textcolor{keywordtype}{void}\ \mbox{\hyperlink{classMFRC522Extended_a456d810cdd67f28aa319746d277841b8}{MFRC522Extended::PICC\_DumpDetailsToSerial}}(\mbox{\hyperlink{classMFRC522Extended_structMFRC522Extended_1_1TagInfo}{TagInfo}}\ *tag\ }
+\DoxyCodeLine{01037\ )\ \{}
+\DoxyCodeLine{01038\ \ \ \ \ \textcolor{comment}{//\ ATQA}}
+\DoxyCodeLine{01039\ \ \ \ \ Serial.print(F(\textcolor{stringliteral}{"{}Card\ ATQA:"{}}));}
+\DoxyCodeLine{01040\ \ \ \ \ \textcolor{keywordflow}{if}\ (((tag-\/>atqa\ \&\ 0xFF00u)\ >>\ 8)\ <\ 0x10)}
+\DoxyCodeLine{01041\ \ \ \ \ \ \ \ \ Serial.print(F(\textcolor{stringliteral}{"{}\ 0"{}}));}
+\DoxyCodeLine{01042\ \ \ \ \ Serial.print((tag-\/>atqa\ \&\ 0xFF00u)\ >>\ 8,\ HEX);}
+\DoxyCodeLine{01043\ \ \ \ \ \textcolor{keywordflow}{if}\ ((tag-\/>atqa\ \&\ 0x00FFu)\ <\ 0x10)}
+\DoxyCodeLine{01044\ \ \ \ \ \ \ \ \ Serial.print(F(\textcolor{stringliteral}{"{}0"{}}));}
+\DoxyCodeLine{01045\ \ \ \ \ \textcolor{keywordflow}{else}}
+\DoxyCodeLine{01046\ \ \ \ \ \ \ \ \ Serial.print(F(\textcolor{stringliteral}{"{}\ "{}}));}
+\DoxyCodeLine{01047\ \ \ \ \ Serial.println(tag-\/>atqa\ \&\ 0x00FFu,\ HEX);}
+\DoxyCodeLine{01048\ }
+\DoxyCodeLine{01049\ \ \ \ \ \textcolor{comment}{//\ UID}}
+\DoxyCodeLine{01050\ \ \ \ \ Serial.print(F(\textcolor{stringliteral}{"{}Card\ UID:"{}}));}
+\DoxyCodeLine{01051\ \ \ \ \ \textcolor{keywordflow}{for}\ (\textcolor{keywordtype}{byte}\ i\ =\ 0;\ i\ <\ tag-\/>uid.size;\ i++)\ \{}
+\DoxyCodeLine{01052\ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{if}\ (tag-\/>uid.uidByte[i]\ <\ 0x10)}
+\DoxyCodeLine{01053\ \ \ \ \ \ \ \ \ \ \ \ \ Serial.print(F(\textcolor{stringliteral}{"{}\ 0"{}}));}
+\DoxyCodeLine{01054\ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{else}}
+\DoxyCodeLine{01055\ \ \ \ \ \ \ \ \ \ \ \ \ Serial.print(F(\textcolor{stringliteral}{"{}\ "{}}));}
+\DoxyCodeLine{01056\ \ \ \ \ \ \ \ \ Serial.print(tag-\/>uid.uidByte[i],\ HEX);}
+\DoxyCodeLine{01057\ \ \ \ \ \}}
+\DoxyCodeLine{01058\ \ \ \ \ Serial.println();}
+\DoxyCodeLine{01059\ }
+\DoxyCodeLine{01060\ \ \ \ \ \textcolor{comment}{//\ SAK}}
+\DoxyCodeLine{01061\ \ \ \ \ Serial.print(F(\textcolor{stringliteral}{"{}Card\ SAK:\ "{}}));}
+\DoxyCodeLine{01062\ \ \ \ \ \textcolor{keywordflow}{if}\ (tag-\/>uid.sak\ <\ 0x10)}
+\DoxyCodeLine{01063\ \ \ \ \ \ \ \ \ Serial.print(F(\textcolor{stringliteral}{"{}0"{}}));}
+\DoxyCodeLine{01064\ \ \ \ \ Serial.println(tag-\/>uid.sak,\ HEX);}
+\DoxyCodeLine{01065\ }
+\DoxyCodeLine{01066\ \ \ \ \ \textcolor{comment}{//\ (suggested)\ PICC\ type}}
+\DoxyCodeLine{01067\ \ \ \ \ PICC\_Type\ piccType\ =\ \mbox{\hyperlink{classMFRC522Extended_addf00efdd2de1002a4f4b34ebe0e1fb2}{PICC\_GetType}}(tag);}
+\DoxyCodeLine{01068\ \ \ \ \ Serial.print(F(\textcolor{stringliteral}{"{}PICC\ type:\ "{}}));}
+\DoxyCodeLine{01069\ \ \ \ \ Serial.println(\mbox{\hyperlink{classMFRC522_aae4a482352d4d4b7d7a9714b0b0b7c38}{PICC\_GetTypeName}}(piccType));}
+\DoxyCodeLine{01070\ \}\ \textcolor{comment}{//\ End\ PICC\_DumpDetailsToSerial()}}
+\DoxyCodeLine{01071\ }
+\DoxyCodeLine{01075\ \textcolor{keywordtype}{void}\ \mbox{\hyperlink{classMFRC522Extended_a8bb3b09bd19eb99430730af0fbb1565f}{MFRC522Extended::PICC\_DumpISO14443\_4}}(\mbox{\hyperlink{classMFRC522Extended_structMFRC522Extended_1_1TagInfo}{TagInfo}}\ *tag)}
+\DoxyCodeLine{01076\ \{}
+\DoxyCodeLine{01077\ \ \ \ \ \textcolor{comment}{//\ ATS}}
+\DoxyCodeLine{01078\ \ \ \ \ \textcolor{keywordflow}{if}\ (tag-\/>ats.size\ >\ 0x00)\ \{\ \textcolor{comment}{//\ The\ first\ byte\ is\ the\ ATS\ length\ including\ the\ length\ byte}}
+\DoxyCodeLine{01079\ \ \ \ \ \ \ \ \ Serial.print(F(\textcolor{stringliteral}{"{}Card\ ATS:"{}}));}
+\DoxyCodeLine{01080\ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{for}\ (\textcolor{keywordtype}{byte}\ offset\ =\ 0;\ offset\ <\ tag-\/>ats.size;\ offset++)\ \{}
+\DoxyCodeLine{01081\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{if}\ (tag-\/>ats.data[offset]\ <\ 0x10)}
+\DoxyCodeLine{01082\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ Serial.print(F(\textcolor{stringliteral}{"{}\ 0"{}}));}
+\DoxyCodeLine{01083\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{else}}
+\DoxyCodeLine{01084\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ Serial.print(F(\textcolor{stringliteral}{"{}\ "{}}));}
+\DoxyCodeLine{01085\ \ \ \ \ \ \ \ \ \ \ \ \ Serial.print(tag-\/>ats.data[offset],\ HEX);}
+\DoxyCodeLine{01086\ \ \ \ \ \ \ \ \ \}}
+\DoxyCodeLine{01087\ \ \ \ \ \ \ \ \ Serial.println();}
+\DoxyCodeLine{01088\ \ \ \ \ \}}
+\DoxyCodeLine{01089\ \ \ \ \ }
+\DoxyCodeLine{01090\ \}\ \textcolor{comment}{//\ End\ PICC\_DumpISO14443\_4}}
+\DoxyCodeLine{01091\ }
+\DoxyCodeLine{01093\ \textcolor{comment}{//\ Convenience\ functions\ -\/\ does\ not\ add\ extra\ functionality}}
+\DoxyCodeLine{01095\ }
+\DoxyCodeLine{01102\ \textcolor{keywordtype}{bool}\ \mbox{\hyperlink{classMFRC522Extended_afaa1289052274755acec885017507b64}{MFRC522Extended::PICC\_IsNewCardPresent}}()\ \{}
+\DoxyCodeLine{01103\ \ \ \ \ \textcolor{keywordtype}{byte}\ bufferATQA[2];}
+\DoxyCodeLine{01104\ \ \ \ \ \textcolor{keywordtype}{byte}\ bufferSize\ =\ \textcolor{keyword}{sizeof}(bufferATQA);}
+\DoxyCodeLine{01105\ }
+\DoxyCodeLine{01106\ \ \ \ \ \textcolor{comment}{//\ Reset\ baud\ rates}}
+\DoxyCodeLine{01107\ \ \ \ \ \mbox{\hyperlink{classMFRC522_aa5e5825adb4c784d8a5a60242c135fb7}{PCD\_WriteRegister}}(TxModeReg,\ 0x00);}
+\DoxyCodeLine{01108\ \ \ \ \ \mbox{\hyperlink{classMFRC522_aa5e5825adb4c784d8a5a60242c135fb7}{PCD\_WriteRegister}}(RxModeReg,\ 0x00);}
+\DoxyCodeLine{01109\ \ \ \ \ \textcolor{comment}{//\ Reset\ ModWidthReg}}
+\DoxyCodeLine{01110\ \ \ \ \ \mbox{\hyperlink{classMFRC522_aa5e5825adb4c784d8a5a60242c135fb7}{PCD\_WriteRegister}}(ModWidthReg,\ 0x26);}
+\DoxyCodeLine{01111\ }
+\DoxyCodeLine{01112\ \ \ \ \ MFRC522::StatusCode\ result\ =\ \mbox{\hyperlink{classMFRC522_a4e0ac6edf5e8f6ade351b009278fbbc7}{PICC\_RequestA}}(bufferATQA,\ \&bufferSize);}
+\DoxyCodeLine{01113\ }
+\DoxyCodeLine{01114\ \ \ \ \ \textcolor{keywordflow}{if}\ (result\ ==\ STATUS\_OK\ ||\ result\ ==\ STATUS\_COLLISION)\ \{}
+\DoxyCodeLine{01115\ \ \ \ \ \ \ \ \ tag.atqa\ =\ ((uint16\_t)bufferATQA[1]\ <<\ 8)\ |\ bufferATQA[0];}
+\DoxyCodeLine{01116\ \ \ \ \ \ \ \ \ tag.ats.size\ =\ 0;}
+\DoxyCodeLine{01117\ \ \ \ \ \ \ \ \ tag.ats.fsc\ =\ 32;\ \ \ \textcolor{comment}{//\ default\ FSC\ value}}
+\DoxyCodeLine{01118\ }
+\DoxyCodeLine{01119\ \ \ \ \ \ \ \ \ \textcolor{comment}{//\ Defaults\ for\ TA1}}
+\DoxyCodeLine{01120\ \ \ \ \ \ \ \ \ tag.ats.ta1.transmitted\ =\ \textcolor{keyword}{false};}
+\DoxyCodeLine{01121\ \ \ \ \ \ \ \ \ tag.ats.ta1.sameD\ =\ \textcolor{keyword}{false};}
+\DoxyCodeLine{01122\ \ \ \ \ \ \ \ \ tag.ats.ta1.ds\ =\ MFRC522Extended::BITRATE\_106KBITS;}
+\DoxyCodeLine{01123\ \ \ \ \ \ \ \ \ tag.ats.ta1.dr\ =\ MFRC522Extended::BITRATE\_106KBITS;}
+\DoxyCodeLine{01124\ }
+\DoxyCodeLine{01125\ \ \ \ \ \ \ \ \ \textcolor{comment}{//\ Defaults\ for\ TB1}}
+\DoxyCodeLine{01126\ \ \ \ \ \ \ \ \ tag.ats.tb1.transmitted\ =\ \textcolor{keyword}{false};}
+\DoxyCodeLine{01127\ \ \ \ \ \ \ \ \ tag.ats.tb1.fwi\ =\ 0;\ \ \ \ \textcolor{comment}{//\ TODO:\ Don't\ know\ the\ default\ for\ this!}}
+\DoxyCodeLine{01128\ \ \ \ \ \ \ \ \ tag.ats.tb1.sfgi\ =\ 0;\ \ \ \textcolor{comment}{//\ The\ default\ value\ of\ SFGI\ is\ 0\ (meaning\ that\ the\ card\ does\ not\ need\ any\ particular\ SFGT)}}
+\DoxyCodeLine{01129\ }
+\DoxyCodeLine{01130\ \ \ \ \ \ \ \ \ \textcolor{comment}{//\ Defaults\ for\ TC1}}
+\DoxyCodeLine{01131\ \ \ \ \ \ \ \ \ tag.ats.tc1.transmitted\ =\ \textcolor{keyword}{false};}
+\DoxyCodeLine{01132\ \ \ \ \ \ \ \ \ tag.ats.tc1.supportsCID\ =\ \textcolor{keyword}{true};}
+\DoxyCodeLine{01133\ \ \ \ \ \ \ \ \ tag.ats.tc1.supportsNAD\ =\ \textcolor{keyword}{false};}
+\DoxyCodeLine{01134\ }
+\DoxyCodeLine{01135\ \ \ \ \ \ \ \ \ memset(tag.ats.data,\ 0,\ FIFO\_SIZE\ -\/\ 2);}
+\DoxyCodeLine{01136\ }
+\DoxyCodeLine{01137\ \ \ \ \ \ \ \ \ tag.blockNumber\ =\ \textcolor{keyword}{false};}
+\DoxyCodeLine{01138\ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{return}\ \textcolor{keyword}{true};}
+\DoxyCodeLine{01139\ \ \ \ \ \}}
+\DoxyCodeLine{01140\ \ \ \ \ \textcolor{keywordflow}{return}\ \textcolor{keyword}{false};}
+\DoxyCodeLine{01141\ \}\ \textcolor{comment}{//\ End\ PICC\_IsNewCardPresent()}}
+\DoxyCodeLine{01142\ }
+\DoxyCodeLine{01151\ \textcolor{keywordtype}{bool}\ \mbox{\hyperlink{classMFRC522Extended_ae68a2f90cec039dc856089aee08119ee}{MFRC522Extended::PICC\_ReadCardSerial}}()\ \{}
+\DoxyCodeLine{01152\ \ \ \ \ MFRC522::StatusCode\ result\ =\ \mbox{\hyperlink{classMFRC522Extended_a0740187cc7f336b0aaea2db432185cb5}{PICC\_Select}}(\&tag.uid);}
+\DoxyCodeLine{01153\ }
+\DoxyCodeLine{01154\ \ \ \ \ \textcolor{comment}{//\ Backward\ compatibility}}
+\DoxyCodeLine{01155\ \ \ \ \ uid.size\ =\ tag.uid.size;}
+\DoxyCodeLine{01156\ \ \ \ \ uid.sak\ =\ tag.uid.sak;}
+\DoxyCodeLine{01157\ \ \ \ \ memcpy(uid.uidByte,\ tag.uid.uidByte,\ \textcolor{keyword}{sizeof}(tag.uid.uidByte));}
+\DoxyCodeLine{01158\ }
+\DoxyCodeLine{01159\ \ \ \ \ \textcolor{keywordflow}{return}\ (result\ ==\ STATUS\_OK);}
+\DoxyCodeLine{01160\ \}\ \textcolor{comment}{//\ End\ }}
+
+\end{DoxyCode}

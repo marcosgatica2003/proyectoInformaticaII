@@ -1,0 +1,24 @@
+<?xml version='1.0' encoding='UTF-8' standalone='no'?>
+<section xmlns="http://docbook.org/ns/docbook" version="5.0" xmlns:xlink="http://www.w3.org/1999/xlink" xml:id="_buzzer_8h_source" xml:lang="es">
+<title>buzzer.h</title>
+<indexterm><primary>main/libraries/buzzer CLDZ/buzzer.h</primary></indexterm>
+<programlisting linenumbering="unnumbered">1 <emphasis role="preprocessor">#ifndef&#32;BUZZER_H</emphasis>
+2 <emphasis role="preprocessor">#define&#32;BUZZER_H</emphasis>
+3 
+4 <emphasis role="preprocessor">#include&#32;&lt;Arduino.h&gt;</emphasis>
+5 
+6 <emphasis role="keyword">class&#32;</emphasis><link linkend="_classBuzzer">Buzzer</link>&#32;{
+7 <emphasis role="keyword">public</emphasis>:
+8 &#32;&#32;&#32;&#32;<link linkend="_classBuzzer">Buzzer</link>(<emphasis role="keywordtype">int</emphasis>&#32;buzzPin,&#32;<emphasis role="keywordtype">int</emphasis>&#32;potPin);
+9 &#32;&#32;&#32;&#32;<emphasis role="keywordtype">void</emphasis>&#32;setup();
+10 &#32;&#32;&#32;&#32;<emphasis role="keywordtype">void</emphasis>&#32;update();
+11 
+12 <emphasis role="keyword">private</emphasis>:
+13 &#32;&#32;&#32;&#32;<emphasis role="keywordtype">int</emphasis>&#32;buzzPin;
+14 &#32;&#32;&#32;&#32;<emphasis role="keywordtype">int</emphasis>&#32;potPin;
+15 &#32;&#32;&#32;&#32;<emphasis role="keywordtype">float</emphasis>&#32;buzzDelay;
+16 &#32;&#32;&#32;&#32;<emphasis role="keywordtype">int</emphasis>&#32;potVal;
+17 };
+18 
+19 <emphasis role="preprocessor">#endif</emphasis>
+</programlisting></section>

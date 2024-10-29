@@ -15,7 +15,7 @@
 accesoRFID tarjetaRFID(SS_PIN, RST_PIN, "87 9C 0A 4E"); ///< Instancia del acceso RFID para la cámara frigorífica.
 accesoRFID llaveroRFID(SS_PIN, RST_PIN, "79 C3 C3 A2"); ///< Instancia del acceso RFID para la cámara frigorífica.
 
-sensorTemp sensor(2); //Pin 2 digital Arduino
+DHT11 sensor(2); //Pin 2 digital Arduino
 
 /**
 * @brief bool verificarAcceso()
@@ -47,7 +47,7 @@ bool verificarAcceso () {
 void setup() {
   Serial.begin(9600);
   tarjetaRFID.start(); llaveroRFID.start();
-
+  setPinDHT11 (sensor, -1);
 }
 
 void loop() {
@@ -55,9 +55,9 @@ void loop() {
     //Abrir puerta
   }
 
-  Serial.println("Temperatura: ");
-  Serial.println(sensor.leerTemperatura());
-  Serial.println(" ºC");
+  Serial.print("Temperatura: ");
+  Serial.print(sensor.readTemperature());
+  Serial.print(" ºC");
     
   delay(2000); //Esto deberíamos quitarlo luego.
 

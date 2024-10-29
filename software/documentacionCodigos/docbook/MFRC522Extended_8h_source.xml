@@ -1,0 +1,111 @@
+<?xml version='1.0' encoding='UTF-8' standalone='no'?>
+<section xmlns="http://docbook.org/ns/docbook" version="5.0" xmlns:xlink="http://www.w3.org/1999/xlink" xml:id="_MFRC522Extended_8h_source" xml:lang="es">
+<title>MFRC522Extended.h</title>
+<indexterm><primary>main/libraries/RFID-RC522/MFRC522Extended.h</primary></indexterm>
+<programlisting linenumbering="unnumbered">1 
+6 <emphasis role="preprocessor">#ifndef&#32;MFRC522Extended_h</emphasis>
+7 <emphasis role="preprocessor">#define&#32;MFRC522Extended_h</emphasis>
+8 
+9 <emphasis role="preprocessor">#include&#32;&lt;Arduino.h&gt;</emphasis>
+10 <emphasis role="preprocessor">#include&#32;&quot;MFRC522.h&quot;</emphasis>
+11 
+12 <emphasis role="keyword">class&#32;</emphasis><link linkend="_classMFRC522Extended">MFRC522Extended</link>&#32;:&#32;<emphasis role="keyword">public</emphasis>&#32;<link linkend="_classMFRC522">MFRC522</link>&#32;{
+13 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;
+14 <emphasis role="keyword">public</emphasis>:
+15 &#32;&#32;&#32;&#32;<emphasis role="comment">//&#32;ISO/IEC&#32;14443-4&#32;bit&#32;rates</emphasis>
+16 &#32;&#32;&#32;&#32;<emphasis role="keyword">enum</emphasis>&#32;TagBitRates&#32;:&#32;<emphasis role="keywordtype">byte</emphasis>&#32;{
+17 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;BITRATE_106KBITS&#32;=&#32;0x00,
+18 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;BITRATE_212KBITS&#32;=&#32;0x01,
+19 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;BITRATE_424KBITS&#32;=&#32;0x02,
+20 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;BITRATE_848KBITS&#32;=&#32;0x03
+21 &#32;&#32;&#32;&#32;};
+22 
+23 &#32;&#32;&#32;&#32;<emphasis role="comment">//&#32;Structure&#32;to&#32;store&#32;ISO/IEC&#32;14443-4&#32;ATS</emphasis>
+24 &#32;&#32;&#32;&#32;<emphasis role="keyword">typedef</emphasis>&#32;<emphasis role="keyword">struct&#32;</emphasis>{
+25 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;<emphasis role="keywordtype">byte</emphasis>&#32;size;
+26 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;<emphasis role="keywordtype">byte</emphasis>&#32;fsc;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;<emphasis role="comment">//&#32;Frame&#32;size&#32;for&#32;proximity&#32;card</emphasis>
+27 
+28 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;<emphasis role="keyword">struct&#32;</emphasis>{
+29 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;<emphasis role="keywordtype">bool</emphasis>&#32;transmitted;
+30 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;<emphasis role="keywordtype">bool</emphasis>&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;sameD;&#32;&#32;<emphasis role="comment">//&#32;Only&#32;the&#32;same&#32;D&#32;for&#32;both&#32;directions&#32;supported</emphasis>
+31 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;TagBitRates&#32;ds;&#32;&#32;&#32;&#32;&#32;<emphasis role="comment">//&#32;Send&#32;D</emphasis>
+32 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;TagBitRates&#32;dr;&#32;&#32;&#32;&#32;&#32;<emphasis role="comment">//&#32;Receive&#32;D</emphasis>
+33 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;}&#32;ta1;
+34 
+35 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;<emphasis role="keyword">struct&#32;</emphasis>{
+36 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;<emphasis role="keywordtype">bool</emphasis>&#32;transmitted;
+37 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;<emphasis role="keywordtype">byte</emphasis>&#32;fwi;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;<emphasis role="comment">//&#32;Frame&#32;waiting&#32;time&#32;integer</emphasis>
+38 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;<emphasis role="keywordtype">byte</emphasis>&#32;sfgi;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;<emphasis role="comment">//&#32;Start-up&#32;frame&#32;guard&#32;time&#32;integer</emphasis>
+39 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;}&#32;tb1;
+40 
+41 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;<emphasis role="keyword">struct&#32;</emphasis>{
+42 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;<emphasis role="keywordtype">bool</emphasis>&#32;transmitted;
+43 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;<emphasis role="keywordtype">bool</emphasis>&#32;supportsCID;
+44 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;<emphasis role="keywordtype">bool</emphasis>&#32;supportsNAD;
+45 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;}&#32;tc1;
+46 
+47 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;<emphasis role="comment">//&#32;Raw&#32;data&#32;from&#32;ATS</emphasis>
+48 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;<emphasis role="keywordtype">byte</emphasis>&#32;data[FIFO_SIZE&#32;-&#32;2];&#32;<emphasis role="comment">//&#32;ATS&#32;cannot&#32;be&#32;bigger&#32;than&#32;FSD&#32;-&#32;2&#32;bytes&#32;(CRC),&#32;according&#32;to&#32;ISO&#32;14443-4&#32;5.2.2</emphasis>
+49 &#32;&#32;&#32;&#32;}&#32;Ats;
+50 
+51 &#32;&#32;&#32;&#32;<emphasis role="comment">//&#32;A&#32;struct&#32;used&#32;for&#32;passing&#32;the&#32;PICC&#32;information</emphasis>
+52 &#32;&#32;&#32;&#32;<emphasis role="keyword">typedef</emphasis>&#32;<emphasis role="keyword">struct&#32;</emphasis>{
+53 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;uint16_t&#32;&#32;&#32;&#32;atqa;
+54 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;<link linkend="_classMFRC522_1structMFRC522_1_1Uid">Uid</link>&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;uid;
+55 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;<link linkend="_classMFRC522Extended_1structMFRC522Extended_1_1Ats">Ats</link>&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;ats;&#32;
+56 
+57 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;<emphasis role="comment">//&#32;For&#32;Block&#32;PCB</emphasis>
+58 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;<emphasis role="keywordtype">bool</emphasis>&#32;blockNumber;
+59 &#32;&#32;&#32;&#32;}&#32;<link linkend="_classMFRC522Extended_1structMFRC522Extended_1_1TagInfo">TagInfo</link>;
+60 
+61 &#32;&#32;&#32;&#32;<emphasis role="comment">//&#32;A&#32;struct&#32;used&#32;for&#32;passing&#32;PCB&#32;Block</emphasis>
+62 &#32;&#32;&#32;&#32;<emphasis role="keyword">typedef</emphasis>&#32;<emphasis role="keyword">struct&#32;</emphasis>{
+63 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;<emphasis role="keyword">struct&#32;</emphasis>{
+64 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;<emphasis role="keywordtype">byte</emphasis>&#32;pcb;
+65 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;<emphasis role="keywordtype">byte</emphasis>&#32;cid;
+66 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;<emphasis role="keywordtype">byte</emphasis>&#32;nad;
+67 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;}&#32;prologue;
+68 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;<emphasis role="keyword">struct&#32;</emphasis>{
+69 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;<emphasis role="keywordtype">byte</emphasis>&#32;size;
+70 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;<emphasis role="keywordtype">byte</emphasis>&#32;*data;
+71 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;}&#32;inf;
+72 &#32;&#32;&#32;&#32;}&#32;PcbBlock;
+73 &#32;&#32;&#32;&#32;
+74 &#32;&#32;&#32;&#32;<emphasis role="comment">//&#32;Member&#32;variables</emphasis>
+75 &#32;&#32;&#32;&#32;TagInfo&#32;tag;
+76 &#32;&#32;&#32;&#32;
+78 &#32;&#32;&#32;&#32;<emphasis role="comment">//&#32;Contructors</emphasis>
+80 &#32;&#32;&#32;&#32;<link linkend="_classMFRC522Extended">MFRC522Extended</link>()&#32;:&#32;<link linkend="_classMFRC522">MFRC522</link>()&#32;{};
+81 &#32;&#32;&#32;&#32;<link linkend="_classMFRC522Extended">MFRC522Extended</link>(uint8_t&#32;rst)&#32;:&#32;<link linkend="_classMFRC522">MFRC522</link>(rst)&#32;{};
+82 &#32;&#32;&#32;&#32;<link linkend="_classMFRC522Extended">MFRC522Extended</link>(uint8_t&#32;ss,&#32;uint8_t&#32;rst)&#32;:&#32;<link linkend="_classMFRC522">MFRC522</link>(ss,&#32;rst)&#32;{};
+83 &#32;&#32;&#32;&#32;
+85 &#32;&#32;&#32;&#32;<emphasis role="comment">//&#32;Functions&#32;for&#32;communicating&#32;with&#32;PICCs</emphasis>
+87 &#32;&#32;&#32;&#32;StatusCode&#32;<link linkend="_classMFRC522Extended_1a0740187cc7f336b0aaea2db432185cb5">PICC_Select</link>(Uid&#32;*uid,&#32;<emphasis role="keywordtype">byte</emphasis>&#32;validBits&#32;=&#32;0)&#32;<emphasis role="keyword">override</emphasis>;&#32;<emphasis role="comment">//&#32;overrride</emphasis>
+88 &#32;&#32;&#32;&#32;StatusCode&#32;<link linkend="_classMFRC522Extended_1a2671f1de35a0cac5da87e4300b7df74d">PICC_RequestATS</link>(Ats&#32;*ats);
+89 &#32;&#32;&#32;&#32;StatusCode&#32;<link linkend="_classMFRC522Extended_1acb69d5c429b8e06ecec8dc1e34c02d65">PICC_PPS</link>();&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;<emphasis role="comment">//&#32;PPS&#32;command&#32;without&#32;bitrate&#32;parameter</emphasis>
+90 &#32;&#32;&#32;&#32;StatusCode&#32;<link linkend="_classMFRC522Extended_1acb69d5c429b8e06ecec8dc1e34c02d65">PICC_PPS</link>(TagBitRates&#32;sendBitRate,&#32;TagBitRates&#32;receiveBitRate);&#32;<emphasis role="comment">//&#32;Different&#32;D&#32;values</emphasis>
+91 &#32;&#32;&#32;&#32;
+93 &#32;&#32;&#32;&#32;<emphasis role="comment">//&#32;Functions&#32;for&#32;communicating&#32;with&#32;ISO/IEC&#32;14433-4&#32;cards</emphasis>
+95 &#32;&#32;&#32;&#32;StatusCode&#32;TCL_Transceive(PcbBlock&#32;*send,&#32;PcbBlock&#32;*back);
+96 &#32;&#32;&#32;&#32;StatusCode&#32;TCL_Transceive(TagInfo&#32;*&#32;tag,&#32;<emphasis role="keywordtype">byte</emphasis>&#32;*sendData,&#32;<emphasis role="keywordtype">byte</emphasis>&#32;sendLen,&#32;<emphasis role="keywordtype">byte</emphasis>&#32;*backData&#32;=&#32;NULL,&#32;<emphasis role="keywordtype">byte</emphasis>&#32;*backLen&#32;=&#32;NULL);
+97 &#32;&#32;&#32;&#32;StatusCode&#32;<link linkend="_classMFRC522Extended_1aebbf1bbae99dea09128a6bcc4cf27f9d">TCL_TransceiveRBlock</link>(TagInfo&#32;*tag,&#32;<emphasis role="keywordtype">bool</emphasis>&#32;ack,&#32;<emphasis role="keywordtype">byte</emphasis>&#32;*backData&#32;=&#32;NULL,&#32;<emphasis role="keywordtype">byte</emphasis>&#32;*backLen&#32;=&#32;NULL);
+98 &#32;&#32;&#32;&#32;StatusCode&#32;<link linkend="_classMFRC522Extended_1a2de7e4ead4065d896d7ee39e9e2040dd">TCL_Deselect</link>(TagInfo&#32;*tag);
+99 &#32;&#32;&#32;&#32;
+101 &#32;&#32;&#32;&#32;<emphasis role="comment">//&#32;Support&#32;functions</emphasis>
+103 &#32;&#32;&#32;&#32;<emphasis role="keyword">static</emphasis>&#32;PICC_Type&#32;<link linkend="_classMFRC522Extended_1addf00efdd2de1002a4f4b34ebe0e1fb2">PICC_GetType</link>(TagInfo&#32;*tag);
+104 &#32;&#32;&#32;&#32;<emphasis role="keyword">using&#32;</emphasis><link linkend="_classMFRC522_1ac80a18228260bdde07dff5d4ac23bb53">MFRC522::PICC_GetType</link>;<emphasis role="comment">//&#32;//&#32;make&#32;old&#32;PICC_GetType(byte&#32;sak)&#32;available,&#32;otherwise&#32;would&#32;be&#32;hidden&#32;by&#32;PICC_GetType(TagInfo&#32;*tag)</emphasis>
+105 
+106 &#32;&#32;&#32;&#32;<emphasis role="comment">//&#32;Support&#32;functions&#32;for&#32;debuging</emphasis>
+107 &#32;&#32;&#32;&#32;<emphasis role="keywordtype">void</emphasis>&#32;<link linkend="_classMFRC522Extended_1a1739931b517243305c765d547d819968">PICC_DumpToSerial</link>(TagInfo&#32;*tag);
+108 &#32;&#32;&#32;&#32;<emphasis role="keyword">using&#32;</emphasis><link linkend="_classMFRC522_1a6f324d43c6fbbd0e260b171747186037">MFRC522::PICC_DumpToSerial</link>;&#32;<emphasis role="comment">//&#32;make&#32;old&#32;PICC_DumpToSerial(Uid&#32;*uid)&#32;available,&#32;otherwise&#32;would&#32;be&#32;hidden&#32;by&#32;PICC_DumpToSerial(TagInfo&#32;*tag)</emphasis>
+109 &#32;&#32;&#32;&#32;<emphasis role="keywordtype">void</emphasis>&#32;<link linkend="_classMFRC522Extended_1a456d810cdd67f28aa319746d277841b8">PICC_DumpDetailsToSerial</link>(TagInfo&#32;*tag);
+110 &#32;&#32;&#32;&#32;<emphasis role="keyword">using&#32;</emphasis><link linkend="_classMFRC522_1a3b9a2c6da6505e0ff7b58c37d7aeff37">MFRC522::PICC_DumpDetailsToSerial</link>;&#32;<emphasis role="comment">//&#32;make&#32;old&#32;PICC_DumpDetailsToSerial(Uid&#32;*uid)&#32;available,&#32;otherwise&#32;would&#32;be&#32;hidden&#32;by&#32;PICC_DumpDetailsToSerial(TagInfo&#32;*tag)</emphasis>
+111 &#32;&#32;&#32;&#32;<emphasis role="keywordtype">void</emphasis>&#32;<link linkend="_classMFRC522Extended_1a8bb3b09bd19eb99430730af0fbb1565f">PICC_DumpISO14443_4</link>(TagInfo&#32;*tag);
+112 &#32;&#32;&#32;&#32;
+114 &#32;&#32;&#32;&#32;<emphasis role="comment">//&#32;Convenience&#32;functions&#32;-&#32;does&#32;not&#32;add&#32;extra&#32;functionality</emphasis>
+116 &#32;&#32;&#32;&#32;<emphasis role="keywordtype">bool</emphasis>&#32;<link linkend="_classMFRC522Extended_1afaa1289052274755acec885017507b64">PICC_IsNewCardPresent</link>()&#32;<emphasis role="keyword">override</emphasis>;&#32;<emphasis role="comment">//&#32;overrride</emphasis>
+117 &#32;&#32;&#32;&#32;<emphasis role="keywordtype">bool</emphasis>&#32;<link linkend="_classMFRC522Extended_1ae68a2f90cec039dc856089aee08119ee">PICC_ReadCardSerial</link>()&#32;<emphasis role="keyword">override</emphasis>;&#32;<emphasis role="comment">//&#32;overrride</emphasis>
+118 };
+119 
+120 <emphasis role="preprocessor">#endif</emphasis>
+</programlisting></section>

@@ -1,0 +1,16 @@
+<map id="MFRC522::PCD_Init" name="MFRC522::PCD_Init">
+<area shape="rect" id="Node000001" title=" " alt="" coords="5,57,152,85"/>
+<area shape="rect" id="Node000002" href="$classMFRC522.html#ad681e424fc68a57941bea5702cee05eb" title=" " alt="" coords="200,57,346,85"/>
+<area shape="poly" id="edge1_Node000001_Node000002" title=" " alt="" coords="152,68,185,68,185,74,152,74"/>
+<area shape="rect" id="Node000003" href="$classMFRC522.html#a044be037a5f172e9cea7d8ce1dcf32e0" title=" " alt="" coords="394,57,591,85"/>
+<area shape="poly" id="edge2_Node000002_Node000003" title=" " alt="" coords="346,68,378,68,378,74,346,74"/>
+<area shape="rect" id="Node000005" href="$classMFRC522.html#aa5e5825adb4c784d8a5a60242c135fb7" title=" " alt="" coords="639,57,854,85"/>
+<area shape="poly" id="edge8_Node000002_Node000005" title=" " alt="" coords="331,83,394,94,493,100,591,94,658,85,658,91,592,99,493,105,394,99,330,88"/>
+<area shape="rect" id="Node000006" href="$classMFRC522.html#a9886678ea0a65021bf602cfb110caa15" title=" " alt="" coords="412,5,574,33"/>
+<area shape="poly" id="edge5_Node000002_Node000006" title=" " alt="" coords="334,54,415,35,417,40,335,59"/>
+<area shape="rect" id="Node000004" href="$classMFRC522.html#a4289838c6f24f2d62eb8dc0e7a6647d1" title=" " alt="" coords="640,5,853,33"/>
+<area shape="poly" id="edge3_Node000003_Node000004" title=" " alt="" coords="563,54,660,34,661,39,565,59"/>
+<area shape="poly" id="edge4_Node000003_Node000005" title=" " alt="" coords="592,68,624,68,624,74,592,74"/>
+<area shape="poly" id="edge6_Node000006_Node000004" title=" " alt="" coords="574,16,625,16,625,22,574,22"/>
+<area shape="poly" id="edge7_Node000006_Node000005" title=" " alt="" coords="565,31,661,51,660,56,563,36"/>
+</map>

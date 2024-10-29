@@ -1,0 +1,1084 @@
+<?xml version='1.0' encoding='UTF-8' standalone='no'?>
+<section xmlns="http://docbook.org/ns/docbook" version="5.0" xmlns:xlink="http://www.w3.org/1999/xlink" xml:id="_MFRC522Extended_8cpp_source" xml:lang="es">
+<title>MFRC522Extended.cpp</title>
+<indexterm><primary>main/libraries/RFID-RC522/MFRC522Extended.cpp</primary></indexterm>
+<programlisting linenumbering="unnumbered">1 <emphasis role="comment">/*</emphasis>
+2 <emphasis role="comment">&#32;*&#32;Library&#32;extends&#32;MFRC522.h&#32;to&#32;support&#32;RATS&#32;for&#32;ISO-14443-4&#32;PICC.</emphasis>
+3 <emphasis role="comment">&#32;*&#32;RATS&#32;-&#32;Request&#32;for&#32;Answer&#32;To&#32;Select.</emphasis>
+4 <emphasis role="comment">&#32;*&#32;NOTE:&#32;Please&#32;also&#32;check&#32;the&#32;comments&#32;in&#32;MFRC522Extended.h</emphasis>
+5 <emphasis role="comment">&#32;*&#32;@author&#32;JPG-Consulting</emphasis>
+6 <emphasis role="comment">*/</emphasis>
+7 
+8 <emphasis role="preprocessor">#include&#32;&quot;MFRC522Extended.h&quot;</emphasis>
+9 
+11 <emphasis role="comment">//&#32;Functions&#32;for&#32;communicating&#32;with&#32;PICCs</emphasis>
+13 
+31 MFRC522::StatusCode&#32;<link linkend="_classMFRC522Extended_1a0740187cc7f336b0aaea2db432185cb5">MFRC522Extended::PICC_Select</link>(&#32;&#32;&#32;<link linkend="_classMFRC522_1structMFRC522_1_1Uid">Uid</link>&#32;*uid,&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;
+32 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;<emphasis role="keywordtype">byte</emphasis>&#32;validBits&#32;&#32;&#32;&#32;&#32;&#32;
+33 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;)&#32;{
+34 &#32;&#32;&#32;&#32;<emphasis role="keywordtype">bool</emphasis>&#32;uidComplete;
+35 &#32;&#32;&#32;&#32;<emphasis role="keywordtype">bool</emphasis>&#32;selectDone;
+36 &#32;&#32;&#32;&#32;<emphasis role="keywordtype">bool</emphasis>&#32;useCascadeTag;
+37 &#32;&#32;&#32;&#32;<emphasis role="keywordtype">byte</emphasis>&#32;cascadeLevel&#32;=&#32;1;
+38 &#32;&#32;&#32;&#32;MFRC522::StatusCode&#32;result;
+39 &#32;&#32;&#32;&#32;<emphasis role="keywordtype">byte</emphasis>&#32;count;
+40 &#32;&#32;&#32;&#32;<emphasis role="keywordtype">byte</emphasis>&#32;index;
+41 &#32;&#32;&#32;&#32;<emphasis role="keywordtype">byte</emphasis>&#32;uidIndex;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;<emphasis role="comment">//&#32;The&#32;first&#32;index&#32;in&#32;uid-&gt;uidByte[]&#32;that&#32;is&#32;used&#32;in&#32;the&#32;current&#32;Cascade&#32;Level.</emphasis>
+42 &#32;&#32;&#32;&#32;int8_t&#32;currentLevelKnownBits;&#32;&#32;&#32;&#32;&#32;&#32;&#32;<emphasis role="comment">//&#32;The&#32;number&#32;of&#32;known&#32;UID&#32;bits&#32;in&#32;the&#32;current&#32;Cascade&#32;Level.</emphasis>
+43 &#32;&#32;&#32;&#32;<emphasis role="keywordtype">byte</emphasis>&#32;buffer[9];&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;<emphasis role="comment">//&#32;The&#32;SELECT/ANTICOLLISION&#32;commands&#32;uses&#32;a&#32;7&#32;byte&#32;standard&#32;frame&#32;+&#32;2&#32;bytes&#32;CRC_A</emphasis>
+44 &#32;&#32;&#32;&#32;<emphasis role="keywordtype">byte</emphasis>&#32;bufferUsed;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;<emphasis role="comment">//&#32;The&#32;number&#32;of&#32;bytes&#32;used&#32;in&#32;the&#32;buffer,&#32;ie&#32;the&#32;number&#32;of&#32;bytes&#32;to&#32;transfer&#32;to&#32;the&#32;FIFO.</emphasis>
+45 &#32;&#32;&#32;&#32;<emphasis role="keywordtype">byte</emphasis>&#32;rxAlign;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;<emphasis role="comment">//&#32;Used&#32;in&#32;BitFramingReg.&#32;Defines&#32;the&#32;bit&#32;position&#32;for&#32;the&#32;first&#32;bit&#32;received.</emphasis>
+46 &#32;&#32;&#32;&#32;<emphasis role="keywordtype">byte</emphasis>&#32;txLastBits;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;<emphasis role="comment">//&#32;Used&#32;in&#32;BitFramingReg.&#32;The&#32;number&#32;of&#32;valid&#32;bits&#32;in&#32;the&#32;last&#32;transmitted&#32;byte.&#32;</emphasis>
+47 &#32;&#32;&#32;&#32;<emphasis role="keywordtype">byte</emphasis>&#32;*responseBuffer;
+48 &#32;&#32;&#32;&#32;<emphasis role="keywordtype">byte</emphasis>&#32;responseLength;
+49 &#32;&#32;&#32;&#32;
+50 &#32;&#32;&#32;&#32;<emphasis role="comment">//&#32;Description&#32;of&#32;buffer&#32;structure:</emphasis>
+51 &#32;&#32;&#32;&#32;<emphasis role="comment">//&#32;&#32;&#32;&#32;&#32;&#32;Byte&#32;0:&#32;SEL&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;Indicates&#32;the&#32;Cascade&#32;Level:&#32;PICC_CMD_SEL_CL1,&#32;PICC_CMD_SEL_CL2&#32;or&#32;PICC_CMD_SEL_CL3</emphasis>
+52 &#32;&#32;&#32;&#32;<emphasis role="comment">//&#32;&#32;&#32;&#32;&#32;&#32;Byte&#32;1:&#32;NVB&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;Number&#32;of&#32;Valid&#32;Bits&#32;(in&#32;complete&#32;command,&#32;not&#32;just&#32;the&#32;UID):&#32;High&#32;nibble:&#32;complete&#32;bytes,&#32;Low&#32;nibble:&#32;Extra&#32;bits.&#32;</emphasis>
+53 &#32;&#32;&#32;&#32;<emphasis role="comment">//&#32;&#32;&#32;&#32;&#32;&#32;Byte&#32;2:&#32;UID-data&#32;or&#32;CT&#32;&#32;&#32;&#32;&#32;&#32;See&#32;explanation&#32;below.&#32;CT&#32;means&#32;Cascade&#32;Tag.</emphasis>
+54 &#32;&#32;&#32;&#32;<emphasis role="comment">//&#32;&#32;&#32;&#32;&#32;&#32;Byte&#32;3:&#32;UID-data</emphasis>
+55 &#32;&#32;&#32;&#32;<emphasis role="comment">//&#32;&#32;&#32;&#32;&#32;&#32;Byte&#32;4:&#32;UID-data</emphasis>
+56 &#32;&#32;&#32;&#32;<emphasis role="comment">//&#32;&#32;&#32;&#32;&#32;&#32;Byte&#32;5:&#32;UID-data</emphasis>
+57 &#32;&#32;&#32;&#32;<emphasis role="comment">//&#32;&#32;&#32;&#32;&#32;&#32;Byte&#32;6:&#32;BCC&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;Block&#32;Check&#32;Character&#32;-&#32;XOR&#32;of&#32;bytes&#32;2-5</emphasis>
+58 &#32;&#32;&#32;&#32;<emphasis role="comment">//&#32;&#32;&#32;&#32;&#32;&#32;Byte&#32;7:&#32;CRC_A</emphasis>
+59 &#32;&#32;&#32;&#32;<emphasis role="comment">//&#32;&#32;&#32;&#32;&#32;&#32;Byte&#32;8:&#32;CRC_A</emphasis>
+60 &#32;&#32;&#32;&#32;<emphasis role="comment">//&#32;The&#32;BCC&#32;and&#32;CRC_A&#32;are&#32;only&#32;transmitted&#32;if&#32;we&#32;know&#32;all&#32;the&#32;UID&#32;bits&#32;of&#32;the&#32;current&#32;Cascade&#32;Level.</emphasis>
+61 &#32;&#32;&#32;&#32;<emphasis role="comment">//</emphasis>
+62 &#32;&#32;&#32;&#32;<emphasis role="comment">//&#32;Description&#32;of&#32;bytes&#32;2-5:&#32;(Section&#32;6.5.4&#32;of&#32;the&#32;ISO/IEC&#32;14443-3&#32;draft:&#32;UID&#32;contents&#32;and&#32;cascade&#32;levels)</emphasis>
+63 &#32;&#32;&#32;&#32;<emphasis role="comment">//&#32;&#32;&#32;&#32;&#32;&#32;UID&#32;size&#32;&#32;&#32;&#32;Cascade&#32;level&#32;&#32;&#32;Byte2&#32;&#32;&#32;Byte3&#32;&#32;&#32;Byte4&#32;&#32;&#32;Byte5</emphasis>
+64 &#32;&#32;&#32;&#32;<emphasis role="comment">//&#32;&#32;&#32;&#32;&#32;&#32;========&#32;&#32;&#32;&#32;=============&#32;&#32;&#32;=====&#32;&#32;&#32;=====&#32;&#32;&#32;=====&#32;&#32;&#32;=====</emphasis>
+65 &#32;&#32;&#32;&#32;<emphasis role="comment">//&#32;&#32;&#32;&#32;&#32;&#32;&#32;4&#32;bytes&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;1&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;uid0&#32;&#32;&#32;&#32;uid1&#32;&#32;&#32;&#32;uid2&#32;&#32;&#32;&#32;uid3</emphasis>
+66 &#32;&#32;&#32;&#32;<emphasis role="comment">//&#32;&#32;&#32;&#32;&#32;&#32;&#32;7&#32;bytes&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;1&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;CT&#32;&#32;&#32;&#32;&#32;&#32;uid0&#32;&#32;&#32;&#32;uid1&#32;&#32;&#32;&#32;uid2</emphasis>
+67 &#32;&#32;&#32;&#32;<emphasis role="comment">//&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;2&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;uid3&#32;&#32;&#32;&#32;uid4&#32;&#32;&#32;&#32;uid5&#32;&#32;&#32;&#32;uid6</emphasis>
+68 &#32;&#32;&#32;&#32;<emphasis role="comment">//&#32;&#32;&#32;&#32;&#32;&#32;10&#32;bytes&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;1&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;CT&#32;&#32;&#32;&#32;&#32;&#32;uid0&#32;&#32;&#32;&#32;uid1&#32;&#32;&#32;&#32;uid2</emphasis>
+69 &#32;&#32;&#32;&#32;<emphasis role="comment">//&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;2&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;CT&#32;&#32;&#32;&#32;&#32;&#32;uid3&#32;&#32;&#32;&#32;uid4&#32;&#32;&#32;&#32;uid5</emphasis>
+70 &#32;&#32;&#32;&#32;<emphasis role="comment">//&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;3&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;uid6&#32;&#32;&#32;&#32;uid7&#32;&#32;&#32;&#32;uid8&#32;&#32;&#32;&#32;uid9</emphasis>
+71 &#32;&#32;&#32;&#32;
+72 &#32;&#32;&#32;&#32;<emphasis role="comment">//&#32;Sanity&#32;checks</emphasis>
+73 &#32;&#32;&#32;&#32;<emphasis role="keywordflow">if</emphasis>&#32;(validBits&#32;&gt;&#32;80)&#32;{
+74 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;<emphasis role="keywordflow">return</emphasis>&#32;STATUS_INVALID;
+75 &#32;&#32;&#32;&#32;}
+76 &#32;&#32;&#32;&#32;
+77 &#32;&#32;&#32;&#32;<emphasis role="comment">//&#32;Prepare&#32;MFRC522</emphasis>
+78 &#32;&#32;&#32;&#32;<link linkend="_classMFRC522_1a76193f4f8916f688fe2b7976d0fd1dc2">PCD_ClearRegisterBitMask</link>(CollReg,&#32;0x80);&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;<emphasis role="comment">//&#32;ValuesAfterColl=1&#32;=&gt;&#32;Bits&#32;received&#32;after&#32;collision&#32;are&#32;cleared.</emphasis>
+79 &#32;&#32;&#32;&#32;
+80 &#32;&#32;&#32;&#32;<emphasis role="comment">//&#32;Repeat&#32;Cascade&#32;Level&#32;loop&#32;until&#32;we&#32;have&#32;a&#32;complete&#32;UID.</emphasis>
+81 &#32;&#32;&#32;&#32;uidComplete&#32;=&#32;<emphasis role="keyword">false</emphasis>;
+82 &#32;&#32;&#32;&#32;<emphasis role="keywordflow">while</emphasis>&#32;(!uidComplete)&#32;{
+83 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;<emphasis role="comment">//&#32;Set&#32;the&#32;Cascade&#32;Level&#32;in&#32;the&#32;SEL&#32;byte,&#32;find&#32;out&#32;if&#32;we&#32;need&#32;to&#32;use&#32;the&#32;Cascade&#32;Tag&#32;in&#32;byte&#32;2.</emphasis>
+84 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;<emphasis role="keywordflow">switch</emphasis>&#32;(cascadeLevel)&#32;{
+85 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;<emphasis role="keywordflow">case</emphasis>&#32;1:
+86 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;buffer[0]&#32;=&#32;PICC_CMD_SEL_CL1;
+87 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;uidIndex&#32;=&#32;0;
+88 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;useCascadeTag&#32;=&#32;validBits&#32;&amp;&amp;&#32;uid-&gt;size&#32;&gt;&#32;4;&#32;<emphasis role="comment">//&#32;When&#32;we&#32;know&#32;that&#32;the&#32;UID&#32;has&#32;more&#32;than&#32;4&#32;bytes</emphasis>
+89 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;<emphasis role="keywordflow">break</emphasis>;
+90 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;
+91 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;<emphasis role="keywordflow">case</emphasis>&#32;2:
+92 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;buffer[0]&#32;=&#32;PICC_CMD_SEL_CL2;
+93 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;uidIndex&#32;=&#32;3;
+94 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;useCascadeTag&#32;=&#32;validBits&#32;&amp;&amp;&#32;uid-&gt;size&#32;&gt;&#32;7;&#32;<emphasis role="comment">//&#32;When&#32;we&#32;know&#32;that&#32;the&#32;UID&#32;has&#32;more&#32;than&#32;7&#32;bytes</emphasis>
+95 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;<emphasis role="keywordflow">break</emphasis>;
+96 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;
+97 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;<emphasis role="keywordflow">case</emphasis>&#32;3:
+98 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;buffer[0]&#32;=&#32;PICC_CMD_SEL_CL3;
+99 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;uidIndex&#32;=&#32;6;
+100 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;useCascadeTag&#32;=&#32;<emphasis role="keyword">false</emphasis>;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;<emphasis role="comment">//&#32;Never&#32;used&#32;in&#32;CL3.</emphasis>
+101 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;<emphasis role="keywordflow">break</emphasis>;
+102 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;
+103 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;<emphasis role="keywordflow">default</emphasis>:
+104 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;<emphasis role="keywordflow">return</emphasis>&#32;STATUS_INTERNAL_ERROR;
+105 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;<emphasis role="keywordflow">break</emphasis>;
+106 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;}
+107 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;
+108 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;<emphasis role="comment">//&#32;How&#32;many&#32;UID&#32;bits&#32;are&#32;known&#32;in&#32;this&#32;Cascade&#32;Level?</emphasis>
+109 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;currentLevelKnownBits&#32;=&#32;validBits&#32;-&#32;(8&#32;*&#32;uidIndex);
+110 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;<emphasis role="keywordflow">if</emphasis>&#32;(currentLevelKnownBits&#32;&lt;&#32;0)&#32;{
+111 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;currentLevelKnownBits&#32;=&#32;0;
+112 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;}
+113 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;<emphasis role="comment">//&#32;Copy&#32;the&#32;known&#32;bits&#32;from&#32;uid-&gt;uidByte[]&#32;to&#32;buffer[]</emphasis>
+114 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;index&#32;=&#32;2;&#32;<emphasis role="comment">//&#32;destination&#32;index&#32;in&#32;buffer[]</emphasis>
+115 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;<emphasis role="keywordflow">if</emphasis>&#32;(useCascadeTag)&#32;{
+116 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;buffer[index++]&#32;=&#32;PICC_CMD_CT;
+117 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;}
+118 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;<emphasis role="keywordtype">byte</emphasis>&#32;bytesToCopy&#32;=&#32;currentLevelKnownBits&#32;/&#32;8&#32;+&#32;(currentLevelKnownBits&#32;%&#32;8&#32;?&#32;1&#32;:&#32;0);&#32;<emphasis role="comment">//&#32;The&#32;number&#32;of&#32;bytes&#32;needed&#32;to&#32;represent&#32;the&#32;known&#32;bits&#32;for&#32;this&#32;level.</emphasis>
+119 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;<emphasis role="keywordflow">if</emphasis>&#32;(bytesToCopy)&#32;{
+120 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;<emphasis role="keywordtype">byte</emphasis>&#32;maxBytes&#32;=&#32;useCascadeTag&#32;?&#32;3&#32;:&#32;4;&#32;<emphasis role="comment">//&#32;Max&#32;4&#32;bytes&#32;in&#32;each&#32;Cascade&#32;Level.&#32;Only&#32;3&#32;left&#32;if&#32;we&#32;use&#32;the&#32;Cascade&#32;Tag</emphasis>
+121 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;<emphasis role="keywordflow">if</emphasis>&#32;(bytesToCopy&#32;&gt;&#32;maxBytes)&#32;{
+122 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;bytesToCopy&#32;=&#32;maxBytes;
+123 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;}
+124 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;<emphasis role="keywordflow">for</emphasis>&#32;(count&#32;=&#32;0;&#32;count&#32;&lt;&#32;bytesToCopy;&#32;count++)&#32;{
+125 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;buffer[index++]&#32;=&#32;uid-&gt;uidByte[uidIndex&#32;+&#32;count];
+126 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;}
+127 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;}
+128 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;<emphasis role="comment">//&#32;Now&#32;that&#32;the&#32;data&#32;has&#32;been&#32;copied&#32;we&#32;need&#32;to&#32;include&#32;the&#32;8&#32;bits&#32;in&#32;CT&#32;in&#32;currentLevelKnownBits</emphasis>
+129 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;<emphasis role="keywordflow">if</emphasis>&#32;(useCascadeTag)&#32;{
+130 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;currentLevelKnownBits&#32;+=&#32;8;
+131 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;}
+132 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;
+133 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;<emphasis role="comment">//&#32;Repeat&#32;anti&#32;collision&#32;loop&#32;until&#32;we&#32;can&#32;transmit&#32;all&#32;UID&#32;bits&#32;+&#32;BCC&#32;and&#32;receive&#32;a&#32;SAK&#32;-&#32;max&#32;32&#32;iterations.</emphasis>
+134 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;selectDone&#32;=&#32;<emphasis role="keyword">false</emphasis>;
+135 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;<emphasis role="keywordflow">while</emphasis>&#32;(!selectDone)&#32;{
+136 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;<emphasis role="comment">//&#32;Find&#32;out&#32;how&#32;many&#32;bits&#32;and&#32;bytes&#32;to&#32;send&#32;and&#32;receive.</emphasis>
+137 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;<emphasis role="keywordflow">if</emphasis>&#32;(currentLevelKnownBits&#32;&gt;=&#32;32)&#32;{&#32;<emphasis role="comment">//&#32;All&#32;UID&#32;bits&#32;in&#32;this&#32;Cascade&#32;Level&#32;are&#32;known.&#32;This&#32;is&#32;a&#32;SELECT.</emphasis>
+138 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;<emphasis role="comment">//Serial.print(F(&quot;SELECT:&#32;currentLevelKnownBits=&quot;));&#32;Serial.println(currentLevelKnownBits,&#32;DEC);</emphasis>
+139 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;buffer[1]&#32;=&#32;0x70;&#32;<emphasis role="comment">//&#32;NVB&#32;-&#32;Number&#32;of&#32;Valid&#32;Bits:&#32;Seven&#32;whole&#32;bytes</emphasis>
+140 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;<emphasis role="comment">//&#32;Calculate&#32;BCC&#32;-&#32;Block&#32;Check&#32;Character</emphasis>
+141 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;buffer[6]&#32;=&#32;buffer[2]&#32;^&#32;buffer[3]&#32;^&#32;buffer[4]&#32;^&#32;buffer[5];
+142 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;<emphasis role="comment">//&#32;Calculate&#32;CRC_A</emphasis>
+143 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;result&#32;=&#32;<link linkend="_classMFRC522_1a7c65647b1d72b6ee7557797322030643">PCD_CalculateCRC</link>(buffer,&#32;7,&#32;&amp;buffer[7]);
+144 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;<emphasis role="keywordflow">if</emphasis>&#32;(result&#32;!=&#32;STATUS_OK)&#32;{
+145 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;<emphasis role="keywordflow">return</emphasis>&#32;result;
+146 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;}
+147 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;txLastBits&#32;&#32;&#32;&#32;&#32;&#32;=&#32;0;&#32;<emphasis role="comment">//&#32;0&#32;=&gt;&#32;All&#32;8&#32;bits&#32;are&#32;valid.</emphasis>
+148 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;bufferUsed&#32;&#32;&#32;&#32;&#32;&#32;=&#32;9;
+149 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;<emphasis role="comment">//&#32;Store&#32;response&#32;in&#32;the&#32;last&#32;3&#32;bytes&#32;of&#32;buffer&#32;(BCC&#32;and&#32;CRC_A&#32;-&#32;not&#32;needed&#32;after&#32;tx)</emphasis>
+150 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;responseBuffer&#32;&#32;=&#32;&amp;buffer[6];
+151 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;responseLength&#32;&#32;=&#32;3;
+152 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;}
+153 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;<emphasis role="keywordflow">else</emphasis>&#32;{&#32;<emphasis role="comment">//&#32;This&#32;is&#32;an&#32;ANTICOLLISION.</emphasis>
+154 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;<emphasis role="comment">//Serial.print(F(&quot;ANTICOLLISION:&#32;currentLevelKnownBits=&quot;));&#32;Serial.println(currentLevelKnownBits,&#32;DEC);</emphasis>
+155 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;txLastBits&#32;&#32;&#32;&#32;&#32;&#32;=&#32;currentLevelKnownBits&#32;%&#32;8;
+156 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;count&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;=&#32;currentLevelKnownBits&#32;/&#32;8;&#32;&#32;&#32;&#32;<emphasis role="comment">//&#32;Number&#32;of&#32;whole&#32;bytes&#32;in&#32;the&#32;UID&#32;part.</emphasis>
+157 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;index&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;=&#32;2&#32;+&#32;count;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;<emphasis role="comment">//&#32;Number&#32;of&#32;whole&#32;bytes:&#32;SEL&#32;+&#32;NVB&#32;+&#32;UIDs</emphasis>
+158 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;buffer[1]&#32;&#32;&#32;&#32;&#32;&#32;&#32;=&#32;(index&#32;&lt;&lt;&#32;4)&#32;+&#32;txLastBits;&#32;&#32;&#32;&#32;<emphasis role="comment">//&#32;NVB&#32;-&#32;Number&#32;of&#32;Valid&#32;Bits</emphasis>
+159 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;bufferUsed&#32;&#32;&#32;&#32;&#32;&#32;=&#32;index&#32;+&#32;(txLastBits&#32;?&#32;1&#32;:&#32;0);
+160 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;<emphasis role="comment">//&#32;Store&#32;response&#32;in&#32;the&#32;unused&#32;part&#32;of&#32;buffer</emphasis>
+161 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;responseBuffer&#32;&#32;=&#32;&amp;buffer[index];
+162 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;responseLength&#32;&#32;=&#32;<emphasis role="keyword">sizeof</emphasis>(buffer)&#32;-&#32;index;
+163 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;}
+164 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;
+165 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;<emphasis role="comment">//&#32;Set&#32;bit&#32;adjustments</emphasis>
+166 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;rxAlign&#32;=&#32;txLastBits;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;<emphasis role="comment">//&#32;Having&#32;a&#32;separate&#32;variable&#32;is&#32;overkill.&#32;But&#32;it&#32;makes&#32;the&#32;next&#32;line&#32;easier&#32;to&#32;read.</emphasis>
+167 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;<link linkend="_classMFRC522_1aa5e5825adb4c784d8a5a60242c135fb7">PCD_WriteRegister</link>(BitFramingReg,&#32;(rxAlign&#32;&lt;&lt;&#32;4)&#32;+&#32;txLastBits);&#32;&#32;<emphasis role="comment">//&#32;RxAlign&#32;=&#32;BitFramingReg[6..4].&#32;TxLastBits&#32;=&#32;BitFramingReg[2..0]</emphasis>
+168 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;
+169 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;<emphasis role="comment">//&#32;Transmit&#32;the&#32;buffer&#32;and&#32;receive&#32;the&#32;response.</emphasis>
+170 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;result&#32;=&#32;<link linkend="_classMFRC522_1aaa96aa7ec4f95e0835cb758ad0450d74">PCD_TransceiveData</link>(buffer,&#32;bufferUsed,&#32;responseBuffer,&#32;&amp;responseLength,&#32;&amp;txLastBits,&#32;rxAlign);
+171 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;<emphasis role="keywordflow">if</emphasis>&#32;(result&#32;==&#32;STATUS_COLLISION)&#32;{&#32;<emphasis role="comment">//&#32;More&#32;than&#32;one&#32;PICC&#32;in&#32;the&#32;field&#32;=&gt;&#32;collision.</emphasis>
+172 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;<emphasis role="keywordtype">byte</emphasis>&#32;valueOfCollReg&#32;=&#32;<link linkend="_classMFRC522_1a4289838c6f24f2d62eb8dc0e7a6647d1">PCD_ReadRegister</link>(CollReg);&#32;<emphasis role="comment">//&#32;CollReg[7..0]&#32;bits&#32;are:&#32;ValuesAfterColl&#32;reserved&#32;CollPosNotValid&#32;CollPos[4:0]</emphasis>
+173 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;<emphasis role="keywordflow">if</emphasis>&#32;(valueOfCollReg&#32;&amp;&#32;0x20)&#32;{&#32;<emphasis role="comment">//&#32;CollPosNotValid</emphasis>
+174 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;<emphasis role="keywordflow">return</emphasis>&#32;STATUS_COLLISION;&#32;<emphasis role="comment">//&#32;Without&#32;a&#32;valid&#32;collision&#32;position&#32;we&#32;cannot&#32;continue</emphasis>
+175 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;}
+176 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;<emphasis role="keywordtype">byte</emphasis>&#32;collisionPos&#32;=&#32;valueOfCollReg&#32;&amp;&#32;0x1F;&#32;<emphasis role="comment">//&#32;Values&#32;0-31,&#32;0&#32;means&#32;bit&#32;32.</emphasis>
+177 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;<emphasis role="keywordflow">if</emphasis>&#32;(collisionPos&#32;==&#32;0)&#32;{
+178 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;collisionPos&#32;=&#32;32;
+179 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;}
+180 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;<emphasis role="keywordflow">if</emphasis>&#32;(collisionPos&#32;&lt;=&#32;currentLevelKnownBits)&#32;{&#32;<emphasis role="comment">//&#32;No&#32;progress&#32;-&#32;should&#32;not&#32;happen&#32;</emphasis>
+181 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;<emphasis role="keywordflow">return</emphasis>&#32;STATUS_INTERNAL_ERROR;
+182 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;}
+183 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;<emphasis role="comment">//&#32;Choose&#32;the&#32;PICC&#32;with&#32;the&#32;bit&#32;set.</emphasis>
+184 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;currentLevelKnownBits&#32;=&#32;collisionPos;
+185 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;count&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;=&#32;(currentLevelKnownBits&#32;-&#32;1)&#32;%&#32;8;&#32;<emphasis role="comment">//&#32;The&#32;bit&#32;to&#32;modify</emphasis>
+186 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;index&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;=&#32;1&#32;+&#32;(currentLevelKnownBits&#32;/&#32;8)&#32;+&#32;(count&#32;?&#32;1&#32;:&#32;0);&#32;<emphasis role="comment">//&#32;First&#32;byte&#32;is&#32;index&#32;0.</emphasis>
+187 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;buffer[index]&#32;&#32;&#32;|=&#32;(1&#32;&lt;&lt;&#32;count);
+188 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;}
+189 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;<emphasis role="keywordflow">else</emphasis>&#32;<emphasis role="keywordflow">if</emphasis>&#32;(result&#32;!=&#32;STATUS_OK)&#32;{
+190 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;<emphasis role="keywordflow">return</emphasis>&#32;result;
+191 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;}
+192 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;<emphasis role="keywordflow">else</emphasis>&#32;{&#32;<emphasis role="comment">//&#32;STATUS_OK</emphasis>
+193 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;<emphasis role="keywordflow">if</emphasis>&#32;(currentLevelKnownBits&#32;&gt;=&#32;32)&#32;{&#32;<emphasis role="comment">//&#32;This&#32;was&#32;a&#32;SELECT.</emphasis>
+194 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;selectDone&#32;=&#32;<emphasis role="keyword">true</emphasis>;&#32;<emphasis role="comment">//&#32;No&#32;more&#32;anticollision&#32;</emphasis>
+195 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;<emphasis role="comment">//&#32;We&#32;continue&#32;below&#32;outside&#32;the&#32;while.</emphasis>
+196 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;}
+197 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;<emphasis role="keywordflow">else</emphasis>&#32;{&#32;<emphasis role="comment">//&#32;This&#32;was&#32;an&#32;ANTICOLLISION.</emphasis>
+198 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;<emphasis role="comment">//&#32;We&#32;now&#32;have&#32;all&#32;32&#32;bits&#32;of&#32;the&#32;UID&#32;in&#32;this&#32;Cascade&#32;Level</emphasis>
+199 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;currentLevelKnownBits&#32;=&#32;32;
+200 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;<emphasis role="comment">//&#32;Run&#32;loop&#32;again&#32;to&#32;do&#32;the&#32;SELECT.</emphasis>
+201 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;}
+202 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;}
+203 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;}&#32;<emphasis role="comment">//&#32;End&#32;of&#32;while&#32;(!selectDone)</emphasis>
+204 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;
+205 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;<emphasis role="comment">//&#32;We&#32;do&#32;not&#32;check&#32;the&#32;CBB&#32;-&#32;it&#32;was&#32;constructed&#32;by&#32;us&#32;above.</emphasis>
+206 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;
+207 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;<emphasis role="comment">//&#32;Copy&#32;the&#32;found&#32;UID&#32;bytes&#32;from&#32;buffer[]&#32;to&#32;uid-&gt;uidByte[]</emphasis>
+208 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;index&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;=&#32;(buffer[2]&#32;==&#32;PICC_CMD_CT)&#32;?&#32;3&#32;:&#32;2;&#32;<emphasis role="comment">//&#32;source&#32;index&#32;in&#32;buffer[]</emphasis>
+209 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;bytesToCopy&#32;&#32;&#32;&#32;&#32;=&#32;(buffer[2]&#32;==&#32;PICC_CMD_CT)&#32;?&#32;3&#32;:&#32;4;
+210 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;<emphasis role="keywordflow">for</emphasis>&#32;(count&#32;=&#32;0;&#32;count&#32;&lt;&#32;bytesToCopy;&#32;count++)&#32;{
+211 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;uid-&gt;uidByte[uidIndex&#32;+&#32;count]&#32;=&#32;buffer[index++];
+212 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;}
+213 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;
+214 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;<emphasis role="comment">//&#32;Check&#32;response&#32;SAK&#32;(Select&#32;Acknowledge)</emphasis>
+215 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;<emphasis role="keywordflow">if</emphasis>&#32;(responseLength&#32;!=&#32;3&#32;||&#32;txLastBits&#32;!=&#32;0)&#32;{&#32;<emphasis role="comment">//&#32;SAK&#32;must&#32;be&#32;exactly&#32;24&#32;bits&#32;(1&#32;byte&#32;+&#32;CRC_A).</emphasis>
+216 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;<emphasis role="keywordflow">return</emphasis>&#32;STATUS_ERROR;
+217 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;}
+218 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;<emphasis role="comment">//&#32;Verify&#32;CRC_A&#32;-&#32;do&#32;our&#32;own&#32;calculation&#32;and&#32;store&#32;the&#32;control&#32;in&#32;buffer[2..3]&#32;-&#32;those&#32;bytes&#32;are&#32;not&#32;needed&#32;anymore.</emphasis>
+219 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;result&#32;=&#32;<link linkend="_classMFRC522_1a7c65647b1d72b6ee7557797322030643">PCD_CalculateCRC</link>(responseBuffer,&#32;1,&#32;&amp;buffer[2]);
+220 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;<emphasis role="keywordflow">if</emphasis>&#32;(result&#32;!=&#32;STATUS_OK)&#32;{
+221 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;<emphasis role="keywordflow">return</emphasis>&#32;result;
+222 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;}
+223 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;<emphasis role="keywordflow">if</emphasis>&#32;((buffer[2]&#32;!=&#32;responseBuffer[1])&#32;||&#32;(buffer[3]&#32;!=&#32;responseBuffer[2]))&#32;{
+224 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;<emphasis role="keywordflow">return</emphasis>&#32;STATUS_CRC_WRONG;
+225 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;}
+226 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;<emphasis role="keywordflow">if</emphasis>&#32;(responseBuffer[0]&#32;&amp;&#32;0x04)&#32;{&#32;<emphasis role="comment">//&#32;Cascade&#32;bit&#32;set&#32;-&#32;UID&#32;not&#32;complete&#32;yes</emphasis>
+227 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;cascadeLevel++;
+228 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;}
+229 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;<emphasis role="keywordflow">else</emphasis>&#32;{
+230 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;uidComplete&#32;=&#32;<emphasis role="keyword">true</emphasis>;
+231 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;uid-&gt;sak&#32;=&#32;responseBuffer[0];
+232 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;}
+233 &#32;&#32;&#32;&#32;}&#32;<emphasis role="comment">//&#32;End&#32;of&#32;while&#32;(!uidComplete)</emphasis>
+234 &#32;&#32;&#32;&#32;
+235 &#32;&#32;&#32;&#32;<emphasis role="comment">//&#32;Set&#32;correct&#32;uid-&gt;size</emphasis>
+236 &#32;&#32;&#32;&#32;uid-&gt;size&#32;=&#32;3&#32;*&#32;cascadeLevel&#32;+&#32;1;
+237 &#32;&#32;&#32;&#32;
+238 &#32;&#32;&#32;&#32;<emphasis role="comment">//&#32;IF&#32;SAK&#32;bit&#32;6&#32;=&#32;1&#32;then&#32;it&#32;is&#32;ISO/IEC&#32;14443-4&#32;(T=CL)</emphasis>
+239 &#32;&#32;&#32;&#32;<emphasis role="comment">//&#32;A&#32;Request&#32;ATS&#32;command&#32;should&#32;be&#32;sent</emphasis>
+240 &#32;&#32;&#32;&#32;<emphasis role="comment">//&#32;We&#32;also&#32;check&#32;SAK&#32;bit&#32;3&#32;is&#32;cero,&#32;as&#32;it&#32;stands&#32;for&#32;UID&#32;complete&#32;(1&#32;would&#32;tell&#32;us&#32;it&#32;is&#32;incomplete)</emphasis>
+241 &#32;&#32;&#32;&#32;<emphasis role="keywordflow">if</emphasis>&#32;((uid-&gt;sak&#32;&amp;&#32;0x24)&#32;==&#32;0x20)&#32;{
+242 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;<link linkend="_classMFRC522Extended_1structMFRC522Extended_1_1Ats">Ats</link>&#32;ats;
+243 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;result&#32;=&#32;<link linkend="_classMFRC522Extended_1a2671f1de35a0cac5da87e4300b7df74d">PICC_RequestATS</link>(&amp;ats);
+244 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;<emphasis role="keywordflow">if</emphasis>&#32;(result&#32;==&#32;STATUS_OK)&#32;{
+245 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;<emphasis role="comment">//&#32;Check&#32;the&#32;ATS</emphasis>
+246 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;<emphasis role="keywordflow">if</emphasis>&#32;(ats.size&#32;&gt;&#32;0)
+247 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;{
+248 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;<emphasis role="comment">//&#32;TA1&#32;has&#32;been&#32;transmitted?</emphasis>
+249 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;<emphasis role="comment">//&#32;PPS&#32;must&#32;be&#32;supported...</emphasis>
+250 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;<emphasis role="keywordflow">if</emphasis>&#32;(ats.ta1.transmitted)
+251 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;{
+252 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;<emphasis role="comment">//&#32;TA1</emphasis>
+253 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;<emphasis role="comment">//&#32;&#32;8&#32;|&#32;7&#32;|&#32;6&#32;|&#32;5&#32;|&#32;4&#32;|&#32;3&#32;|&#32;2&#32;|&#32;1&#32;|&#32;Description</emphasis>
+254 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;<emphasis role="comment">//&#32;---+---+---+---+---+---+---+---+------------------------------------------</emphasis>
+255 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;<emphasis role="comment">//&#32;&#32;0&#32;|&#32;-&#32;|&#32;-&#32;|&#32;-&#32;|&#32;0&#32;|&#32;-&#32;|&#32;-&#32;|&#32;-&#32;|&#32;Different&#32;D&#32;for&#32;each&#32;direction&#32;supported</emphasis>
+256 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;<emphasis role="comment">//&#32;&#32;1&#32;|&#32;-&#32;|&#32;-&#32;|&#32;-&#32;|&#32;0&#32;|&#32;-&#32;|&#32;-&#32;|&#32;-&#32;|&#32;Only&#32;same&#32;D&#32;for&#32;both&#32;direction&#32;supported</emphasis>
+257 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;<emphasis role="comment">//&#32;&#32;-&#32;|&#32;x&#32;|&#32;x&#32;|&#32;x&#32;|&#32;0&#32;|&#32;-&#32;|&#32;-&#32;|&#32;-&#32;|&#32;DS&#32;(Send&#32;D)</emphasis>
+258 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;<emphasis role="comment">//&#32;&#32;-&#32;|&#32;-&#32;|&#32;-&#32;|&#32;-&#32;|&#32;0&#32;|&#32;x&#32;|&#32;x&#32;|&#32;x&#32;|&#32;DR&#32;(Receive&#32;D)</emphasis>
+259 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;<emphasis role="comment">//</emphasis>
+260 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;<emphasis role="comment">//&#32;D&#32;to&#32;bitrate&#32;table</emphasis>
+261 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;<emphasis role="comment">//&#32;&#32;3&#32;|&#32;2&#32;|&#32;1&#32;|&#32;Value</emphasis>
+262 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;<emphasis role="comment">//&#32;---+---+---+-----------------------------</emphasis>
+263 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;<emphasis role="comment">//&#32;&#32;1&#32;|&#32;-&#32;|&#32;-&#32;|&#32;848&#32;kBaud&#32;is&#32;supported</emphasis>
+264 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;<emphasis role="comment">//&#32;&#32;-&#32;|&#32;1&#32;|&#32;-&#32;|&#32;424&#32;kBaud&#32;is&#32;supported</emphasis>
+265 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;<emphasis role="comment">//&#32;&#32;-&#32;|&#32;-&#32;|&#32;1&#32;|&#32;212&#32;kBaud&#32;is&#32;supported</emphasis>
+266 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;<emphasis role="comment">//&#32;&#32;0&#32;|&#32;0&#32;|&#32;0&#32;|&#32;Only&#32;106&#32;kBaud&#32;is&#32;supported</emphasis>
+267 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;<emphasis role="comment">//</emphasis>
+268 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;<emphasis role="comment">//&#32;Note:&#32;106&#32;kBaud&#32;is&#32;always&#32;supported</emphasis>
+269 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;<emphasis role="comment">//</emphasis>
+270 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;<emphasis role="comment">//&#32;I&#32;have&#32;almost&#32;constant&#32;timeouts&#32;when&#32;changing&#32;speeds&#32;:(</emphasis>
+271 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;<emphasis role="comment">//&#32;default&#32;never&#32;used,&#32;so&#32;only&#32;delarate</emphasis>
+272 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;<emphasis role="comment">//TagBitRates&#32;ds&#32;=&#32;BITRATE_106KBITS;&#32;</emphasis>
+273 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;<emphasis role="comment">//TagBitRates&#32;dr&#32;=&#32;BITRATE_106KBITS;</emphasis>
+274 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;TagBitRates&#32;ds;
+275 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;TagBitRates&#32;dr;
+276 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;
+278 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;<emphasis role="comment">//if&#32;(ats.ta1.ds&#32;&amp;&#32;0x04)&#32;</emphasis>
+279 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;<emphasis role="comment">//{</emphasis>
+280 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;<emphasis role="comment">//&#32;&#32;ds&#32;=&#32;BITRATE_848KBITS;</emphasis>
+281 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;<emphasis role="comment">//}&#32;</emphasis>
+282 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;<emphasis role="comment">//else&#32;if&#32;(ats.ta1.ds&#32;&amp;&#32;0x02)</emphasis>
+283 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;<emphasis role="comment">//{</emphasis>
+284 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;<emphasis role="comment">//&#32;&#32;ds&#32;=&#32;BITRATE_424KBITS;</emphasis>
+285 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;<emphasis role="comment">//}</emphasis>
+286 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;<emphasis role="comment">//else&#32;if&#32;(ats.ta1.ds&#32;&amp;&#32;0x01)</emphasis>
+287 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;<emphasis role="comment">//{</emphasis>
+288 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;<emphasis role="comment">//&#32;&#32;ds&#32;=&#32;BITRATE_212KBITS;</emphasis>
+289 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;<emphasis role="comment">//}</emphasis>
+290 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;<emphasis role="comment">//else&#32;</emphasis>
+291 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;<emphasis role="comment">//{</emphasis>
+292 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;<emphasis role="comment">//&#32;&#32;ds&#32;=&#32;BITRATE_106KBITS;</emphasis>
+293 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;<emphasis role="comment">//}</emphasis>
+294 
+295 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;<emphasis role="keywordflow">if</emphasis>&#32;(ats.ta1.ds&#32;&amp;&#32;0x01)
+296 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;{
+297 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;ds&#32;=&#32;BITRATE_212KBITS;
+298 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;}
+299 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;<emphasis role="keywordflow">else</emphasis>&#32;
+300 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;{
+301 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;ds&#32;=&#32;BITRATE_106KBITS;
+302 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;}
+303 
+305 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;<emphasis role="comment">//if&#32;(ats.ta1.dr&#32;&amp;&#32;0x04)&#32;</emphasis>
+306 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;<emphasis role="comment">//{</emphasis>
+307 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;<emphasis role="comment">//&#32;&#32;dr&#32;=&#32;BITRATE_848KBITS;</emphasis>
+308 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;<emphasis role="comment">//}&#32;</emphasis>
+309 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;<emphasis role="comment">//else&#32;if&#32;(ats.ta1.dr&#32;&amp;&#32;0x02)</emphasis>
+310 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;<emphasis role="comment">//{</emphasis>
+311 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;<emphasis role="comment">//&#32;&#32;dr&#32;=&#32;BITRATE_424KBITS;</emphasis>
+312 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;<emphasis role="comment">//}</emphasis>
+313 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;<emphasis role="comment">//else&#32;if&#32;(ats.ta1.dr&#32;&amp;&#32;0x01)</emphasis>
+314 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;<emphasis role="comment">//{</emphasis>
+315 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;<emphasis role="comment">//&#32;&#32;dr&#32;=&#32;BITRATE_212KBITS;</emphasis>
+316 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;<emphasis role="comment">//}</emphasis>
+317 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;<emphasis role="comment">//else&#32;</emphasis>
+318 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;<emphasis role="comment">//{</emphasis>
+319 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;<emphasis role="comment">//&#32;&#32;dr&#32;=&#32;BITRATE_106KBITS;</emphasis>
+320 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;<emphasis role="comment">//}</emphasis>
+321 
+322 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;<emphasis role="keywordflow">if</emphasis>&#32;(ats.ta1.dr&#32;&amp;&#32;0x01)
+323 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;{
+324 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;dr&#32;=&#32;BITRATE_212KBITS;
+325 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;}
+326 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;<emphasis role="keywordflow">else</emphasis>
+327 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;{
+328 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;dr&#32;=&#32;BITRATE_106KBITS;
+329 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;}
+330 
+331 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;<link linkend="_classMFRC522Extended_1acb69d5c429b8e06ecec8dc1e34c02d65">PICC_PPS</link>(ds,&#32;dr);
+332 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;}
+333 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;}
+334 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;}
+335 &#32;&#32;&#32;&#32;}
+336 
+337 &#32;&#32;&#32;&#32;<emphasis role="keywordflow">return</emphasis>&#32;STATUS_OK;
+338 }&#32;<emphasis role="comment">//&#32;End&#32;PICC_Select()</emphasis>
+339 
+345 MFRC522::StatusCode&#32;<link linkend="_classMFRC522Extended_1a2671f1de35a0cac5da87e4300b7df74d">MFRC522Extended::PICC_RequestATS</link>(<link linkend="_classMFRC522Extended_1structMFRC522Extended_1_1Ats">Ats</link>&#32;*ats)&#32;
+346 {
+347 &#32;&#32;&#32;&#32;<emphasis role="comment">//&#32;TODO&#32;unused&#32;variable</emphasis>
+348 &#32;&#32;&#32;&#32;<emphasis role="comment">//byte&#32;count;</emphasis>
+349 &#32;&#32;&#32;&#32;MFRC522::StatusCode&#32;result;
+350 
+351 &#32;&#32;&#32;&#32;<emphasis role="keywordtype">byte</emphasis>&#32;bufferATS[FIFO_SIZE];
+352 &#32;&#32;&#32;&#32;<emphasis role="keywordtype">byte</emphasis>&#32;bufferSize&#32;=&#32;FIFO_SIZE;
+353 
+354 &#32;&#32;&#32;&#32;memset(bufferATS,&#32;0,&#32;FIFO_SIZE);
+355 
+356 &#32;&#32;&#32;&#32;<emphasis role="comment">//&#32;Build&#32;command&#32;buffer</emphasis>
+357 &#32;&#32;&#32;&#32;bufferATS[0]&#32;=&#32;PICC_CMD_RATS;
+358 &#32;&#32;&#32;&#32;
+359 &#32;&#32;&#32;&#32;<emphasis role="comment">//&#32;The&#32;CID&#32;defines&#32;the&#32;logical&#32;number&#32;of&#32;the&#32;addressed&#32;card&#32;and&#32;has&#32;a&#32;range&#32;of&#32;0&#32;</emphasis>
+360 &#32;&#32;&#32;&#32;<emphasis role="comment">//&#32;through&#32;14;&#32;15&#32;is&#32;reserved&#32;for&#32;future&#32;use&#32;(RFU).</emphasis>
+361 &#32;&#32;&#32;&#32;<emphasis role="comment">//</emphasis>
+362 &#32;&#32;&#32;&#32;<emphasis role="comment">//&#32;FSDI&#32;codes&#32;the&#32;maximum&#32;frame&#32;size&#32;(FSD)&#32;that&#32;the&#32;terminal&#32;can&#32;receive.</emphasis>
+363 &#32;&#32;&#32;&#32;<emphasis role="comment">//</emphasis>
+364 &#32;&#32;&#32;&#32;<emphasis role="comment">//&#32;FSDI&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;|&#32;&#32;0&#32;&#32;|&#32;&#32;1&#32;&#32;|&#32;&#32;2&#32;&#32;|&#32;&#32;3&#32;&#32;|&#32;&#32;4&#32;&#32;|&#32;&#32;5&#32;&#32;|&#32;&#32;6&#32;&#32;|&#32;&#32;7&#32;&#32;|&#32;&#32;8&#32;&#32;|&#32;&#32;9-F</emphasis>
+365 &#32;&#32;&#32;&#32;<emphasis role="comment">//&#32;------------+-----+-----+-----+-----+-----+-----+-----+-----+-----+-----------</emphasis>
+366 &#32;&#32;&#32;&#32;<emphasis role="comment">//&#32;FSD&#32;(bytes)&#32;|&#32;&#32;16&#32;|&#32;&#32;24&#32;|&#32;&#32;32&#32;|&#32;&#32;40&#32;|&#32;&#32;48&#32;|&#32;&#32;64&#32;|&#32;&#32;96&#32;|&#32;128&#32;|&#32;256&#32;|&#32;RFU&#32;&gt;&#32;256</emphasis>
+367 &#32;&#32;&#32;&#32;<emphasis role="comment">//</emphasis>
+368 &#32;&#32;&#32;&#32;bufferATS[1]&#32;=&#32;0x50;&#32;<emphasis role="comment">//&#32;FSD=64,&#32;CID=0</emphasis>
+369 
+370 &#32;&#32;&#32;&#32;<emphasis role="comment">//&#32;Calculate&#32;CRC_A</emphasis>
+371 &#32;&#32;&#32;&#32;result&#32;=&#32;<link linkend="_classMFRC522_1a7c65647b1d72b6ee7557797322030643">PCD_CalculateCRC</link>(bufferATS,&#32;2,&#32;&amp;bufferATS[2]);
+372 &#32;&#32;&#32;&#32;<emphasis role="keywordflow">if</emphasis>&#32;(result&#32;!=&#32;STATUS_OK)&#32;{
+373 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;<emphasis role="keywordflow">return</emphasis>&#32;result;
+374 &#32;&#32;&#32;&#32;}
+375 
+376 &#32;&#32;&#32;&#32;<emphasis role="comment">//&#32;Transmit&#32;the&#32;buffer&#32;and&#32;receive&#32;the&#32;response,&#32;validate&#32;CRC_A.</emphasis>
+377 &#32;&#32;&#32;&#32;result&#32;=&#32;<link linkend="_classMFRC522_1aaa96aa7ec4f95e0835cb758ad0450d74">PCD_TransceiveData</link>(bufferATS,&#32;4,&#32;bufferATS,&#32;&amp;bufferSize,&#32;NULL,&#32;0,&#32;<emphasis role="keyword">true</emphasis>);
+378 &#32;&#32;&#32;&#32;<emphasis role="keywordflow">if</emphasis>&#32;(result&#32;!=&#32;STATUS_OK)&#32;{
+379 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;<link linkend="_classMFRC522_1a8874921b4ed26c5b73d89c90f76d4933">PICC_HaltA</link>();
+380 &#32;&#32;&#32;&#32;}
+381 
+382 &#32;&#32;&#32;&#32;<emphasis role="comment">//&#32;Set&#32;the&#32;ats&#32;structure&#32;data</emphasis>
+383 &#32;&#32;&#32;&#32;ats-&gt;size&#32;=&#32;bufferATS[0];
+384 
+385 &#32;&#32;&#32;&#32;<emphasis role="comment">//&#32;T0&#32;byte:</emphasis>
+386 &#32;&#32;&#32;&#32;<emphasis role="comment">//</emphasis>
+387 &#32;&#32;&#32;&#32;<emphasis role="comment">//&#32;b8&#32;|&#32;b7&#32;|&#32;b6&#32;|&#32;b5&#32;|&#32;b4&#32;|&#32;b3&#32;|&#32;b2&#32;|&#32;b1&#32;|&#32;Meaning</emphasis>
+388 &#32;&#32;&#32;&#32;<emphasis role="comment">//----+----+----+----+----+----+----+----+---------------------------</emphasis>
+389 &#32;&#32;&#32;&#32;<emphasis role="comment">//&#32;&#32;0&#32;|&#32;...|&#32;...|&#32;...|&#32;...|...&#32;|&#32;...|&#32;...|&#32;Set&#32;to&#32;0&#32;(RFU)</emphasis>
+390 &#32;&#32;&#32;&#32;<emphasis role="comment">//&#32;&#32;0&#32;|&#32;&#32;1&#32;|&#32;x&#32;&#32;|&#32;&#32;x&#32;|&#32;...|...&#32;|&#32;...|&#32;...|&#32;TC1&#32;transmitted</emphasis>
+391 &#32;&#32;&#32;&#32;<emphasis role="comment">//&#32;&#32;0&#32;|&#32;&#32;x&#32;|&#32;1&#32;&#32;|&#32;&#32;x&#32;|&#32;...|...&#32;|&#32;...|&#32;...|&#32;TB1&#32;transmitted</emphasis>
+392 &#32;&#32;&#32;&#32;<emphasis role="comment">//&#32;&#32;0&#32;|&#32;&#32;x&#32;|&#32;x&#32;&#32;|&#32;&#32;1&#32;|&#32;...|...&#32;|&#32;...|&#32;...|&#32;TA1&#32;transmitted</emphasis>
+393 &#32;&#32;&#32;&#32;<emphasis role="comment">//&#32;&#32;0&#32;|&#32;...|&#32;...|&#32;...|&#32;&#32;x&#32;|&#32;&#32;x&#32;|&#32;&#32;x&#32;|&#32;x&#32;&#32;|&#32;Maximum&#32;frame&#32;size&#32;(FSCI)</emphasis>
+394 &#32;&#32;&#32;&#32;<emphasis role="comment">//</emphasis>
+395 &#32;&#32;&#32;&#32;<emphasis role="comment">//&#32;FSCI&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;|&#32;&#32;0&#32;&#32;|&#32;&#32;1&#32;&#32;|&#32;&#32;2&#32;&#32;|&#32;&#32;3&#32;&#32;|&#32;&#32;4&#32;&#32;|&#32;&#32;5&#32;&#32;|&#32;&#32;6&#32;&#32;|&#32;&#32;7&#32;&#32;|&#32;&#32;8&#32;&#32;|&#32;&#32;9-F</emphasis>
+396 &#32;&#32;&#32;&#32;<emphasis role="comment">//&#32;------------+-----+-----+-----+-----+-----+-----+-----+-----+-----+-----------</emphasis>
+397 &#32;&#32;&#32;&#32;<emphasis role="comment">//&#32;FSC&#32;(bytes)&#32;|&#32;&#32;16&#32;|&#32;&#32;24&#32;|&#32;&#32;32&#32;|&#32;&#32;40&#32;|&#32;&#32;48&#32;|&#32;&#32;64&#32;|&#32;&#32;96&#32;|&#32;128&#32;|&#32;256&#32;|&#32;RFU&#32;&gt;&#32;256</emphasis>
+398 &#32;&#32;&#32;&#32;<emphasis role="comment">//</emphasis>
+399 &#32;&#32;&#32;&#32;<emphasis role="comment">//&#32;Default&#32;FSCI&#32;is&#32;2&#32;(32&#32;bytes)</emphasis>
+400 &#32;&#32;&#32;&#32;<emphasis role="keywordflow">if</emphasis>&#32;(ats-&gt;size&#32;&gt;&#32;0x01)
+401 &#32;&#32;&#32;&#32;{
+402 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;<emphasis role="comment">//&#32;TC1,&#32;TB1&#32;and&#32;TA1&#32;where&#32;NOT&#32;transmitted</emphasis>
+403 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;ats-&gt;ta1.transmitted&#32;=&#32;(bool)(bufferATS[1]&#32;&amp;&#32;0x40);
+404 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;ats-&gt;tb1.transmitted&#32;=&#32;(bool)(bufferATS[1]&#32;&amp;&#32;0x20);
+405 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;ats-&gt;tc1.transmitted&#32;=&#32;(bool)(bufferATS[1]&#32;&amp;&#32;0x10);
+406 
+407 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;<emphasis role="comment">//&#32;Decode&#32;FSCI</emphasis>
+408 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;<emphasis role="keywordflow">switch</emphasis>&#32;(bufferATS[1]&#32;&amp;&#32;0x0F)
+409 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;{
+410 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;<emphasis role="keywordflow">case</emphasis>&#32;0x00:
+411 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;ats-&gt;fsc&#32;=&#32;16;
+412 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;<emphasis role="keywordflow">break</emphasis>;
+413 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;<emphasis role="keywordflow">case</emphasis>&#32;0x01:
+414 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;ats-&gt;fsc&#32;=&#32;24;
+415 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;<emphasis role="keywordflow">break</emphasis>;
+416 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;<emphasis role="keywordflow">case</emphasis>&#32;0x02:
+417 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;ats-&gt;fsc&#32;=&#32;32;
+418 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;<emphasis role="keywordflow">break</emphasis>;
+419 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;<emphasis role="keywordflow">case</emphasis>&#32;0x03:
+420 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;ats-&gt;fsc&#32;=&#32;40;
+421 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;<emphasis role="keywordflow">break</emphasis>;
+422 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;<emphasis role="keywordflow">case</emphasis>&#32;0x04:
+423 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;ats-&gt;fsc&#32;=&#32;48;
+424 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;<emphasis role="keywordflow">break</emphasis>;
+425 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;<emphasis role="keywordflow">case</emphasis>&#32;0x05:
+426 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;ats-&gt;fsc&#32;=&#32;64;
+427 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;<emphasis role="keywordflow">break</emphasis>;
+428 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;<emphasis role="keywordflow">case</emphasis>&#32;0x06:
+429 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;ats-&gt;fsc&#32;=&#32;96;
+430 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;<emphasis role="keywordflow">break</emphasis>;
+431 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;<emphasis role="keywordflow">case</emphasis>&#32;0x07:
+432 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;ats-&gt;fsc&#32;=&#32;128;
+433 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;<emphasis role="keywordflow">break</emphasis>;
+434 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;<emphasis role="keywordflow">case</emphasis>&#32;0x08:
+435 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;<emphasis role="comment">//&#32;This&#32;value&#32;cannot&#32;be&#32;hold&#32;by&#32;a&#32;byte</emphasis>
+436 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;<emphasis role="comment">//&#32;The&#32;reason&#32;I&#32;ignore&#32;it&#32;is&#32;that&#32;MFRC255&#32;FIFO&#32;is&#32;64&#32;bytes&#32;so&#32;this&#32;is&#32;not&#32;a&#32;possible&#32;value&#32;(or&#32;atleast&#32;it&#32;shouldn&apos;t)</emphasis>
+437 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;<emphasis role="comment">//ats-&gt;fsc&#32;=&#32;256;</emphasis>
+438 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;<emphasis role="keywordflow">break</emphasis>;
+439 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;<emphasis role="comment">//&#32;TODO:&#32;What&#32;to&#32;do&#32;with&#32;RFU&#32;(Reserved&#32;for&#32;future&#32;use)?</emphasis>
+440 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;<emphasis role="keywordflow">default</emphasis>:
+441 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;<emphasis role="keywordflow">break</emphasis>;
+442 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;}
+443 
+444 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;<emphasis role="comment">//&#32;TA1</emphasis>
+445 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;<emphasis role="keywordflow">if</emphasis>&#32;(ats-&gt;ta1.transmitted)
+446 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;{
+447 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;ats-&gt;ta1.sameD&#32;=&#32;(bool)(bufferATS[2]&#32;&amp;&#32;0x80);
+448 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;ats-&gt;ta1.ds&#32;=&#32;(TagBitRates)((bufferATS[2]&#32;&amp;&#32;0x70)&#32;&gt;&gt;&#32;4);
+449 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;ats-&gt;ta1.dr&#32;=&#32;(TagBitRates)(bufferATS[2]&#32;&amp;&#32;0x07);
+450 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;}
+451 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;<emphasis role="keywordflow">else</emphasis>
+452 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;{
+453 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;<emphasis role="comment">//&#32;Default&#32;TA1</emphasis>
+454 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;ats-&gt;ta1.ds&#32;=&#32;BITRATE_106KBITS;
+455 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;ats-&gt;ta1.dr&#32;=&#32;BITRATE_106KBITS;
+456 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;}
+457 
+458 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;<emphasis role="comment">//&#32;TB1</emphasis>
+459 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;<emphasis role="keywordflow">if</emphasis>&#32;(ats-&gt;tb1.transmitted)
+460 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;{
+461 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;uint8_t&#32;tb1Index&#32;=&#32;2;
+462 
+463 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;<emphasis role="keywordflow">if</emphasis>&#32;(ats-&gt;ta1.transmitted)
+464 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;tb1Index++;
+465 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;
+466 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;ats-&gt;tb1.fwi&#32;=&#32;(bufferATS[tb1Index]&#32;&amp;&#32;0xF0)&#32;&gt;&gt;&#32;4;
+467 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;ats-&gt;tb1.sfgi&#32;=&#32;bufferATS[tb1Index]&#32;&amp;&#32;0x0F;
+468 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;}
+469 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;<emphasis role="keywordflow">else</emphasis>
+470 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;{
+471 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;<emphasis role="comment">//&#32;Defaults&#32;for&#32;TB1</emphasis>
+472 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;ats-&gt;tb1.fwi&#32;=&#32;0;&#32;&#32;&#32;<emphasis role="comment">//&#32;TODO:&#32;Don&apos;t&#32;know&#32;the&#32;default&#32;for&#32;this!</emphasis>
+473 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;ats-&gt;tb1.sfgi&#32;=&#32;0;&#32;&#32;<emphasis role="comment">//&#32;The&#32;default&#32;value&#32;of&#32;SFGI&#32;is&#32;0&#32;(meaning&#32;that&#32;the&#32;card&#32;does&#32;not&#32;need&#32;any&#32;particular&#32;SFGT)</emphasis>
+474 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;}
+475 
+476 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;<emphasis role="comment">//&#32;TC1</emphasis>
+477 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;<emphasis role="keywordflow">if</emphasis>&#32;(ats-&gt;tc1.transmitted)
+478 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;{
+479 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;uint8_t&#32;tc1Index&#32;=&#32;2;
+480 
+481 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;<emphasis role="keywordflow">if</emphasis>&#32;(ats-&gt;ta1.transmitted)
+482 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;tc1Index++;
+483 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;<emphasis role="keywordflow">if</emphasis>&#32;(ats-&gt;tb1.transmitted)
+484 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;tc1Index++;
+485 
+486 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;ats-&gt;tc1.supportsCID&#32;=&#32;(bool)(bufferATS[tc1Index]&#32;&amp;&#32;0x02);
+487 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;ats-&gt;tc1.supportsNAD&#32;=&#32;(bool)(bufferATS[tc1Index]&#32;&amp;&#32;0x01);
+488 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;}
+489 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;<emphasis role="keywordflow">else</emphasis>
+490 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;{
+491 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;<emphasis role="comment">//&#32;Defaults&#32;for&#32;TC1</emphasis>
+492 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;ats-&gt;tc1.supportsCID&#32;=&#32;<emphasis role="keyword">true</emphasis>;
+493 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;ats-&gt;tc1.supportsNAD&#32;=&#32;<emphasis role="keyword">false</emphasis>;
+494 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;}
+495 &#32;&#32;&#32;&#32;}
+496 &#32;&#32;&#32;&#32;<emphasis role="keywordflow">else</emphasis>
+497 &#32;&#32;&#32;&#32;{
+498 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;<emphasis role="comment">//&#32;TC1,&#32;TB1&#32;and&#32;TA1&#32;where&#32;NOT&#32;transmitted</emphasis>
+499 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;ats-&gt;ta1.transmitted&#32;=&#32;<emphasis role="keyword">false</emphasis>;
+500 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;ats-&gt;tb1.transmitted&#32;=&#32;<emphasis role="keyword">false</emphasis>;
+501 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;ats-&gt;tc1.transmitted&#32;=&#32;<emphasis role="keyword">false</emphasis>;
+502 
+503 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;<emphasis role="comment">//&#32;Default&#32;FSCI</emphasis>
+504 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;ats-&gt;fsc&#32;=&#32;32;&#32;&#32;<emphasis role="comment">//&#32;Defaults&#32;to&#32;FSCI&#32;2&#32;(32&#32;bytes)</emphasis>
+505 
+506 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;<emphasis role="comment">//&#32;Default&#32;TA1</emphasis>
+507 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;ats-&gt;ta1.sameD&#32;=&#32;<emphasis role="keyword">false</emphasis>;
+508 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;ats-&gt;ta1.ds&#32;=&#32;BITRATE_106KBITS;
+509 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;ats-&gt;ta1.dr&#32;=&#32;BITRATE_106KBITS;
+510 
+511 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;<emphasis role="comment">//&#32;Defaults&#32;for&#32;TB1</emphasis>
+512 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;ats-&gt;tb1.transmitted&#32;=&#32;<emphasis role="keyword">false</emphasis>;
+513 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;ats-&gt;tb1.fwi&#32;=&#32;0;&#32;&#32;&#32;<emphasis role="comment">//&#32;TODO:&#32;Don&apos;t&#32;know&#32;the&#32;default&#32;for&#32;this!</emphasis>
+514 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;ats-&gt;tb1.sfgi&#32;=&#32;0;&#32;&#32;<emphasis role="comment">//&#32;The&#32;default&#32;value&#32;of&#32;SFGI&#32;is&#32;0&#32;(meaning&#32;that&#32;the&#32;card&#32;does&#32;not&#32;need&#32;any&#32;particular&#32;SFGT)</emphasis>
+515 
+516 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;<emphasis role="comment">//&#32;Defaults&#32;for&#32;TC1</emphasis>
+517 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;ats-&gt;tc1.transmitted&#32;=&#32;<emphasis role="keyword">false</emphasis>;
+518 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;ats-&gt;tc1.supportsCID&#32;=&#32;<emphasis role="keyword">true</emphasis>;
+519 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;ats-&gt;tc1.supportsNAD&#32;=&#32;<emphasis role="keyword">false</emphasis>;
+520 &#32;&#32;&#32;&#32;}
+521 
+522 &#32;&#32;&#32;&#32;memcpy(ats-&gt;data,&#32;bufferATS,&#32;bufferSize&#32;-&#32;2);
+523 
+524 &#32;&#32;&#32;&#32;<emphasis role="keywordflow">return</emphasis>&#32;result;
+525 }&#32;<emphasis role="comment">//&#32;End&#32;PICC_RequestATS()</emphasis>
+526 
+532 MFRC522::StatusCode&#32;<link linkend="_classMFRC522Extended_1acb69d5c429b8e06ecec8dc1e34c02d65">MFRC522Extended::PICC_PPS</link>()
+533 {
+534 &#32;&#32;&#32;&#32;StatusCode&#32;result;
+535 
+536 &#32;&#32;&#32;&#32;<emphasis role="keywordtype">byte</emphasis>&#32;ppsBuffer[4];
+537 &#32;&#32;&#32;&#32;<emphasis role="keywordtype">byte</emphasis>&#32;ppsBufferSize&#32;=&#32;4;
+538 &#32;&#32;&#32;&#32;<emphasis role="comment">//&#32;Start&#32;byte:&#32;The&#32;start&#32;byte&#32;(PPS)&#32;consists&#32;of&#32;two&#32;parts:</emphasis>
+539 &#32;&#32;&#32;&#32;<emphasis role="comment">//&#32;&#32;–The&#32;upper&#32;nibble(b8–b5)&#32;is&#32;set&#32;to’D&apos;to&#32;identify&#32;the&#32;PPS.&#32;All&#32;other&#32;values&#32;are&#32;RFU.</emphasis>
+540 &#32;&#32;&#32;&#32;<emphasis role="comment">//&#32;&#32;-The&#32;lower&#32;nibble(b4–b1),&#32;which&#32;is&#32;called&#32;the&#32;‘card&#32;identifier’&#32;(CID),&#32;defines&#32;the&#32;logical&#32;number&#32;of&#32;the&#32;addressed&#32;card.</emphasis>
+541 &#32;&#32;&#32;&#32;ppsBuffer[0]&#32;=&#32;0xD0;&#32;&#32;&#32;&#32;<emphasis role="comment">//&#32;CID&#32;is&#32;hardcoded&#32;as&#32;0&#32;in&#32;RATS</emphasis>
+542 &#32;&#32;&#32;&#32;ppsBuffer[1]&#32;=&#32;0x00;&#32;&#32;&#32;&#32;<emphasis role="comment">//&#32;PPS0&#32;indicates&#32;whether&#32;PPS1&#32;is&#32;present</emphasis>
+543 
+544 &#32;&#32;&#32;&#32;<emphasis role="comment">//&#32;Calculate&#32;CRC_A</emphasis>
+545 &#32;&#32;&#32;&#32;result&#32;=&#32;<link linkend="_classMFRC522_1a7c65647b1d72b6ee7557797322030643">PCD_CalculateCRC</link>(ppsBuffer,&#32;2,&#32;&amp;ppsBuffer[2]);
+546 &#32;&#32;&#32;&#32;<emphasis role="keywordflow">if</emphasis>&#32;(result&#32;!=&#32;STATUS_OK)&#32;{
+547 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;<emphasis role="keywordflow">return</emphasis>&#32;result;
+548 &#32;&#32;&#32;&#32;}
+549 
+550 &#32;&#32;&#32;&#32;<emphasis role="comment">//&#32;Transmit&#32;the&#32;buffer&#32;and&#32;receive&#32;the&#32;response,&#32;validate&#32;CRC_A.</emphasis>
+551 &#32;&#32;&#32;&#32;result&#32;=&#32;<link linkend="_classMFRC522_1aaa96aa7ec4f95e0835cb758ad0450d74">PCD_TransceiveData</link>(ppsBuffer,&#32;4,&#32;ppsBuffer,&#32;&amp;ppsBufferSize,&#32;NULL,&#32;0,&#32;<emphasis role="keyword">true</emphasis>);
+552 &#32;&#32;&#32;&#32;<emphasis role="keywordflow">if</emphasis>&#32;(result&#32;==&#32;STATUS_OK)
+553 &#32;&#32;&#32;&#32;{
+554 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;<emphasis role="comment">//&#32;Enable&#32;CRC&#32;for&#32;T=CL</emphasis>
+555 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;<emphasis role="keywordtype">byte</emphasis>&#32;txReg&#32;=&#32;<link linkend="_classMFRC522_1a4289838c6f24f2d62eb8dc0e7a6647d1">PCD_ReadRegister</link>(TxModeReg)&#32;|&#32;0x80;
+556 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;<emphasis role="keywordtype">byte</emphasis>&#32;rxReg&#32;=&#32;<link linkend="_classMFRC522_1a4289838c6f24f2d62eb8dc0e7a6647d1">PCD_ReadRegister</link>(RxModeReg)&#32;|&#32;0x80;
+557 
+558 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;<link linkend="_classMFRC522_1aa5e5825adb4c784d8a5a60242c135fb7">PCD_WriteRegister</link>(TxModeReg,&#32;txReg);
+559 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;<link linkend="_classMFRC522_1aa5e5825adb4c784d8a5a60242c135fb7">PCD_WriteRegister</link>(RxModeReg,&#32;rxReg);
+560 &#32;&#32;&#32;&#32;}
+561 
+562 &#32;&#32;&#32;&#32;<emphasis role="keywordflow">return</emphasis>&#32;result;
+563 }&#32;<emphasis role="comment">//&#32;End&#32;PICC_PPS()</emphasis>
+564 
+570 MFRC522::StatusCode&#32;<link linkend="_classMFRC522Extended_1acb69d5c429b8e06ecec8dc1e34c02d65">MFRC522Extended::PICC_PPS</link>(TagBitRates&#32;sendBitRate,&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;
+571 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;TagBitRates&#32;receiveBitRate&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;
+572 )&#32;{
+573 &#32;&#32;&#32;&#32;StatusCode&#32;result;
+574 
+575 &#32;&#32;&#32;&#32;<emphasis role="comment">//&#32;TODO&#32;not&#32;used</emphasis>
+576 &#32;&#32;&#32;&#32;<emphasis role="comment">//byte&#32;txReg&#32;=&#32;PCD_ReadRegister(TxModeReg)&#32;&amp;&#32;0x8F;</emphasis>
+577 &#32;&#32;&#32;&#32;<emphasis role="comment">//byte&#32;rxReg&#32;=&#32;PCD_ReadRegister(RxModeReg)&#32;&amp;&#32;0x8F;</emphasis>
+578 
+579 &#32;&#32;&#32;&#32;<emphasis role="keywordtype">byte</emphasis>&#32;ppsBuffer[5];
+580 &#32;&#32;&#32;&#32;<emphasis role="keywordtype">byte</emphasis>&#32;ppsBufferSize&#32;=&#32;5;
+581 &#32;&#32;&#32;&#32;<emphasis role="comment">//&#32;Start&#32;byte:&#32;The&#32;start&#32;byte&#32;(PPS)&#32;consists&#32;of&#32;two&#32;parts:</emphasis>
+582 &#32;&#32;&#32;&#32;<emphasis role="comment">//&#32;&#32;–The&#32;upper&#32;nibble(b8–b5)&#32;is&#32;set&#32;to’D&apos;to&#32;identify&#32;the&#32;PPS.&#32;All&#32;other&#32;values&#32;are&#32;RFU.</emphasis>
+583 &#32;&#32;&#32;&#32;<emphasis role="comment">//&#32;&#32;-The&#32;lower&#32;nibble(b4–b1),&#32;which&#32;is&#32;called&#32;the&#32;‘card&#32;identifier’&#32;(CID),&#32;defines&#32;the&#32;logical&#32;number&#32;of&#32;the&#32;addressed&#32;card.</emphasis>
+584 &#32;&#32;&#32;&#32;ppsBuffer[0]&#32;=&#32;0xD0;&#32;&#32;&#32;&#32;<emphasis role="comment">//&#32;CID&#32;is&#32;hardcoded&#32;as&#32;0&#32;in&#32;RATS</emphasis>
+585 &#32;&#32;&#32;&#32;ppsBuffer[1]&#32;=&#32;0x11;&#32;&#32;&#32;&#32;<emphasis role="comment">//&#32;PPS0&#32;indicates&#32;whether&#32;PPS1&#32;is&#32;present</emphasis>
+586 
+587 &#32;&#32;&#32;&#32;<emphasis role="comment">//&#32;Bit&#32;8&#32;-&#32;Set&#32;to&#32;&apos;0&apos;&#32;as&#32;MFRC522&#32;allows&#32;different&#32;bit&#32;rates&#32;for&#32;send&#32;and&#32;receive</emphasis>
+588 &#32;&#32;&#32;&#32;<emphasis role="comment">//&#32;Bit&#32;4&#32;-&#32;Set&#32;to&#32;&apos;0&apos;&#32;as&#32;it&#32;is&#32;Reserved&#32;for&#32;future&#32;use.</emphasis>
+589 &#32;&#32;&#32;&#32;<emphasis role="comment">//ppsBuffer[2]&#32;=&#32;(((sendBitRate&#32;&amp;&#32;0x03)&#32;&lt;&lt;&#32;4)&#32;|&#32;(receiveBitRate&#32;&amp;&#32;0x03))&#32;&amp;&#32;0xE7;</emphasis>
+590 &#32;&#32;&#32;&#32;ppsBuffer[2]&#32;=&#32;(((sendBitRate&#32;&amp;&#32;0x03)&#32;&lt;&lt;&#32;2)&#32;|&#32;(receiveBitRate&#32;&amp;&#32;0x03))&#32;&amp;&#32;0xE7;
+591 
+592 &#32;&#32;&#32;&#32;<emphasis role="comment">//&#32;Calculate&#32;CRC_A</emphasis>
+593 &#32;&#32;&#32;&#32;result&#32;=&#32;<link linkend="_classMFRC522_1a7c65647b1d72b6ee7557797322030643">PCD_CalculateCRC</link>(ppsBuffer,&#32;3,&#32;&amp;ppsBuffer[3]);
+594 &#32;&#32;&#32;&#32;<emphasis role="keywordflow">if</emphasis>&#32;(result&#32;!=&#32;STATUS_OK)&#32;{
+595 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;<emphasis role="keywordflow">return</emphasis>&#32;result;
+596 &#32;&#32;&#32;&#32;}
+597 &#32;&#32;&#32;&#32;
+598 &#32;&#32;&#32;&#32;<emphasis role="comment">//&#32;Transmit&#32;the&#32;buffer&#32;and&#32;receive&#32;the&#32;response,&#32;validate&#32;CRC_A.</emphasis>
+599 &#32;&#32;&#32;&#32;result&#32;=&#32;<link linkend="_classMFRC522_1aaa96aa7ec4f95e0835cb758ad0450d74">PCD_TransceiveData</link>(ppsBuffer,&#32;5,&#32;ppsBuffer,&#32;&amp;ppsBufferSize,&#32;NULL,&#32;0,&#32;<emphasis role="keyword">true</emphasis>);
+600 &#32;&#32;&#32;&#32;<emphasis role="keywordflow">if</emphasis>&#32;(result&#32;==&#32;STATUS_OK)
+601 &#32;&#32;&#32;&#32;{
+602 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;<emphasis role="comment">//&#32;Make&#32;sure&#32;it&#32;is&#32;an&#32;answer&#32;to&#32;our&#32;PPS</emphasis>
+603 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;<emphasis role="comment">//&#32;We&#32;should&#32;receive&#32;our&#32;PPS&#32;byte&#32;and&#32;2&#32;CRC&#32;bytes</emphasis>
+604 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;<emphasis role="keywordflow">if</emphasis>&#32;((ppsBufferSize&#32;==&#32;3)&#32;&amp;&amp;&#32;(ppsBuffer[0]&#32;==&#32;0xD0))&#32;{
+605 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;<emphasis role="keywordtype">byte</emphasis>&#32;txReg&#32;=&#32;<link linkend="_classMFRC522_1a4289838c6f24f2d62eb8dc0e7a6647d1">PCD_ReadRegister</link>(TxModeReg)&#32;&amp;&#32;0x8F;
+606 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;<emphasis role="keywordtype">byte</emphasis>&#32;rxReg&#32;=&#32;<link linkend="_classMFRC522_1a4289838c6f24f2d62eb8dc0e7a6647d1">PCD_ReadRegister</link>(RxModeReg)&#32;&amp;&#32;0x8F;
+607 
+608 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;<emphasis role="comment">//&#32;Set&#32;bit&#32;rate&#32;and&#32;enable&#32;CRC&#32;for&#32;T=CL</emphasis>
+609 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;txReg&#32;=&#32;(txReg&#32;&amp;&#32;0x8F)&#32;|&#32;((receiveBitRate&#32;&amp;&#32;0x03)&#32;&lt;&lt;&#32;4)&#32;|&#32;0x80;
+610 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;rxReg&#32;=&#32;(rxReg&#32;&amp;&#32;0x8F)&#32;|&#32;((sendBitRate&#32;&amp;&#32;0x03)&#32;&lt;&lt;&#32;4)&#32;|&#32;0x80;
+611 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;rxReg&#32;&amp;=&#32;0xF0;&#32;<emphasis role="comment">//Enforce&#32;although&#32;this&#32;should&#32;be&#32;set&#32;already</emphasis>
+612 
+613 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;<emphasis role="comment">//&#32;From&#32;ConfigIsoType</emphasis>
+614 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;<emphasis role="comment">//rxReg&#32;|=&#32;0x06;</emphasis>
+615 
+616 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;<link linkend="_classMFRC522_1aa5e5825adb4c784d8a5a60242c135fb7">PCD_WriteRegister</link>(TxModeReg,&#32;txReg);
+617 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;<link linkend="_classMFRC522_1aa5e5825adb4c784d8a5a60242c135fb7">PCD_WriteRegister</link>(RxModeReg,&#32;rxReg);
+618 
+619 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;<emphasis role="comment">//&#32;At&#32;212kBps</emphasis>
+620 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;<emphasis role="keywordflow">switch</emphasis>&#32;(sendBitRate)&#32;{
+621 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;<emphasis role="keywordflow">case</emphasis>&#32;BITRATE_212KBITS:
+622 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;{
+623 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;<emphasis role="comment">//PCD_WriteRegister(ModWidthReg,&#32;0x13);</emphasis>
+624 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;<link linkend="_classMFRC522_1aa5e5825adb4c784d8a5a60242c135fb7">PCD_WriteRegister</link>(ModWidthReg,&#32;0x15);
+625 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;}
+626 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;<emphasis role="keywordflow">break</emphasis>;
+627 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;<emphasis role="keywordflow">case</emphasis>&#32;BITRATE_424KBITS:
+628 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;{
+629 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;<link linkend="_classMFRC522_1aa5e5825adb4c784d8a5a60242c135fb7">PCD_WriteRegister</link>(ModWidthReg,&#32;0x0A);
+630 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;}
+631 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;<emphasis role="keywordflow">break</emphasis>;
+632 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;<emphasis role="keywordflow">case</emphasis>&#32;BITRATE_848KBITS:
+633 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;{
+634 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;<link linkend="_classMFRC522_1aa5e5825adb4c784d8a5a60242c135fb7">PCD_WriteRegister</link>(ModWidthReg,&#32;0x05);
+635 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;}
+636 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;<emphasis role="keywordflow">break</emphasis>;
+637 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;<emphasis role="keywordflow">default</emphasis>:
+638 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;{
+639 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;<link linkend="_classMFRC522_1aa5e5825adb4c784d8a5a60242c135fb7">PCD_WriteRegister</link>(ModWidthReg,&#32;0x26);&#32;<emphasis role="comment">//&#32;Default&#32;value</emphasis>
+640 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;}
+641 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;<emphasis role="keywordflow">break</emphasis>;
+642 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;}
+643 
+644 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;<emphasis role="comment">//PCD_WriteRegister(RxThresholdReg,&#32;0x84);&#32;//&#32;ISO-14443.4&#32;Type&#32;A&#32;(default)</emphasis>
+645 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;<emphasis role="comment">//PCD_WriteRegister(ControlReg,&#32;0x10);</emphasis>
+646 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;
+647 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;delayMicroseconds(10);
+648 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;}
+649 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;<emphasis role="keywordflow">else</emphasis>&#32;
+650 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;{
+651 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;<emphasis role="keywordflow">return</emphasis>&#32;STATUS_ERROR;
+652 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;}
+653 &#32;&#32;&#32;&#32;}
+654 
+655 &#32;&#32;&#32;&#32;<emphasis role="keywordflow">return</emphasis>&#32;result;
+656 }&#32;<emphasis role="comment">//&#32;End&#32;PICC_PPS()</emphasis>
+657 
+658 
+660 <emphasis role="comment">//&#32;Functions&#32;for&#32;communicating&#32;with&#32;ISO/IEC&#32;14433-4&#32;cards</emphasis>
+662 
+663 MFRC522::StatusCode&#32;MFRC522Extended::TCL_Transceive(PcbBlock&#32;*send,&#32;PcbBlock&#32;*back)
+664 {
+665 &#32;&#32;&#32;&#32;MFRC522::StatusCode&#32;result;
+666 &#32;&#32;&#32;&#32;<emphasis role="keywordtype">byte</emphasis>&#32;inBuffer[FIFO_SIZE];
+667 &#32;&#32;&#32;&#32;<emphasis role="keywordtype">byte</emphasis>&#32;inBufferSize&#32;=&#32;FIFO_SIZE;
+668 &#32;&#32;&#32;&#32;<emphasis role="keywordtype">byte</emphasis>&#32;outBuffer[send-&gt;inf.size&#32;+&#32;5];&#32;<emphasis role="comment">//&#32;PCB&#32;+&#32;CID&#32;+&#32;NAD&#32;+&#32;INF&#32;+&#32;EPILOGUE&#32;(CRC)</emphasis>
+669 &#32;&#32;&#32;&#32;<emphasis role="keywordtype">byte</emphasis>&#32;outBufferOffset&#32;=&#32;1;
+670 &#32;&#32;&#32;&#32;<emphasis role="keywordtype">byte</emphasis>&#32;inBufferOffset&#32;=&#32;1;
+671 
+672 &#32;&#32;&#32;&#32;<emphasis role="comment">//&#32;Set&#32;the&#32;PCB&#32;byte</emphasis>
+673 &#32;&#32;&#32;&#32;outBuffer[0]&#32;=&#32;send-&gt;prologue.pcb;
+674 
+675 &#32;&#32;&#32;&#32;<emphasis role="comment">//&#32;Set&#32;the&#32;CID&#32;byte&#32;if&#32;available</emphasis>
+676 &#32;&#32;&#32;&#32;<emphasis role="keywordflow">if</emphasis>&#32;(send-&gt;prologue.pcb&#32;&amp;&#32;0x08)&#32;{
+677 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;outBuffer[outBufferOffset]&#32;=&#32;send-&gt;prologue.cid;
+678 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;outBufferOffset++;
+679 &#32;&#32;&#32;&#32;}
+680 
+681 &#32;&#32;&#32;&#32;<emphasis role="comment">//&#32;Set&#32;the&#32;NAD&#32;byte&#32;if&#32;available</emphasis>
+682 &#32;&#32;&#32;&#32;<emphasis role="keywordflow">if</emphasis>&#32;(send-&gt;prologue.pcb&#32;&amp;&#32;0x04)&#32;{
+683 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;outBuffer[outBufferOffset]&#32;=&#32;send-&gt;prologue.nad;
+684 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;outBufferOffset++;
+685 &#32;&#32;&#32;&#32;}
+686 
+687 &#32;&#32;&#32;&#32;<emphasis role="comment">//&#32;Copy&#32;the&#32;INF&#32;field&#32;if&#32;available</emphasis>
+688 &#32;&#32;&#32;&#32;<emphasis role="keywordflow">if</emphasis>&#32;(send-&gt;inf.size&#32;&gt;&#32;0)&#32;{
+689 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;memcpy(&amp;outBuffer[outBufferOffset],&#32;send-&gt;inf.data,&#32;send-&gt;inf.size);
+690 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;outBufferOffset&#32;+=&#32;send-&gt;inf.size;
+691 &#32;&#32;&#32;&#32;}
+692 
+693 &#32;&#32;&#32;&#32;<emphasis role="comment">//&#32;Is&#32;the&#32;CRC&#32;enabled&#32;for&#32;transmission?</emphasis>
+694 &#32;&#32;&#32;&#32;<emphasis role="keywordtype">byte</emphasis>&#32;txModeReg&#32;=&#32;<link linkend="_classMFRC522_1a4289838c6f24f2d62eb8dc0e7a6647d1">PCD_ReadRegister</link>(TxModeReg);
+695 &#32;&#32;&#32;&#32;<emphasis role="keywordflow">if</emphasis>&#32;((txModeReg&#32;&amp;&#32;0x80)&#32;!=&#32;0x80)&#32;{
+696 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;<emphasis role="comment">//&#32;Calculate&#32;CRC_A</emphasis>
+697 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;result&#32;=&#32;<link linkend="_classMFRC522_1a7c65647b1d72b6ee7557797322030643">PCD_CalculateCRC</link>(outBuffer,&#32;outBufferOffset,&#32;&amp;outBuffer[outBufferOffset]);
+698 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;<emphasis role="keywordflow">if</emphasis>&#32;(result&#32;!=&#32;STATUS_OK)&#32;{
+699 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;<emphasis role="keywordflow">return</emphasis>&#32;result;
+700 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;}
+701 
+702 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;outBufferOffset&#32;+=&#32;2;
+703 &#32;&#32;&#32;&#32;}
+704 
+705 &#32;&#32;&#32;&#32;<emphasis role="comment">//&#32;Transceive&#32;the&#32;block</emphasis>
+706 &#32;&#32;&#32;&#32;result&#32;=&#32;<link linkend="_classMFRC522_1aaa96aa7ec4f95e0835cb758ad0450d74">PCD_TransceiveData</link>(outBuffer,&#32;outBufferOffset,&#32;inBuffer,&#32;&amp;inBufferSize);
+707 &#32;&#32;&#32;&#32;<emphasis role="keywordflow">if</emphasis>&#32;(result&#32;!=&#32;STATUS_OK)&#32;{
+708 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;<emphasis role="keywordflow">return</emphasis>&#32;result;
+709 &#32;&#32;&#32;&#32;}
+710 
+711 &#32;&#32;&#32;&#32;<emphasis role="comment">//&#32;We&#32;want&#32;to&#32;turn&#32;the&#32;received&#32;array&#32;back&#32;to&#32;a&#32;PcbBlock</emphasis>
+712 &#32;&#32;&#32;&#32;back-&gt;prologue.pcb&#32;=&#32;inBuffer[0];
+713 
+714 &#32;&#32;&#32;&#32;<emphasis role="comment">//&#32;CID&#32;byte&#32;is&#32;present?</emphasis>
+715 &#32;&#32;&#32;&#32;<emphasis role="keywordflow">if</emphasis>&#32;(send-&gt;prologue.pcb&#32;&amp;&#32;0x08)&#32;{
+716 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;back-&gt;prologue.cid&#32;=&#32;inBuffer[inBufferOffset];
+717 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;inBufferOffset++;
+718 &#32;&#32;&#32;&#32;}
+719 
+720 &#32;&#32;&#32;&#32;<emphasis role="comment">//&#32;NAD&#32;byte&#32;is&#32;present?</emphasis>
+721 &#32;&#32;&#32;&#32;<emphasis role="keywordflow">if</emphasis>&#32;(send-&gt;prologue.pcb&#32;&amp;&#32;0x04)&#32;{
+722 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;back-&gt;prologue.nad&#32;=&#32;inBuffer[inBufferOffset];
+723 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;inBufferOffset++;
+724 &#32;&#32;&#32;&#32;}
+725 
+726 &#32;&#32;&#32;&#32;<emphasis role="comment">//&#32;Check&#32;if&#32;CRC&#32;is&#32;taken&#32;care&#32;of&#32;by&#32;MFRC522</emphasis>
+727 &#32;&#32;&#32;&#32;<emphasis role="keywordtype">byte</emphasis>&#32;rxModeReg&#32;=&#32;<link linkend="_classMFRC522_1a4289838c6f24f2d62eb8dc0e7a6647d1">PCD_ReadRegister</link>(TxModeReg);
+728 &#32;&#32;&#32;&#32;<emphasis role="keywordflow">if</emphasis>&#32;((rxModeReg&#32;&amp;&#32;0x80)&#32;!=&#32;0x80)&#32;{
+729 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;Serial.print(<emphasis role="stringliteral">&quot;CRC&#32;is&#32;not&#32;taken&#32;care&#32;of&#32;by&#32;MFRC522:&#32;&quot;</emphasis>);
+730 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;Serial.println(rxModeReg,&#32;HEX);
+731 
+732 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;<emphasis role="comment">//&#32;Check&#32;the&#32;CRC</emphasis>
+733 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;<emphasis role="comment">//&#32;We&#32;need&#32;at&#32;least&#32;the&#32;CRC_A&#32;value.</emphasis>
+734 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;<emphasis role="keywordflow">if</emphasis>&#32;((<emphasis role="keywordtype">int</emphasis>)(inBufferSize&#32;-&#32;inBufferOffset)&#32;&lt;&#32;2)&#32;{
+735 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;<emphasis role="keywordflow">return</emphasis>&#32;STATUS_CRC_WRONG;
+736 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;}
+737 
+738 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;<emphasis role="comment">//&#32;Verify&#32;CRC_A&#32;-&#32;do&#32;our&#32;own&#32;calculation&#32;and&#32;store&#32;the&#32;control&#32;in&#32;controlBuffer.</emphasis>
+739 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;<emphasis role="keywordtype">byte</emphasis>&#32;controlBuffer[2];
+740 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;MFRC522::StatusCode&#32;status&#32;=&#32;<link linkend="_classMFRC522_1a7c65647b1d72b6ee7557797322030643">PCD_CalculateCRC</link>(inBuffer,&#32;inBufferSize&#32;-&#32;2,&#32;controlBuffer);
+741 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;<emphasis role="keywordflow">if</emphasis>&#32;(status&#32;!=&#32;STATUS_OK)&#32;{
+742 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;<emphasis role="keywordflow">return</emphasis>&#32;status;
+743 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;}
+744 
+745 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;<emphasis role="keywordflow">if</emphasis>&#32;((inBuffer[inBufferSize&#32;-&#32;2]&#32;!=&#32;controlBuffer[0])&#32;||&#32;(inBuffer[inBufferSize&#32;-&#32;1]&#32;!=&#32;controlBuffer[1]))&#32;{
+746 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;<emphasis role="keywordflow">return</emphasis>&#32;STATUS_CRC_WRONG;
+747 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;}
+748 
+749 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;<emphasis role="comment">//&#32;Take&#32;away&#32;the&#32;CRC&#32;bytes</emphasis>
+750 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;inBufferSize&#32;-=&#32;2;
+751 &#32;&#32;&#32;&#32;}
+752 
+753 &#32;&#32;&#32;&#32;<emphasis role="comment">//&#32;Got&#32;more&#32;data?</emphasis>
+754 &#32;&#32;&#32;&#32;<emphasis role="keywordflow">if</emphasis>&#32;(inBufferSize&#32;&gt;&#32;inBufferOffset)&#32;{
+755 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;<emphasis role="keywordflow">if</emphasis>&#32;((inBufferSize&#32;-&#32;inBufferOffset)&#32;&gt;&#32;back-&gt;inf.size)&#32;{
+756 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;<emphasis role="keywordflow">return</emphasis>&#32;STATUS_NO_ROOM;
+757 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;}
+758 
+759 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;memcpy(back-&gt;inf.data,&#32;&amp;inBuffer[inBufferOffset],&#32;inBufferSize&#32;-&#32;inBufferOffset);
+760 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;back-&gt;inf.size&#32;=&#32;inBufferSize&#32;-&#32;inBufferOffset;
+761 &#32;&#32;&#32;&#32;}&#32;<emphasis role="keywordflow">else</emphasis>&#32;{
+762 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;back-&gt;inf.size&#32;=&#32;0;
+763 &#32;&#32;&#32;&#32;}
+764 
+765 &#32;&#32;&#32;&#32;<emphasis role="comment">//&#32;If&#32;the&#32;response&#32;is&#32;a&#32;R-Block&#32;check&#32;NACK</emphasis>
+766 &#32;&#32;&#32;&#32;<emphasis role="keywordflow">if</emphasis>&#32;(((inBuffer[0]&#32;&amp;&#32;0xC0)&#32;==&#32;0x80)&#32;&amp;&amp;&#32;(inBuffer[0]&#32;&amp;&#32;0x20))&#32;{
+767 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;<emphasis role="keywordflow">return</emphasis>&#32;STATUS_MIFARE_NACK;
+768 &#32;&#32;&#32;&#32;}
+769 &#32;&#32;&#32;&#32;
+770 &#32;&#32;&#32;&#32;<emphasis role="keywordflow">return</emphasis>&#32;result;
+771 }
+775 MFRC522::StatusCode&#32;MFRC522Extended::TCL_Transceive(<link linkend="_classMFRC522Extended_1structMFRC522Extended_1_1TagInfo">TagInfo</link>&#32;*tag,&#32;<emphasis role="keywordtype">byte</emphasis>&#32;*sendData,&#32;<emphasis role="keywordtype">byte</emphasis>&#32;sendLen,&#32;<emphasis role="keywordtype">byte</emphasis>&#32;*backData,&#32;<emphasis role="keywordtype">byte</emphasis>&#32;*backLen)
+776 {
+777 &#32;&#32;&#32;&#32;MFRC522::StatusCode&#32;result;
+778 
+779 &#32;&#32;&#32;&#32;<link linkend="_classMFRC522Extended_1structMFRC522Extended_1_1PcbBlock">PcbBlock</link>&#32;out;
+780 &#32;&#32;&#32;&#32;<link linkend="_classMFRC522Extended_1structMFRC522Extended_1_1PcbBlock">PcbBlock</link>&#32;in;
+781 &#32;&#32;&#32;&#32;<emphasis role="keywordtype">byte</emphasis>&#32;outBuffer[FIFO_SIZE];
+782 &#32;&#32;&#32;&#32;<emphasis role="keywordtype">byte</emphasis>&#32;outBufferSize&#32;=&#32;FIFO_SIZE;
+783 &#32;&#32;&#32;&#32;<emphasis role="keywordtype">byte</emphasis>&#32;totalBackLen&#32;=&#32;*backLen;
+784 
+785 &#32;&#32;&#32;&#32;<emphasis role="comment">//&#32;This&#32;command&#32;sends&#32;an&#32;I-Block</emphasis>
+786 &#32;&#32;&#32;&#32;out.prologue.pcb&#32;=&#32;0x02;
+787 
+788 &#32;&#32;&#32;&#32;<emphasis role="keywordflow">if</emphasis>&#32;(tag-&gt;ats.tc1.supportsCID)&#32;{
+789 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;out.prologue.pcb&#32;|=&#32;0x08;
+790 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;out.prologue.cid&#32;=&#32;0x00;&#32;&#32;&#32;&#32;<emphasis role="comment">//&#32;CID&#32;is&#32;curentlly&#32;hardcoded&#32;as&#32;0x00</emphasis>
+791 &#32;&#32;&#32;&#32;}
+792 
+793 &#32;&#32;&#32;&#32;<emphasis role="comment">//&#32;This&#32;command&#32;doe&#32;not&#32;support&#32;NAD</emphasis>
+794 &#32;&#32;&#32;&#32;out.prologue.pcb&#32;&amp;=&#32;0xFB;
+795 &#32;&#32;&#32;&#32;out.prologue.nad&#32;=&#32;0x00;
+796 
+797 &#32;&#32;&#32;&#32;<emphasis role="comment">//&#32;Set&#32;the&#32;block&#32;number</emphasis>
+798 &#32;&#32;&#32;&#32;<emphasis role="keywordflow">if</emphasis>&#32;(tag-&gt;blockNumber)&#32;{
+799 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;out.prologue.pcb&#32;|=&#32;0x01;
+800 &#32;&#32;&#32;&#32;}
+801 
+802 &#32;&#32;&#32;&#32;<emphasis role="comment">//&#32;Do&#32;we&#32;have&#32;data&#32;to&#32;send?</emphasis>
+803 &#32;&#32;&#32;&#32;<emphasis role="keywordflow">if</emphasis>&#32;(sendData&#32;&amp;&amp;&#32;(sendLen&#32;&gt;&#32;0))&#32;{
+804 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;out.inf.size&#32;=&#32;sendLen;
+805 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;out.inf.data&#32;=&#32;sendData;
+806 &#32;&#32;&#32;&#32;}&#32;<emphasis role="keywordflow">else</emphasis>&#32;{
+807 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;out.inf.size&#32;=&#32;0;
+808 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;out.inf.data&#32;=&#32;NULL;
+809 &#32;&#32;&#32;&#32;}
+810 
+811 &#32;&#32;&#32;&#32;<emphasis role="comment">//&#32;Initialize&#32;the&#32;receiving&#32;data</emphasis>
+812 &#32;&#32;&#32;&#32;<emphasis role="comment">//&#32;TODO&#32;Warning:&#32;Value&#32;escapes&#32;the&#32;local&#32;scope</emphasis>
+813 &#32;&#32;&#32;&#32;in.inf.data&#32;=&#32;outBuffer;
+814 &#32;&#32;&#32;&#32;in.inf.size&#32;=&#32;outBufferSize;
+815 
+816 &#32;&#32;&#32;&#32;result&#32;=&#32;TCL_Transceive(&amp;out,&#32;&amp;in);
+817 &#32;&#32;&#32;&#32;<emphasis role="keywordflow">if</emphasis>&#32;(result&#32;!=&#32;STATUS_OK)&#32;{
+818 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;<emphasis role="keywordflow">return</emphasis>&#32;result;
+819 &#32;&#32;&#32;&#32;}
+820 
+821 &#32;&#32;&#32;&#32;<emphasis role="comment">//&#32;Swap&#32;block&#32;number&#32;on&#32;success</emphasis>
+822 &#32;&#32;&#32;&#32;tag-&gt;blockNumber&#32;=&#32;!tag-&gt;blockNumber;
+823 
+824 &#32;&#32;&#32;&#32;<emphasis role="keywordflow">if</emphasis>&#32;(backData&#32;!=&#32;<emphasis role="keyword">nullptr</emphasis>&#32;&amp;&amp;&#32;backLen&#32;!=<emphasis role="keyword">nullptr</emphasis>)&#32;{
+825 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;<emphasis role="keywordflow">if</emphasis>&#32;(*backLen&#32;&lt;&#32;in.inf.size)
+826 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;<emphasis role="keywordflow">return</emphasis>&#32;STATUS_NO_ROOM;
+827 
+828 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;*backLen&#32;=&#32;in.inf.size;
+829 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;memcpy(backData,&#32;in.inf.data,&#32;in.inf.size);
+830 &#32;&#32;&#32;&#32;}
+831 
+832 &#32;&#32;&#32;&#32;<emphasis role="comment">//&#32;Check&#32;chaining</emphasis>
+833 &#32;&#32;&#32;&#32;<emphasis role="keywordflow">if</emphasis>&#32;((in.prologue.pcb&#32;&amp;&#32;0x10)&#32;==&#32;0x00)
+834 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;<emphasis role="keywordflow">return</emphasis>&#32;result;
+835 
+836 &#32;&#32;&#32;&#32;<emphasis role="comment">//&#32;Result&#32;is&#32;chained</emphasis>
+837 &#32;&#32;&#32;&#32;<emphasis role="comment">//&#32;Send&#32;an&#32;ACK&#32;to&#32;receive&#32;more&#32;data</emphasis>
+838 &#32;&#32;&#32;&#32;<emphasis role="comment">//&#32;TODO:&#32;Should&#32;be&#32;checked&#32;I&apos;ve&#32;never&#32;needed&#32;to&#32;send&#32;an&#32;ACK</emphasis>
+839 &#32;&#32;&#32;&#32;<emphasis role="keywordflow">while</emphasis>&#32;(in.prologue.pcb&#32;&amp;&#32;0x10)&#32;{
+840 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;<emphasis role="keywordtype">byte</emphasis>&#32;ackData[FIFO_SIZE];
+841 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;<emphasis role="keywordtype">byte</emphasis>&#32;ackDataSize&#32;=&#32;FIFO_SIZE;
+842 
+843 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;result&#32;=&#32;<link linkend="_classMFRC522Extended_1aebbf1bbae99dea09128a6bcc4cf27f9d">TCL_TransceiveRBlock</link>(tag,&#32;<emphasis role="keyword">true</emphasis>,&#32;ackData,&#32;&amp;ackDataSize);
+844 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;<emphasis role="keywordflow">if</emphasis>&#32;(result&#32;!=&#32;STATUS_OK)
+845 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;<emphasis role="keywordflow">return</emphasis>&#32;result;
+846 
+847 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;<emphasis role="keywordflow">if</emphasis>&#32;(backData&#32;!=&#32;<emphasis role="keyword">nullptr</emphasis>&#32;&amp;&amp;&#32;backLen&#32;!=&#32;<emphasis role="keyword">nullptr</emphasis>)&#32;{
+848 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;<emphasis role="keywordflow">if</emphasis>&#32;((*backLen&#32;+&#32;ackDataSize)&#32;&gt;&#32;totalBackLen)
+849 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;<emphasis role="keywordflow">return</emphasis>&#32;STATUS_NO_ROOM;
+850 
+851 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;memcpy(&amp;(backData[*backLen]),&#32;ackData,&#32;ackDataSize);
+852 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;*backLen&#32;+=&#32;ackDataSize;
+853 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;}
+854 &#32;&#32;&#32;&#32;}
+855 &#32;&#32;&#32;&#32;
+856 &#32;&#32;&#32;&#32;<emphasis role="keywordflow">return</emphasis>&#32;result;
+857 }&#32;<emphasis role="comment">//&#32;End&#32;TCL_Transceive()</emphasis>
+858 
+862 MFRC522::StatusCode&#32;<link linkend="_classMFRC522Extended_1aebbf1bbae99dea09128a6bcc4cf27f9d">MFRC522Extended::TCL_TransceiveRBlock</link>(<link linkend="_classMFRC522Extended_1structMFRC522Extended_1_1TagInfo">TagInfo</link>&#32;*tag,&#32;<emphasis role="keywordtype">bool</emphasis>&#32;ack,&#32;<emphasis role="keywordtype">byte</emphasis>&#32;*backData,&#32;<emphasis role="keywordtype">byte</emphasis>&#32;*backLen)
+863 {
+864 &#32;&#32;&#32;&#32;MFRC522::StatusCode&#32;result;
+865 
+866 &#32;&#32;&#32;&#32;<link linkend="_classMFRC522Extended_1structMFRC522Extended_1_1PcbBlock">PcbBlock</link>&#32;out;
+867 &#32;&#32;&#32;&#32;<link linkend="_classMFRC522Extended_1structMFRC522Extended_1_1PcbBlock">PcbBlock</link>&#32;in;
+868 &#32;&#32;&#32;&#32;<emphasis role="keywordtype">byte</emphasis>&#32;outBuffer[FIFO_SIZE];
+869 &#32;&#32;&#32;&#32;<emphasis role="keywordtype">byte</emphasis>&#32;outBufferSize&#32;=&#32;FIFO_SIZE;
+870 
+871 &#32;&#32;&#32;&#32;<emphasis role="comment">//&#32;This&#32;command&#32;sends&#32;an&#32;R-Block</emphasis>
+872 &#32;&#32;&#32;&#32;<emphasis role="keywordflow">if</emphasis>&#32;(ack)
+873 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;out.prologue.pcb&#32;=&#32;0xA2;&#32;&#32;&#32;&#32;<emphasis role="comment">//&#32;ACK</emphasis>
+874 &#32;&#32;&#32;&#32;<emphasis role="keywordflow">else</emphasis>&#32;
+875 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;out.prologue.pcb&#32;=&#32;0xB2;&#32;&#32;&#32;&#32;<emphasis role="comment">//&#32;NAK</emphasis>
+876 &#32;&#32;&#32;&#32;
+877 
+878 &#32;&#32;&#32;&#32;<emphasis role="keywordflow">if</emphasis>&#32;(tag-&gt;ats.tc1.supportsCID)&#32;{
+879 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;out.prologue.pcb&#32;|=&#32;0x08;
+880 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;out.prologue.cid&#32;=&#32;0x00;&#32;&#32;&#32;&#32;<emphasis role="comment">//&#32;CID&#32;is&#32;curentlly&#32;hardcoded&#32;as&#32;0x00</emphasis>
+881 &#32;&#32;&#32;&#32;}
+882 
+883 &#32;&#32;&#32;&#32;<emphasis role="comment">//&#32;This&#32;command&#32;doe&#32;not&#32;support&#32;NAD</emphasis>
+884 &#32;&#32;&#32;&#32;out.prologue.pcb&#32;&amp;=&#32;0xFB;
+885 &#32;&#32;&#32;&#32;out.prologue.nad&#32;=&#32;0x00;
+886 
+887 &#32;&#32;&#32;&#32;<emphasis role="comment">//&#32;Set&#32;the&#32;block&#32;number</emphasis>
+888 &#32;&#32;&#32;&#32;<emphasis role="keywordflow">if</emphasis>&#32;(tag-&gt;blockNumber)&#32;{
+889 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;out.prologue.pcb&#32;|=&#32;0x01;
+890 &#32;&#32;&#32;&#32;}
+891 
+892 &#32;&#32;&#32;&#32;<emphasis role="comment">//&#32;No&#32;INF&#32;data&#32;for&#32;R-Block</emphasis>
+893 &#32;&#32;&#32;&#32;out.inf.size&#32;=&#32;0;
+894 &#32;&#32;&#32;&#32;out.inf.data&#32;=&#32;NULL;
+895 
+896 &#32;&#32;&#32;&#32;<emphasis role="comment">//&#32;Initialize&#32;the&#32;receiving&#32;data</emphasis>
+897 &#32;&#32;&#32;&#32;<emphasis role="comment">//&#32;TODO&#32;Warning:&#32;Value&#32;escapes&#32;the&#32;local&#32;scope</emphasis>
+898 &#32;&#32;&#32;&#32;in.inf.data&#32;=&#32;outBuffer;
+899 &#32;&#32;&#32;&#32;in.inf.size&#32;=&#32;outBufferSize;
+900 
+901 &#32;&#32;&#32;&#32;result&#32;=&#32;TCL_Transceive(&amp;out,&#32;&amp;in);
+902 &#32;&#32;&#32;&#32;<emphasis role="keywordflow">if</emphasis>&#32;(result&#32;!=&#32;STATUS_OK)&#32;{
+903 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;<emphasis role="keywordflow">return</emphasis>&#32;result;
+904 &#32;&#32;&#32;&#32;}
+905 
+906 &#32;&#32;&#32;&#32;<emphasis role="comment">//&#32;Swap&#32;block&#32;number&#32;on&#32;success</emphasis>
+907 &#32;&#32;&#32;&#32;tag-&gt;blockNumber&#32;=&#32;!tag-&gt;blockNumber;
+908 
+909 &#32;&#32;&#32;&#32;<emphasis role="keywordflow">if</emphasis>&#32;(backData&#32;&amp;&amp;&#32;backLen)&#32;{
+910 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;<emphasis role="keywordflow">if</emphasis>&#32;(*backLen&#32;&lt;&#32;in.inf.size)
+911 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;<emphasis role="keywordflow">return</emphasis>&#32;STATUS_NO_ROOM;
+912 
+913 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;*backLen&#32;=&#32;in.inf.size;
+914 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;memcpy(backData,&#32;in.inf.data,&#32;in.inf.size);
+915 &#32;&#32;&#32;&#32;}
+916 &#32;&#32;&#32;&#32;
+917 &#32;&#32;&#32;&#32;<emphasis role="keywordflow">return</emphasis>&#32;result;
+918 }&#32;<emphasis role="comment">//&#32;End&#32;TCL_TransceiveRBlock()</emphasis>
+919 
+923 MFRC522::StatusCode&#32;<link linkend="_classMFRC522Extended_1a2de7e4ead4065d896d7ee39e9e2040dd">MFRC522Extended::TCL_Deselect</link>(<link linkend="_classMFRC522Extended_1structMFRC522Extended_1_1TagInfo">TagInfo</link>&#32;*tag)
+924 {
+925 &#32;&#32;&#32;&#32;MFRC522::StatusCode&#32;result;
+926 &#32;&#32;&#32;&#32;<emphasis role="keywordtype">byte</emphasis>&#32;outBuffer[4];
+927 &#32;&#32;&#32;&#32;<emphasis role="keywordtype">byte</emphasis>&#32;outBufferSize&#32;=&#32;1;
+928 &#32;&#32;&#32;&#32;<emphasis role="keywordtype">byte</emphasis>&#32;inBuffer[FIFO_SIZE];
+929 &#32;&#32;&#32;&#32;<emphasis role="keywordtype">byte</emphasis>&#32;inBufferSize&#32;=&#32;FIFO_SIZE;
+930 
+931 &#32;&#32;&#32;&#32;outBuffer[0]&#32;=&#32;0xC2;
+932 &#32;&#32;&#32;&#32;<emphasis role="keywordflow">if</emphasis>&#32;(tag-&gt;ats.tc1.supportsCID)
+933 &#32;&#32;&#32;&#32;{
+934 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;outBuffer[0]&#32;|=&#32;0x08;
+935 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;outBuffer[1]&#32;=&#32;0x00;&#32;&#32;<emphasis role="comment">//&#32;CID&#32;is&#32;hardcoded</emphasis>
+936 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;outBufferSize&#32;=&#32;2;
+937 &#32;&#32;&#32;&#32;}
+938 
+939 &#32;&#32;&#32;&#32;result&#32;=&#32;<link linkend="_classMFRC522_1aaa96aa7ec4f95e0835cb758ad0450d74">PCD_TransceiveData</link>(outBuffer,&#32;outBufferSize,&#32;inBuffer,&#32;&amp;inBufferSize);
+940 &#32;&#32;&#32;&#32;<emphasis role="keywordflow">if</emphasis>&#32;(result&#32;!=&#32;STATUS_OK)&#32;{
+941 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;<emphasis role="keywordflow">return</emphasis>&#32;result;
+942 &#32;&#32;&#32;&#32;}
+943 
+944 &#32;&#32;&#32;&#32;<emphasis role="comment">//&#32;TODO:Maybe&#32;do&#32;some&#32;checks?&#32;In&#32;my&#32;test&#32;it&#32;returns:&#32;CA&#32;00&#32;(Same&#32;data&#32;as&#32;I&#32;sent&#32;to&#32;my&#32;card)</emphasis>
+945 
+946 &#32;&#32;&#32;&#32;<emphasis role="keywordflow">return</emphasis>&#32;result;
+947 }&#32;<emphasis role="comment">//&#32;End&#32;TCL_Deselect()</emphasis>
+948 
+950 <emphasis role="comment">//&#32;Support&#32;functions</emphasis>
+952 
+958 MFRC522::PICC_Type&#32;<link linkend="_classMFRC522Extended_1addf00efdd2de1002a4f4b34ebe0e1fb2">MFRC522Extended::PICC_GetType</link>(<link linkend="_classMFRC522Extended_1structMFRC522Extended_1_1TagInfo">TagInfo</link>&#32;*tag&#32;&#32;&#32;&#32;&#32;&#32;&#32;
+959 )&#32;{
+960 &#32;&#32;&#32;&#32;<emphasis role="comment">//&#32;http://www.nxp.com/documents/application_note/AN10833.pdf&#32;</emphasis>
+961 &#32;&#32;&#32;&#32;<emphasis role="comment">//&#32;3.2&#32;Coding&#32;of&#32;Select&#32;Acknowledge&#32;(SAK)</emphasis>
+962 &#32;&#32;&#32;&#32;<emphasis role="comment">//&#32;ignore&#32;8-bit&#32;(iso14443&#32;starts&#32;with&#32;LSBit&#32;=&#32;bit&#32;1)</emphasis>
+963 &#32;&#32;&#32;&#32;<emphasis role="comment">//&#32;fixes&#32;wrong&#32;type&#32;for&#32;manufacturer&#32;Infineon&#32;(http://nfc-tools.org/index.php?title=ISO14443A)</emphasis>
+964 &#32;&#32;&#32;&#32;<emphasis role="keywordtype">byte</emphasis>&#32;sak&#32;=&#32;tag-&gt;uid.sak&#32;&amp;&#32;0x7F;
+965 &#32;&#32;&#32;&#32;<emphasis role="keywordflow">switch</emphasis>&#32;(sak)&#32;{
+966 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;<emphasis role="keywordflow">case</emphasis>&#32;0x04:&#32;&#32;<emphasis role="keywordflow">return</emphasis>&#32;PICC_TYPE_NOT_COMPLETE;&#32;&#32;<emphasis role="comment">//&#32;UID&#32;not&#32;complete</emphasis>
+967 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;<emphasis role="keywordflow">case</emphasis>&#32;0x09:&#32;&#32;<emphasis role="keywordflow">return</emphasis>&#32;PICC_TYPE_MIFARE_MINI;
+968 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;<emphasis role="keywordflow">case</emphasis>&#32;0x08:&#32;&#32;<emphasis role="keywordflow">return</emphasis>&#32;PICC_TYPE_MIFARE_1K;
+969 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;<emphasis role="keywordflow">case</emphasis>&#32;0x18:&#32;&#32;<emphasis role="keywordflow">return</emphasis>&#32;PICC_TYPE_MIFARE_4K;
+970 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;<emphasis role="keywordflow">case</emphasis>&#32;0x00:&#32;&#32;<emphasis role="keywordflow">return</emphasis>&#32;PICC_TYPE_MIFARE_UL;
+971 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;<emphasis role="keywordflow">case</emphasis>&#32;0x10:
+972 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;<emphasis role="keywordflow">case</emphasis>&#32;0x11:&#32;&#32;<emphasis role="keywordflow">return</emphasis>&#32;PICC_TYPE_MIFARE_PLUS;
+973 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;<emphasis role="keywordflow">case</emphasis>&#32;0x01:&#32;&#32;<emphasis role="keywordflow">return</emphasis>&#32;PICC_TYPE_TNP3XXX;
+974 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;<emphasis role="keywordflow">case</emphasis>&#32;0x20:
+975 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;<emphasis role="keywordflow">if</emphasis>&#32;(tag-&gt;atqa&#32;==&#32;0x0344)
+976 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;<emphasis role="keywordflow">return</emphasis>&#32;PICC_TYPE_MIFARE_DESFIRE;
+977 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;<emphasis role="keywordflow">return</emphasis>&#32;PICC_TYPE_ISO_14443_4;
+978 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;<emphasis role="keywordflow">case</emphasis>&#32;0x40:&#32;&#32;<emphasis role="keywordflow">return</emphasis>&#32;PICC_TYPE_ISO_18092;
+979 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;<emphasis role="keywordflow">default</emphasis>:&#32;&#32;&#32;&#32;<emphasis role="keywordflow">return</emphasis>&#32;PICC_TYPE_UNKNOWN;
+980 &#32;&#32;&#32;&#32;}
+981 }&#32;<emphasis role="comment">//&#32;End&#32;PICC_GetType()</emphasis>
+982 
+988 <emphasis role="keywordtype">void</emphasis>&#32;<link linkend="_classMFRC522Extended_1a1739931b517243305c765d547d819968">MFRC522Extended::PICC_DumpToSerial</link>(<link linkend="_classMFRC522Extended_1structMFRC522Extended_1_1TagInfo">TagInfo</link>&#32;*tag)
+989 {
+990 &#32;&#32;&#32;&#32;<link linkend="_classMFRC522_1structMFRC522_1_1MIFARE__Key">MIFARE_Key</link>&#32;key;
+991 
+992 &#32;&#32;&#32;&#32;<emphasis role="comment">//&#32;Dump&#32;UID,&#32;SAK&#32;and&#32;Type</emphasis>
+993 &#32;&#32;&#32;&#32;<link linkend="_classMFRC522Extended_1a456d810cdd67f28aa319746d277841b8">PICC_DumpDetailsToSerial</link>(tag);
+994 
+995 &#32;&#32;&#32;&#32;<emphasis role="comment">//&#32;Dump&#32;contents</emphasis>
+996 &#32;&#32;&#32;&#32;PICC_Type&#32;piccType&#32;=&#32;<link linkend="_classMFRC522_1ac80a18228260bdde07dff5d4ac23bb53">MFRC522::PICC_GetType</link>(tag-&gt;uid.sak);
+997 &#32;&#32;&#32;&#32;<emphasis role="keywordflow">switch</emphasis>&#32;(piccType)&#32;{
+998 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;<emphasis role="keywordflow">case</emphasis>&#32;PICC_TYPE_MIFARE_MINI:
+999 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;<emphasis role="keywordflow">case</emphasis>&#32;PICC_TYPE_MIFARE_1K:
+1000 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;<emphasis role="keywordflow">case</emphasis>&#32;PICC_TYPE_MIFARE_4K:
+1001 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;<emphasis role="comment">//&#32;All&#32;keys&#32;are&#32;set&#32;to&#32;FFFFFFFFFFFFh&#32;at&#32;chip&#32;delivery&#32;from&#32;the&#32;factory.</emphasis>
+1002 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;<emphasis role="keywordflow">for</emphasis>&#32;(<emphasis role="keywordtype">byte</emphasis>&#32;i&#32;=&#32;0;&#32;i&#32;&lt;&#32;6;&#32;i++)&#32;{
+1003 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;key.keyByte[i]&#32;=&#32;0xFF;
+1004 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;}
+1005 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;<link linkend="_classMFRC522_1aafba2e74124efa2d736c1672ea104190">PICC_DumpMifareClassicToSerial</link>(&amp;tag-&gt;uid,&#32;piccType,&#32;&amp;key);
+1006 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;<emphasis role="keywordflow">break</emphasis>;
+1007 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;
+1008 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;<emphasis role="keywordflow">case</emphasis>&#32;PICC_TYPE_MIFARE_UL:
+1009 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;<link linkend="_classMFRC522_1ac148d28877dd577606a28e9e7e4b6809">PICC_DumpMifareUltralightToSerial</link>();
+1010 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;<emphasis role="keywordflow">break</emphasis>;
+1011 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;
+1012 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;<emphasis role="keywordflow">case</emphasis>&#32;PICC_TYPE_ISO_14443_4:
+1013 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;<emphasis role="keywordflow">case</emphasis>&#32;PICC_TYPE_MIFARE_DESFIRE:
+1014 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;<link linkend="_classMFRC522Extended_1a8bb3b09bd19eb99430730af0fbb1565f">PICC_DumpISO14443_4</link>(tag);
+1015 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;Serial.println(F(<emphasis role="stringliteral">&quot;Dumping&#32;memory&#32;contents&#32;not&#32;implemented&#32;for&#32;that&#32;PICC&#32;type.&quot;</emphasis>));
+1016 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;<emphasis role="keywordflow">break</emphasis>;
+1017 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;<emphasis role="keywordflow">case</emphasis>&#32;PICC_TYPE_ISO_18092:
+1018 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;<emphasis role="keywordflow">case</emphasis>&#32;PICC_TYPE_MIFARE_PLUS:
+1019 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;<emphasis role="keywordflow">case</emphasis>&#32;PICC_TYPE_TNP3XXX:
+1020 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;Serial.println(F(<emphasis role="stringliteral">&quot;Dumping&#32;memory&#32;contents&#32;not&#32;implemented&#32;for&#32;that&#32;PICC&#32;type.&quot;</emphasis>));
+1021 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;<emphasis role="keywordflow">break</emphasis>;
+1022 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;
+1023 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;<emphasis role="keywordflow">case</emphasis>&#32;PICC_TYPE_UNKNOWN:
+1024 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;<emphasis role="keywordflow">case</emphasis>&#32;PICC_TYPE_NOT_COMPLETE:
+1025 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;<emphasis role="keywordflow">default</emphasis>:
+1026 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;<emphasis role="keywordflow">break</emphasis>;&#32;<emphasis role="comment">//&#32;No&#32;memory&#32;dump&#32;here</emphasis>
+1027 &#32;&#32;&#32;&#32;}
+1028 
+1029 &#32;&#32;&#32;&#32;Serial.println();
+1030 &#32;&#32;&#32;&#32;<link linkend="_classMFRC522_1a8874921b4ed26c5b73d89c90f76d4933">PICC_HaltA</link>();&#32;<emphasis role="comment">//&#32;Already&#32;done&#32;if&#32;it&#32;was&#32;a&#32;MIFARE&#32;Classic&#32;PICC.</emphasis>
+1031 }
+1032 
+1036 <emphasis role="keywordtype">void</emphasis>&#32;<link linkend="_classMFRC522Extended_1a456d810cdd67f28aa319746d277841b8">MFRC522Extended::PICC_DumpDetailsToSerial</link>(<link linkend="_classMFRC522Extended_1structMFRC522Extended_1_1TagInfo">TagInfo</link>&#32;*tag&#32;
+1037 )&#32;{
+1038 &#32;&#32;&#32;&#32;<emphasis role="comment">//&#32;ATQA</emphasis>
+1039 &#32;&#32;&#32;&#32;Serial.print(F(<emphasis role="stringliteral">&quot;Card&#32;ATQA:&quot;</emphasis>));
+1040 &#32;&#32;&#32;&#32;<emphasis role="keywordflow">if</emphasis>&#32;(((tag-&gt;atqa&#32;&amp;&#32;0xFF00u)&#32;&gt;&gt;&#32;8)&#32;&lt;&#32;0x10)
+1041 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;Serial.print(F(<emphasis role="stringliteral">&quot;&#32;0&quot;</emphasis>));
+1042 &#32;&#32;&#32;&#32;Serial.print((tag-&gt;atqa&#32;&amp;&#32;0xFF00u)&#32;&gt;&gt;&#32;8,&#32;HEX);
+1043 &#32;&#32;&#32;&#32;<emphasis role="keywordflow">if</emphasis>&#32;((tag-&gt;atqa&#32;&amp;&#32;0x00FFu)&#32;&lt;&#32;0x10)
+1044 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;Serial.print(F(<emphasis role="stringliteral">&quot;0&quot;</emphasis>));
+1045 &#32;&#32;&#32;&#32;<emphasis role="keywordflow">else</emphasis>
+1046 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;Serial.print(F(<emphasis role="stringliteral">&quot;&#32;&quot;</emphasis>));
+1047 &#32;&#32;&#32;&#32;Serial.println(tag-&gt;atqa&#32;&amp;&#32;0x00FFu,&#32;HEX);
+1048 
+1049 &#32;&#32;&#32;&#32;<emphasis role="comment">//&#32;UID</emphasis>
+1050 &#32;&#32;&#32;&#32;Serial.print(F(<emphasis role="stringliteral">&quot;Card&#32;UID:&quot;</emphasis>));
+1051 &#32;&#32;&#32;&#32;<emphasis role="keywordflow">for</emphasis>&#32;(<emphasis role="keywordtype">byte</emphasis>&#32;i&#32;=&#32;0;&#32;i&#32;&lt;&#32;tag-&gt;uid.size;&#32;i++)&#32;{
+1052 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;<emphasis role="keywordflow">if</emphasis>&#32;(tag-&gt;uid.uidByte[i]&#32;&lt;&#32;0x10)
+1053 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;Serial.print(F(<emphasis role="stringliteral">&quot;&#32;0&quot;</emphasis>));
+1054 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;<emphasis role="keywordflow">else</emphasis>
+1055 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;Serial.print(F(<emphasis role="stringliteral">&quot;&#32;&quot;</emphasis>));
+1056 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;Serial.print(tag-&gt;uid.uidByte[i],&#32;HEX);
+1057 &#32;&#32;&#32;&#32;}
+1058 &#32;&#32;&#32;&#32;Serial.println();
+1059 
+1060 &#32;&#32;&#32;&#32;<emphasis role="comment">//&#32;SAK</emphasis>
+1061 &#32;&#32;&#32;&#32;Serial.print(F(<emphasis role="stringliteral">&quot;Card&#32;SAK:&#32;&quot;</emphasis>));
+1062 &#32;&#32;&#32;&#32;<emphasis role="keywordflow">if</emphasis>&#32;(tag-&gt;uid.sak&#32;&lt;&#32;0x10)
+1063 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;Serial.print(F(<emphasis role="stringliteral">&quot;0&quot;</emphasis>));
+1064 &#32;&#32;&#32;&#32;Serial.println(tag-&gt;uid.sak,&#32;HEX);
+1065 
+1066 &#32;&#32;&#32;&#32;<emphasis role="comment">//&#32;(suggested)&#32;PICC&#32;type</emphasis>
+1067 &#32;&#32;&#32;&#32;PICC_Type&#32;piccType&#32;=&#32;<link linkend="_classMFRC522Extended_1addf00efdd2de1002a4f4b34ebe0e1fb2">PICC_GetType</link>(tag);
+1068 &#32;&#32;&#32;&#32;Serial.print(F(<emphasis role="stringliteral">&quot;PICC&#32;type:&#32;&quot;</emphasis>));
+1069 &#32;&#32;&#32;&#32;Serial.println(<link linkend="_classMFRC522_1aae4a482352d4d4b7d7a9714b0b0b7c38">PICC_GetTypeName</link>(piccType));
+1070 }&#32;<emphasis role="comment">//&#32;End&#32;PICC_DumpDetailsToSerial()</emphasis>
+1071 
+1075 <emphasis role="keywordtype">void</emphasis>&#32;<link linkend="_classMFRC522Extended_1a8bb3b09bd19eb99430730af0fbb1565f">MFRC522Extended::PICC_DumpISO14443_4</link>(<link linkend="_classMFRC522Extended_1structMFRC522Extended_1_1TagInfo">TagInfo</link>&#32;*tag)
+1076 {
+1077 &#32;&#32;&#32;&#32;<emphasis role="comment">//&#32;ATS</emphasis>
+1078 &#32;&#32;&#32;&#32;<emphasis role="keywordflow">if</emphasis>&#32;(tag-&gt;ats.size&#32;&gt;&#32;0x00)&#32;{&#32;<emphasis role="comment">//&#32;The&#32;first&#32;byte&#32;is&#32;the&#32;ATS&#32;length&#32;including&#32;the&#32;length&#32;byte</emphasis>
+1079 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;Serial.print(F(<emphasis role="stringliteral">&quot;Card&#32;ATS:&quot;</emphasis>));
+1080 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;<emphasis role="keywordflow">for</emphasis>&#32;(<emphasis role="keywordtype">byte</emphasis>&#32;offset&#32;=&#32;0;&#32;offset&#32;&lt;&#32;tag-&gt;ats.size;&#32;offset++)&#32;{
+1081 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;<emphasis role="keywordflow">if</emphasis>&#32;(tag-&gt;ats.data[offset]&#32;&lt;&#32;0x10)
+1082 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;Serial.print(F(<emphasis role="stringliteral">&quot;&#32;0&quot;</emphasis>));
+1083 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;<emphasis role="keywordflow">else</emphasis>
+1084 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;Serial.print(F(<emphasis role="stringliteral">&quot;&#32;&quot;</emphasis>));
+1085 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;Serial.print(tag-&gt;ats.data[offset],&#32;HEX);
+1086 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;}
+1087 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;Serial.println();
+1088 &#32;&#32;&#32;&#32;}
+1089 &#32;&#32;&#32;&#32;
+1090 }&#32;<emphasis role="comment">//&#32;End&#32;PICC_DumpISO14443_4</emphasis>
+1091 
+1093 <emphasis role="comment">//&#32;Convenience&#32;functions&#32;-&#32;does&#32;not&#32;add&#32;extra&#32;functionality</emphasis>
+1095 
+1102 <emphasis role="keywordtype">bool</emphasis>&#32;<link linkend="_classMFRC522Extended_1afaa1289052274755acec885017507b64">MFRC522Extended::PICC_IsNewCardPresent</link>()&#32;{
+1103 &#32;&#32;&#32;&#32;<emphasis role="keywordtype">byte</emphasis>&#32;bufferATQA[2];
+1104 &#32;&#32;&#32;&#32;<emphasis role="keywordtype">byte</emphasis>&#32;bufferSize&#32;=&#32;<emphasis role="keyword">sizeof</emphasis>(bufferATQA);
+1105 
+1106 &#32;&#32;&#32;&#32;<emphasis role="comment">//&#32;Reset&#32;baud&#32;rates</emphasis>
+1107 &#32;&#32;&#32;&#32;<link linkend="_classMFRC522_1aa5e5825adb4c784d8a5a60242c135fb7">PCD_WriteRegister</link>(TxModeReg,&#32;0x00);
+1108 &#32;&#32;&#32;&#32;<link linkend="_classMFRC522_1aa5e5825adb4c784d8a5a60242c135fb7">PCD_WriteRegister</link>(RxModeReg,&#32;0x00);
+1109 &#32;&#32;&#32;&#32;<emphasis role="comment">//&#32;Reset&#32;ModWidthReg</emphasis>
+1110 &#32;&#32;&#32;&#32;<link linkend="_classMFRC522_1aa5e5825adb4c784d8a5a60242c135fb7">PCD_WriteRegister</link>(ModWidthReg,&#32;0x26);
+1111 
+1112 &#32;&#32;&#32;&#32;MFRC522::StatusCode&#32;result&#32;=&#32;<link linkend="_classMFRC522_1a4e0ac6edf5e8f6ade351b009278fbbc7">PICC_RequestA</link>(bufferATQA,&#32;&amp;bufferSize);
+1113 
+1114 &#32;&#32;&#32;&#32;<emphasis role="keywordflow">if</emphasis>&#32;(result&#32;==&#32;STATUS_OK&#32;||&#32;result&#32;==&#32;STATUS_COLLISION)&#32;{
+1115 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;tag.atqa&#32;=&#32;((uint16_t)bufferATQA[1]&#32;&lt;&lt;&#32;8)&#32;|&#32;bufferATQA[0];
+1116 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;tag.ats.size&#32;=&#32;0;
+1117 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;tag.ats.fsc&#32;=&#32;32;&#32;&#32;&#32;<emphasis role="comment">//&#32;default&#32;FSC&#32;value</emphasis>
+1118 
+1119 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;<emphasis role="comment">//&#32;Defaults&#32;for&#32;TA1</emphasis>
+1120 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;tag.ats.ta1.transmitted&#32;=&#32;<emphasis role="keyword">false</emphasis>;
+1121 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;tag.ats.ta1.sameD&#32;=&#32;<emphasis role="keyword">false</emphasis>;
+1122 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;tag.ats.ta1.ds&#32;=&#32;MFRC522Extended::BITRATE_106KBITS;
+1123 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;tag.ats.ta1.dr&#32;=&#32;MFRC522Extended::BITRATE_106KBITS;
+1124 
+1125 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;<emphasis role="comment">//&#32;Defaults&#32;for&#32;TB1</emphasis>
+1126 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;tag.ats.tb1.transmitted&#32;=&#32;<emphasis role="keyword">false</emphasis>;
+1127 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;tag.ats.tb1.fwi&#32;=&#32;0;&#32;&#32;&#32;&#32;<emphasis role="comment">//&#32;TODO:&#32;Don&apos;t&#32;know&#32;the&#32;default&#32;for&#32;this!</emphasis>
+1128 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;tag.ats.tb1.sfgi&#32;=&#32;0;&#32;&#32;&#32;<emphasis role="comment">//&#32;The&#32;default&#32;value&#32;of&#32;SFGI&#32;is&#32;0&#32;(meaning&#32;that&#32;the&#32;card&#32;does&#32;not&#32;need&#32;any&#32;particular&#32;SFGT)</emphasis>
+1129 
+1130 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;<emphasis role="comment">//&#32;Defaults&#32;for&#32;TC1</emphasis>
+1131 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;tag.ats.tc1.transmitted&#32;=&#32;<emphasis role="keyword">false</emphasis>;
+1132 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;tag.ats.tc1.supportsCID&#32;=&#32;<emphasis role="keyword">true</emphasis>;
+1133 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;tag.ats.tc1.supportsNAD&#32;=&#32;<emphasis role="keyword">false</emphasis>;
+1134 
+1135 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;memset(tag.ats.data,&#32;0,&#32;FIFO_SIZE&#32;-&#32;2);
+1136 
+1137 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;tag.blockNumber&#32;=&#32;<emphasis role="keyword">false</emphasis>;
+1138 &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;<emphasis role="keywordflow">return</emphasis>&#32;<emphasis role="keyword">true</emphasis>;
+1139 &#32;&#32;&#32;&#32;}
+1140 &#32;&#32;&#32;&#32;<emphasis role="keywordflow">return</emphasis>&#32;<emphasis role="keyword">false</emphasis>;
+1141 }&#32;<emphasis role="comment">//&#32;End&#32;PICC_IsNewCardPresent()</emphasis>
+1142 
+1151 <emphasis role="keywordtype">bool</emphasis>&#32;<link linkend="_classMFRC522Extended_1ae68a2f90cec039dc856089aee08119ee">MFRC522Extended::PICC_ReadCardSerial</link>()&#32;{
+1152 &#32;&#32;&#32;&#32;MFRC522::StatusCode&#32;result&#32;=&#32;<link linkend="_classMFRC522Extended_1a0740187cc7f336b0aaea2db432185cb5">PICC_Select</link>(&amp;tag.uid);
+1153 
+1154 &#32;&#32;&#32;&#32;<emphasis role="comment">//&#32;Backward&#32;compatibility</emphasis>
+1155 &#32;&#32;&#32;&#32;uid.size&#32;=&#32;tag.uid.size;
+1156 &#32;&#32;&#32;&#32;uid.sak&#32;=&#32;tag.uid.sak;
+1157 &#32;&#32;&#32;&#32;memcpy(uid.uidByte,&#32;tag.uid.uidByte,&#32;<emphasis role="keyword">sizeof</emphasis>(tag.uid.uidByte));
+1158 
+1159 &#32;&#32;&#32;&#32;<emphasis role="keywordflow">return</emphasis>&#32;(result&#32;==&#32;STATUS_OK);
+1160 }&#32;<emphasis role="comment">//&#32;End&#32;</emphasis>
+</programlisting></section>

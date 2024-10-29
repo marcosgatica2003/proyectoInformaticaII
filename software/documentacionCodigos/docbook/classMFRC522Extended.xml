@@ -1,0 +1,1105 @@
+<?xml version='1.0' encoding='UTF-8' standalone='no'?>
+<section xmlns="http://docbook.org/ns/docbook" version="5.0" xmlns:xlink="http://www.w3.org/1999/xlink" xml:id="_classMFRC522Extended" xml:lang="es">
+<title>Referencia de la clase MFRC522Extended</title>
+<indexterm><primary>MFRC522Extended</primary></indexterm>
+<para>
+<computeroutput>#include &lt;MFRC522Extended.h&gt;</computeroutput>
+</para>
+Diagrama de herencia de MFRC522Extended<para>
+    <informalfigure>
+        <mediaobject>
+            <imageobject>
+                <imagedata width="50%" align="center" valign="middle" scalefit="0" fileref="classMFRC522Extended__inherit__graph.png"></imagedata>
+            </imageobject>
+        </mediaobject>
+    </informalfigure>
+</para>
+Diagrama de colaboración de MFRC522Extended:<para>
+    <informalfigure>
+        <mediaobject>
+            <imageobject>
+                <imagedata width="50%" align="center" valign="middle" scalefit="0" fileref="classMFRC522Extended__coll__graph.png"></imagedata>
+            </imageobject>
+        </mediaobject>
+    </informalfigure>
+</para>
+<simplesect>
+    <title>Estructuras de datos    </title>
+        <itemizedlist>
+            <listitem><para>struct <link linkend="_classMFRC522Extended_1structMFRC522Extended_1_1Ats">Ats</link></para>
+</listitem>
+            <listitem><para>struct <link linkend="_classMFRC522Extended_1structMFRC522Extended_1_1Ats_8ta1">Ats.ta1</link></para>
+</listitem>
+            <listitem><para>struct <link linkend="_classMFRC522Extended_1structMFRC522Extended_1_1Ats_8tb1">Ats.tb1</link></para>
+</listitem>
+            <listitem><para>struct <link linkend="_classMFRC522Extended_1structMFRC522Extended_1_1Ats_8tc1">Ats.tc1</link></para>
+</listitem>
+            <listitem><para>struct <link linkend="_classMFRC522Extended_1structMFRC522Extended_1_1PcbBlock">PcbBlock</link></para>
+</listitem>
+            <listitem><para>struct <link linkend="_classMFRC522Extended_1structMFRC522Extended_1_1PcbBlock_8inf">PcbBlock.inf</link></para>
+</listitem>
+            <listitem><para>struct <link linkend="_classMFRC522Extended_1structMFRC522Extended_1_1PcbBlock_8prologue">PcbBlock.prologue</link></para>
+</listitem>
+            <listitem><para>struct <link linkend="_classMFRC522Extended_1structMFRC522Extended_1_1TagInfo">TagInfo</link></para>
+</listitem>
+        </itemizedlist>
+</simplesect>
+<simplesect>
+    <title>Tipos públicos    </title>
+        <itemizedlist>
+            <listitem><para><anchor xml:id="_classMFRC522Extended_1a58db706310aa57194bcf97d7c2c92e8d"/>enum <emphasis role="strong">TagBitRates</emphasis> : byte { <emphasis role="strong">BITRATE_106KBITS</emphasis> = 0x00
+, <emphasis role="strong">BITRATE_212KBITS</emphasis> = 0x01
+, <emphasis role="strong">BITRATE_424KBITS</emphasis> = 0x02
+, <emphasis role="strong">BITRATE_848KBITS</emphasis> = 0x03
+ }</para>
+</listitem>
+        </itemizedlist>
+</simplesect>
+Tipos públicos heredados de <link linkend="_classMFRC522">MFRC522</link>        <itemizedlist>
+            <listitem><para><anchor xml:id="_classMFRC522_1a3f25eb3421a80d3aeca247c9640f0669"/>enum <emphasis role="strong">PCD_Register</emphasis> : byte { <?linebreak?><emphasis role="strong">CommandReg</emphasis> = 0x01 &lt;&lt; 1
+, <emphasis role="strong">ComIEnReg</emphasis> = 0x02 &lt;&lt; 1
+, <emphasis role="strong">DivIEnReg</emphasis> = 0x03 &lt;&lt; 1
+, <emphasis role="strong">ComIrqReg</emphasis> = 0x04 &lt;&lt; 1
+, <?linebreak?><emphasis role="strong">DivIrqReg</emphasis> = 0x05 &lt;&lt; 1
+, <emphasis role="strong">ErrorReg</emphasis> = 0x06 &lt;&lt; 1
+, <emphasis role="strong">Status1Reg</emphasis> = 0x07 &lt;&lt; 1
+, <emphasis role="strong">Status2Reg</emphasis> = 0x08 &lt;&lt; 1
+, <?linebreak?><emphasis role="strong">FIFODataReg</emphasis> = 0x09 &lt;&lt; 1
+, <emphasis role="strong">FIFOLevelReg</emphasis> = 0x0A &lt;&lt; 1
+, <emphasis role="strong">WaterLevelReg</emphasis> = 0x0B &lt;&lt; 1
+, <emphasis role="strong">ControlReg</emphasis> = 0x0C &lt;&lt; 1
+, <?linebreak?><emphasis role="strong">BitFramingReg</emphasis> = 0x0D &lt;&lt; 1
+, <emphasis role="strong">CollReg</emphasis> = 0x0E &lt;&lt; 1
+, <emphasis role="strong">ModeReg</emphasis> = 0x11 &lt;&lt; 1
+, <emphasis role="strong">TxModeReg</emphasis> = 0x12 &lt;&lt; 1
+, <?linebreak?><emphasis role="strong">RxModeReg</emphasis> = 0x13 &lt;&lt; 1
+, <emphasis role="strong">TxControlReg</emphasis> = 0x14 &lt;&lt; 1
+, <emphasis role="strong">TxASKReg</emphasis> = 0x15 &lt;&lt; 1
+, <emphasis role="strong">TxSelReg</emphasis> = 0x16 &lt;&lt; 1
+, <?linebreak?><emphasis role="strong">RxSelReg</emphasis> = 0x17 &lt;&lt; 1
+, <emphasis role="strong">RxThresholdReg</emphasis> = 0x18 &lt;&lt; 1
+, <emphasis role="strong">DemodReg</emphasis> = 0x19 &lt;&lt; 1
+, <emphasis role="strong">MfTxReg</emphasis> = 0x1C &lt;&lt; 1
+, <?linebreak?><emphasis role="strong">MfRxReg</emphasis> = 0x1D &lt;&lt; 1
+, <emphasis role="strong">SerialSpeedReg</emphasis> = 0x1F &lt;&lt; 1
+, <emphasis role="strong">CRCResultRegH</emphasis> = 0x21 &lt;&lt; 1
+, <emphasis role="strong">CRCResultRegL</emphasis> = 0x22 &lt;&lt; 1
+, <?linebreak?><emphasis role="strong">ModWidthReg</emphasis> = 0x24 &lt;&lt; 1
+, <emphasis role="strong">RFCfgReg</emphasis> = 0x26 &lt;&lt; 1
+, <emphasis role="strong">GsNReg</emphasis> = 0x27 &lt;&lt; 1
+, <emphasis role="strong">CWGsPReg</emphasis> = 0x28 &lt;&lt; 1
+, <?linebreak?><emphasis role="strong">ModGsPReg</emphasis> = 0x29 &lt;&lt; 1
+, <emphasis role="strong">TModeReg</emphasis> = 0x2A &lt;&lt; 1
+, <emphasis role="strong">TPrescalerReg</emphasis> = 0x2B &lt;&lt; 1
+, <emphasis role="strong">TReloadRegH</emphasis> = 0x2C &lt;&lt; 1
+, <?linebreak?><emphasis role="strong">TReloadRegL</emphasis> = 0x2D &lt;&lt; 1
+, <emphasis role="strong">TCounterValueRegH</emphasis> = 0x2E &lt;&lt; 1
+, <emphasis role="strong">TCounterValueRegL</emphasis> = 0x2F &lt;&lt; 1
+, <emphasis role="strong">TestSel1Reg</emphasis> = 0x31 &lt;&lt; 1
+, <?linebreak?><emphasis role="strong">TestSel2Reg</emphasis> = 0x32 &lt;&lt; 1
+, <emphasis role="strong">TestPinEnReg</emphasis> = 0x33 &lt;&lt; 1
+, <emphasis role="strong">TestPinValueReg</emphasis> = 0x34 &lt;&lt; 1
+, <emphasis role="strong">TestBusReg</emphasis> = 0x35 &lt;&lt; 1
+, <?linebreak?><emphasis role="strong">AutoTestReg</emphasis> = 0x36 &lt;&lt; 1
+, <emphasis role="strong">VersionReg</emphasis> = 0x37 &lt;&lt; 1
+, <emphasis role="strong">AnalogTestReg</emphasis> = 0x38 &lt;&lt; 1
+, <emphasis role="strong">TestDAC1Reg</emphasis> = 0x39 &lt;&lt; 1
+, <?linebreak?><emphasis role="strong">TestDAC2Reg</emphasis> = 0x3A &lt;&lt; 1
+, <emphasis role="strong">TestADCReg</emphasis> = 0x3B &lt;&lt; 1
+ }</para>
+</listitem>
+            <listitem><para><anchor xml:id="_classMFRC522_1a9a9be34ff94660db8bf098745d9fc1d8"/>enum <emphasis role="strong">PCD_Command</emphasis> : byte { <?linebreak?><emphasis role="strong">PCD_Idle</emphasis> = 0x00
+, <emphasis role="strong">PCD_Mem</emphasis> = 0x01
+, <emphasis role="strong">PCD_GenerateRandomID</emphasis> = 0x02
+, <emphasis role="strong">PCD_CalcCRC</emphasis> = 0x03
+, <?linebreak?><emphasis role="strong">PCD_Transmit</emphasis> = 0x04
+, <emphasis role="strong">PCD_NoCmdChange</emphasis> = 0x07
+, <emphasis role="strong">PCD_Receive</emphasis> = 0x08
+, <emphasis role="strong">PCD_Transceive</emphasis> = 0x0C
+, <?linebreak?><emphasis role="strong">PCD_MFAuthent</emphasis> = 0x0E
+, <emphasis role="strong">PCD_SoftReset</emphasis> = 0x0F
+ }</para>
+</listitem>
+            <listitem><para><anchor xml:id="_classMFRC522_1a5aafab5cf00bb9a8ba4240b97d72cca1"/>enum <emphasis role="strong">PCD_RxGain</emphasis> : byte { <?linebreak?><emphasis role="strong">RxGain_18dB</emphasis> = 0x00 &lt;&lt; 4
+, <emphasis role="strong">RxGain_23dB</emphasis> = 0x01 &lt;&lt; 4
+, <emphasis role="strong">RxGain_18dB_2</emphasis> = 0x02 &lt;&lt; 4
+, <emphasis role="strong">RxGain_23dB_2</emphasis> = 0x03 &lt;&lt; 4
+, <?linebreak?><emphasis role="strong">RxGain_33dB</emphasis> = 0x04 &lt;&lt; 4
+, <emphasis role="strong">RxGain_38dB</emphasis> = 0x05 &lt;&lt; 4
+, <emphasis role="strong">RxGain_43dB</emphasis> = 0x06 &lt;&lt; 4
+, <emphasis role="strong">RxGain_48dB</emphasis> = 0x07 &lt;&lt; 4
+, <?linebreak?><emphasis role="strong">RxGain_min</emphasis> = 0x00 &lt;&lt; 4
+, <emphasis role="strong">RxGain_avg</emphasis> = 0x04 &lt;&lt; 4
+, <emphasis role="strong">RxGain_max</emphasis> = 0x07 &lt;&lt; 4
+ }</para>
+</listitem>
+            <listitem><para><anchor xml:id="_classMFRC522_1ab57242c2e8a0ca7de1a968c2ccb55341"/>enum <emphasis role="strong">PICC_Command</emphasis> : byte { <?linebreak?><emphasis role="strong">PICC_CMD_REQA</emphasis> = 0x26
+, <emphasis role="strong">PICC_CMD_WUPA</emphasis> = 0x52
+, <emphasis role="strong">PICC_CMD_CT</emphasis> = 0x88
+, <emphasis role="strong">PICC_CMD_SEL_CL1</emphasis> = 0x93
+, <?linebreak?><emphasis role="strong">PICC_CMD_SEL_CL2</emphasis> = 0x95
+, <emphasis role="strong">PICC_CMD_SEL_CL3</emphasis> = 0x97
+, <emphasis role="strong">PICC_CMD_HLTA</emphasis> = 0x50
+, <emphasis role="strong">PICC_CMD_RATS</emphasis> = 0xE0
+, <?linebreak?><emphasis role="strong">PICC_CMD_MF_AUTH_KEY_A</emphasis> = 0x60
+, <emphasis role="strong">PICC_CMD_MF_AUTH_KEY_B</emphasis> = 0x61
+, <emphasis role="strong">PICC_CMD_MF_READ</emphasis> = 0x30
+, <emphasis role="strong">PICC_CMD_MF_WRITE</emphasis> = 0xA0
+, <?linebreak?><emphasis role="strong">PICC_CMD_MF_DECREMENT</emphasis> = 0xC0
+, <emphasis role="strong">PICC_CMD_MF_INCREMENT</emphasis> = 0xC1
+, <emphasis role="strong">PICC_CMD_MF_RESTORE</emphasis> = 0xC2
+, <emphasis role="strong">PICC_CMD_MF_TRANSFER</emphasis> = 0xB0
+, <?linebreak?><emphasis role="strong">PICC_CMD_UL_WRITE</emphasis> = 0xA2
+ }</para>
+</listitem>
+            <listitem><para><anchor xml:id="_classMFRC522_1a92c17a5b83cc4fde3cc3454c03b8eede"/>enum <emphasis role="strong">MIFARE_Misc</emphasis> { <emphasis role="strong">MF_ACK</emphasis> = 0xA
+, <emphasis role="strong">MF_KEY_SIZE</emphasis> = 6
+ }</para>
+</listitem>
+            <listitem><para><anchor xml:id="_classMFRC522_1aafd15c276e5cf3b677885b7b95e71ca2"/>enum <emphasis role="strong">PICC_Type</emphasis> : byte { <?linebreak?><emphasis role="strong">PICC_TYPE_UNKNOWN</emphasis>
+, <emphasis role="strong">PICC_TYPE_ISO_14443_4</emphasis>
+, <emphasis role="strong">PICC_TYPE_ISO_18092</emphasis>
+, <emphasis role="strong">PICC_TYPE_MIFARE_MINI</emphasis>
+, <?linebreak?><emphasis role="strong">PICC_TYPE_MIFARE_1K</emphasis>
+, <emphasis role="strong">PICC_TYPE_MIFARE_4K</emphasis>
+, <emphasis role="strong">PICC_TYPE_MIFARE_UL</emphasis>
+, <emphasis role="strong">PICC_TYPE_MIFARE_PLUS</emphasis>
+, <?linebreak?><emphasis role="strong">PICC_TYPE_MIFARE_DESFIRE</emphasis>
+, <emphasis role="strong">PICC_TYPE_TNP3XXX</emphasis>
+, <emphasis role="strong">PICC_TYPE_NOT_COMPLETE</emphasis> = 0xff
+ }</para>
+</listitem>
+            <listitem><para><anchor xml:id="_classMFRC522_1a7cb2a1ad6f06e49fddac5c62399c81a9"/>enum <emphasis role="strong">StatusCode</emphasis> : byte { <?linebreak?><emphasis role="strong">STATUS_OK</emphasis>
+, <emphasis role="strong">STATUS_ERROR</emphasis>
+, <emphasis role="strong">STATUS_COLLISION</emphasis>
+, <emphasis role="strong">STATUS_TIMEOUT</emphasis>
+, <?linebreak?><emphasis role="strong">STATUS_NO_ROOM</emphasis>
+, <emphasis role="strong">STATUS_INTERNAL_ERROR</emphasis>
+, <emphasis role="strong">STATUS_INVALID</emphasis>
+, <emphasis role="strong">STATUS_CRC_WRONG</emphasis>
+, <?linebreak?><emphasis role="strong">STATUS_MIFARE_NACK</emphasis> = 0xff
+ }</para>
+</listitem>
+        </itemizedlist>
+<simplesect>
+    <title>Métodos públicos    </title>
+        <itemizedlist>
+            <listitem><para><anchor xml:id="_classMFRC522Extended_1ad3a48218c0adf97327cc70a59bb519b6"/><emphasis role="strong">MFRC522Extended</emphasis> (uint8_t rst)</para>
+</listitem>
+            <listitem><para><anchor xml:id="_classMFRC522Extended_1a37ce17c2b418ca787a016803f86f651d"/><emphasis role="strong">MFRC522Extended</emphasis> (uint8_t ss, uint8_t rst)</para>
+</listitem>
+            <listitem><para>StatusCode <link linkend="_classMFRC522Extended_1a0740187cc7f336b0aaea2db432185cb5">PICC_Select</link> (<link linkend="_classMFRC522_1structMFRC522_1_1Uid">Uid</link> *uid, byte validBits=0) override</para>
+</listitem>
+            <listitem><para>StatusCode <link linkend="_classMFRC522Extended_1a2671f1de35a0cac5da87e4300b7df74d">PICC_RequestATS</link> (<link linkend="_classMFRC522Extended_1structMFRC522Extended_1_1Ats">Ats</link> *ats)</para>
+</listitem>
+            <listitem><para>StatusCode <link linkend="_classMFRC522Extended_1acb69d5c429b8e06ecec8dc1e34c02d65">PICC_PPS</link> ()</para>
+</listitem>
+            <listitem><para>StatusCode <link linkend="_classMFRC522Extended_1a9db408d811b5467517a1c92e37f62c6f">PICC_PPS</link> (TagBitRates sendBitRate, TagBitRates receiveBitRate)</para>
+</listitem>
+            <listitem><para><anchor xml:id="_classMFRC522Extended_1a9b41f11274de99e0e82688d4e925460d"/>StatusCode <emphasis role="strong">TCL_Transceive</emphasis> (<link linkend="_classMFRC522Extended_1structMFRC522Extended_1_1PcbBlock">PcbBlock</link> *send, <link linkend="_classMFRC522Extended_1structMFRC522Extended_1_1PcbBlock">PcbBlock</link> *back)</para>
+</listitem>
+            <listitem><para>StatusCode <link linkend="_classMFRC522Extended_1a4a0e94f11a21101fd4d5b0ea0e3393c9">TCL_Transceive</link> (<link linkend="_classMFRC522Extended_1structMFRC522Extended_1_1TagInfo">TagInfo</link> *tag, byte *sendData, byte sendLen, byte *backData=NULL, byte *backLen=NULL)</para>
+</listitem>
+            <listitem><para>StatusCode <link linkend="_classMFRC522Extended_1aebbf1bbae99dea09128a6bcc4cf27f9d">TCL_TransceiveRBlock</link> (<link linkend="_classMFRC522Extended_1structMFRC522Extended_1_1TagInfo">TagInfo</link> *tag, bool ack, byte *backData=NULL, byte *backLen=NULL)</para>
+</listitem>
+            <listitem><para>StatusCode <link linkend="_classMFRC522Extended_1a2de7e4ead4065d896d7ee39e9e2040dd">TCL_Deselect</link> (<link linkend="_classMFRC522Extended_1structMFRC522Extended_1_1TagInfo">TagInfo</link> *tag)</para>
+</listitem>
+            <listitem><para>void <link linkend="_classMFRC522Extended_1a1739931b517243305c765d547d819968">PICC_DumpToSerial</link> (<link linkend="_classMFRC522Extended_1structMFRC522Extended_1_1TagInfo">TagInfo</link> *tag)</para>
+</listitem>
+            <listitem><para>void <link linkend="_classMFRC522Extended_1a456d810cdd67f28aa319746d277841b8">PICC_DumpDetailsToSerial</link> (<link linkend="_classMFRC522Extended_1structMFRC522Extended_1_1TagInfo">TagInfo</link> *tag)</para>
+</listitem>
+            <listitem><para>void <link linkend="_classMFRC522Extended_1a8bb3b09bd19eb99430730af0fbb1565f">PICC_DumpISO14443_4</link> (<link linkend="_classMFRC522Extended_1structMFRC522Extended_1_1TagInfo">TagInfo</link> *tag)</para>
+</listitem>
+            <listitem><para>bool <link linkend="_classMFRC522Extended_1afaa1289052274755acec885017507b64">PICC_IsNewCardPresent</link> () override</para>
+</listitem>
+            <listitem><para>bool <link linkend="_classMFRC522Extended_1ae68a2f90cec039dc856089aee08119ee">PICC_ReadCardSerial</link> () override</para>
+</listitem>
+            <listitem><para>void <link linkend="_classMFRC522Extended_1a6f324d43c6fbbd0e260b171747186037">PICC_DumpToSerial</link> (<link linkend="_classMFRC522_1structMFRC522_1_1Uid">Uid</link> *uid)</para>
+</listitem>
+            <listitem><para>void <link linkend="_classMFRC522Extended_1a3b9a2c6da6505e0ff7b58c37d7aeff37">PICC_DumpDetailsToSerial</link> (<link linkend="_classMFRC522_1structMFRC522_1_1Uid">Uid</link> *uid)</para>
+</listitem>
+        </itemizedlist>
+</simplesect>
+Métodos públicos heredados de <link linkend="_classMFRC522">MFRC522</link>        <itemizedlist>
+            <listitem><para><link linkend="_classMFRC522_1a999d0301e800f479e1ecfa2fd06e28c8">MFRC522</link> ()</para>
+</listitem>
+            <listitem><para><link linkend="_classMFRC522_1a59c2f9a7664d029afe4e0185c7f3623b">MFRC522</link> (byte resetPowerDownPin)</para>
+</listitem>
+            <listitem><para><link linkend="_classMFRC522_1a8b859e244e80970594bf333a0148ade1">MFRC522</link> (byte chipSelectPin, byte resetPowerDownPin)</para>
+</listitem>
+            <listitem><para>void <link linkend="_classMFRC522_1aa5e5825adb4c784d8a5a60242c135fb7">PCD_WriteRegister</link> (PCD_Register reg, byte value)</para>
+</listitem>
+            <listitem><para>void <link linkend="_classMFRC522_1a846b4b9d0468b62d853b125d4b269054">PCD_WriteRegister</link> (PCD_Register reg, byte count, byte *values)</para>
+</listitem>
+            <listitem><para>byte <link linkend="_classMFRC522_1a4289838c6f24f2d62eb8dc0e7a6647d1">PCD_ReadRegister</link> (PCD_Register reg)</para>
+</listitem>
+            <listitem><para>void <link linkend="_classMFRC522_1ae84aeb5b0cab567ac0445ae76c16a86b">PCD_ReadRegister</link> (PCD_Register reg, byte count, byte *values, byte rxAlign=0)</para>
+</listitem>
+            <listitem><para>void <link linkend="_classMFRC522_1acebb9a90249419f2a53281c4a13727d1">PCD_SetRegisterBitMask</link> (PCD_Register reg, byte mask)</para>
+</listitem>
+            <listitem><para>void <link linkend="_classMFRC522_1a76193f4f8916f688fe2b7976d0fd1dc2">PCD_ClearRegisterBitMask</link> (PCD_Register reg, byte mask)</para>
+</listitem>
+            <listitem><para>StatusCode <link linkend="_classMFRC522_1a7c65647b1d72b6ee7557797322030643">PCD_CalculateCRC</link> (byte *data, byte length, byte *result)</para>
+</listitem>
+            <listitem><para>void <link linkend="_classMFRC522_1ad681e424fc68a57941bea5702cee05eb">PCD_Init</link> ()</para>
+</listitem>
+            <listitem><para>void <link linkend="_classMFRC522_1a50a743c6c0c3ced652cb7fdca61949ab">PCD_Init</link> (byte resetPowerDownPin)</para>
+</listitem>
+            <listitem><para>void <link linkend="_classMFRC522_1a3a14c851e9a2f62956db01d5666c284b">PCD_Init</link> (byte chipSelectPin, byte resetPowerDownPin)</para>
+</listitem>
+            <listitem><para>void <link linkend="_classMFRC522_1a9886678ea0a65021bf602cfb110caa15">PCD_Reset</link> ()</para>
+</listitem>
+            <listitem><para>void <link linkend="_classMFRC522_1a044be037a5f172e9cea7d8ce1dcf32e0">PCD_AntennaOn</link> ()</para>
+</listitem>
+            <listitem><para>void <link linkend="_classMFRC522_1a2098ebe85700109b20c5026643f1dad7">PCD_AntennaOff</link> ()</para>
+</listitem>
+            <listitem><para>byte <link linkend="_classMFRC522_1aa02ae994a9ebf146475f46fc538cef28">PCD_GetAntennaGain</link> ()</para>
+</listitem>
+            <listitem><para>void <link linkend="_classMFRC522_1a5ce84dd855f2ae297dd00fafaf62ef78">PCD_SetAntennaGain</link> (byte mask)</para>
+</listitem>
+            <listitem><para>bool <link linkend="_classMFRC522_1a25f052c9c340da34128c365662370b01">PCD_PerformSelfTest</link> ()</para>
+</listitem>
+            <listitem><para>void <emphasis role="strong">PCD_SoftPowerDown</emphasis> ()</para>
+</listitem>
+            <listitem><para>void <emphasis role="strong">PCD_SoftPowerUp</emphasis> ()</para>
+</listitem>
+            <listitem><para>StatusCode <link linkend="_classMFRC522_1aaa96aa7ec4f95e0835cb758ad0450d74">PCD_TransceiveData</link> (byte *sendData, byte sendLen, byte *backData, byte *backLen, byte *validBits=nullptr, byte rxAlign=0, bool checkCRC=false)</para>
+</listitem>
+            <listitem><para>StatusCode <link linkend="_classMFRC522_1acb2b1e74bc49fda2704450a684faa845">PCD_CommunicateWithPICC</link> (byte command, byte waitIRq, byte *sendData, byte sendLen, byte *backData=nullptr, byte *backLen=nullptr, byte *validBits=nullptr, byte rxAlign=0, bool checkCRC=false)</para>
+</listitem>
+            <listitem><para>StatusCode <link linkend="_classMFRC522_1a4e0ac6edf5e8f6ade351b009278fbbc7">PICC_RequestA</link> (byte *bufferATQA, byte *bufferSize)</para>
+</listitem>
+            <listitem><para>StatusCode <link linkend="_classMFRC522_1ad00a1efcfa6dc203ca885d43f4d02125">PICC_WakeupA</link> (byte *bufferATQA, byte *bufferSize)</para>
+</listitem>
+            <listitem><para>StatusCode <link linkend="_classMFRC522_1a639d27ac072bc0dfa478d0957591afcc">PICC_REQA_or_WUPA</link> (byte command, byte *bufferATQA, byte *bufferSize)</para>
+</listitem>
+            <listitem><para>StatusCode <link linkend="_classMFRC522_1a8874921b4ed26c5b73d89c90f76d4933">PICC_HaltA</link> ()</para>
+</listitem>
+            <listitem><para>StatusCode <link linkend="_classMFRC522_1a6c2313c4aa98806cc2bf0e9cca993ec0">PCD_Authenticate</link> (byte command, byte blockAddr, <link linkend="_classMFRC522_1structMFRC522_1_1MIFARE__Key">MIFARE_Key</link> *key, <link linkend="_classMFRC522_1structMFRC522_1_1Uid">Uid</link> *uid)</para>
+</listitem>
+            <listitem><para>void <link linkend="_classMFRC522_1a24d3ab7b2170fdfa3f0121a7256f12d9">PCD_StopCrypto1</link> ()</para>
+</listitem>
+            <listitem><para>StatusCode <link linkend="_classMFRC522_1a6ed93e88913ea104420f3bb4a88cce52">MIFARE_Read</link> (byte blockAddr, byte *buffer, byte *bufferSize)</para>
+</listitem>
+            <listitem><para>StatusCode <link linkend="_classMFRC522_1a0dc5fb05769779ec3ed708bd153706b3">MIFARE_Write</link> (byte blockAddr, byte *buffer, byte bufferSize)</para>
+</listitem>
+            <listitem><para>StatusCode <link linkend="_classMFRC522_1a7053e61540b68e6aa5c6cbea308836c4">MIFARE_Ultralight_Write</link> (byte page, byte *buffer, byte bufferSize)</para>
+</listitem>
+            <listitem><para>StatusCode <link linkend="_classMFRC522_1aeab21496c761cdecb29c69f9f3fa6150">MIFARE_Decrement</link> (byte blockAddr, int32_t delta)</para>
+</listitem>
+            <listitem><para>StatusCode <link linkend="_classMFRC522_1af9566664f23d4d67efd270e42c3dc723">MIFARE_Increment</link> (byte blockAddr, int32_t delta)</para>
+</listitem>
+            <listitem><para>StatusCode <link linkend="_classMFRC522_1a946ba7e7e244f40adcb9f900d8fd3a48">MIFARE_Restore</link> (byte blockAddr)</para>
+</listitem>
+            <listitem><para>StatusCode <link linkend="_classMFRC522_1a16ee66df69fda8a3065bc9218b45de0b">MIFARE_Transfer</link> (byte blockAddr)</para>
+</listitem>
+            <listitem><para>StatusCode <link linkend="_classMFRC522_1ab4009cbdd5150b1b3a62084aa2033807">MIFARE_GetValue</link> (byte blockAddr, int32_t *value)</para>
+</listitem>
+            <listitem><para>StatusCode <link linkend="_classMFRC522_1af19fc75e9415322fbe89245ed70a784b">MIFARE_SetValue</link> (byte blockAddr, int32_t value)</para>
+</listitem>
+            <listitem><para>StatusCode <link linkend="_classMFRC522_1acb47eb7a05ae58825b4085efeb7a09bb">PCD_NTAG216_AUTH</link> (byte *passWord, byte pACK[])</para>
+</listitem>
+            <listitem><para>StatusCode <link linkend="_classMFRC522_1aa88d28676b3ffb5985af8db35d39077b">PCD_MIFARE_Transceive</link> (byte *sendData, byte sendLen, bool acceptTimeout=false)</para>
+</listitem>
+            <listitem><para>void <link linkend="_classMFRC522_1a41c31c6932a59646eeff470c60a4d20d">PCD_DumpVersionToSerial</link> ()</para>
+</listitem>
+            <listitem><para>void <link linkend="_classMFRC522_1a6f324d43c6fbbd0e260b171747186037">PICC_DumpToSerial</link> (<link linkend="_classMFRC522_1structMFRC522_1_1Uid">Uid</link> *uid)</para>
+</listitem>
+            <listitem><para>void <link linkend="_classMFRC522_1a3b9a2c6da6505e0ff7b58c37d7aeff37">PICC_DumpDetailsToSerial</link> (<link linkend="_classMFRC522_1structMFRC522_1_1Uid">Uid</link> *uid)</para>
+</listitem>
+            <listitem><para>void <link linkend="_classMFRC522_1aafba2e74124efa2d736c1672ea104190">PICC_DumpMifareClassicToSerial</link> (<link linkend="_classMFRC522_1structMFRC522_1_1Uid">Uid</link> *uid, PICC_Type piccType, <link linkend="_classMFRC522_1structMFRC522_1_1MIFARE__Key">MIFARE_Key</link> *key)</para>
+</listitem>
+            <listitem><para>void <link linkend="_classMFRC522_1a20c559f09927a7c5f91295f6158e4342">PICC_DumpMifareClassicSectorToSerial</link> (<link linkend="_classMFRC522_1structMFRC522_1_1Uid">Uid</link> *uid, <link linkend="_classMFRC522_1structMFRC522_1_1MIFARE__Key">MIFARE_Key</link> *key, byte sector)</para>
+</listitem>
+            <listitem><para>void <link linkend="_classMFRC522_1ac148d28877dd577606a28e9e7e4b6809">PICC_DumpMifareUltralightToSerial</link> ()</para>
+</listitem>
+            <listitem><para>void <link linkend="_classMFRC522_1ab8c712963189654e9bc368be8783e2ab">MIFARE_SetAccessBits</link> (byte *accessBitBuffer, byte g0, byte g1, byte g2, byte g3)</para>
+</listitem>
+            <listitem><para>bool <link linkend="_classMFRC522_1a925607adc9382720c222578bd236a9c8">MIFARE_OpenUidBackdoor</link> (bool logErrors)</para>
+</listitem>
+            <listitem><para>bool <link linkend="_classMFRC522_1a2bdc18af4952ce99099607c84139b51c">MIFARE_SetUid</link> (byte *newUid, byte uidSize, bool logErrors)</para>
+</listitem>
+            <listitem><para>bool <link linkend="_classMFRC522_1afcbb15d925cb3bea9f58595111fbca48">MIFARE_UnbrickUidSector</link> (bool logErrors)</para>
+</listitem>
+        </itemizedlist>
+<simplesect>
+    <title>Métodos públicos estáticos    </title>
+        <itemizedlist>
+            <listitem><para>static PICC_Type <link linkend="_classMFRC522Extended_1addf00efdd2de1002a4f4b34ebe0e1fb2">PICC_GetType</link> (<link linkend="_classMFRC522Extended_1structMFRC522Extended_1_1TagInfo">TagInfo</link> *tag)</para>
+</listitem>
+            <listitem><para>static PICC_Type <link linkend="_classMFRC522Extended_1ac80a18228260bdde07dff5d4ac23bb53">PICC_GetType</link> (byte sak)</para>
+</listitem>
+        </itemizedlist>
+</simplesect>
+Métodos públicos estáticos heredados de <link linkend="_classMFRC522">MFRC522</link>        <itemizedlist>
+            <listitem><para>static const __FlashStringHelper * <link linkend="_classMFRC522_1a32f88620ab97f7fef3693280c58cb4bb">GetStatusCodeName</link> (StatusCode code)</para>
+</listitem>
+            <listitem><para>static PICC_Type <link linkend="_classMFRC522_1ac80a18228260bdde07dff5d4ac23bb53">PICC_GetType</link> (byte sak)</para>
+</listitem>
+            <listitem><para>static const __FlashStringHelper * <link linkend="_classMFRC522_1aae4a482352d4d4b7d7a9714b0b0b7c38">PICC_GetTypeName</link> (PICC_Type type)</para>
+</listitem>
+        </itemizedlist>
+<simplesect>
+    <title>Campos de datos    </title>
+        <itemizedlist>
+            <listitem><para><anchor xml:id="_classMFRC522Extended_1ab824eb0aac40d902099af74ac2782691"/><link linkend="_classMFRC522Extended_1structMFRC522Extended_1_1TagInfo">TagInfo</link> <emphasis role="strong">tag</emphasis></para>
+</listitem>
+        </itemizedlist>
+</simplesect>
+Campos de datos heredados de <link linkend="_classMFRC522">MFRC522</link>        <itemizedlist>
+            <listitem><para><link linkend="_classMFRC522_1structMFRC522_1_1Uid">Uid</link> <emphasis role="strong">uid</emphasis></para>
+</listitem>
+        </itemizedlist>
+<simplesect>
+    <title>Otros miembros heredados    </title>
+Atributos públicos estáticos heredados de <link linkend="_classMFRC522">MFRC522</link>        <itemizedlist>
+            <listitem><para>static constexpr byte <emphasis role="strong">FIFO_SIZE</emphasis> = 64</para>
+</listitem>
+            <listitem><para>static constexpr uint8_t <emphasis role="strong">UNUSED_PIN</emphasis> = UINT8_MAX</para>
+</listitem>
+        </itemizedlist>
+</simplesect>
+Métodos protegidos heredados de <link linkend="_classMFRC522">MFRC522</link>        <itemizedlist>
+            <listitem><para>StatusCode <link linkend="_classMFRC522_1a86cb4ad38f61b823dfe97103b1b1f9d6">MIFARE_TwoStepHelper</link> (byte command, byte blockAddr, int32_t data)</para>
+</listitem>
+        </itemizedlist>
+Atributos protegidos heredados de <link linkend="_classMFRC522">MFRC522</link>        <itemizedlist>
+            <listitem><para>byte <emphasis role="strong">_chipSelectPin</emphasis></para>
+</listitem>
+            <listitem><para>byte <emphasis role="strong">_resetPowerDownPin</emphasis></para>
+</listitem>
+        </itemizedlist>
+<section>
+<title>Descripción detallada</title>
+
+<para>Library extends <link linkend="_MFRC522_8h_source">MFRC522.h</link> to support RATS for ISO-14443-4 PICC. RATS - Request for Answer To Select. <formalpara><title>Autor</title>
+
+<para>JPG-Consulting </para>
+</formalpara>
+</para>
+</section>
+<section>
+<title>Documentación de estructuras de datos</title>
+<indexterm><primary>MFRC522Extended::Ats</primary></indexterm>
+<section>
+<title>struct MFRC522Extended::Ats</title>
+Diagrama de colaboración de MFRC522Extended::Ats:<para>
+    <informalfigure>
+        <mediaobject>
+            <imageobject>
+                <imagedata width="50%" align="center" valign="middle" scalefit="0" fileref="structMFRC522Extended_1_1Ats__coll__graph.png"></imagedata>
+            </imageobject>
+        </mediaobject>
+    </informalfigure>
+</para>
+<table frame="all">
+<title>Campos de datos</title>
+    <tgroup cols="3" align="left" colsep="1" rowsep="1">
+      <colspec colname='c1'/>
+      <colspec colname='c2'/>
+      <colspec colname='c3'/>
+<tbody>
+<row><entry><anchor xml:id="_classMFRC522Extended_1a079430497122e58bbd4e45c6af9a48d7"/>byte</entry><entry>data[FIFO_SIZE - 2]</entry><entry></entry></row>
+<row><entry><anchor xml:id="_classMFRC522Extended_1af9e23a28758a628093af7e5929b3a442"/>byte</entry><entry>fsc</entry><entry></entry></row>
+<row><entry><anchor xml:id="_classMFRC522Extended_1a03d987872ffbccd006178107e5d9851a"/>byte</entry><entry>size</entry><entry></entry></row>
+<row><entry><anchor xml:id="_classMFRC522Extended_1ac692e54afd48e7a84e486750287f4c79"/>struct <link linkend="_classMFRC522Extended_1structMFRC522Extended_1_1Ats_8ta1">Ats.ta1</link></entry><entry>ta1</entry><entry></entry></row>
+<row><entry><anchor xml:id="_classMFRC522Extended_1a7b10edd74b16e424065a66a2199cd731"/>struct <link linkend="_classMFRC522Extended_1structMFRC522Extended_1_1Ats_8tb1">Ats.tb1</link></entry><entry>tb1</entry><entry></entry></row>
+<row><entry><anchor xml:id="_classMFRC522Extended_1ac7310456cba4c6b41d24eac4c96e2474"/>struct <link linkend="_classMFRC522Extended_1structMFRC522Extended_1_1Ats_8tc1">Ats.tc1</link></entry><entry>tc1</entry><entry></entry></row>
+    </tbody>
+    </tgroup>
+</table>
+<indexterm><primary>MFRC522Extended::Ats.ta1</primary></indexterm>
+</section>
+<section>
+<title>struct MFRC522Extended::Ats.ta1</title>
+Diagrama de colaboración de MFRC522Extended::Ats.ta1:<para>
+    <informalfigure>
+        <mediaobject>
+            <imageobject>
+                <imagedata width="50%" align="center" valign="middle" scalefit="0" fileref="structMFRC522Extended_1_1Ats_8ta1__coll__graph.png"></imagedata>
+            </imageobject>
+        </mediaobject>
+    </informalfigure>
+</para>
+<table frame="all">
+<title>Campos de datos</title>
+    <tgroup cols="3" align="left" colsep="1" rowsep="1">
+      <colspec colname='c1'/>
+      <colspec colname='c2'/>
+      <colspec colname='c3'/>
+<tbody>
+<row><entry><anchor xml:id="_classMFRC522Extended_1ab4688aaaaf17fad03225929fe56ad458"/>TagBitRates</entry><entry>dr</entry><entry></entry></row>
+<row><entry><anchor xml:id="_classMFRC522Extended_1a522748524ad010358705b6852b81be4c"/>TagBitRates</entry><entry>ds</entry><entry></entry></row>
+<row><entry><anchor xml:id="_classMFRC522Extended_1a61158fcaa7a7ae6a30e2c0425c79c365"/>bool</entry><entry>sameD</entry><entry></entry></row>
+<row><entry><anchor xml:id="_classMFRC522Extended_1a1d50fdac507bd6496700b783bcb6d7a8"/>bool</entry><entry>transmitted</entry><entry></entry></row>
+    </tbody>
+    </tgroup>
+</table>
+<indexterm><primary>MFRC522Extended::Ats.tb1</primary></indexterm>
+</section>
+<section>
+<title>struct MFRC522Extended::Ats.tb1</title>
+Diagrama de colaboración de MFRC522Extended::Ats.tb1:<para>
+    <informalfigure>
+        <mediaobject>
+            <imageobject>
+                <imagedata width="50%" align="center" valign="middle" scalefit="0" fileref="structMFRC522Extended_1_1Ats_8tb1__coll__graph.png"></imagedata>
+            </imageobject>
+        </mediaobject>
+    </informalfigure>
+</para>
+<table frame="all">
+<title>Campos de datos</title>
+    <tgroup cols="3" align="left" colsep="1" rowsep="1">
+      <colspec colname='c1'/>
+      <colspec colname='c2'/>
+      <colspec colname='c3'/>
+<tbody>
+<row><entry><anchor xml:id="_classMFRC522Extended_1ae9632a304bc1979cfb8f0f7df589e880"/>byte</entry><entry>fwi</entry><entry></entry></row>
+<row><entry><anchor xml:id="_classMFRC522Extended_1a0ced0e2131a269156af434ef93ead041"/>byte</entry><entry>sfgi</entry><entry></entry></row>
+<row><entry><anchor xml:id="_classMFRC522Extended_1a1d50fdac507bd6496700b783bcb6d7a8"/>bool</entry><entry>transmitted</entry><entry></entry></row>
+    </tbody>
+    </tgroup>
+</table>
+<indexterm><primary>MFRC522Extended::Ats.tc1</primary></indexterm>
+</section>
+<section>
+<title>struct MFRC522Extended::Ats.tc1</title>
+Diagrama de colaboración de MFRC522Extended::Ats.tc1:<para>
+    <informalfigure>
+        <mediaobject>
+            <imageobject>
+                <imagedata width="50%" align="center" valign="middle" scalefit="0" fileref="structMFRC522Extended_1_1Ats_8tc1__coll__graph.png"></imagedata>
+            </imageobject>
+        </mediaobject>
+    </informalfigure>
+</para>
+<table frame="all">
+<title>Campos de datos</title>
+    <tgroup cols="3" align="left" colsep="1" rowsep="1">
+      <colspec colname='c1'/>
+      <colspec colname='c2'/>
+      <colspec colname='c3'/>
+<tbody>
+<row><entry><anchor xml:id="_classMFRC522Extended_1ad52312714d45cea9f32c033b07c1f0e3"/>bool</entry><entry>supportsCID</entry><entry></entry></row>
+<row><entry><anchor xml:id="_classMFRC522Extended_1aad9f6f806d99c13b8063e02e7c600733"/>bool</entry><entry>supportsNAD</entry><entry></entry></row>
+<row><entry><anchor xml:id="_classMFRC522Extended_1a1d50fdac507bd6496700b783bcb6d7a8"/>bool</entry><entry>transmitted</entry><entry></entry></row>
+    </tbody>
+    </tgroup>
+</table>
+<indexterm><primary>MFRC522Extended::PcbBlock</primary></indexterm>
+</section>
+<section>
+<title>struct MFRC522Extended::PcbBlock</title>
+Diagrama de colaboración de MFRC522Extended::PcbBlock:<para>
+    <informalfigure>
+        <mediaobject>
+            <imageobject>
+                <imagedata width="50%" align="center" valign="middle" scalefit="0" fileref="structMFRC522Extended_1_1PcbBlock__coll__graph.png"></imagedata>
+            </imageobject>
+        </mediaobject>
+    </informalfigure>
+</para>
+<table frame="all">
+<title>Campos de datos</title>
+    <tgroup cols="3" align="left" colsep="1" rowsep="1">
+      <colspec colname='c1'/>
+      <colspec colname='c2'/>
+      <colspec colname='c3'/>
+<tbody>
+<row><entry><anchor xml:id="_classMFRC522Extended_1a390e24defc1cfc05036b5ca3d20b53b8"/>struct <link linkend="_classMFRC522Extended_1structMFRC522Extended_1_1PcbBlock_8inf">PcbBlock.inf</link></entry><entry>inf</entry><entry></entry></row>
+<row><entry><anchor xml:id="_classMFRC522Extended_1a75812d58511f51251de023f5b0b3c236"/>struct <link linkend="_classMFRC522Extended_1structMFRC522Extended_1_1PcbBlock_8prologue">PcbBlock.prologue</link></entry><entry>prologue</entry><entry></entry></row>
+    </tbody>
+    </tgroup>
+</table>
+<indexterm><primary>MFRC522Extended::PcbBlock.inf</primary></indexterm>
+</section>
+<section>
+<title>struct MFRC522Extended::PcbBlock.inf</title>
+Diagrama de colaboración de MFRC522Extended::PcbBlock.inf:<para>
+    <informalfigure>
+        <mediaobject>
+            <imageobject>
+                <imagedata width="50%" align="center" valign="middle" scalefit="0" fileref="structMFRC522Extended_1_1PcbBlock_8inf__coll__graph.png"></imagedata>
+            </imageobject>
+        </mediaobject>
+    </informalfigure>
+</para>
+<table frame="all">
+<title>Campos de datos</title>
+    <tgroup cols="3" align="left" colsep="1" rowsep="1">
+      <colspec colname='c1'/>
+      <colspec colname='c2'/>
+      <colspec colname='c3'/>
+<tbody>
+<row><entry><anchor xml:id="_classMFRC522Extended_1a8d777f385d3dfec8815d20f7496026dc"/>byte *</entry><entry>data</entry><entry></entry></row>
+<row><entry><anchor xml:id="_classMFRC522Extended_1af7bd60b75b29d79b660a2859395c1a24"/>byte</entry><entry>size</entry><entry></entry></row>
+    </tbody>
+    </tgroup>
+</table>
+<indexterm><primary>MFRC522Extended::PcbBlock.prologue</primary></indexterm>
+</section>
+<section>
+<title>struct MFRC522Extended::PcbBlock.prologue</title>
+Diagrama de colaboración de MFRC522Extended::PcbBlock.prologue:<para>
+    <informalfigure>
+        <mediaobject>
+            <imageobject>
+                <imagedata width="50%" align="center" valign="middle" scalefit="0" fileref="structMFRC522Extended_1_1PcbBlock_8prologue__coll__graph.png"></imagedata>
+            </imageobject>
+        </mediaobject>
+    </informalfigure>
+</para>
+<table frame="all">
+<title>Campos de datos</title>
+    <tgroup cols="3" align="left" colsep="1" rowsep="1">
+      <colspec colname='c1'/>
+      <colspec colname='c2'/>
+      <colspec colname='c3'/>
+<tbody>
+<row><entry><anchor xml:id="_classMFRC522Extended_1a4b7cc5694dd3a265bac326eaba31266e"/>byte</entry><entry>cid</entry><entry></entry></row>
+<row><entry><anchor xml:id="_classMFRC522Extended_1a938a800650dda9e8aba505177c4cc6bd"/>byte</entry><entry>nad</entry><entry></entry></row>
+<row><entry><anchor xml:id="_classMFRC522Extended_1af42a83f45934ad4e2e2628bec3dfede9"/>byte</entry><entry>pcb</entry><entry></entry></row>
+    </tbody>
+    </tgroup>
+</table>
+<indexterm><primary>MFRC522Extended::TagInfo</primary></indexterm>
+</section>
+<section>
+<title>struct MFRC522Extended::TagInfo</title>
+Diagrama de colaboración de MFRC522Extended::TagInfo:<para>
+    <informalfigure>
+        <mediaobject>
+            <imageobject>
+                <imagedata width="50%" align="center" valign="middle" scalefit="0" fileref="structMFRC522Extended_1_1TagInfo__coll__graph.png"></imagedata>
+            </imageobject>
+        </mediaobject>
+    </informalfigure>
+</para>
+<table frame="all">
+<title>Campos de datos</title>
+    <tgroup cols="3" align="left" colsep="1" rowsep="1">
+      <colspec colname='c1'/>
+      <colspec colname='c2'/>
+      <colspec colname='c3'/>
+<tbody>
+<row><entry><anchor xml:id="_classMFRC522Extended_1aa465fa31a1ad20c475fddea7cf6a22f9"/>uint16_t</entry><entry>atqa</entry><entry></entry></row>
+<row><entry><anchor xml:id="_classMFRC522Extended_1acfd1bf479e668097b295f5b332d8b37c"/><link linkend="_classMFRC522Extended_1structMFRC522Extended_1_1Ats">Ats</link></entry><entry>ats</entry><entry></entry></row>
+<row><entry><anchor xml:id="_classMFRC522Extended_1ae9e80e92f113c9fb6f78ff5d84a13e02"/>bool</entry><entry>blockNumber</entry><entry></entry></row>
+<row><entry><anchor xml:id="_classMFRC522Extended_1a3c5c2e94d314ed52215b6e44f6384f61"/><link linkend="_classMFRC522_1structMFRC522_1_1Uid">Uid</link></entry><entry>uid</entry><entry></entry></row>
+    </tbody>
+    </tgroup>
+</table>
+</section>
+<section>
+<title>Documentación de funciones miembro</title>
+<anchor xml:id="_classMFRC522Extended_1a456d810cdd67f28aa319746d277841b8"/><section>
+    <title>PICC_DumpDetailsToSerial()<computeroutput>[1/2]</computeroutput></title>
+<indexterm><primary>PICC_DumpDetailsToSerial</primary><secondary>MFRC522Extended</secondary></indexterm>
+<indexterm><primary>MFRC522Extended</primary><secondary>PICC_DumpDetailsToSerial</secondary></indexterm>
+<para><computeroutput>void MFRC522Extended::PICC_DumpDetailsToSerial (<link linkend="_classMFRC522Extended_1structMFRC522Extended_1_1TagInfo">TagInfo</link> * tag)</computeroutput></para>
+<para>Dumps card info (UID,SAK,Type) about the selected PICC to Serial. </para>
+
+<para>
+                <formalpara>
+                    <title>
+Parámetros</title>
+                    <para>
+                    <table frame="all">
+                        <tgroup cols="2" align="left" colsep="1" rowsep="1">
+                        <colspec colwidth="1*"/>
+                        <colspec colwidth="4*"/>
+                        <tbody>
+                            <row>
+<entry>tag</entry><entry>
+<para>Pointer to <link linkend="_classMFRC522Extended_1structMFRC522Extended_1_1TagInfo">TagInfo</link> struct returned from a successful <link linkend="_classMFRC522Extended_1a0740187cc7f336b0aaea2db432185cb5">PICC_Select()</link>. </para>
+</entry>
+                            </row>
+                        </tbody>
+                        </tgroup>
+                    </table>
+                    </para>
+                </formalpara>
+                </para>
+Gráfico de llamadas de esta función:<para>
+    <informalfigure>
+        <mediaobject>
+            <imageobject>
+                <imagedata width="50%" align="center" valign="middle" scalefit="0" fileref="classMFRC522Extended_a456d810cdd67f28aa319746d277841b8_cgraph.png"></imagedata>
+            </imageobject>
+        </mediaobject>
+    </informalfigure>
+</para>
+Gráfico de llamadas a esta función:<para>
+    <informalfigure>
+        <mediaobject>
+            <imageobject>
+                <imagedata width="50%" align="center" valign="middle" scalefit="0" fileref="classMFRC522Extended_a456d810cdd67f28aa319746d277841b8_icgraph.png"></imagedata>
+            </imageobject>
+        </mediaobject>
+    </informalfigure>
+</para>
+</section>
+<anchor xml:id="_classMFRC522Extended_1a3b9a2c6da6505e0ff7b58c37d7aeff37"/><section>
+    <title>PICC_DumpDetailsToSerial()<computeroutput>[2/2]</computeroutput></title>
+<indexterm><primary>PICC_DumpDetailsToSerial</primary><secondary>MFRC522Extended</secondary></indexterm>
+<indexterm><primary>MFRC522Extended</primary><secondary>PICC_DumpDetailsToSerial</secondary></indexterm>
+<para><computeroutput>void MFRC522::PICC_DumpDetailsToSerial (<link linkend="_classMFRC522_1structMFRC522_1_1Uid">Uid</link> * uid)</computeroutput></para>
+<para>Dumps card info (UID,SAK,Type) about the selected PICC to Serial. </para>
+
+<para>
+                <formalpara>
+                    <title>
+Parámetros</title>
+                    <para>
+                    <table frame="all">
+                        <tgroup cols="2" align="left" colsep="1" rowsep="1">
+                        <colspec colwidth="1*"/>
+                        <colspec colwidth="4*"/>
+                        <tbody>
+                            <row>
+<entry>uid</entry><entry>
+<para>Pointer to Uid struct returned from a successful <link linkend="_classMFRC522Extended_1a0740187cc7f336b0aaea2db432185cb5">PICC_Select()</link>. </para>
+</entry>
+                            </row>
+                        </tbody>
+                        </tgroup>
+                    </table>
+                    </para>
+                </formalpara>
+                </para>
+Gráfico de llamadas de esta función:<para>
+    <informalfigure>
+        <mediaobject>
+            <imageobject>
+                <imagedata width="50%" align="center" valign="middle" scalefit="0" fileref="classMFRC522Extended_a3b9a2c6da6505e0ff7b58c37d7aeff37_cgraph.png"></imagedata>
+            </imageobject>
+        </mediaobject>
+    </informalfigure>
+</para>
+</section>
+<anchor xml:id="_classMFRC522Extended_1a8bb3b09bd19eb99430730af0fbb1565f"/><section>
+    <title>PICC_DumpISO14443_4()</title>
+<indexterm><primary>PICC_DumpISO14443_4</primary><secondary>MFRC522Extended</secondary></indexterm>
+<indexterm><primary>MFRC522Extended</primary><secondary>PICC_DumpISO14443_4</secondary></indexterm>
+<para><computeroutput>void MFRC522Extended::PICC_DumpISO14443_4 (<link linkend="_classMFRC522Extended_1structMFRC522Extended_1_1TagInfo">TagInfo</link> * tag)</computeroutput></para>
+<para>Dumps memory contents of a ISO-14443-4 PICC. </para>
+Gráfico de llamadas a esta función:<para>
+    <informalfigure>
+        <mediaobject>
+            <imageobject>
+                <imagedata width="50%" align="center" valign="middle" scalefit="0" fileref="classMFRC522Extended_a8bb3b09bd19eb99430730af0fbb1565f_icgraph.png"></imagedata>
+            </imageobject>
+        </mediaobject>
+    </informalfigure>
+</para>
+</section>
+<anchor xml:id="_classMFRC522Extended_1a1739931b517243305c765d547d819968"/><section>
+    <title>PICC_DumpToSerial()<computeroutput>[1/2]</computeroutput></title>
+<indexterm><primary>PICC_DumpToSerial</primary><secondary>MFRC522Extended</secondary></indexterm>
+<indexterm><primary>MFRC522Extended</primary><secondary>PICC_DumpToSerial</secondary></indexterm>
+<para><computeroutput>void MFRC522Extended::PICC_DumpToSerial (<link linkend="_classMFRC522Extended_1structMFRC522Extended_1_1TagInfo">TagInfo</link> * tag)</computeroutput></para>
+<para>Dumps debug info about the selected PICC to Serial. On success the PICC is halted after dumping the data. For MIFARE Classic the factory default key of 0xFFFFFFFFFFFF is tried. </para>
+Gráfico de llamadas de esta función:<para>
+    <informalfigure>
+        <mediaobject>
+            <imageobject>
+                <imagedata width="50%" align="center" valign="middle" scalefit="0" fileref="classMFRC522Extended_a1739931b517243305c765d547d819968_cgraph.png"></imagedata>
+            </imageobject>
+        </mediaobject>
+    </informalfigure>
+</para>
+</section>
+<anchor xml:id="_classMFRC522Extended_1a6f324d43c6fbbd0e260b171747186037"/><section>
+    <title>PICC_DumpToSerial()<computeroutput>[2/2]</computeroutput></title>
+<indexterm><primary>PICC_DumpToSerial</primary><secondary>MFRC522Extended</secondary></indexterm>
+<indexterm><primary>MFRC522Extended</primary><secondary>PICC_DumpToSerial</secondary></indexterm>
+<para><computeroutput>void MFRC522::PICC_DumpToSerial (<link linkend="_classMFRC522_1structMFRC522_1_1Uid">Uid</link> * uid)</computeroutput></para>
+<para>Dumps debug info about the selected PICC to Serial. On success the PICC is halted after dumping the data. For MIFARE Classic the factory default key of 0xFFFFFFFFFFFF is tried. <?linebreak?> </para>
+
+<para>
+                <formalpara>
+                    <title>
+Parámetros</title>
+                    <para>
+                    <table frame="all">
+                        <tgroup cols="2" align="left" colsep="1" rowsep="1">
+                        <colspec colwidth="1*"/>
+                        <colspec colwidth="4*"/>
+                        <tbody>
+                            <row>
+<entry>uid</entry><entry>
+<para>Pointer to Uid struct returned from a successful <link linkend="_classMFRC522Extended_1a0740187cc7f336b0aaea2db432185cb5">PICC_Select()</link>. </para>
+</entry>
+                            </row>
+                        </tbody>
+                        </tgroup>
+                    </table>
+                    </para>
+                </formalpara>
+                </para>
+</section>
+<anchor xml:id="_classMFRC522Extended_1ac80a18228260bdde07dff5d4ac23bb53"/><section>
+    <title>PICC_GetType()<computeroutput>[1/2]</computeroutput></title>
+<indexterm><primary>PICC_GetType</primary><secondary>MFRC522Extended</secondary></indexterm>
+<indexterm><primary>MFRC522Extended</primary><secondary>PICC_GetType</secondary></indexterm>
+<para><computeroutput>MFRC522::PICC_Type MFRC522::PICC_GetType (byte sak)<computeroutput>[static]</computeroutput></computeroutput></para>
+<para>Translates the SAK (Select Acknowledge) to a PICC type.</para>
+
+<para><formalpara><title>Devuelve</title>
+
+<para>PICC_Type </para>
+</formalpara>
+</para>
+
+<para>
+                <formalpara>
+                    <title>
+Parámetros</title>
+                    <para>
+                    <table frame="all">
+                        <tgroup cols="2" align="left" colsep="1" rowsep="1">
+                        <colspec colwidth="1*"/>
+                        <colspec colwidth="4*"/>
+                        <tbody>
+                            <row>
+<entry>sak</entry><entry>
+<para>The SAK byte returned from <link linkend="_classMFRC522Extended_1a0740187cc7f336b0aaea2db432185cb5">PICC_Select()</link>. </para>
+</entry>
+                            </row>
+                        </tbody>
+                        </tgroup>
+                    </table>
+                    </para>
+                </formalpara>
+                </para>
+</section>
+<anchor xml:id="_classMFRC522Extended_1addf00efdd2de1002a4f4b34ebe0e1fb2"/><section>
+    <title>PICC_GetType()<computeroutput>[2/2]</computeroutput></title>
+<indexterm><primary>PICC_GetType</primary><secondary>MFRC522Extended</secondary></indexterm>
+<indexterm><primary>MFRC522Extended</primary><secondary>PICC_GetType</secondary></indexterm>
+<para><computeroutput>MFRC522::PICC_Type MFRC522Extended::PICC_GetType (<link linkend="_classMFRC522Extended_1structMFRC522Extended_1_1TagInfo">TagInfo</link> * tag)<computeroutput>[static]</computeroutput></computeroutput></para>
+<para>Get the PICC type.</para>
+
+<para><formalpara><title>Devuelve</title>
+
+<para>PICC_Type </para>
+</formalpara>
+</para>
+
+<para>
+                <formalpara>
+                    <title>
+Parámetros</title>
+                    <para>
+                    <table frame="all">
+                        <tgroup cols="2" align="left" colsep="1" rowsep="1">
+                        <colspec colwidth="1*"/>
+                        <colspec colwidth="4*"/>
+                        <tbody>
+                            <row>
+<entry>tag</entry><entry>
+<para>The <link linkend="_classMFRC522Extended_1structMFRC522Extended_1_1TagInfo">TagInfo</link> returned from <link linkend="_classMFRC522Extended_1a0740187cc7f336b0aaea2db432185cb5">PICC_Select()</link>. </para>
+</entry>
+                            </row>
+                        </tbody>
+                        </tgroup>
+                    </table>
+                    </para>
+                </formalpara>
+                </para>
+Gráfico de llamadas a esta función:<para>
+    <informalfigure>
+        <mediaobject>
+            <imageobject>
+                <imagedata width="50%" align="center" valign="middle" scalefit="0" fileref="classMFRC522Extended_addf00efdd2de1002a4f4b34ebe0e1fb2_icgraph.png"></imagedata>
+            </imageobject>
+        </mediaobject>
+    </informalfigure>
+</para>
+</section>
+<anchor xml:id="_classMFRC522Extended_1afaa1289052274755acec885017507b64"/><section>
+    <title>PICC_IsNewCardPresent()</title>
+<indexterm><primary>PICC_IsNewCardPresent</primary><secondary>MFRC522Extended</secondary></indexterm>
+<indexterm><primary>MFRC522Extended</primary><secondary>PICC_IsNewCardPresent</secondary></indexterm>
+<para><computeroutput>bool MFRC522Extended::PICC_IsNewCardPresent ( )<computeroutput>[override]</computeroutput>, <computeroutput>[virtual]</computeroutput></computeroutput></para>
+<para>Returns true if a PICC responds to PICC_CMD_REQA. Only &quot;new&quot; cards in state IDLE are invited. Sleeping cards in state HALT are ignored.</para>
+
+<para><formalpara><title>Devuelve</title>
+
+<para>bool </para>
+</formalpara>
+</para>
+<para>
+Reimplementado de <link linkend="_classMFRC522_1a3adca9d3b455c680ebcde3b74c4e567b">MFRC522</link>.</para>
+Gráfico de llamadas de esta función:<para>
+    <informalfigure>
+        <mediaobject>
+            <imageobject>
+                <imagedata width="50%" align="center" valign="middle" scalefit="0" fileref="classMFRC522Extended_afaa1289052274755acec885017507b64_cgraph.png"></imagedata>
+            </imageobject>
+        </mediaobject>
+    </informalfigure>
+</para>
+</section>
+<anchor xml:id="_classMFRC522Extended_1acb69d5c429b8e06ecec8dc1e34c02d65"/><section>
+    <title>PICC_PPS()<computeroutput>[1/2]</computeroutput></title>
+<indexterm><primary>PICC_PPS</primary><secondary>MFRC522Extended</secondary></indexterm>
+<indexterm><primary>MFRC522Extended</primary><secondary>PICC_PPS</secondary></indexterm>
+<para><computeroutput>MFRC522::StatusCode MFRC522Extended::PICC_PPS ( )</computeroutput></para>
+<para>Transmits Protocol and Parameter Selection Request (PPS) without parameter 1</para>
+
+<para><formalpara><title>Devuelve</title>
+
+<para>STATUS_OK on success, STATUS_??? otherwise. </para>
+</formalpara>
+</para>
+Gráfico de llamadas de esta función:<para>
+    <informalfigure>
+        <mediaobject>
+            <imageobject>
+                <imagedata width="50%" align="center" valign="middle" scalefit="0" fileref="classMFRC522Extended_acb69d5c429b8e06ecec8dc1e34c02d65_cgraph.png"></imagedata>
+            </imageobject>
+        </mediaobject>
+    </informalfigure>
+</para>
+Gráfico de llamadas a esta función:<para>
+    <informalfigure>
+        <mediaobject>
+            <imageobject>
+                <imagedata width="50%" align="center" valign="middle" scalefit="0" fileref="classMFRC522Extended_acb69d5c429b8e06ecec8dc1e34c02d65_icgraph.png"></imagedata>
+            </imageobject>
+        </mediaobject>
+    </informalfigure>
+</para>
+</section>
+<anchor xml:id="_classMFRC522Extended_1a9db408d811b5467517a1c92e37f62c6f"/><section>
+    <title>PICC_PPS()<computeroutput>[2/2]</computeroutput></title>
+<indexterm><primary>PICC_PPS</primary><secondary>MFRC522Extended</secondary></indexterm>
+<indexterm><primary>MFRC522Extended</primary><secondary>PICC_PPS</secondary></indexterm>
+<para><computeroutput>MFRC522::StatusCode MFRC522Extended::PICC_PPS (TagBitRates sendBitRate, TagBitRates receiveBitRate)</computeroutput></para>
+<para>Transmits Protocol and Parameter Selection Request (PPS)</para>
+
+<para><formalpara><title>Devuelve</title>
+
+<para>STATUS_OK on success, STATUS_??? otherwise. </para>
+</formalpara>
+</para>
+
+<para>
+                <formalpara>
+                    <title>
+Parámetros</title>
+                    <para>
+                    <table frame="all">
+                        <tgroup cols="2" align="left" colsep="1" rowsep="1">
+                        <colspec colwidth="1*"/>
+                        <colspec colwidth="4*"/>
+                        <tbody>
+                            <row>
+<entry>sendBitRate</entry><entry>
+<para>DS  </para>
+</entry>
+                            </row>
+                            <row>
+<entry>receiveBitRate</entry><entry>
+<para>DR </para>
+</entry>
+                            </row>
+                        </tbody>
+                        </tgroup>
+                    </table>
+                    </para>
+                </formalpara>
+                </para>
+Gráfico de llamadas de esta función:<para>
+    <informalfigure>
+        <mediaobject>
+            <imageobject>
+                <imagedata width="50%" align="center" valign="middle" scalefit="0" fileref="classMFRC522Extended_a9db408d811b5467517a1c92e37f62c6f_cgraph.png"></imagedata>
+            </imageobject>
+        </mediaobject>
+    </informalfigure>
+</para>
+</section>
+<anchor xml:id="_classMFRC522Extended_1ae68a2f90cec039dc856089aee08119ee"/><section>
+    <title>PICC_ReadCardSerial()</title>
+<indexterm><primary>PICC_ReadCardSerial</primary><secondary>MFRC522Extended</secondary></indexterm>
+<indexterm><primary>MFRC522Extended</primary><secondary>PICC_ReadCardSerial</secondary></indexterm>
+<para><computeroutput>bool MFRC522Extended::PICC_ReadCardSerial ( )<computeroutput>[override]</computeroutput>, <computeroutput>[virtual]</computeroutput></computeroutput></para>
+<para>Simple wrapper around PICC_Select. Returns true if a UID could be read. Remember to call <link linkend="_classMFRC522Extended_1afaa1289052274755acec885017507b64">PICC_IsNewCardPresent()</link>, <link linkend="_classMFRC522_1a4e0ac6edf5e8f6ade351b009278fbbc7">PICC_RequestA()</link> or <link linkend="_classMFRC522_1ad00a1efcfa6dc203ca885d43f4d02125">PICC_WakeupA()</link> first. The read UID is available in the class variable uid.</para>
+
+<para><formalpara><title>Devuelve</title>
+
+<para>bool </para>
+</formalpara>
+</para>
+<para>
+Reimplementado de <link linkend="_classMFRC522_1aab1218c71cec9cc17ee3ac8a683df106">MFRC522</link>.</para>
+Gráfico de llamadas de esta función:<para>
+    <informalfigure>
+        <mediaobject>
+            <imageobject>
+                <imagedata width="50%" align="center" valign="middle" scalefit="0" fileref="classMFRC522Extended_ae68a2f90cec039dc856089aee08119ee_cgraph.png"></imagedata>
+            </imageobject>
+        </mediaobject>
+    </informalfigure>
+</para>
+</section>
+<anchor xml:id="_classMFRC522Extended_1a2671f1de35a0cac5da87e4300b7df74d"/><section>
+    <title>PICC_RequestATS()</title>
+<indexterm><primary>PICC_RequestATS</primary><secondary>MFRC522Extended</secondary></indexterm>
+<indexterm><primary>MFRC522Extended</primary><secondary>PICC_RequestATS</secondary></indexterm>
+<para><computeroutput>MFRC522::StatusCode MFRC522Extended::PICC_RequestATS (<link linkend="_classMFRC522Extended_1structMFRC522Extended_1_1Ats">Ats</link> * ats)</computeroutput></para>
+<para>Transmits a Request command for Answer To Select (ATS).</para>
+
+<para><formalpara><title>Devuelve</title>
+
+<para>STATUS_OK on success, STATUS_??? otherwise. </para>
+</formalpara>
+</para>
+Gráfico de llamadas de esta función:<para>
+    <informalfigure>
+        <mediaobject>
+            <imageobject>
+                <imagedata width="50%" align="center" valign="middle" scalefit="0" fileref="classMFRC522Extended_a2671f1de35a0cac5da87e4300b7df74d_cgraph.png"></imagedata>
+            </imageobject>
+        </mediaobject>
+    </informalfigure>
+</para>
+Gráfico de llamadas a esta función:<para>
+    <informalfigure>
+        <mediaobject>
+            <imageobject>
+                <imagedata width="50%" align="center" valign="middle" scalefit="0" fileref="classMFRC522Extended_a2671f1de35a0cac5da87e4300b7df74d_icgraph.png"></imagedata>
+            </imageobject>
+        </mediaobject>
+    </informalfigure>
+</para>
+</section>
+<anchor xml:id="_classMFRC522Extended_1a0740187cc7f336b0aaea2db432185cb5"/><section>
+    <title>PICC_Select()</title>
+<indexterm><primary>PICC_Select</primary><secondary>MFRC522Extended</secondary></indexterm>
+<indexterm><primary>MFRC522Extended</primary><secondary>PICC_Select</secondary></indexterm>
+<para><computeroutput>MFRC522::StatusCode MFRC522Extended::PICC_Select (<link linkend="_classMFRC522_1structMFRC522_1_1Uid">Uid</link> * uid, byte validBits = <computeroutput>0</computeroutput>
+)<computeroutput>[override]</computeroutput>, <computeroutput>[virtual]</computeroutput></computeroutput></para>
+<para>Transmits SELECT/ANTICOLLISION commands to select a single PICC. Before calling this function the PICCs must be placed in the READY(*) state by calling <link linkend="_classMFRC522_1a4e0ac6edf5e8f6ade351b009278fbbc7">PICC_RequestA()</link> or <link linkend="_classMFRC522_1ad00a1efcfa6dc203ca885d43f4d02125">PICC_WakeupA()</link>. On success:<itemizedlist>
+<listitem>
+<para>The chosen PICC is in state ACTIVE(*) and all other PICCs have returned to state IDLE/HALT. (Figure 7 of the ISO/IEC 14443-3 draft.)</para>
+</listitem><listitem>
+<para>The UID size and value of the chosen PICC is returned in *uid along with the SAK.</para>
+</listitem></itemizedlist>
+</para>
+
+<para>A PICC UID consists of 4, 7 or 10 bytes. Only 4 bytes can be specified in a SELECT command, so for the longer UIDs two or three iterations are used: UID size Number of UID bytes Cascade levels Example of PICC ======== =================== ============== =============== single 4 1 MIFARE Classic double 7 2 MIFARE Ultralight triple 10 3 Not currently in use?</para>
+
+<para><formalpara><title>Devuelve</title>
+
+<para>STATUS_OK on success, STATUS_??? otherwise. </para>
+</formalpara>
+</para>
+
+<para>
+                <formalpara>
+                    <title>
+Parámetros</title>
+                    <para>
+                    <table frame="all">
+                        <tgroup cols="2" align="left" colsep="1" rowsep="1">
+                        <colspec colwidth="1*"/>
+                        <colspec colwidth="4*"/>
+                        <tbody>
+                            <row>
+<entry>uid</entry><entry>
+<para>Pointer to Uid struct. Normally output, but can also be used to supply a known UID.  </para>
+</entry>
+                            </row>
+                            <row>
+<entry>validBits</entry><entry>
+<para>The number of known UID bits supplied in *uid. Normally 0. If set you must also supply uid-&gt;size. </para>
+</entry>
+                            </row>
+                        </tbody>
+                        </tgroup>
+                    </table>
+                    </para>
+                </formalpara>
+                </para>
+<para>
+Reimplementado de <link linkend="_classMFRC522_1a7a78c629cb4e1d90cc2d7526b17d6c22">MFRC522</link>.</para>
+Gráfico de llamadas de esta función:<para>
+    <informalfigure>
+        <mediaobject>
+            <imageobject>
+                <imagedata width="50%" align="center" valign="middle" scalefit="0" fileref="classMFRC522Extended_a0740187cc7f336b0aaea2db432185cb5_cgraph.png"></imagedata>
+            </imageobject>
+        </mediaobject>
+    </informalfigure>
+</para>
+Gráfico de llamadas a esta función:<para>
+    <informalfigure>
+        <mediaobject>
+            <imageobject>
+                <imagedata width="50%" align="center" valign="middle" scalefit="0" fileref="classMFRC522Extended_a0740187cc7f336b0aaea2db432185cb5_icgraph.png"></imagedata>
+            </imageobject>
+        </mediaobject>
+    </informalfigure>
+</para>
+</section>
+<anchor xml:id="_classMFRC522Extended_1a2de7e4ead4065d896d7ee39e9e2040dd"/><section>
+    <title>TCL_Deselect()</title>
+<indexterm><primary>TCL_Deselect</primary><secondary>MFRC522Extended</secondary></indexterm>
+<indexterm><primary>MFRC522Extended</primary><secondary>TCL_Deselect</secondary></indexterm>
+<para><computeroutput>MFRC522::StatusCode MFRC522Extended::TCL_Deselect (<link linkend="_classMFRC522Extended_1structMFRC522Extended_1_1TagInfo">TagInfo</link> * tag)</computeroutput></para>
+<para>Send an S-Block to deselect the card. </para>
+Gráfico de llamadas de esta función:<para>
+    <informalfigure>
+        <mediaobject>
+            <imageobject>
+                <imagedata width="50%" align="center" valign="middle" scalefit="0" fileref="classMFRC522Extended_a2de7e4ead4065d896d7ee39e9e2040dd_cgraph.png"></imagedata>
+            </imageobject>
+        </mediaobject>
+    </informalfigure>
+</para>
+</section>
+<anchor xml:id="_classMFRC522Extended_1a4a0e94f11a21101fd4d5b0ea0e3393c9"/><section>
+    <title>TCL_Transceive()</title>
+<indexterm><primary>TCL_Transceive</primary><secondary>MFRC522Extended</secondary></indexterm>
+<indexterm><primary>MFRC522Extended</primary><secondary>TCL_Transceive</secondary></indexterm>
+<para><computeroutput>MFRC522::StatusCode MFRC522Extended::TCL_Transceive (<link linkend="_classMFRC522Extended_1structMFRC522Extended_1_1TagInfo">TagInfo</link> * tag, byte * sendData, byte sendLen, byte * backData = <computeroutput>NULL</computeroutput>
+, byte * backLen = <computeroutput>NULL</computeroutput>
+)</computeroutput></para>
+<para>Send an I-Block (Application) </para>
+Gráfico de llamadas de esta función:<para>
+    <informalfigure>
+        <mediaobject>
+            <imageobject>
+                <imagedata width="50%" align="center" valign="middle" scalefit="0" fileref="classMFRC522Extended_a4a0e94f11a21101fd4d5b0ea0e3393c9_cgraph.png"></imagedata>
+            </imageobject>
+        </mediaobject>
+    </informalfigure>
+</para>
+</section>
+<anchor xml:id="_classMFRC522Extended_1aebbf1bbae99dea09128a6bcc4cf27f9d"/><section>
+    <title>TCL_TransceiveRBlock()</title>
+<indexterm><primary>TCL_TransceiveRBlock</primary><secondary>MFRC522Extended</secondary></indexterm>
+<indexterm><primary>MFRC522Extended</primary><secondary>TCL_TransceiveRBlock</secondary></indexterm>
+<para><computeroutput>MFRC522::StatusCode MFRC522Extended::TCL_TransceiveRBlock (<link linkend="_classMFRC522Extended_1structMFRC522Extended_1_1TagInfo">TagInfo</link> * tag, bool ack, byte * backData = <computeroutput>NULL</computeroutput>
+, byte * backLen = <computeroutput>NULL</computeroutput>
+)</computeroutput></para>
+<para>Send R-Block to the PICC. </para>
+Gráfico de llamadas a esta función:<para>
+    <informalfigure>
+        <mediaobject>
+            <imageobject>
+                <imagedata width="50%" align="center" valign="middle" scalefit="0" fileref="classMFRC522Extended_aebbf1bbae99dea09128a6bcc4cf27f9d_icgraph.png"></imagedata>
+            </imageobject>
+        </mediaobject>
+    </informalfigure>
+</para>
+</section>
+<para>
+La documentación de esta clase está generada de los siguientes archivos:</para>
+main/libraries/RFID-RC522/MFRC522Extended.hmain/libraries/RFID-RC522/MFRC522Extended.cpp</section>
+</section>
+</section>
