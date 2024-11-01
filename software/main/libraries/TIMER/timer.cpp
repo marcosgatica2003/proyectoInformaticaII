@@ -17,6 +17,14 @@ void timer::iniciar() {
     pinMode(pinSalidaDos, OUTPUT);
 }
 
+bool timer::tiempoUnoCumplido() {
+    return (millis() - cont1 >= tiempoUno);
+}
+
+bool timer::tiempoDosCumplido() {
+    return (millis() - cont1 >= tiempoDos);
+}
+
 void timer::actualizar() {
     unsigned long tiempoActual = millis();
 
@@ -32,9 +40,9 @@ void timer::actualizar() {
     }
 
     if (contON) {
-        if (tiempoActual - cont1 >= tiempoUno) {
+        if (tiempoUnoCumplido()) {
             digitalWrite(pinSalidaUno, HIGH);
-            if (tiempoActual - cont1 >= tiempoDos) {
+            if (tiempoDosCumplido()) {
                 digitalWrite(pinSalidaDos, HIGH);
             }
         }

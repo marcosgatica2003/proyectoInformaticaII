@@ -38,6 +38,20 @@ class timer {
  */
        void actualizar();
 
+/**
+ * @brief bool tiempoUnoCumplido(): Función que verifica si se cumplió el tiempoUno.
+ * Devuelve true en caso de haber pasado el tiempoUno, de lo contrario devuelve false.
+ */
+
+       bool tiempoUnoCumplido();
+
+/**
+ * @brief bool tiempoDosCumplido(): Función que verifica si se cumplió el tiempoDos.
+ * Devuelve true en caso de haber pasado el tiempoDos, de lo contrario devuelve false.
+ */
+
+       bool tiempoDosCumplido();
+
     private:
         const unsigned long tiempoUno; /**< Tiempo de activación de la primera salida en milisegundos. */
         const unsigned long tiempoDos; /**< Tiempo de activación de la segunda salida en milisegundos. */
