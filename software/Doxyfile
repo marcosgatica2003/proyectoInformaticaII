@@ -297,7 +297,7 @@ ALIASES                =
 # members will be omitted, etc.
 # The default value is: NO.
 
-OPTIMIZE_OUTPUT_FOR_C  = NO
+OPTIMIZE_OUTPUT_FOR_C  = YES
 
 # Set the OPTIMIZE_OUTPUT_JAVA tag to YES if your project consists of Java or
 # Python sources only. Doxygen will then generate output that is more tailored
@@ -465,7 +465,7 @@ INLINE_GROUPED_CLASSES = NO
 # Man pages) or section (for LaTeX and RTF).
 # The default value is: NO.
 
-INLINE_SIMPLE_STRUCTS  = NO
+INLINE_SIMPLE_STRUCTS  = YES
 
 # When TYPEDEF_HIDES_STRUCT tag is enabled, a typedef of a struct, union, or
 # enum is documented as struct, union, or enum with the name of the typedef. So
@@ -966,10 +966,15 @@ WARN_LOGFILE           =
 # Note: If this tag is empty the current directory is searched.
 
 INPUT                  = ./main/main.ino \
-												 ./main/libraries/RFID-RC522/accesoRFID.h \
-												 ./main/libraries/DHT11-HW-481/sensorHW481.h \
-												 ./main/libraries/DHT11-HW-481/Bonezegei_DHT11.h
- 
+                         ./main/libraries/RFID-RC522/accesoRFID.h \
+												 ./main/libraries/RFID-RC522/MFRC522.h \
+												 ./main/libraries/RFID-RC522/MFRC522Extended.h \
+												 ./main/libraries/RFID-RC522/deprecated.h \
+												 ./main/libraries/RFID-RC522/require_cpp11.h \
+                         ./main/libraries/DHT11-HW-481/setPin.h \
+                         ./main/libraries/DHT11-HW-481/setPin.cpp \
+                         ./main/libraries/DHT11-HW-481/DHT11.h \
+												 ./main/libraries/TIMER/timer.h
 
 
 # This tag can be used to specify the character encoding of the source files
@@ -1351,7 +1356,7 @@ IGNORE_PREFIX          =
 # If the GENERATE_HTML tag is set to YES, Doxygen will generate HTML output
 # The default value is: YES.
 
-GENERATE_HTML          = NO
+GENERATE_HTML          = YES
 
 # The HTML_OUTPUT tag is used to specify where the HTML docs will be put. If a
 # relative path is entered the value of OUTPUT_DIRECTORY will be put in front of
@@ -1777,7 +1782,7 @@ DISABLE_INDEX          = NO
 # The default value is: NO.
 # This tag requires that the tag GENERATE_HTML is set to YES.
 
-GENERATE_TREEVIEW      = NO
+GENERATE_TREEVIEW      = YES
 
 # When both GENERATE_TREEVIEW and DISABLE_INDEX are set to YES, then the
 # FULL_SIDEBAR option determines if the side bar is limited to only the treeview
@@ -2641,7 +2646,7 @@ DOT_FONTPATH           =
 # The default value is: YES.
 
 CLASS_GRAPH            = YES
-CLASS_DIAGRAMS				 = YES
+
 # If the COLLABORATION_GRAPH tag is set to YES then Doxygen will generate a
 # graph for each documented class showing the direct and indirect implementation
 # dependencies (inheritance, containment, and class references variables) of the
@@ -2749,7 +2754,7 @@ INCLUDED_BY_GRAPH      = YES
 # The default value is: NO.
 # This tag requires that the tag HAVE_DOT is set to YES.
 
-CALL_GRAPH             = NO
+CALL_GRAPH             = YES
 
 # If the CALLER_GRAPH tag is set to YES then Doxygen will generate a caller
 # dependency graph for every global function or class method.
@@ -2761,7 +2766,7 @@ CALL_GRAPH             = NO
 # The default value is: NO.
 # This tag requires that the tag HAVE_DOT is set to YES.
 
-CALLER_GRAPH           = NO
+CALLER_GRAPH           = YES
 
 # If the GRAPHICAL_HIERARCHY tag is set to YES then Doxygen will graphical
 # hierarchy of all classes instead of a textual one.

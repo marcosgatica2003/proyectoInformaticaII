@@ -29,20 +29,30 @@ class accesoRFID {
       /**
       *@brief void start();
       * Inicia la comunicación SPI con el módulo RFID (usando sus métodos).
-      *
+      */
+
+      void start();
+        
+      /**
       *@brief void mostrarID(); 
       *Imprime por puerto serie el UID de la tarjeta detectada por el RFID
       *
+      */
+
+      void mostrarID();
+
+      /**
       *@brief bool autorizar();
       *Compara el UID de la tarjeta con el UID autorizado. Devuelve true (acceso permitido) o un false (acceso denegado).
-      *
+      */
+
+      bool autorizar();
+
+      /**
       *@brief bool detectarTarjeta();
       *Lee el UID de la tarjeta para implementarla en el sistema.
       */
 
-      void start();
-      void mostrarID();
-      bool autorizar();
       bool detectarTarjeta();
 
     private:

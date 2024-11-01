@@ -1,0 +1,1041 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "https://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" lang="es">
+<head>
+<meta http-equiv="Content-Type" content="text/xhtml;charset=UTF-8"/>
+<meta http-equiv="X-UA-Compatible" content="IE=11"/>
+<meta name="generator" content="Doxygen 1.12.0"/>
+<meta name="viewport" content="width=device-width, initial-scale=1"/>
+<title>Sistema de seguridad en cámaras frigoríficas: Referencia de la clase MFRC522Extended</title>
+<link href="tabs.css" rel="stylesheet" type="text/css"/>
+<script type="text/javascript" src="jquery.js"></script>
+<script type="text/javascript" src="dynsections.js"></script>
+<script type="text/javascript" src="clipboard.js"></script>
+<link href="navtree.css" rel="stylesheet" type="text/css"/>
+<script type="text/javascript" src="navtreedata.js"></script>
+<script type="text/javascript" src="navtree.js"></script>
+<script type="text/javascript" src="resize.js"></script>
+<script type="text/javascript" src="cookie.js"></script>
+<link href="search/search.css" rel="stylesheet" type="text/css"/>
+<script type="text/javascript" src="search/searchdata.js"></script>
+<script type="text/javascript" src="search/search.js"></script>
+<link href="doxygen.css" rel="stylesheet" type="text/css" />
+</head>
+<body>
+<div id="top"><!-- do not remove this div, it is closed by doxygen! -->
+<div id="titlearea">
+<table cellspacing="0" cellpadding="0">
+ <tbody>
+ <tr id="projectrow">
+  <td id="projectalign">
+   <div id="projectname">Sistema de seguridad en cámaras frigoríficas
+   </div>
+  </td>
+ </tr>
+ </tbody>
+</table>
+</div>
+<!-- end header part -->
+<!-- Generado por Doxygen 1.12.0 -->
+<script type="text/javascript">
+/* @license magnet:?xt=urn:btih:d3d9a9a6595521f9666a5e94cc830dab83b65699&amp;dn=expat.txt MIT */
+var searchBox = new SearchBox("searchBox", "search/",'.html');
+/* @license-end */
+</script>
+<script type="text/javascript">
+/* @license magnet:?xt=urn:btih:d3d9a9a6595521f9666a5e94cc830dab83b65699&amp;dn=expat.txt MIT */
+$(function() { codefold.init(0); });
+/* @license-end */
+</script>
+<script type="text/javascript" src="menudata.js"></script>
+<script type="text/javascript" src="menu.js"></script>
+<script type="text/javascript">
+/* @license magnet:?xt=urn:btih:d3d9a9a6595521f9666a5e94cc830dab83b65699&amp;dn=expat.txt MIT */
+$(function() {
+  initMenu('',true,false,'search.php','Buscar',true);
+  $(function() { init_search(); });
+});
+/* @license-end */
+</script>
+<div id="main-nav"></div>
+</div><!-- top -->
+<div id="side-nav" class="ui-resizable side-nav-resizable">
+  <div id="nav-tree">
+    <div id="nav-tree-contents">
+      <div id="nav-sync" class="sync"></div>
+    </div>
+  </div>
+  <div id="splitbar" style="-moz-user-select:none;" 
+       class="ui-resizable-handle">
+  </div>
+</div>
+<script type="text/javascript">
+/* @license magnet:?xt=urn:btih:d3d9a9a6595521f9666a5e94cc830dab83b65699&amp;dn=expat.txt MIT */
+$(function(){initNavTree('classMFRC522Extended.html',''); initResizable(true); });
+/* @license-end */
+</script>
+<div id="doc-content">
+<!-- window showing the filter options -->
+<div id="MSearchSelectWindow"
+     onmouseover="return searchBox.OnSearchSelectShow()"
+     onmouseout="return searchBox.OnSearchSelectHide()"
+     onkeydown="return searchBox.OnSearchSelectKey(event)">
+</div>
+
+<!-- iframe showing the search results (closed by default) -->
+<div id="MSearchResultsWindow">
+<div id="MSearchResults">
+<div class="SRPage">
+<div id="SRIndex">
+<div id="SRResults"></div>
+<div class="SRStatus" id="Loading">Cargando...</div>
+<div class="SRStatus" id="Searching">Buscando...</div>
+<div class="SRStatus" id="NoMatches">Nada coincide</div>
+</div>
+</div>
+</div>
+</div>
+
+<div class="header">
+  <div class="summary">
+<a href="#nested-classes">Estructuras de datos</a> &#124;
+<a href="#pub-types">Tipos públicos</a> &#124;
+<a href="#pub-methods">Métodos públicos</a> &#124;
+<a href="#pub-static-methods">Métodos públicos estáticos</a> &#124;
+<a href="#pub-attribs">Campos de datos</a>  </div>
+  <div class="headertitle"><div class="title">Referencia de la clase MFRC522Extended</div></div>
+</div><!--header-->
+<div class="contents">
+
+<p><code>#include &lt;<a class="el" href="MFRC522Extended_8h_source.html">MFRC522Extended.h</a>&gt;</code></p>
+<div class="dynheader">
+Diagrama de herencia de MFRC522Extended</div>
+<div class="dyncontent">
+<div class="center"><img src="classMFRC522Extended__inherit__graph.png" border="0" usemap="#aMFRC522Extended_inherit__map" alt="Inheritance graph"/></div>
+<map name="aMFRC522Extended_inherit__map" id="aMFRC522Extended_inherit__map">
+<area shape="rect" title=" " alt="" coords="21,507,201,832"/>
+<area shape="rect" href="classMFRC522.html" title=" " alt="" coords="5,5,216,459"/>
+<area shape="poly" title=" " alt="" coords="113,474,113,507,108,507,108,474"/>
+</map>
+</div>
+<div class="dynheader">
+Diagrama de colaboración de MFRC522Extended:</div>
+<div class="dyncontent">
+<div class="center"><img src="classMFRC522Extended__coll__graph.png" border="0" usemap="#aMFRC522Extended_coll__map" alt="Collaboration graph"/></div>
+<map name="aMFRC522Extended_coll__map" id="aMFRC522Extended_coll__map">
+<area shape="rect" title=" " alt="" coords="133,743,313,1069"/>
+<area shape="rect" href="classMFRC522.html" title=" " alt="" coords="5,246,216,678"/>
+<area shape="poly" title=" " alt="" coords="171,692,184,743,179,744,166,693"/>
+<area shape="rect" href="classMFRC522.html#structMFRC522_1_1Uid" title=" " alt="" coords="58,37,163,149"/>
+<area shape="poly" title=" " alt="" coords="113,149,113,229,108,229,108,149"/>
+<area shape="rect" href="classMFRC522Extended.html#structMFRC522Extended_1_1TagInfo" title=" " alt="" coords="241,406,431,518"/>
+<area shape="poly" title=" " alt="" coords="325,519,271,727,266,726,319,518"/>
+<area shape="rect" href="classMFRC522Extended.html#structMFRC522Extended_1_1Ats" title=" " alt="" coords="253,5,419,181"/>
+<area shape="poly" title=" " alt="" coords="339,181,339,389,333,389,333,181"/>
+</map>
+</div>
+<table class="memberdecls">
+<tr class="heading"><td colspan="2"><h2 class="groupheader"><a id="nested-classes" name="nested-classes"></a>
+Estructuras de datos</h2></td></tr>
+<tr class="memitem:structMFRC522Extended_1_1Ats" id="r_structMFRC522Extended_1_1Ats"><td class="memItemLeft" align="right" valign="top">struct &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#structMFRC522Extended_1_1Ats">Ats</a></td></tr>
+<tr class="separator:structMFRC522Extended_1_1Ats"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:structMFRC522Extended_1_1Ats_8ta1" id="r_structMFRC522Extended_1_1Ats_8ta1"><td class="memItemLeft" align="right" valign="top">struct &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#structMFRC522Extended_1_1Ats_8ta1">Ats.ta1</a></td></tr>
+<tr class="separator:structMFRC522Extended_1_1Ats_8ta1"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:structMFRC522Extended_1_1Ats_8tb1" id="r_structMFRC522Extended_1_1Ats_8tb1"><td class="memItemLeft" align="right" valign="top">struct &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#structMFRC522Extended_1_1Ats_8tb1">Ats.tb1</a></td></tr>
+<tr class="separator:structMFRC522Extended_1_1Ats_8tb1"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:structMFRC522Extended_1_1Ats_8tc1" id="r_structMFRC522Extended_1_1Ats_8tc1"><td class="memItemLeft" align="right" valign="top">struct &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#structMFRC522Extended_1_1Ats_8tc1">Ats.tc1</a></td></tr>
+<tr class="separator:structMFRC522Extended_1_1Ats_8tc1"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:structMFRC522Extended_1_1PcbBlock" id="r_structMFRC522Extended_1_1PcbBlock"><td class="memItemLeft" align="right" valign="top">struct &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#structMFRC522Extended_1_1PcbBlock">PcbBlock</a></td></tr>
+<tr class="separator:structMFRC522Extended_1_1PcbBlock"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:structMFRC522Extended_1_1PcbBlock_8inf" id="r_structMFRC522Extended_1_1PcbBlock_8inf"><td class="memItemLeft" align="right" valign="top">struct &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#structMFRC522Extended_1_1PcbBlock_8inf">PcbBlock.inf</a></td></tr>
+<tr class="separator:structMFRC522Extended_1_1PcbBlock_8inf"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:structMFRC522Extended_1_1PcbBlock_8prologue" id="r_structMFRC522Extended_1_1PcbBlock_8prologue"><td class="memItemLeft" align="right" valign="top">struct &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#structMFRC522Extended_1_1PcbBlock_8prologue">PcbBlock.prologue</a></td></tr>
+<tr class="separator:structMFRC522Extended_1_1PcbBlock_8prologue"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:structMFRC522Extended_1_1TagInfo" id="r_structMFRC522Extended_1_1TagInfo"><td class="memItemLeft" align="right" valign="top">struct &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#structMFRC522Extended_1_1TagInfo">TagInfo</a></td></tr>
+<tr class="separator:structMFRC522Extended_1_1TagInfo"><td class="memSeparator" colspan="2">&#160;</td></tr>
+</table><table class="memberdecls">
+<tr class="heading"><td colspan="2"><h2 class="groupheader"><a id="pub-types" name="pub-types"></a>
+Tipos públicos</h2></td></tr>
+<tr class="memitem:a58db706310aa57194bcf97d7c2c92e8d" id="r_a58db706310aa57194bcf97d7c2c92e8d"><td class="memItemLeft" align="right" valign="top"><a id="a58db706310aa57194bcf97d7c2c92e8d" name="a58db706310aa57194bcf97d7c2c92e8d"></a>enum &#160;</td><td class="memItemRight" valign="bottom"><b>TagBitRates</b> : byte { <b>BITRATE_106KBITS</b> = 0x00
+, <b>BITRATE_212KBITS</b> = 0x01
+, <b>BITRATE_424KBITS</b> = 0x02
+, <b>BITRATE_848KBITS</b> = 0x03
+ }</td></tr>
+<tr class="separator:a58db706310aa57194bcf97d7c2c92e8d"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="inherit_header pub_types_classMFRC522"><td colspan="2" onclick="javascript:dynsection.toggleInherit('pub_types_classMFRC522')"><img src="closed.png" alt="-"/>&#160;Tipos públicos heredados de <a class="el" href="classMFRC522.html">MFRC522</a></td></tr>
+<tr class="memitem:a3f25eb3421a80d3aeca247c9640f0669 inherit pub_types_classMFRC522" id="r_a3f25eb3421a80d3aeca247c9640f0669"><td class="memItemLeft" align="right" valign="top"><a id="a3f25eb3421a80d3aeca247c9640f0669" name="a3f25eb3421a80d3aeca247c9640f0669"></a>enum &#160;</td><td class="memItemRight" valign="bottom"><b>PCD_Register</b> : byte { <br />
+&#160;&#160;<b>CommandReg</b> = 0x01 &lt;&lt; 1
+, <b>ComIEnReg</b> = 0x02 &lt;&lt; 1
+, <b>DivIEnReg</b> = 0x03 &lt;&lt; 1
+, <b>ComIrqReg</b> = 0x04 &lt;&lt; 1
+, <br />
+&#160;&#160;<b>DivIrqReg</b> = 0x05 &lt;&lt; 1
+, <b>ErrorReg</b> = 0x06 &lt;&lt; 1
+, <b>Status1Reg</b> = 0x07 &lt;&lt; 1
+, <b>Status2Reg</b> = 0x08 &lt;&lt; 1
+, <br />
+&#160;&#160;<b>FIFODataReg</b> = 0x09 &lt;&lt; 1
+, <b>FIFOLevelReg</b> = 0x0A &lt;&lt; 1
+, <b>WaterLevelReg</b> = 0x0B &lt;&lt; 1
+, <b>ControlReg</b> = 0x0C &lt;&lt; 1
+, <br />
+&#160;&#160;<b>BitFramingReg</b> = 0x0D &lt;&lt; 1
+, <b>CollReg</b> = 0x0E &lt;&lt; 1
+, <b>ModeReg</b> = 0x11 &lt;&lt; 1
+, <b>TxModeReg</b> = 0x12 &lt;&lt; 1
+, <br />
+&#160;&#160;<b>RxModeReg</b> = 0x13 &lt;&lt; 1
+, <b>TxControlReg</b> = 0x14 &lt;&lt; 1
+, <b>TxASKReg</b> = 0x15 &lt;&lt; 1
+, <b>TxSelReg</b> = 0x16 &lt;&lt; 1
+, <br />
+&#160;&#160;<b>RxSelReg</b> = 0x17 &lt;&lt; 1
+, <b>RxThresholdReg</b> = 0x18 &lt;&lt; 1
+, <b>DemodReg</b> = 0x19 &lt;&lt; 1
+, <b>MfTxReg</b> = 0x1C &lt;&lt; 1
+, <br />
+&#160;&#160;<b>MfRxReg</b> = 0x1D &lt;&lt; 1
+, <b>SerialSpeedReg</b> = 0x1F &lt;&lt; 1
+, <b>CRCResultRegH</b> = 0x21 &lt;&lt; 1
+, <b>CRCResultRegL</b> = 0x22 &lt;&lt; 1
+, <br />
+&#160;&#160;<b>ModWidthReg</b> = 0x24 &lt;&lt; 1
+, <b>RFCfgReg</b> = 0x26 &lt;&lt; 1
+, <b>GsNReg</b> = 0x27 &lt;&lt; 1
+, <b>CWGsPReg</b> = 0x28 &lt;&lt; 1
+, <br />
+&#160;&#160;<b>ModGsPReg</b> = 0x29 &lt;&lt; 1
+, <b>TModeReg</b> = 0x2A &lt;&lt; 1
+, <b>TPrescalerReg</b> = 0x2B &lt;&lt; 1
+, <b>TReloadRegH</b> = 0x2C &lt;&lt; 1
+, <br />
+&#160;&#160;<b>TReloadRegL</b> = 0x2D &lt;&lt; 1
+, <b>TCounterValueRegH</b> = 0x2E &lt;&lt; 1
+, <b>TCounterValueRegL</b> = 0x2F &lt;&lt; 1
+, <b>TestSel1Reg</b> = 0x31 &lt;&lt; 1
+, <br />
+&#160;&#160;<b>TestSel2Reg</b> = 0x32 &lt;&lt; 1
+, <b>TestPinEnReg</b> = 0x33 &lt;&lt; 1
+, <b>TestPinValueReg</b> = 0x34 &lt;&lt; 1
+, <b>TestBusReg</b> = 0x35 &lt;&lt; 1
+, <br />
+&#160;&#160;<b>AutoTestReg</b> = 0x36 &lt;&lt; 1
+, <b>VersionReg</b> = 0x37 &lt;&lt; 1
+, <b>AnalogTestReg</b> = 0x38 &lt;&lt; 1
+, <b>TestDAC1Reg</b> = 0x39 &lt;&lt; 1
+, <br />
+&#160;&#160;<b>TestDAC2Reg</b> = 0x3A &lt;&lt; 1
+, <b>TestADCReg</b> = 0x3B &lt;&lt; 1
+<br />
+ }</td></tr>
+<tr class="separator:a3f25eb3421a80d3aeca247c9640f0669 inherit pub_types_classMFRC522"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a9a9be34ff94660db8bf098745d9fc1d8 inherit pub_types_classMFRC522" id="r_a9a9be34ff94660db8bf098745d9fc1d8"><td class="memItemLeft" align="right" valign="top"><a id="a9a9be34ff94660db8bf098745d9fc1d8" name="a9a9be34ff94660db8bf098745d9fc1d8"></a>enum &#160;</td><td class="memItemRight" valign="bottom"><b>PCD_Command</b> : byte { <br />
+&#160;&#160;<b>PCD_Idle</b> = 0x00
+, <b>PCD_Mem</b> = 0x01
+, <b>PCD_GenerateRandomID</b> = 0x02
+, <b>PCD_CalcCRC</b> = 0x03
+, <br />
+&#160;&#160;<b>PCD_Transmit</b> = 0x04
+, <b>PCD_NoCmdChange</b> = 0x07
+, <b>PCD_Receive</b> = 0x08
+, <b>PCD_Transceive</b> = 0x0C
+, <br />
+&#160;&#160;<b>PCD_MFAuthent</b> = 0x0E
+, <b>PCD_SoftReset</b> = 0x0F
+<br />
+ }</td></tr>
+<tr class="separator:a9a9be34ff94660db8bf098745d9fc1d8 inherit pub_types_classMFRC522"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a5aafab5cf00bb9a8ba4240b97d72cca1 inherit pub_types_classMFRC522" id="r_a5aafab5cf00bb9a8ba4240b97d72cca1"><td class="memItemLeft" align="right" valign="top"><a id="a5aafab5cf00bb9a8ba4240b97d72cca1" name="a5aafab5cf00bb9a8ba4240b97d72cca1"></a>enum &#160;</td><td class="memItemRight" valign="bottom"><b>PCD_RxGain</b> : byte { <br />
+&#160;&#160;<b>RxGain_18dB</b> = 0x00 &lt;&lt; 4
+, <b>RxGain_23dB</b> = 0x01 &lt;&lt; 4
+, <b>RxGain_18dB_2</b> = 0x02 &lt;&lt; 4
+, <b>RxGain_23dB_2</b> = 0x03 &lt;&lt; 4
+, <br />
+&#160;&#160;<b>RxGain_33dB</b> = 0x04 &lt;&lt; 4
+, <b>RxGain_38dB</b> = 0x05 &lt;&lt; 4
+, <b>RxGain_43dB</b> = 0x06 &lt;&lt; 4
+, <b>RxGain_48dB</b> = 0x07 &lt;&lt; 4
+, <br />
+&#160;&#160;<b>RxGain_min</b> = 0x00 &lt;&lt; 4
+, <b>RxGain_avg</b> = 0x04 &lt;&lt; 4
+, <b>RxGain_max</b> = 0x07 &lt;&lt; 4
+<br />
+ }</td></tr>
+<tr class="separator:a5aafab5cf00bb9a8ba4240b97d72cca1 inherit pub_types_classMFRC522"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ab57242c2e8a0ca7de1a968c2ccb55341 inherit pub_types_classMFRC522" id="r_ab57242c2e8a0ca7de1a968c2ccb55341"><td class="memItemLeft" align="right" valign="top"><a id="ab57242c2e8a0ca7de1a968c2ccb55341" name="ab57242c2e8a0ca7de1a968c2ccb55341"></a>enum &#160;</td><td class="memItemRight" valign="bottom"><b>PICC_Command</b> : byte { <br />
+&#160;&#160;<b>PICC_CMD_REQA</b> = 0x26
+, <b>PICC_CMD_WUPA</b> = 0x52
+, <b>PICC_CMD_CT</b> = 0x88
+, <b>PICC_CMD_SEL_CL1</b> = 0x93
+, <br />
+&#160;&#160;<b>PICC_CMD_SEL_CL2</b> = 0x95
+, <b>PICC_CMD_SEL_CL3</b> = 0x97
+, <b>PICC_CMD_HLTA</b> = 0x50
+, <b>PICC_CMD_RATS</b> = 0xE0
+, <br />
+&#160;&#160;<b>PICC_CMD_MF_AUTH_KEY_A</b> = 0x60
+, <b>PICC_CMD_MF_AUTH_KEY_B</b> = 0x61
+, <b>PICC_CMD_MF_READ</b> = 0x30
+, <b>PICC_CMD_MF_WRITE</b> = 0xA0
+, <br />
+&#160;&#160;<b>PICC_CMD_MF_DECREMENT</b> = 0xC0
+, <b>PICC_CMD_MF_INCREMENT</b> = 0xC1
+, <b>PICC_CMD_MF_RESTORE</b> = 0xC2
+, <b>PICC_CMD_MF_TRANSFER</b> = 0xB0
+, <br />
+&#160;&#160;<b>PICC_CMD_UL_WRITE</b> = 0xA2
+<br />
+ }</td></tr>
+<tr class="separator:ab57242c2e8a0ca7de1a968c2ccb55341 inherit pub_types_classMFRC522"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a92c17a5b83cc4fde3cc3454c03b8eede inherit pub_types_classMFRC522" id="r_a92c17a5b83cc4fde3cc3454c03b8eede"><td class="memItemLeft" align="right" valign="top"><a id="a92c17a5b83cc4fde3cc3454c03b8eede" name="a92c17a5b83cc4fde3cc3454c03b8eede"></a>enum &#160;</td><td class="memItemRight" valign="bottom"><b>MIFARE_Misc</b> { <b>MF_ACK</b> = 0xA
+, <b>MF_KEY_SIZE</b> = 6
+ }</td></tr>
+<tr class="separator:a92c17a5b83cc4fde3cc3454c03b8eede inherit pub_types_classMFRC522"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:aafd15c276e5cf3b677885b7b95e71ca2 inherit pub_types_classMFRC522" id="r_aafd15c276e5cf3b677885b7b95e71ca2"><td class="memItemLeft" align="right" valign="top"><a id="aafd15c276e5cf3b677885b7b95e71ca2" name="aafd15c276e5cf3b677885b7b95e71ca2"></a>enum &#160;</td><td class="memItemRight" valign="bottom"><b>PICC_Type</b> : byte { <br />
+&#160;&#160;<b>PICC_TYPE_UNKNOWN</b>
+, <b>PICC_TYPE_ISO_14443_4</b>
+, <b>PICC_TYPE_ISO_18092</b>
+, <b>PICC_TYPE_MIFARE_MINI</b>
+, <br />
+&#160;&#160;<b>PICC_TYPE_MIFARE_1K</b>
+, <b>PICC_TYPE_MIFARE_4K</b>
+, <b>PICC_TYPE_MIFARE_UL</b>
+, <b>PICC_TYPE_MIFARE_PLUS</b>
+, <br />
+&#160;&#160;<b>PICC_TYPE_MIFARE_DESFIRE</b>
+, <b>PICC_TYPE_TNP3XXX</b>
+, <b>PICC_TYPE_NOT_COMPLETE</b> = 0xff
+<br />
+ }</td></tr>
+<tr class="separator:aafd15c276e5cf3b677885b7b95e71ca2 inherit pub_types_classMFRC522"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a7cb2a1ad6f06e49fddac5c62399c81a9 inherit pub_types_classMFRC522" id="r_a7cb2a1ad6f06e49fddac5c62399c81a9"><td class="memItemLeft" align="right" valign="top"><a id="a7cb2a1ad6f06e49fddac5c62399c81a9" name="a7cb2a1ad6f06e49fddac5c62399c81a9"></a>enum &#160;</td><td class="memItemRight" valign="bottom"><b>StatusCode</b> : byte { <br />
+&#160;&#160;<b>STATUS_OK</b>
+, <b>STATUS_ERROR</b>
+, <b>STATUS_COLLISION</b>
+, <b>STATUS_TIMEOUT</b>
+, <br />
+&#160;&#160;<b>STATUS_NO_ROOM</b>
+, <b>STATUS_INTERNAL_ERROR</b>
+, <b>STATUS_INVALID</b>
+, <b>STATUS_CRC_WRONG</b>
+, <br />
+&#160;&#160;<b>STATUS_MIFARE_NACK</b> = 0xff
+<br />
+ }</td></tr>
+<tr class="separator:a7cb2a1ad6f06e49fddac5c62399c81a9 inherit pub_types_classMFRC522"><td class="memSeparator" colspan="2">&#160;</td></tr>
+</table><table class="memberdecls">
+<tr class="heading"><td colspan="2"><h2 class="groupheader"><a id="pub-methods" name="pub-methods"></a>
+Métodos públicos</h2></td></tr>
+<tr class="memitem:ad3a48218c0adf97327cc70a59bb519b6" id="r_ad3a48218c0adf97327cc70a59bb519b6"><td class="memItemLeft" align="right" valign="top"><a id="ad3a48218c0adf97327cc70a59bb519b6" name="ad3a48218c0adf97327cc70a59bb519b6"></a>
+&#160;</td><td class="memItemRight" valign="bottom"><b>MFRC522Extended</b> (uint8_t rst)</td></tr>
+<tr class="separator:ad3a48218c0adf97327cc70a59bb519b6"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a37ce17c2b418ca787a016803f86f651d" id="r_a37ce17c2b418ca787a016803f86f651d"><td class="memItemLeft" align="right" valign="top"><a id="a37ce17c2b418ca787a016803f86f651d" name="a37ce17c2b418ca787a016803f86f651d"></a>
+&#160;</td><td class="memItemRight" valign="bottom"><b>MFRC522Extended</b> (uint8_t ss, uint8_t rst)</td></tr>
+<tr class="separator:a37ce17c2b418ca787a016803f86f651d"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a3a5474a0fd8c2954815cacf2a03fd15c" id="r_a3a5474a0fd8c2954815cacf2a03fd15c"><td class="memItemLeft" align="right" valign="top">StatusCode&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#a3a5474a0fd8c2954815cacf2a03fd15c">PICC_Select</a> (<a class="el" href="classMFRC522.html#structMFRC522_1_1Uid">Uid</a> *uid, byte validBits=0) override</td></tr>
+<tr class="separator:a3a5474a0fd8c2954815cacf2a03fd15c"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a738dda2dc1edf23929e637a5bebbf627" id="r_a738dda2dc1edf23929e637a5bebbf627"><td class="memItemLeft" align="right" valign="top"><a id="a738dda2dc1edf23929e637a5bebbf627" name="a738dda2dc1edf23929e637a5bebbf627"></a>
+StatusCode&#160;</td><td class="memItemRight" valign="bottom"><b>PICC_RequestATS</b> (<a class="el" href="#structMFRC522Extended_1_1Ats">Ats</a> *ats)</td></tr>
+<tr class="separator:a738dda2dc1edf23929e637a5bebbf627"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a5faea13e39f9af535ca6492ac3670faf" id="r_a5faea13e39f9af535ca6492ac3670faf"><td class="memItemLeft" align="right" valign="top"><a id="a5faea13e39f9af535ca6492ac3670faf" name="a5faea13e39f9af535ca6492ac3670faf"></a>
+StatusCode&#160;</td><td class="memItemRight" valign="bottom"><b>PICC_PPS</b> ()</td></tr>
+<tr class="separator:a5faea13e39f9af535ca6492ac3670faf"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:aada82dbd1d952a8109cf0d2a8a54ed97" id="r_aada82dbd1d952a8109cf0d2a8a54ed97"><td class="memItemLeft" align="right" valign="top"><a id="aada82dbd1d952a8109cf0d2a8a54ed97" name="aada82dbd1d952a8109cf0d2a8a54ed97"></a>
+StatusCode&#160;</td><td class="memItemRight" valign="bottom"><b>PICC_PPS</b> (TagBitRates sendBitRate, TagBitRates receiveBitRate)</td></tr>
+<tr class="separator:aada82dbd1d952a8109cf0d2a8a54ed97"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a21e1307f09e13dad7de06ec38040798f" id="r_a21e1307f09e13dad7de06ec38040798f"><td class="memItemLeft" align="right" valign="top"><a id="a21e1307f09e13dad7de06ec38040798f" name="a21e1307f09e13dad7de06ec38040798f"></a>
+StatusCode&#160;</td><td class="memItemRight" valign="bottom"><b>TCL_Transceive</b> (<a class="el" href="#structMFRC522Extended_1_1PcbBlock">PcbBlock</a> *send, <a class="el" href="#structMFRC522Extended_1_1PcbBlock">PcbBlock</a> *back)</td></tr>
+<tr class="separator:a21e1307f09e13dad7de06ec38040798f"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a3386be8af3d080d13dcbc274f792d81b" id="r_a3386be8af3d080d13dcbc274f792d81b"><td class="memItemLeft" align="right" valign="top"><a id="a3386be8af3d080d13dcbc274f792d81b" name="a3386be8af3d080d13dcbc274f792d81b"></a>
+StatusCode&#160;</td><td class="memItemRight" valign="bottom"><b>TCL_Transceive</b> (<a class="el" href="#structMFRC522Extended_1_1TagInfo">TagInfo</a> *tag, byte *sendData, byte sendLen, byte *backData=NULL, byte *backLen=NULL)</td></tr>
+<tr class="separator:a3386be8af3d080d13dcbc274f792d81b"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ac7a995c74b45b0978f6c2c83a7ea207c" id="r_ac7a995c74b45b0978f6c2c83a7ea207c"><td class="memItemLeft" align="right" valign="top"><a id="ac7a995c74b45b0978f6c2c83a7ea207c" name="ac7a995c74b45b0978f6c2c83a7ea207c"></a>
+StatusCode&#160;</td><td class="memItemRight" valign="bottom"><b>TCL_TransceiveRBlock</b> (<a class="el" href="#structMFRC522Extended_1_1TagInfo">TagInfo</a> *tag, bool ack, byte *backData=NULL, byte *backLen=NULL)</td></tr>
+<tr class="separator:ac7a995c74b45b0978f6c2c83a7ea207c"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:aef1964544bf22868cc0f13d80abbf0a4" id="r_aef1964544bf22868cc0f13d80abbf0a4"><td class="memItemLeft" align="right" valign="top"><a id="aef1964544bf22868cc0f13d80abbf0a4" name="aef1964544bf22868cc0f13d80abbf0a4"></a>
+StatusCode&#160;</td><td class="memItemRight" valign="bottom"><b>TCL_Deselect</b> (<a class="el" href="#structMFRC522Extended_1_1TagInfo">TagInfo</a> *tag)</td></tr>
+<tr class="separator:aef1964544bf22868cc0f13d80abbf0a4"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a1739931b517243305c765d547d819968" id="r_a1739931b517243305c765d547d819968"><td class="memItemLeft" align="right" valign="top"><a id="a1739931b517243305c765d547d819968" name="a1739931b517243305c765d547d819968"></a>
+void&#160;</td><td class="memItemRight" valign="bottom"><b>PICC_DumpToSerial</b> (<a class="el" href="#structMFRC522Extended_1_1TagInfo">TagInfo</a> *tag)</td></tr>
+<tr class="separator:a1739931b517243305c765d547d819968"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a456d810cdd67f28aa319746d277841b8" id="r_a456d810cdd67f28aa319746d277841b8"><td class="memItemLeft" align="right" valign="top"><a id="a456d810cdd67f28aa319746d277841b8" name="a456d810cdd67f28aa319746d277841b8"></a>
+void&#160;</td><td class="memItemRight" valign="bottom"><b>PICC_DumpDetailsToSerial</b> (<a class="el" href="#structMFRC522Extended_1_1TagInfo">TagInfo</a> *tag)</td></tr>
+<tr class="separator:a456d810cdd67f28aa319746d277841b8"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a8bb3b09bd19eb99430730af0fbb1565f" id="r_a8bb3b09bd19eb99430730af0fbb1565f"><td class="memItemLeft" align="right" valign="top"><a id="a8bb3b09bd19eb99430730af0fbb1565f" name="a8bb3b09bd19eb99430730af0fbb1565f"></a>
+void&#160;</td><td class="memItemRight" valign="bottom"><b>PICC_DumpISO14443_4</b> (<a class="el" href="#structMFRC522Extended_1_1TagInfo">TagInfo</a> *tag)</td></tr>
+<tr class="separator:a8bb3b09bd19eb99430730af0fbb1565f"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:afaa1289052274755acec885017507b64" id="r_afaa1289052274755acec885017507b64"><td class="memItemLeft" align="right" valign="top">bool&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#afaa1289052274755acec885017507b64">PICC_IsNewCardPresent</a> () override</td></tr>
+<tr class="separator:afaa1289052274755acec885017507b64"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ae68a2f90cec039dc856089aee08119ee" id="r_ae68a2f90cec039dc856089aee08119ee"><td class="memItemLeft" align="right" valign="top">bool&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#ae68a2f90cec039dc856089aee08119ee">PICC_ReadCardSerial</a> () override</td></tr>
+<tr class="separator:ae68a2f90cec039dc856089aee08119ee"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a6f324d43c6fbbd0e260b171747186037" id="r_a6f324d43c6fbbd0e260b171747186037"><td class="memItemLeft" align="right" valign="top"><a id="a6f324d43c6fbbd0e260b171747186037" name="a6f324d43c6fbbd0e260b171747186037"></a>
+void&#160;</td><td class="memItemRight" valign="bottom"><b>PICC_DumpToSerial</b> (<a class="el" href="classMFRC522.html#structMFRC522_1_1Uid">Uid</a> *uid)</td></tr>
+<tr class="separator:a6f324d43c6fbbd0e260b171747186037"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a3b9a2c6da6505e0ff7b58c37d7aeff37" id="r_a3b9a2c6da6505e0ff7b58c37d7aeff37"><td class="memItemLeft" align="right" valign="top"><a id="a3b9a2c6da6505e0ff7b58c37d7aeff37" name="a3b9a2c6da6505e0ff7b58c37d7aeff37"></a>
+void&#160;</td><td class="memItemRight" valign="bottom"><b>PICC_DumpDetailsToSerial</b> (<a class="el" href="classMFRC522.html#structMFRC522_1_1Uid">Uid</a> *uid)</td></tr>
+<tr class="separator:a3b9a2c6da6505e0ff7b58c37d7aeff37"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="inherit_header pub_methods_classMFRC522"><td colspan="2" onclick="javascript:dynsection.toggleInherit('pub_methods_classMFRC522')"><img src="closed.png" alt="-"/>&#160;Métodos públicos heredados de <a class="el" href="classMFRC522.html">MFRC522</a></td></tr>
+<tr class="memitem:a59c2f9a7664d029afe4e0185c7f3623b inherit pub_methods_classMFRC522" id="r_a59c2f9a7664d029afe4e0185c7f3623b"><td class="memItemLeft" align="right" valign="top">
+&#160;</td><td class="memItemRight" valign="bottom"><b>MFRC522</b> (byte resetPowerDownPin)</td></tr>
+<tr class="separator:a59c2f9a7664d029afe4e0185c7f3623b inherit pub_methods_classMFRC522"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a8b859e244e80970594bf333a0148ade1 inherit pub_methods_classMFRC522" id="r_a8b859e244e80970594bf333a0148ade1"><td class="memItemLeft" align="right" valign="top">
+&#160;</td><td class="memItemRight" valign="bottom"><b>MFRC522</b> (byte chipSelectPin, byte resetPowerDownPin)</td></tr>
+<tr class="separator:a8b859e244e80970594bf333a0148ade1 inherit pub_methods_classMFRC522"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:aa5e5825adb4c784d8a5a60242c135fb7 inherit pub_methods_classMFRC522" id="r_aa5e5825adb4c784d8a5a60242c135fb7"><td class="memItemLeft" align="right" valign="top">
+void&#160;</td><td class="memItemRight" valign="bottom"><b>PCD_WriteRegister</b> (PCD_Register reg, byte value)</td></tr>
+<tr class="separator:aa5e5825adb4c784d8a5a60242c135fb7 inherit pub_methods_classMFRC522"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a846b4b9d0468b62d853b125d4b269054 inherit pub_methods_classMFRC522" id="r_a846b4b9d0468b62d853b125d4b269054"><td class="memItemLeft" align="right" valign="top">
+void&#160;</td><td class="memItemRight" valign="bottom"><b>PCD_WriteRegister</b> (PCD_Register reg, byte count, byte *values)</td></tr>
+<tr class="separator:a846b4b9d0468b62d853b125d4b269054 inherit pub_methods_classMFRC522"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a4289838c6f24f2d62eb8dc0e7a6647d1 inherit pub_methods_classMFRC522" id="r_a4289838c6f24f2d62eb8dc0e7a6647d1"><td class="memItemLeft" align="right" valign="top">
+byte&#160;</td><td class="memItemRight" valign="bottom"><b>PCD_ReadRegister</b> (PCD_Register reg)</td></tr>
+<tr class="separator:a4289838c6f24f2d62eb8dc0e7a6647d1 inherit pub_methods_classMFRC522"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ae84aeb5b0cab567ac0445ae76c16a86b inherit pub_methods_classMFRC522" id="r_ae84aeb5b0cab567ac0445ae76c16a86b"><td class="memItemLeft" align="right" valign="top">
+void&#160;</td><td class="memItemRight" valign="bottom"><b>PCD_ReadRegister</b> (PCD_Register reg, byte count, byte *values, byte rxAlign=0)</td></tr>
+<tr class="separator:ae84aeb5b0cab567ac0445ae76c16a86b inherit pub_methods_classMFRC522"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:acebb9a90249419f2a53281c4a13727d1 inherit pub_methods_classMFRC522" id="r_acebb9a90249419f2a53281c4a13727d1"><td class="memItemLeft" align="right" valign="top">
+void&#160;</td><td class="memItemRight" valign="bottom"><b>PCD_SetRegisterBitMask</b> (PCD_Register reg, byte mask)</td></tr>
+<tr class="separator:acebb9a90249419f2a53281c4a13727d1 inherit pub_methods_classMFRC522"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a76193f4f8916f688fe2b7976d0fd1dc2 inherit pub_methods_classMFRC522" id="r_a76193f4f8916f688fe2b7976d0fd1dc2"><td class="memItemLeft" align="right" valign="top">
+void&#160;</td><td class="memItemRight" valign="bottom"><b>PCD_ClearRegisterBitMask</b> (PCD_Register reg, byte mask)</td></tr>
+<tr class="separator:a76193f4f8916f688fe2b7976d0fd1dc2 inherit pub_methods_classMFRC522"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a99279992a2c75b2dfd80e8911021a1f2 inherit pub_methods_classMFRC522" id="r_a99279992a2c75b2dfd80e8911021a1f2"><td class="memItemLeft" align="right" valign="top">
+StatusCode&#160;</td><td class="memItemRight" valign="bottom"><b>PCD_CalculateCRC</b> (byte *data, byte length, byte *result)</td></tr>
+<tr class="separator:a99279992a2c75b2dfd80e8911021a1f2 inherit pub_methods_classMFRC522"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ad681e424fc68a57941bea5702cee05eb inherit pub_methods_classMFRC522" id="r_ad681e424fc68a57941bea5702cee05eb"><td class="memItemLeft" align="right" valign="top">
+void&#160;</td><td class="memItemRight" valign="bottom"><b>PCD_Init</b> ()</td></tr>
+<tr class="separator:ad681e424fc68a57941bea5702cee05eb inherit pub_methods_classMFRC522"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a50a743c6c0c3ced652cb7fdca61949ab inherit pub_methods_classMFRC522" id="r_a50a743c6c0c3ced652cb7fdca61949ab"><td class="memItemLeft" align="right" valign="top">
+void&#160;</td><td class="memItemRight" valign="bottom"><b>PCD_Init</b> (byte resetPowerDownPin)</td></tr>
+<tr class="separator:a50a743c6c0c3ced652cb7fdca61949ab inherit pub_methods_classMFRC522"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a3a14c851e9a2f62956db01d5666c284b inherit pub_methods_classMFRC522" id="r_a3a14c851e9a2f62956db01d5666c284b"><td class="memItemLeft" align="right" valign="top">
+void&#160;</td><td class="memItemRight" valign="bottom"><b>PCD_Init</b> (byte chipSelectPin, byte resetPowerDownPin)</td></tr>
+<tr class="separator:a3a14c851e9a2f62956db01d5666c284b inherit pub_methods_classMFRC522"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a9886678ea0a65021bf602cfb110caa15 inherit pub_methods_classMFRC522" id="r_a9886678ea0a65021bf602cfb110caa15"><td class="memItemLeft" align="right" valign="top">
+void&#160;</td><td class="memItemRight" valign="bottom"><b>PCD_Reset</b> ()</td></tr>
+<tr class="separator:a9886678ea0a65021bf602cfb110caa15 inherit pub_methods_classMFRC522"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a044be037a5f172e9cea7d8ce1dcf32e0 inherit pub_methods_classMFRC522" id="r_a044be037a5f172e9cea7d8ce1dcf32e0"><td class="memItemLeft" align="right" valign="top">
+void&#160;</td><td class="memItemRight" valign="bottom"><b>PCD_AntennaOn</b> ()</td></tr>
+<tr class="separator:a044be037a5f172e9cea7d8ce1dcf32e0 inherit pub_methods_classMFRC522"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a2098ebe85700109b20c5026643f1dad7 inherit pub_methods_classMFRC522" id="r_a2098ebe85700109b20c5026643f1dad7"><td class="memItemLeft" align="right" valign="top">
+void&#160;</td><td class="memItemRight" valign="bottom"><b>PCD_AntennaOff</b> ()</td></tr>
+<tr class="separator:a2098ebe85700109b20c5026643f1dad7 inherit pub_methods_classMFRC522"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:aa02ae994a9ebf146475f46fc538cef28 inherit pub_methods_classMFRC522" id="r_aa02ae994a9ebf146475f46fc538cef28"><td class="memItemLeft" align="right" valign="top">
+byte&#160;</td><td class="memItemRight" valign="bottom"><b>PCD_GetAntennaGain</b> ()</td></tr>
+<tr class="separator:aa02ae994a9ebf146475f46fc538cef28 inherit pub_methods_classMFRC522"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a5ce84dd855f2ae297dd00fafaf62ef78 inherit pub_methods_classMFRC522" id="r_a5ce84dd855f2ae297dd00fafaf62ef78"><td class="memItemLeft" align="right" valign="top">
+void&#160;</td><td class="memItemRight" valign="bottom"><b>PCD_SetAntennaGain</b> (byte mask)</td></tr>
+<tr class="separator:a5ce84dd855f2ae297dd00fafaf62ef78 inherit pub_methods_classMFRC522"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a25f052c9c340da34128c365662370b01 inherit pub_methods_classMFRC522" id="r_a25f052c9c340da34128c365662370b01"><td class="memItemLeft" align="right" valign="top">
+bool&#160;</td><td class="memItemRight" valign="bottom"><b>PCD_PerformSelfTest</b> ()</td></tr>
+<tr class="separator:a25f052c9c340da34128c365662370b01 inherit pub_methods_classMFRC522"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a98befa52f6df765779dce6bf616ff009 inherit pub_methods_classMFRC522" id="r_a98befa52f6df765779dce6bf616ff009"><td class="memItemLeft" align="right" valign="top">
+void&#160;</td><td class="memItemRight" valign="bottom"><b>PCD_SoftPowerDown</b> ()</td></tr>
+<tr class="separator:a98befa52f6df765779dce6bf616ff009 inherit pub_methods_classMFRC522"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ad6559531854fba81f7440babe617c90e inherit pub_methods_classMFRC522" id="r_ad6559531854fba81f7440babe617c90e"><td class="memItemLeft" align="right" valign="top">
+void&#160;</td><td class="memItemRight" valign="bottom"><b>PCD_SoftPowerUp</b> ()</td></tr>
+<tr class="separator:ad6559531854fba81f7440babe617c90e inherit pub_methods_classMFRC522"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a5f6c851a74c3a4263d16b3f0a5ec88c5 inherit pub_methods_classMFRC522" id="r_a5f6c851a74c3a4263d16b3f0a5ec88c5"><td class="memItemLeft" align="right" valign="top">
+StatusCode&#160;</td><td class="memItemRight" valign="bottom"><b>PCD_TransceiveData</b> (byte *sendData, byte sendLen, byte *backData, byte *backLen, byte *validBits=nullptr, byte rxAlign=0, bool checkCRC=false)</td></tr>
+<tr class="separator:a5f6c851a74c3a4263d16b3f0a5ec88c5 inherit pub_methods_classMFRC522"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ad6f880659dad1688be74bd75a6736010 inherit pub_methods_classMFRC522" id="r_ad6f880659dad1688be74bd75a6736010"><td class="memItemLeft" align="right" valign="top">
+StatusCode&#160;</td><td class="memItemRight" valign="bottom"><b>PCD_CommunicateWithPICC</b> (byte command, byte waitIRq, byte *sendData, byte sendLen, byte *backData=nullptr, byte *backLen=nullptr, byte *validBits=nullptr, byte rxAlign=0, bool checkCRC=false)</td></tr>
+<tr class="separator:ad6f880659dad1688be74bd75a6736010 inherit pub_methods_classMFRC522"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a31c3c288bd70b2eb60ca2420a2fd0790 inherit pub_methods_classMFRC522" id="r_a31c3c288bd70b2eb60ca2420a2fd0790"><td class="memItemLeft" align="right" valign="top">
+StatusCode&#160;</td><td class="memItemRight" valign="bottom"><b>PICC_RequestA</b> (byte *bufferATQA, byte *bufferSize)</td></tr>
+<tr class="separator:a31c3c288bd70b2eb60ca2420a2fd0790 inherit pub_methods_classMFRC522"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ac450b76186c94a9f1e0dc574170b14b5 inherit pub_methods_classMFRC522" id="r_ac450b76186c94a9f1e0dc574170b14b5"><td class="memItemLeft" align="right" valign="top">
+StatusCode&#160;</td><td class="memItemRight" valign="bottom"><b>PICC_WakeupA</b> (byte *bufferATQA, byte *bufferSize)</td></tr>
+<tr class="separator:ac450b76186c94a9f1e0dc574170b14b5 inherit pub_methods_classMFRC522"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a0404742209301389fc07d33321e5af15 inherit pub_methods_classMFRC522" id="r_a0404742209301389fc07d33321e5af15"><td class="memItemLeft" align="right" valign="top">
+StatusCode&#160;</td><td class="memItemRight" valign="bottom"><b>PICC_REQA_or_WUPA</b> (byte command, byte *bufferATQA, byte *bufferSize)</td></tr>
+<tr class="separator:a0404742209301389fc07d33321e5af15 inherit pub_methods_classMFRC522"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:afd7c286a3d1719bb78391c5f45c0b571 inherit pub_methods_classMFRC522" id="r_afd7c286a3d1719bb78391c5f45c0b571"><td class="memItemLeft" align="right" valign="top">
+StatusCode&#160;</td><td class="memItemRight" valign="bottom"><b>PICC_HaltA</b> ()</td></tr>
+<tr class="separator:afd7c286a3d1719bb78391c5f45c0b571 inherit pub_methods_classMFRC522"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a881c966f438a1c69540c75db7a5e9108 inherit pub_methods_classMFRC522" id="r_a881c966f438a1c69540c75db7a5e9108"><td class="memItemLeft" align="right" valign="top">
+StatusCode&#160;</td><td class="memItemRight" valign="bottom"><b>PCD_Authenticate</b> (byte command, byte blockAddr, <a class="el" href="classMFRC522.html#structMFRC522_1_1MIFARE__Key">MIFARE_Key</a> *key, <a class="el" href="classMFRC522.html#structMFRC522_1_1Uid">Uid</a> *uid)</td></tr>
+<tr class="separator:a881c966f438a1c69540c75db7a5e9108 inherit pub_methods_classMFRC522"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a24d3ab7b2170fdfa3f0121a7256f12d9 inherit pub_methods_classMFRC522" id="r_a24d3ab7b2170fdfa3f0121a7256f12d9"><td class="memItemLeft" align="right" valign="top">
+void&#160;</td><td class="memItemRight" valign="bottom"><b>PCD_StopCrypto1</b> ()</td></tr>
+<tr class="separator:a24d3ab7b2170fdfa3f0121a7256f12d9 inherit pub_methods_classMFRC522"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:aef29694546c2592babc24df021bc2106 inherit pub_methods_classMFRC522" id="r_aef29694546c2592babc24df021bc2106"><td class="memItemLeft" align="right" valign="top">
+StatusCode&#160;</td><td class="memItemRight" valign="bottom"><b>MIFARE_Read</b> (byte blockAddr, byte *buffer, byte *bufferSize)</td></tr>
+<tr class="separator:aef29694546c2592babc24df021bc2106 inherit pub_methods_classMFRC522"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a687c112db963d5c889acaf93a5bfbd2f inherit pub_methods_classMFRC522" id="r_a687c112db963d5c889acaf93a5bfbd2f"><td class="memItemLeft" align="right" valign="top">
+StatusCode&#160;</td><td class="memItemRight" valign="bottom"><b>MIFARE_Write</b> (byte blockAddr, byte *buffer, byte bufferSize)</td></tr>
+<tr class="separator:a687c112db963d5c889acaf93a5bfbd2f inherit pub_methods_classMFRC522"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ad4cf1800bbab750d2505f3cc63af6cb3 inherit pub_methods_classMFRC522" id="r_ad4cf1800bbab750d2505f3cc63af6cb3"><td class="memItemLeft" align="right" valign="top">
+StatusCode&#160;</td><td class="memItemRight" valign="bottom"><b>MIFARE_Ultralight_Write</b> (byte page, byte *buffer, byte bufferSize)</td></tr>
+<tr class="separator:ad4cf1800bbab750d2505f3cc63af6cb3 inherit pub_methods_classMFRC522"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ac08546c1f26ebec46072026d81737e03 inherit pub_methods_classMFRC522" id="r_ac08546c1f26ebec46072026d81737e03"><td class="memItemLeft" align="right" valign="top">
+StatusCode&#160;</td><td class="memItemRight" valign="bottom"><b>MIFARE_Decrement</b> (byte blockAddr, int32_t delta)</td></tr>
+<tr class="separator:ac08546c1f26ebec46072026d81737e03 inherit pub_methods_classMFRC522"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:aac3f29190c1232939a77bb68b016f41f inherit pub_methods_classMFRC522" id="r_aac3f29190c1232939a77bb68b016f41f"><td class="memItemLeft" align="right" valign="top">
+StatusCode&#160;</td><td class="memItemRight" valign="bottom"><b>MIFARE_Increment</b> (byte blockAddr, int32_t delta)</td></tr>
+<tr class="separator:aac3f29190c1232939a77bb68b016f41f inherit pub_methods_classMFRC522"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:aec61b1b2873a47537740bcb9e9563741 inherit pub_methods_classMFRC522" id="r_aec61b1b2873a47537740bcb9e9563741"><td class="memItemLeft" align="right" valign="top">
+StatusCode&#160;</td><td class="memItemRight" valign="bottom"><b>MIFARE_Restore</b> (byte blockAddr)</td></tr>
+<tr class="separator:aec61b1b2873a47537740bcb9e9563741 inherit pub_methods_classMFRC522"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a6139d5dbbda2aaac8b1e19fd03e0bc89 inherit pub_methods_classMFRC522" id="r_a6139d5dbbda2aaac8b1e19fd03e0bc89"><td class="memItemLeft" align="right" valign="top">
+StatusCode&#160;</td><td class="memItemRight" valign="bottom"><b>MIFARE_Transfer</b> (byte blockAddr)</td></tr>
+<tr class="separator:a6139d5dbbda2aaac8b1e19fd03e0bc89 inherit pub_methods_classMFRC522"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:acf4ce93650f7f8386ed2d3e46af391ee inherit pub_methods_classMFRC522" id="r_acf4ce93650f7f8386ed2d3e46af391ee"><td class="memItemLeft" align="right" valign="top">
+StatusCode&#160;</td><td class="memItemRight" valign="bottom"><b>MIFARE_GetValue</b> (byte blockAddr, int32_t *value)</td></tr>
+<tr class="separator:acf4ce93650f7f8386ed2d3e46af391ee inherit pub_methods_classMFRC522"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:abef20007b066863719ed733349c4ef44 inherit pub_methods_classMFRC522" id="r_abef20007b066863719ed733349c4ef44"><td class="memItemLeft" align="right" valign="top">
+StatusCode&#160;</td><td class="memItemRight" valign="bottom"><b>MIFARE_SetValue</b> (byte blockAddr, int32_t value)</td></tr>
+<tr class="separator:abef20007b066863719ed733349c4ef44 inherit pub_methods_classMFRC522"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a068162ba39829fb123f1f51c7177a44b inherit pub_methods_classMFRC522" id="r_a068162ba39829fb123f1f51c7177a44b"><td class="memItemLeft" align="right" valign="top">
+StatusCode&#160;</td><td class="memItemRight" valign="bottom"><b>PCD_NTAG216_AUTH</b> (byte *passWord, byte pACK[])</td></tr>
+<tr class="separator:a068162ba39829fb123f1f51c7177a44b inherit pub_methods_classMFRC522"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a8b9b0f6809996dddded355b7da39138f inherit pub_methods_classMFRC522" id="r_a8b9b0f6809996dddded355b7da39138f"><td class="memItemLeft" align="right" valign="top">
+StatusCode&#160;</td><td class="memItemRight" valign="bottom"><b>PCD_MIFARE_Transceive</b> (byte *sendData, byte sendLen, bool acceptTimeout=false)</td></tr>
+<tr class="separator:a8b9b0f6809996dddded355b7da39138f inherit pub_methods_classMFRC522"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a41c31c6932a59646eeff470c60a4d20d inherit pub_methods_classMFRC522" id="r_a41c31c6932a59646eeff470c60a4d20d"><td class="memItemLeft" align="right" valign="top">
+void&#160;</td><td class="memItemRight" valign="bottom"><b>PCD_DumpVersionToSerial</b> ()</td></tr>
+<tr class="separator:a41c31c6932a59646eeff470c60a4d20d inherit pub_methods_classMFRC522"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a6f324d43c6fbbd0e260b171747186037 inherit pub_methods_classMFRC522" id="r_a6f324d43c6fbbd0e260b171747186037"><td class="memItemLeft" align="right" valign="top">
+void&#160;</td><td class="memItemRight" valign="bottom"><b>PICC_DumpToSerial</b> (<a class="el" href="classMFRC522.html#structMFRC522_1_1Uid">Uid</a> *uid)</td></tr>
+<tr class="separator:a6f324d43c6fbbd0e260b171747186037 inherit pub_methods_classMFRC522"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a3b9a2c6da6505e0ff7b58c37d7aeff37 inherit pub_methods_classMFRC522" id="r_a3b9a2c6da6505e0ff7b58c37d7aeff37"><td class="memItemLeft" align="right" valign="top">
+void&#160;</td><td class="memItemRight" valign="bottom"><b>PICC_DumpDetailsToSerial</b> (<a class="el" href="classMFRC522.html#structMFRC522_1_1Uid">Uid</a> *uid)</td></tr>
+<tr class="separator:a3b9a2c6da6505e0ff7b58c37d7aeff37 inherit pub_methods_classMFRC522"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:aafba2e74124efa2d736c1672ea104190 inherit pub_methods_classMFRC522" id="r_aafba2e74124efa2d736c1672ea104190"><td class="memItemLeft" align="right" valign="top">
+void&#160;</td><td class="memItemRight" valign="bottom"><b>PICC_DumpMifareClassicToSerial</b> (<a class="el" href="classMFRC522.html#structMFRC522_1_1Uid">Uid</a> *uid, PICC_Type piccType, <a class="el" href="classMFRC522.html#structMFRC522_1_1MIFARE__Key">MIFARE_Key</a> *key)</td></tr>
+<tr class="separator:aafba2e74124efa2d736c1672ea104190 inherit pub_methods_classMFRC522"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a20c559f09927a7c5f91295f6158e4342 inherit pub_methods_classMFRC522" id="r_a20c559f09927a7c5f91295f6158e4342"><td class="memItemLeft" align="right" valign="top">
+void&#160;</td><td class="memItemRight" valign="bottom"><b>PICC_DumpMifareClassicSectorToSerial</b> (<a class="el" href="classMFRC522.html#structMFRC522_1_1Uid">Uid</a> *uid, <a class="el" href="classMFRC522.html#structMFRC522_1_1MIFARE__Key">MIFARE_Key</a> *key, byte sector)</td></tr>
+<tr class="separator:a20c559f09927a7c5f91295f6158e4342 inherit pub_methods_classMFRC522"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ac148d28877dd577606a28e9e7e4b6809 inherit pub_methods_classMFRC522" id="r_ac148d28877dd577606a28e9e7e4b6809"><td class="memItemLeft" align="right" valign="top">
+void&#160;</td><td class="memItemRight" valign="bottom"><b>PICC_DumpMifareUltralightToSerial</b> ()</td></tr>
+<tr class="separator:ac148d28877dd577606a28e9e7e4b6809 inherit pub_methods_classMFRC522"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ab8c712963189654e9bc368be8783e2ab inherit pub_methods_classMFRC522" id="r_ab8c712963189654e9bc368be8783e2ab"><td class="memItemLeft" align="right" valign="top">
+void&#160;</td><td class="memItemRight" valign="bottom"><b>MIFARE_SetAccessBits</b> (byte *accessBitBuffer, byte g0, byte g1, byte g2, byte g3)</td></tr>
+<tr class="separator:ab8c712963189654e9bc368be8783e2ab inherit pub_methods_classMFRC522"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a925607adc9382720c222578bd236a9c8 inherit pub_methods_classMFRC522" id="r_a925607adc9382720c222578bd236a9c8"><td class="memItemLeft" align="right" valign="top">
+bool&#160;</td><td class="memItemRight" valign="bottom"><b>MIFARE_OpenUidBackdoor</b> (bool logErrors)</td></tr>
+<tr class="separator:a925607adc9382720c222578bd236a9c8 inherit pub_methods_classMFRC522"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a2bdc18af4952ce99099607c84139b51c inherit pub_methods_classMFRC522" id="r_a2bdc18af4952ce99099607c84139b51c"><td class="memItemLeft" align="right" valign="top">
+bool&#160;</td><td class="memItemRight" valign="bottom"><b>MIFARE_SetUid</b> (byte *newUid, byte uidSize, bool logErrors)</td></tr>
+<tr class="separator:a2bdc18af4952ce99099607c84139b51c inherit pub_methods_classMFRC522"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:afcbb15d925cb3bea9f58595111fbca48 inherit pub_methods_classMFRC522" id="r_afcbb15d925cb3bea9f58595111fbca48"><td class="memItemLeft" align="right" valign="top">
+bool&#160;</td><td class="memItemRight" valign="bottom"><b>MIFARE_UnbrickUidSector</b> (bool logErrors)</td></tr>
+<tr class="separator:afcbb15d925cb3bea9f58595111fbca48 inherit pub_methods_classMFRC522"><td class="memSeparator" colspan="2">&#160;</td></tr>
+</table><table class="memberdecls">
+<tr class="heading"><td colspan="2"><h2 class="groupheader"><a id="pub-static-methods" name="pub-static-methods"></a>
+Métodos públicos estáticos</h2></td></tr>
+<tr class="memitem:a6f7181779cced4d7c38b080d91e5c240" id="r_a6f7181779cced4d7c38b080d91e5c240"><td class="memItemLeft" align="right" valign="top"><a id="a6f7181779cced4d7c38b080d91e5c240" name="a6f7181779cced4d7c38b080d91e5c240"></a>
+static PICC_Type&#160;</td><td class="memItemRight" valign="bottom"><b>PICC_GetType</b> (<a class="el" href="#structMFRC522Extended_1_1TagInfo">TagInfo</a> *tag)</td></tr>
+<tr class="separator:a6f7181779cced4d7c38b080d91e5c240"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a0e19310b2dd803882e8a4cede50f346f" id="r_a0e19310b2dd803882e8a4cede50f346f"><td class="memItemLeft" align="right" valign="top"><a id="a0e19310b2dd803882e8a4cede50f346f" name="a0e19310b2dd803882e8a4cede50f346f"></a>
+static PICC_Type&#160;</td><td class="memItemRight" valign="bottom"><b>PICC_GetType</b> (byte sak)</td></tr>
+<tr class="separator:a0e19310b2dd803882e8a4cede50f346f"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="inherit_header pub_static_methods_classMFRC522"><td colspan="2" onclick="javascript:dynsection.toggleInherit('pub_static_methods_classMFRC522')"><img src="closed.png" alt="-"/>&#160;Métodos públicos estáticos heredados de <a class="el" href="classMFRC522.html">MFRC522</a></td></tr>
+<tr class="memitem:ad3546d8e10c458f6cffeafc1598b5020 inherit pub_static_methods_classMFRC522" id="r_ad3546d8e10c458f6cffeafc1598b5020"><td class="memItemLeft" align="right" valign="top">
+static const __FlashStringHelper *&#160;</td><td class="memItemRight" valign="bottom"><b>GetStatusCodeName</b> (StatusCode code)</td></tr>
+<tr class="separator:ad3546d8e10c458f6cffeafc1598b5020 inherit pub_static_methods_classMFRC522"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a0e19310b2dd803882e8a4cede50f346f inherit pub_static_methods_classMFRC522" id="r_a0e19310b2dd803882e8a4cede50f346f"><td class="memItemLeft" align="right" valign="top">
+static PICC_Type&#160;</td><td class="memItemRight" valign="bottom"><b>PICC_GetType</b> (byte sak)</td></tr>
+<tr class="separator:a0e19310b2dd803882e8a4cede50f346f inherit pub_static_methods_classMFRC522"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a258d741184f161cce44b9c6fba6e853f inherit pub_static_methods_classMFRC522" id="r_a258d741184f161cce44b9c6fba6e853f"><td class="memItemLeft" align="right" valign="top">
+static const __FlashStringHelper *&#160;</td><td class="memItemRight" valign="bottom"><b>PICC_GetTypeName</b> (PICC_Type type)</td></tr>
+<tr class="separator:a258d741184f161cce44b9c6fba6e853f inherit pub_static_methods_classMFRC522"><td class="memSeparator" colspan="2">&#160;</td></tr>
+</table><table class="memberdecls">
+<tr class="heading"><td colspan="2"><h2 class="groupheader"><a id="pub-attribs" name="pub-attribs"></a>
+Campos de datos</h2></td></tr>
+<tr class="memitem:ab824eb0aac40d902099af74ac2782691" id="r_ab824eb0aac40d902099af74ac2782691"><td class="memItemLeft" align="right" valign="top"><a id="ab824eb0aac40d902099af74ac2782691" name="ab824eb0aac40d902099af74ac2782691"></a>
+<a class="el" href="#structMFRC522Extended_1_1TagInfo">TagInfo</a>&#160;</td><td class="memItemRight" valign="bottom"><b>tag</b></td></tr>
+<tr class="separator:ab824eb0aac40d902099af74ac2782691"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="inherit_header pub_attribs_classMFRC522"><td colspan="2" onclick="javascript:dynsection.toggleInherit('pub_attribs_classMFRC522')"><img src="closed.png" alt="-"/>&#160;Campos de datos heredados de <a class="el" href="classMFRC522.html">MFRC522</a></td></tr>
+<tr class="memitem:ad456545d41962dd7f8bd4210f5618498 inherit pub_attribs_classMFRC522" id="r_ad456545d41962dd7f8bd4210f5618498"><td class="memItemLeft" align="right" valign="top">
+<a class="el" href="classMFRC522.html#structMFRC522_1_1Uid">Uid</a>&#160;</td><td class="memItemRight" valign="bottom"><b>uid</b></td></tr>
+<tr class="separator:ad456545d41962dd7f8bd4210f5618498 inherit pub_attribs_classMFRC522"><td class="memSeparator" colspan="2">&#160;</td></tr>
+</table><table class="memberdecls">
+<tr class="heading"><td colspan="2"><h2 class="groupheader"><a id="inherited" name="inherited"></a>
+Otros miembros heredados</h2></td></tr>
+<tr class="inherit_header pub_static_attribs_classMFRC522"><td colspan="2" onclick="javascript:dynsection.toggleInherit('pub_static_attribs_classMFRC522')"><img src="closed.png" alt="-"/>&#160;Atributos públicos estáticos heredados de <a class="el" href="classMFRC522.html">MFRC522</a></td></tr>
+<tr class="memitem:a37ca1cca79286c98755584f2256bbe1b inherit pub_static_attribs_classMFRC522" id="r_a37ca1cca79286c98755584f2256bbe1b"><td class="memItemLeft" align="right" valign="top">
+static constexpr byte&#160;</td><td class="memItemRight" valign="bottom"><b>FIFO_SIZE</b> = 64</td></tr>
+<tr class="separator:a37ca1cca79286c98755584f2256bbe1b inherit pub_static_attribs_classMFRC522"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a41313d0e4a8a674271e64362d24e1d6b inherit pub_static_attribs_classMFRC522" id="r_a41313d0e4a8a674271e64362d24e1d6b"><td class="memItemLeft" align="right" valign="top">
+static constexpr uint8_t&#160;</td><td class="memItemRight" valign="bottom"><b>UNUSED_PIN</b> = UINT8_MAX</td></tr>
+<tr class="separator:a41313d0e4a8a674271e64362d24e1d6b inherit pub_static_attribs_classMFRC522"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="inherit_header pro_methods_classMFRC522"><td colspan="2" onclick="javascript:dynsection.toggleInherit('pro_methods_classMFRC522')"><img src="closed.png" alt="-"/>&#160;Métodos protegidos heredados de <a class="el" href="classMFRC522.html">MFRC522</a></td></tr>
+<tr class="memitem:a1a1b7348e68cb0dd171533567036e7b5 inherit pro_methods_classMFRC522" id="r_a1a1b7348e68cb0dd171533567036e7b5"><td class="memItemLeft" align="right" valign="top">
+StatusCode&#160;</td><td class="memItemRight" valign="bottom"><b>MIFARE_TwoStepHelper</b> (byte command, byte blockAddr, int32_t data)</td></tr>
+<tr class="separator:a1a1b7348e68cb0dd171533567036e7b5 inherit pro_methods_classMFRC522"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="inherit_header pro_attribs_classMFRC522"><td colspan="2" onclick="javascript:dynsection.toggleInherit('pro_attribs_classMFRC522')"><img src="closed.png" alt="-"/>&#160;Atributos protegidos heredados de <a class="el" href="classMFRC522.html">MFRC522</a></td></tr>
+<tr class="memitem:affaa7030ec6e5984cce845a8ed6df1b2 inherit pro_attribs_classMFRC522" id="r_affaa7030ec6e5984cce845a8ed6df1b2"><td class="memItemLeft" align="right" valign="top">
+byte&#160;</td><td class="memItemRight" valign="bottom"><b>_chipSelectPin</b></td></tr>
+<tr class="separator:affaa7030ec6e5984cce845a8ed6df1b2 inherit pro_attribs_classMFRC522"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a3885cb4bb582de0045cff2829d59006f inherit pro_attribs_classMFRC522" id="r_a3885cb4bb582de0045cff2829d59006f"><td class="memItemLeft" align="right" valign="top">
+byte&#160;</td><td class="memItemRight" valign="bottom"><b>_resetPowerDownPin</b></td></tr>
+<tr class="separator:a3885cb4bb582de0045cff2829d59006f inherit pro_attribs_classMFRC522"><td class="memSeparator" colspan="2">&#160;</td></tr>
+</table>
+<a name="details" id="details"></a><h2 class="groupheader">Descripción detallada</h2>
+<div class="textblock"><p>Library extends <a class="el" href="MFRC522_8h_source.html">MFRC522.h</a> to support RATS for ISO-14443-4 PICC. RATS - Request for Answer To Select. </p><dl class="section author"><dt>Autor</dt><dd>JPG-Consulting </dd></dl>
+</div><hr/><h2 class="groupheader">Documentación de estructuras de datos</h2>
+<a name="structMFRC522Extended_1_1Ats" id="structMFRC522Extended_1_1Ats"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#structMFRC522Extended_1_1Ats">&#9670;&#160;</a></span>MFRC522Extended::Ats</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">struct MFRC522Extended::Ats</td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+<div class="textblock"></div><div class="dynheader">
+Diagrama de colaboración de MFRC522Extended::Ats:</div>
+<div class="dyncontent">
+<div class="center"><img src="structMFRC522Extended_1_1Ats__coll__graph.png" border="0" usemap="#aMFRC522Extended_1_1Ats_coll__map" alt="Collaboration graph"/></div>
+<map name="aMFRC522Extended_1_1Ats_coll__map" id="aMFRC522Extended_1_1Ats_coll__map">
+<area shape="rect" title=" " alt="" coords="5,5,171,181"/>
+</map>
+</div>
+<table class="fieldtable">
+<tr><th colspan="3">Campos de datos</th></tr>
+<tr><td class="fieldtype">
+<a id="a079430497122e58bbd4e45c6af9a48d7" name="a079430497122e58bbd4e45c6af9a48d7"></a>byte</td>
+<td class="fieldname">
+data[FIFO_SIZE - 2]</td>
+<td class="fielddoc">
+</td></tr>
+<tr><td class="fieldtype">
+<a id="af9e23a28758a628093af7e5929b3a442" name="af9e23a28758a628093af7e5929b3a442"></a>byte</td>
+<td class="fieldname">
+fsc</td>
+<td class="fielddoc">
+</td></tr>
+<tr><td class="fieldtype">
+<a id="a03d987872ffbccd006178107e5d9851a" name="a03d987872ffbccd006178107e5d9851a"></a>byte</td>
+<td class="fieldname">
+size</td>
+<td class="fielddoc">
+</td></tr>
+<tr><td class="fieldtype">
+<a id="ac692e54afd48e7a84e486750287f4c79" name="ac692e54afd48e7a84e486750287f4c79"></a>struct <a class="el" href="#structMFRC522Extended_1_1Ats_8ta1">Ats.ta1</a></td>
+<td class="fieldname">
+ta1</td>
+<td class="fielddoc">
+</td></tr>
+<tr><td class="fieldtype">
+<a id="a7b10edd74b16e424065a66a2199cd731" name="a7b10edd74b16e424065a66a2199cd731"></a>struct <a class="el" href="#structMFRC522Extended_1_1Ats_8tb1">Ats.tb1</a></td>
+<td class="fieldname">
+tb1</td>
+<td class="fielddoc">
+</td></tr>
+<tr><td class="fieldtype">
+<a id="ac7310456cba4c6b41d24eac4c96e2474" name="ac7310456cba4c6b41d24eac4c96e2474"></a>struct <a class="el" href="#structMFRC522Extended_1_1Ats_8tc1">Ats.tc1</a></td>
+<td class="fieldname">
+tc1</td>
+<td class="fielddoc">
+</td></tr>
+</table>
+
+</div>
+</div>
+<a name="structMFRC522Extended_1_1Ats_8ta1" id="structMFRC522Extended_1_1Ats_8ta1"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#structMFRC522Extended_1_1Ats_8ta1">&#9670;&#160;</a></span>MFRC522Extended::Ats.ta1</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">struct MFRC522Extended::Ats.ta1</td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+<div class="textblock"></div><div class="dynheader">
+Diagrama de colaboración de MFRC522Extended::Ats.ta1:</div>
+<div class="dyncontent">
+<div class="center"><img src="structMFRC522Extended_1_1Ats_8ta1__coll__graph.png" border="0" usemap="#aMFRC522Extended_1_1Ats_8ta1_coll__map" alt="Collaboration graph"/></div>
+<map name="aMFRC522Extended_1_1Ats_8ta1_coll__map" id="aMFRC522Extended_1_1Ats_8ta1_coll__map">
+<area shape="rect" title=" " alt="" coords="5,5,195,139"/>
+</map>
+</div>
+<table class="fieldtable">
+<tr><th colspan="3">Campos de datos</th></tr>
+<tr><td class="fieldtype">
+<a id="ab4688aaaaf17fad03225929fe56ad458" name="ab4688aaaaf17fad03225929fe56ad458"></a>TagBitRates</td>
+<td class="fieldname">
+dr</td>
+<td class="fielddoc">
+</td></tr>
+<tr><td class="fieldtype">
+<a id="a522748524ad010358705b6852b81be4c" name="a522748524ad010358705b6852b81be4c"></a>TagBitRates</td>
+<td class="fieldname">
+ds</td>
+<td class="fielddoc">
+</td></tr>
+<tr><td class="fieldtype">
+<a id="a61158fcaa7a7ae6a30e2c0425c79c365" name="a61158fcaa7a7ae6a30e2c0425c79c365"></a>bool</td>
+<td class="fieldname">
+sameD</td>
+<td class="fielddoc">
+</td></tr>
+<tr><td class="fieldtype">
+<a id="a1d50fdac507bd6496700b783bcb6d7a8" name="a1d50fdac507bd6496700b783bcb6d7a8"></a>bool</td>
+<td class="fieldname">
+transmitted</td>
+<td class="fielddoc">
+</td></tr>
+</table>
+
+</div>
+</div>
+<a name="structMFRC522Extended_1_1Ats_8tb1" id="structMFRC522Extended_1_1Ats_8tb1"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#structMFRC522Extended_1_1Ats_8tb1">&#9670;&#160;</a></span>MFRC522Extended::Ats.tb1</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">struct MFRC522Extended::Ats.tb1</td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+<div class="textblock"></div><div class="dynheader">
+Diagrama de colaboración de MFRC522Extended::Ats.tb1:</div>
+<div class="dyncontent">
+<div class="center"><img src="structMFRC522Extended_1_1Ats_8tb1__coll__graph.png" border="0" usemap="#aMFRC522Extended_1_1Ats_8tb1_coll__map" alt="Collaboration graph"/></div>
+<map name="aMFRC522Extended_1_1Ats_8tb1_coll__map" id="aMFRC522Extended_1_1Ats_8tb1_coll__map">
+<area shape="rect" title=" " alt="" coords="5,5,195,117"/>
+</map>
+</div>
+<table class="fieldtable">
+<tr><th colspan="3">Campos de datos</th></tr>
+<tr><td class="fieldtype">
+<a id="ae9632a304bc1979cfb8f0f7df589e880" name="ae9632a304bc1979cfb8f0f7df589e880"></a>byte</td>
+<td class="fieldname">
+fwi</td>
+<td class="fielddoc">
+</td></tr>
+<tr><td class="fieldtype">
+<a id="a0ced0e2131a269156af434ef93ead041" name="a0ced0e2131a269156af434ef93ead041"></a>byte</td>
+<td class="fieldname">
+sfgi</td>
+<td class="fielddoc">
+</td></tr>
+<tr><td class="fieldtype">
+<a id="a1d50fdac507bd6496700b783bcb6d7a8" name="a1d50fdac507bd6496700b783bcb6d7a8"></a>bool</td>
+<td class="fieldname">
+transmitted</td>
+<td class="fielddoc">
+</td></tr>
+</table>
+
+</div>
+</div>
+<a name="structMFRC522Extended_1_1Ats_8tc1" id="structMFRC522Extended_1_1Ats_8tc1"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#structMFRC522Extended_1_1Ats_8tc1">&#9670;&#160;</a></span>MFRC522Extended::Ats.tc1</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">struct MFRC522Extended::Ats.tc1</td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+<div class="textblock"></div><div class="dynheader">
+Diagrama de colaboración de MFRC522Extended::Ats.tc1:</div>
+<div class="dyncontent">
+<div class="center"><img src="structMFRC522Extended_1_1Ats_8tc1__coll__graph.png" border="0" usemap="#aMFRC522Extended_1_1Ats_8tc1_coll__map" alt="Collaboration graph"/></div>
+<map name="aMFRC522Extended_1_1Ats_8tc1_coll__map" id="aMFRC522Extended_1_1Ats_8tc1_coll__map">
+<area shape="rect" title=" " alt="" coords="5,5,195,117"/>
+</map>
+</div>
+<table class="fieldtable">
+<tr><th colspan="3">Campos de datos</th></tr>
+<tr><td class="fieldtype">
+<a id="ad52312714d45cea9f32c033b07c1f0e3" name="ad52312714d45cea9f32c033b07c1f0e3"></a>bool</td>
+<td class="fieldname">
+supportsCID</td>
+<td class="fielddoc">
+</td></tr>
+<tr><td class="fieldtype">
+<a id="aad9f6f806d99c13b8063e02e7c600733" name="aad9f6f806d99c13b8063e02e7c600733"></a>bool</td>
+<td class="fieldname">
+supportsNAD</td>
+<td class="fielddoc">
+</td></tr>
+<tr><td class="fieldtype">
+<a id="a1d50fdac507bd6496700b783bcb6d7a8" name="a1d50fdac507bd6496700b783bcb6d7a8"></a>bool</td>
+<td class="fieldname">
+transmitted</td>
+<td class="fielddoc">
+</td></tr>
+</table>
+
+</div>
+</div>
+<a name="structMFRC522Extended_1_1PcbBlock" id="structMFRC522Extended_1_1PcbBlock"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#structMFRC522Extended_1_1PcbBlock">&#9670;&#160;</a></span>MFRC522Extended::PcbBlock</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">struct MFRC522Extended::PcbBlock</td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+<div class="textblock"></div><div class="dynheader">
+Diagrama de colaboración de MFRC522Extended::PcbBlock:</div>
+<div class="dyncontent">
+<div class="center"><img src="structMFRC522Extended_1_1PcbBlock__coll__graph.png" border="0" usemap="#aMFRC522Extended_1_1PcbBlock_coll__map" alt="Collaboration graph"/></div>
+<map name="aMFRC522Extended_1_1PcbBlock_coll__map" id="aMFRC522Extended_1_1PcbBlock_coll__map">
+<area shape="rect" title=" " alt="" coords="5,5,208,96"/>
+</map>
+</div>
+<table class="fieldtable">
+<tr><th colspan="3">Campos de datos</th></tr>
+<tr><td class="fieldtype">
+<a id="a390e24defc1cfc05036b5ca3d20b53b8" name="a390e24defc1cfc05036b5ca3d20b53b8"></a>struct <a class="el" href="#structMFRC522Extended_1_1PcbBlock_8inf">PcbBlock.inf</a></td>
+<td class="fieldname">
+inf</td>
+<td class="fielddoc">
+</td></tr>
+<tr><td class="fieldtype">
+<a id="a75812d58511f51251de023f5b0b3c236" name="a75812d58511f51251de023f5b0b3c236"></a>struct <a class="el" href="#structMFRC522Extended_1_1PcbBlock_8prologue">PcbBlock.prologue</a></td>
+<td class="fieldname">
+prologue</td>
+<td class="fielddoc">
+</td></tr>
+</table>
+
+</div>
+</div>
+<a name="structMFRC522Extended_1_1PcbBlock_8inf" id="structMFRC522Extended_1_1PcbBlock_8inf"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#structMFRC522Extended_1_1PcbBlock_8inf">&#9670;&#160;</a></span>MFRC522Extended::PcbBlock.inf</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">struct MFRC522Extended::PcbBlock.inf</td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+<div class="textblock"></div><div class="dynheader">
+Diagrama de colaboración de MFRC522Extended::PcbBlock.inf:</div>
+<div class="dyncontent">
+<div class="center"><img src="structMFRC522Extended_1_1PcbBlock_8inf__coll__graph.png" border="0" usemap="#aMFRC522Extended_1_1PcbBlock_8inf_coll__map" alt="Collaboration graph"/></div>
+<map name="aMFRC522Extended_1_1PcbBlock_8inf_coll__map" id="aMFRC522Extended_1_1PcbBlock_8inf_coll__map">
+<area shape="rect" title=" " alt="" coords="5,5,229,96"/>
+</map>
+</div>
+<table class="fieldtable">
+<tr><th colspan="3">Campos de datos</th></tr>
+<tr><td class="fieldtype">
+<a id="a8d777f385d3dfec8815d20f7496026dc" name="a8d777f385d3dfec8815d20f7496026dc"></a>byte *</td>
+<td class="fieldname">
+data</td>
+<td class="fielddoc">
+</td></tr>
+<tr><td class="fieldtype">
+<a id="af7bd60b75b29d79b660a2859395c1a24" name="af7bd60b75b29d79b660a2859395c1a24"></a>byte</td>
+<td class="fieldname">
+size</td>
+<td class="fielddoc">
+</td></tr>
+</table>
+
+</div>
+</div>
+<a name="structMFRC522Extended_1_1PcbBlock_8prologue" id="structMFRC522Extended_1_1PcbBlock_8prologue"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#structMFRC522Extended_1_1PcbBlock_8prologue">&#9670;&#160;</a></span>MFRC522Extended::PcbBlock.prologue</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">struct MFRC522Extended::PcbBlock.prologue</td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+<div class="textblock"></div><div class="dynheader">
+Diagrama de colaboración de MFRC522Extended::PcbBlock.prologue:</div>
+<div class="dyncontent">
+<div class="center"><img src="structMFRC522Extended_1_1PcbBlock_8prologue__coll__graph.png" border="0" usemap="#aMFRC522Extended_1_1PcbBlock_8prologue_coll__map" alt="Collaboration graph"/></div>
+<map name="aMFRC522Extended_1_1PcbBlock_8prologue_coll__map" id="aMFRC522Extended_1_1PcbBlock_8prologue_coll__map">
+<area shape="rect" title=" " alt="" coords="5,5,269,117"/>
+</map>
+</div>
+<table class="fieldtable">
+<tr><th colspan="3">Campos de datos</th></tr>
+<tr><td class="fieldtype">
+<a id="a4b7cc5694dd3a265bac326eaba31266e" name="a4b7cc5694dd3a265bac326eaba31266e"></a>byte</td>
+<td class="fieldname">
+cid</td>
+<td class="fielddoc">
+</td></tr>
+<tr><td class="fieldtype">
+<a id="a938a800650dda9e8aba505177c4cc6bd" name="a938a800650dda9e8aba505177c4cc6bd"></a>byte</td>
+<td class="fieldname">
+nad</td>
+<td class="fielddoc">
+</td></tr>
+<tr><td class="fieldtype">
+<a id="af42a83f45934ad4e2e2628bec3dfede9" name="af42a83f45934ad4e2e2628bec3dfede9"></a>byte</td>
+<td class="fieldname">
+pcb</td>
+<td class="fielddoc">
+</td></tr>
+</table>
+
+</div>
+</div>
+<a name="structMFRC522Extended_1_1TagInfo" id="structMFRC522Extended_1_1TagInfo"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#structMFRC522Extended_1_1TagInfo">&#9670;&#160;</a></span>MFRC522Extended::TagInfo</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">struct MFRC522Extended::TagInfo</td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+<div class="textblock"></div><div class="dynheader">
+Diagrama de colaboración de MFRC522Extended::TagInfo:</div>
+<div class="dyncontent">
+<div class="center"><img src="structMFRC522Extended_1_1TagInfo__coll__graph.png" border="0" usemap="#aMFRC522Extended_1_1TagInfo_coll__map" alt="Collaboration graph"/></div>
+<map name="aMFRC522Extended_1_1TagInfo_coll__map" id="aMFRC522Extended_1_1TagInfo_coll__map">
+<area shape="rect" title=" " alt="" coords="5,246,196,358"/>
+<area shape="rect" href="classMFRC522Extended.html#structMFRC522Extended_1_1Ats" title=" " alt="" coords="18,5,183,181"/>
+<area shape="poly" title=" " alt="" coords="103,181,103,230,98,230,98,181"/>
+</map>
+</div>
+<table class="fieldtable">
+<tr><th colspan="3">Campos de datos</th></tr>
+<tr><td class="fieldtype">
+<a id="aa465fa31a1ad20c475fddea7cf6a22f9" name="aa465fa31a1ad20c475fddea7cf6a22f9"></a>uint16_t</td>
+<td class="fieldname">
+atqa</td>
+<td class="fielddoc">
+</td></tr>
+<tr><td class="fieldtype">
+<a id="acfd1bf479e668097b295f5b332d8b37c" name="acfd1bf479e668097b295f5b332d8b37c"></a><a class="el" href="#structMFRC522Extended_1_1Ats">Ats</a></td>
+<td class="fieldname">
+ats</td>
+<td class="fielddoc">
+</td></tr>
+<tr><td class="fieldtype">
+<a id="ae9e80e92f113c9fb6f78ff5d84a13e02" name="ae9e80e92f113c9fb6f78ff5d84a13e02"></a>bool</td>
+<td class="fieldname">
+blockNumber</td>
+<td class="fielddoc">
+</td></tr>
+<tr><td class="fieldtype">
+<a id="a3c5c2e94d314ed52215b6e44f6384f61" name="a3c5c2e94d314ed52215b6e44f6384f61"></a><a class="el" href="classMFRC522.html#structMFRC522_1_1Uid">Uid</a></td>
+<td class="fieldname">
+uid</td>
+<td class="fielddoc">
+</td></tr>
+</table>
+
+</div>
+</div>
+<h2 class="groupheader">Documentación de funciones miembro</h2>
+<a id="afaa1289052274755acec885017507b64" name="afaa1289052274755acec885017507b64"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#afaa1289052274755acec885017507b64">&#9670;&#160;</a></span>PICC_IsNewCardPresent()</h2>
+
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">bool MFRC522Extended::PICC_IsNewCardPresent </td>
+          <td>(</td>
+          <td class="paramname"><span class="paramname"><em></em></span></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">override</span><span class="mlabel">virtual</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+<p>Reimplementado de <a class="el" href="classMFRC522.html">MFRC522</a>.</p>
+
+</div>
+</div>
+<a id="ae68a2f90cec039dc856089aee08119ee" name="ae68a2f90cec039dc856089aee08119ee"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#ae68a2f90cec039dc856089aee08119ee">&#9670;&#160;</a></span>PICC_ReadCardSerial()</h2>
+
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">bool MFRC522Extended::PICC_ReadCardSerial </td>
+          <td>(</td>
+          <td class="paramname"><span class="paramname"><em></em></span></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">override</span><span class="mlabel">virtual</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+<p>Reimplementado de <a class="el" href="classMFRC522.html">MFRC522</a>.</p>
+
+</div>
+</div>
+<a id="a3a5474a0fd8c2954815cacf2a03fd15c" name="a3a5474a0fd8c2954815cacf2a03fd15c"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a3a5474a0fd8c2954815cacf2a03fd15c">&#9670;&#160;</a></span>PICC_Select()</h2>
+
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">StatusCode MFRC522Extended::PICC_Select </td>
+          <td>(</td>
+          <td class="paramtype"><a class="el" href="classMFRC522.html#structMFRC522_1_1Uid">Uid</a> *</td>          <td class="paramname"><span class="paramname"><em>uid</em></span>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">byte</td>          <td class="paramname"><span class="paramname"><em>validBits</em></span><span class="paramdefsep"> = </span><span class="paramdefval">0</span>&#160;)</td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">override</span><span class="mlabel">virtual</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+<p>Reimplementado de <a class="el" href="classMFRC522.html">MFRC522</a>.</p>
+
+</div>
+</div>
+<hr/>La documentación de esta clase está generada del siguiente archivo:<ul>
+<li>main/libraries/RFID-RC522/<a class="el" href="MFRC522Extended_8h_source.html">MFRC522Extended.h</a></li>
+</ul>
+</div><!-- contents -->
+</div><!-- doc-content -->
+<!-- start footer part -->
+<div id="nav-path" class="navpath"><!-- id is needed for treeview function! -->
+  <ul>
+    <li class="navelem"><a class="el" href="classMFRC522Extended.html">MFRC522Extended</a></li>
+    <li class="footer">Generado por <a href="https://www.doxygen.org/index.html"><img class="footer" src="doxygen.svg" width="104" height="31" alt="doxygen"/></a> 1.12.0 </li>
+  </ul>
+</div>
+</body>
+</html>

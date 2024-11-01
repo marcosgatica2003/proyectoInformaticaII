@@ -1,0 +1,15 @@
+\doxysection{require\+\_\+cpp11.\+h}
+\hypertarget{require__cpp11_8h_source}{}\label{require__cpp11_8h_source}\index{main/libraries/RFID-\/RC522/require\_cpp11.h@{main/libraries/RFID-\/RC522/require\_cpp11.h}}
+
+\begin{DoxyCode}{0}
+\DoxyCodeLine{00001\ }
+\DoxyCodeLine{00005\ \textcolor{preprocessor}{\#ifndef\ REQUIRE\_CPP11\_H}}
+\DoxyCodeLine{00006\ \textcolor{preprocessor}{\#define\ REQUIRE\_CPP11\_H}}
+\DoxyCodeLine{00007\ }
+\DoxyCodeLine{00008\ \textcolor{preprocessor}{\#if\ \_\_cplusplus\ <\ 201103L}}
+\DoxyCodeLine{00009\ \textcolor{preprocessor}{\#error\ "{}This\ library\ needs\ at\ least\ a\ C++11\ compliant\ compiler,\ maybe\ compiler\ argument\ for\ C++11\ support\ is\ missing\ or\ if\ you\ use\ Arduino\ IDE\ upgrade\ to\ version\ >=1.6.6"{}}}
+\DoxyCodeLine{00010\ \textcolor{preprocessor}{\#endif}}
+\DoxyCodeLine{00011\ }
+\DoxyCodeLine{00012\ \textcolor{preprocessor}{\#endif\ }\textcolor{comment}{//\ REQUIRE\_CPP11\_H}}
+
+\end{DoxyCode}
