@@ -14,5 +14,6 @@ var hierarchy =
     [ "MFRC522Extended::PcbBlock.inf", "classMFRC522Extended.html#structMFRC522Extended_1_1PcbBlock_8inf", null ],
     [ "MFRC522Extended::PcbBlock.prologue", "classMFRC522Extended.html#structMFRC522Extended_1_1PcbBlock_8prologue", null ],
     [ "MFRC522Extended::TagInfo", "classMFRC522Extended.html#structMFRC522Extended_1_1TagInfo", null ],
+    [ "timer", "classtimer.html", null ],
     [ "MFRC522::Uid", "classMFRC522.html#structMFRC522_1_1Uid", null ]
 ];

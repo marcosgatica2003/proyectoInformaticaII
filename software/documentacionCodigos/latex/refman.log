@@ -1,4 +1,4 @@
-This is pdfTeX, Version 3.141592653-2.6-1.40.26 (TeX Live 2024/Arch Linux) (preloaded format=pdflatex 2024.10.8)  29 OCT 2024 19:02
+This is pdfTeX, Version 3.141592653-2.6-1.40.26 (TeX Live 2024/Arch Linux) (preloaded format=pdflatex 2024.10.8)  1 NOV 2024 03:46
 entering extended mode
  restricted \write18 enabled.
  %&-line parsing enabled.
@@ -972,7 +972,7 @@ LaTeX Font Info:    Trying to load font information for T1+pcr on input line 10
  (/usr/share/texmf-dist/tex/latex/psnfss/t1pcr.fd
 File: t1pcr.fd 2001/06/04 font definitions for T1/pcr.
 ) <./classaccesoRFID__coll__graph.pdf>
-<classaccesoRFID__coll__graph.pdf, id=387, 181.67876pt x 196.735pt>
+<classaccesoRFID__coll__graph.pdf, id=429, 181.67876pt x 196.735pt>
 File: classaccesoRFID__coll__graph.pdf Graphic file (type pdf)
 <use classaccesoRFID__coll__graph.pdf>
 Package pdftex.def Info: classaccesoRFID__coll__graph.pdf  used on input line 1
@@ -998,7 +998,7 @@ LaTeX Font Info:    Font shape `T1/pcr/m/it' in size <8> not available
 LaTeX Font Info:    Font shape `T1/pcr/m/it' in size <7> not available
 (Font)              Font shape `T1/pcr/m/sl' tried instead on input line 51.
 ) (./classDHT11.tex <./classDHT11__coll__graph.pdf>
-<classDHT11__coll__graph.pdf, id=417, 235.88126pt x 228.855pt>
+<classDHT11__coll__graph.pdf, id=459, 235.88126pt x 228.855pt>
 File: classDHT11__coll__graph.pdf Graphic file (type pdf)
 <use classDHT11__coll__graph.pdf>
 Package pdftex.def Info: classDHT11__coll__graph.pdf  used on input line 14.
@@ -1023,7 +1023,7 @@ Underfull \hbox (badness 10000) detected at line 108
  []
 
 ) (./classMFRC522.tex <./classMFRC522__inherit__graph.pdf>
-<classMFRC522__inherit__graph.pdf, id=476, 238.8925pt x 702.625pt>
+<classMFRC522__inherit__graph.pdf, id=518, 238.8925pt x 702.625pt>
 File: classMFRC522__inherit__graph.pdf Graphic file (type pdf)
 <use classMFRC522__inherit__graph.pdf>
 Package pdftex.def Info: classMFRC522__inherit__graph.pdf  used on input line 1
@@ -1032,7 +1032,7 @@ Package pdftex.def Info: classMFRC522__inherit__graph.pdf  used on input line 1
 LaTeX Info: Redefining \. on input line 13.
 LaTeX Info: Redefining \% on input line 13.
  [10] <./classMFRC522__coll__graph.pdf>
-<classMFRC522__coll__graph.pdf, id=490, 238.8925pt x 539.01375pt>
+<classMFRC522__coll__graph.pdf, id=532, 238.8925pt x 539.01375pt>
 File: classMFRC522__coll__graph.pdf Graphic file (type pdf)
 <use classMFRC522__coll__graph.pdf>
 Package pdftex.def Info: classMFRC522__coll__graph.pdf  used on input line 20.
@@ -1064,7 +1064,7 @@ LaTeX Info: Redefining \% on input line 203.
 LaTeX Info: Redefining \. on input line 364.
 LaTeX Info: Redefining \% on input line 364.
  [14] <./structMFRC522_1_1MIFARE__Key__coll__graph.pdf>
-<structMFRC522_1_1MIFARE__Key__coll__graph.pdf, id=603, 201.75375pt x 132.495pt
+<structMFRC522_1_1MIFARE__Key__coll__graph.pdf, id=645, 201.75375pt x 132.495pt
 >
 File: structMFRC522_1_1MIFARE__Key__coll__graph.pdf Graphic file (type pdf)
 <use structMFRC522_1_1MIFARE__Key__coll__graph.pdf>
@@ -1072,7 +1072,7 @@ Package pdftex.def Info: structMFRC522_1_1MIFARE__Key__coll__graph.pdf  used on
  input line 408.
 (pdftex.def)             Requested size: 201.0pt x 132.00136pt.
  <./structMFRC522_1_1Uid__coll__graph.pdf>
-<structMFRC522_1_1Uid__coll__graph.pdf, id=611, 159.59625pt x 164.615pt>
+<structMFRC522_1_1Uid__coll__graph.pdf, id=653, 159.59625pt x 164.615pt>
 File: structMFRC522_1_1Uid__coll__graph.pdf Graphic file (type pdf)
 <use structMFRC522_1_1Uid__coll__graph.pdf>
 Package pdftex.def Info: structMFRC522_1_1Uid__coll__graph.pdf  used on input l
@@ -1081,7 +1081,7 @@ ine 429.
 LaTeX Info: Redefining \. on input line 432.
 LaTeX Info: Redefining \% on input line 432.
  [15]) (./classMFRC522Extended.tex <./classMFRC522Extended__inherit__graph.pdf>
-<classMFRC522Extended__inherit__graph.pdf, id=642, 238.8925pt x 702.625pt>
+<classMFRC522Extended__inherit__graph.pdf, id=685, 238.8925pt x 702.625pt>
 File: classMFRC522Extended__inherit__graph.pdf Graphic file (type pdf)
 <use classMFRC522Extended__inherit__graph.pdf>
 Package pdftex.def Info: classMFRC522Extended__inherit__graph.pdf  used on inpu
@@ -1090,7 +1090,7 @@ t line 14.
 LaTeX Info: Redefining \. on input line 17.
 LaTeX Info: Redefining \% on input line 17.
  [16] <./classMFRC522Extended__coll__graph.pdf>
-<classMFRC522Extended__coll__graph.pdf, id=660, 401.5pt x 881.2925pt>
+<classMFRC522Extended__coll__graph.pdf, id=703, 401.5pt x 881.2925pt>
 File: classMFRC522Extended__coll__graph.pdf Graphic file (type pdf)
 <use classMFRC522Extended__coll__graph.pdf>
 Package pdftex.def Info: classMFRC522Extended__coll__graph.pdf  used on input l
@@ -1180,7 +1180,7 @@ Underfull \hbox (badness 10000) detected at line 424
  []
 
  <./structMFRC522Extended_1_1Ats__coll__graph.pdf>
-<structMFRC522Extended_1_1Ats__coll__graph.pdf, id=781, 204.765pt x 212.795pt>
+<structMFRC522Extended_1_1Ats__coll__graph.pdf, id=824, 204.765pt x 212.795pt>
 File: structMFRC522Extended_1_1Ats__coll__graph.pdf Graphic file (type pdf)
 <use structMFRC522Extended_1_1Ats__coll__graph.pdf>
 Package pdftex.def Info: structMFRC522Extended_1_1Ats__coll__graph.pdf  used on
@@ -1189,7 +1189,7 @@ Package pdftex.def Info: structMFRC522Extended_1_1Ats__coll__graph.pdf  used on
 LaTeX Info: Redefining \. on input line 480.
 LaTeX Info: Redefining \% on input line 480.
  [22] <./structMFRC522Extended_1_1Ats_8ta1__coll__graph.pdf>
-<structMFRC522Extended_1_1Ats_8ta1__coll__graph.pdf, id=816, 222.8325pt x 180.6
+<structMFRC522Extended_1_1Ats_8ta1__coll__graph.pdf, id=858, 222.8325pt x 180.6
 75pt>
 File: structMFRC522Extended_1_1Ats_8ta1__coll__graph.pdf Graphic file (type pdf
 )
@@ -1198,7 +1198,7 @@ Package pdftex.def Info: structMFRC522Extended_1_1Ats_8ta1__coll__graph.pdf  us
 ed on input line 491.
 (pdftex.def)             Requested size: 222.0pt x 180.00186pt.
  <./structMFRC522Extended_1_1Ats_8tb1__coll__graph.pdf>
-<structMFRC522Extended_1_1Ats_8tb1__coll__graph.pdf, id=831, 222.8325pt x 164.6
+<structMFRC522Extended_1_1Ats_8tb1__coll__graph.pdf, id=873, 222.8325pt x 164.6
 15pt>
 File: structMFRC522Extended_1_1Ats_8tb1__coll__graph.pdf Graphic file (type pdf
 )
@@ -1233,7 +1233,7 @@ nored
 l.552 \end{DoxyFields}
                       
  <./structMFRC522Extended_1_1Ats_8tc1__coll__graph.pdf>
-<structMFRC522Extended_1_1Ats_8tc1__coll__graph.pdf, id=864, 222.8325pt x 164.6
+<structMFRC522Extended_1_1Ats_8tc1__coll__graph.pdf, id=906, 222.8325pt x 164.6
 15pt>
 File: structMFRC522Extended_1_1Ats_8tc1__coll__graph.pdf Graphic file (type pdf
 )
@@ -1266,7 +1266,7 @@ nored
 l.585 \end{DoxyFields}
                       
  <./structMFRC522Extended_1_1PcbBlock__coll__graph.pdf>
-<structMFRC522Extended_1_1PcbBlock__coll__graph.pdf, id=879, 232.87pt x 148.555
+<structMFRC522Extended_1_1PcbBlock__coll__graph.pdf, id=921, 232.87pt x 148.555
 pt>
 File: structMFRC522Extended_1_1PcbBlock__coll__graph.pdf Graphic file (type pdf
 )
@@ -1277,7 +1277,7 @@ ed on input line 596.
 LaTeX Info: Redefining \. on input line 599.
 LaTeX Info: Redefining \% on input line 599.
  [24] <./structMFRC522Extended_1_1PcbBlock_8inf__coll__graph.pdf>
-<structMFRC522Extended_1_1PcbBlock_8inf__coll__graph.pdf, id=913, 248.93pt x 14
+<structMFRC522Extended_1_1PcbBlock_8inf__coll__graph.pdf, id=956, 248.93pt x 14
 8.555pt>
 File: structMFRC522Extended_1_1PcbBlock_8inf__coll__graph.pdf Graphic file (typ
 e pdf)
@@ -1286,7 +1286,7 @@ Package pdftex.def Info: structMFRC522Extended_1_1PcbBlock_8inf__coll__graph.pd
 f  used on input line 623.
 (pdftex.def)             Requested size: 248.0pt x 148.0038pt.
  <./structMFRC522Extended_1_1PcbBlock_8prologue__coll__graph.pdf>
-<structMFRC522Extended_1_1PcbBlock_8prologue__coll__graph.pdf, id=929, 279.0425
+<structMFRC522Extended_1_1PcbBlock_8prologue__coll__graph.pdf, id=971, 279.0425
 pt x 164.615pt>
 File: structMFRC522Extended_1_1PcbBlock_8prologue__coll__graph.pdf Graphic file
  (type pdf)
@@ -1297,7 +1297,7 @@ ph.pdf  used on input line 650.
 LaTeX Info: Redefining \. on input line 653.
 LaTeX Info: Redefining \% on input line 653.
  [25] <./structMFRC522Extended_1_1TagInfo__coll__graph.pdf>
-<structMFRC522Extended_1_1TagInfo__coll__graph.pdf, id=957, 223.83624pt x 346.2
+<structMFRC522Extended_1_1TagInfo__coll__graph.pdf, id=999, 223.83624pt x 346.2
 9375pt>
 File: structMFRC522Extended_1_1TagInfo__coll__graph.pdf Graphic file (type pdf)
 
@@ -1310,61 +1310,86 @@ LaTeX Info: Redefining \% on input line 686.
  [26]
 LaTeX Info: Redefining \. on input line 740.
 LaTeX Info: Redefining \% on input line 740.
- [27])
-LaTeX Info: Redefining \. on input line 247.
-LaTeX Info: Redefining \% on input line 247.
- [28]
+ [27]) (./classtimer.tex <./classtimer__coll__graph.pdf>
+<classtimer__coll__graph.pdf, id=1039, 155.58125pt x 164.615pt>
+File: classtimer__coll__graph.pdf Graphic file (type pdf)
+<use classtimer__coll__graph.pdf>
+Package pdftex.def Info: classtimer__coll__graph.pdf  used on input line 19.
+(pdftex.def)             Requested size: 155.0pt x 164.00171pt.
+LaTeX Info: Redefining \. on input line 44.
+LaTeX Info: Redefining \% on input line 44.
+ [28])
+LaTeX Info: Redefining \. on input line 248.
+LaTeX Info: Redefining \% on input line 248.
+
+[29]
+LaTeX Info: Redefining \. on input line 248.
+LaTeX Info: Redefining \% on input line 248.
+ [30
+
+]
 Cap\'{\i }tulo 5.
 (./DHT11_8h_source.tex) (./setPin_8cpp.tex <./setPin_8cpp__incl.pdf>
-<setPin_8cpp__incl.pdf, id=1010, 214.8025pt x 227.85126pt>
+<setPin_8cpp__incl.pdf, id=1080, 214.8025pt x 227.85126pt>
 File: setPin_8cpp__incl.pdf Graphic file (type pdf)
 <use setPin_8cpp__incl.pdf>
 Package pdftex.def Info: setPin_8cpp__incl.pdf  used on input line 15.
 (pdftex.def)             Requested size: 214.0pt x 227.00237pt.
- [29
-
-])
+ [31])
 (./setPin_8h.tex <./setPin_8h__dep__incl.pdf>
-<setPin_8h__dep__incl.pdf, id=1029, 200.75pt x 183.68625pt>
+<setPin_8h__dep__incl.pdf, id=1099, 200.75pt x 183.68625pt>
 File: setPin_8h__dep__incl.pdf Graphic file (type pdf)
 <use setPin_8h__dep__incl.pdf>
 Package pdftex.def Info: setPin_8h__dep__incl.pdf  used on input line 8.
 (pdftex.def)             Requested size: 200.0pt x 183.01309pt.
 LaTeX Info: Redefining \. on input line 11.
 LaTeX Info: Redefining \% on input line 11.
- [30]) (./setPin_8h_source.tex)
+ [32]) (./setPin_8h_source.tex)
 (./accesoRFID_8h_source.tex
 LaTeX Info: Redefining \. on input line 6.
 LaTeX Info: Redefining \% on input line 6.
- [31]) (./deprecated_8h_source.tex)
+ [33]) (./deprecated_8h_source.tex)
 (./MFRC522_8h_source.tex
 LaTeX Info: Redefining \. on input line 22.
 LaTeX Info: Redefining \% on input line 22.
- [32]
+ [34]
 LaTeX Info: Redefining \. on input line 103.
 LaTeX Info: Redefining \% on input line 103.
- [33]
+ [35]
 LaTeX Info: Redefining \. on input line 178.
 LaTeX Info: Redefining \% on input line 178.
- [34]
+ [36]
 LaTeX Info: Redefining \. on input line 248.
 LaTeX Info: Redefining \% on input line 248.
- [35]
+ [37]
 LaTeX Info: Redefining \. on input line 329.
 LaTeX Info: Redefining \% on input line 329.
- [36])
+ [38])
 (./MFRC522Extended_8h_source.tex
 LaTeX Info: Redefining \. on input line 60.
 LaTeX Info: Redefining \% on input line 60.
- [37]) (./require__cpp11_8h_source.tex)
-LaTeX Info: Redefining \. on input line 259.
-LaTeX Info: Redefining \% on input line 259.
+ [39]) (./require__cpp11_8h_source.tex)
+(./timer_8h.tex <./timer_8h__incl.pdf>
+<timer_8h__incl.pdf, id=1195, 197.73875pt x 170.6375pt>
+File: timer_8h__incl.pdf Graphic file (type pdf)
+<use timer_8h__incl.pdf>
+Package pdftex.def Info: timer_8h__incl.pdf  used on input line 14.
+(pdftex.def)             Requested size: 197.0pt x 170.00175pt.
+LaTeX Info: Redefining \. on input line 17.
+LaTeX Info: Redefining \% on input line 17.
+ [40]) (./timer_8h_source.tex)
+LaTeX Info: Redefining \. on input line 262.
+LaTeX Info: Redefining \% on input line 262.
+ [41]
+LaTeX Info: Redefining \. on input line 262.
+LaTeX Info: Redefining \% on input line 262.
 
-[38] (./refman.ind
+[42
+
+] (./refman.ind
 LaTeX Font Info:    Font shape `T1/phv/m/n' will be
 (Font)              scaled to size 22.39185pt on input line 1.
- [39
-
+ [43
 
 
 ]) (./refman.aux
@@ -1380,16 +1405,16 @@ L3 programming layer <2024-02-20>
 LaTeX Warning: There were multiply-defined labels.
 
 Package rerunfilecheck Info: File `refman.out' has not changed.
-(rerunfilecheck)             Checksum: 787C9C286153060D1BC00474B3EEE1F0;13092.
+(rerunfilecheck)             Checksum: 7644EDA0E6E24832A11DA4D71659EE1B;14699.
  ) 
 Here is how much of TeX's memory you used:
- 19810 strings out of 476076
- 328922 string characters out of 5793775
+ 19888 strings out of 476076
+ 330627 string characters out of 5793775
  1978187 words of memory out of 5000000
- 41235 multiletter control sequences out of 15000+600000
+ 41284 multiletter control sequences out of 15000+600000
  617174 words of font info for 104 fonts, out of 8000000 for 9000
  14 hyphenation exceptions out of 8191
- 101i,16n,117p,634b,754s stack positions out of 10000i,1000n,20000p,200000b,200000s
+ 101i,16n,117p,634b,767s stack positions out of 10000i,1000n,20000p,200000b,200000s
 </usr/share/texmf-dist/fonts/type1/public/amsfonts/cm/cmmi10.pfb></usr/share/
 texmf-dist/fonts/type1/public/amsfonts/cm/cmmi7.pfb></usr/share/texmf-dist/font
 s/type1/public/amsfonts/cm/cmsy10.pfb></usr/share/texmf-dist/fonts/type1/public
@@ -1399,10 +1424,10 @@ exmf-dist/fonts/type1/urw/courier/ucrro8a.pfb></usr/share/texmf-dist/fonts/type
 1/urw/helvetic/uhvb8a.pfb></usr/share/texmf-dist/fonts/type1/urw/helvetic/uhvb8
 ac.pfb></usr/share/texmf-dist/fonts/type1/urw/helvetic/uhvr8a.pfb></usr/share/t
 exmf-dist/fonts/type1/urw/helvetic/uhvro8a.pfb>
-Output written on refman.pdf (43 pages, 365416 bytes).
+Output written on refman.pdf (47 pages, 385622 bytes).
 PDF statistics:
- 1298 PDF objects out of 1440 (max. 8388607)
- 1120 compressed objects within 12 object streams
- 316 named destinations out of 1000 (max. 500000)
- 555 words of extra memory for PDF output out of 10000 (max. 10000000)
+ 1403 PDF objects out of 1440 (max. 8388607)
+ 1213 compressed objects within 13 object streams
+ 338 named destinations out of 1000 (max. 500000)
+ 621 words of extra memory for PDF output out of 10000 (max. 10000000)
 
