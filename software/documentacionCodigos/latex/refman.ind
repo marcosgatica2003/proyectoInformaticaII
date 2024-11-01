@@ -15,14 +15,15 @@
 
   \indexspace
 
-  \item {main/libraries/DHT11-\/HW-\/481/DHT11.h}, \hyperpage{29}
-  \item {main/libraries/DHT11-\/HW-\/481/setPin.cpp}, \hyperpage{29}
-  \item {main/libraries/DHT11-\/HW-\/481/setPin.h}, \hyperpage{31, 32}
-  \item {main/libraries/RFID-\/RC522/accesoRFID.h}, \hyperpage{32}
-  \item {main/libraries/RFID-\/RC522/deprecated.h}, \hyperpage{32}
-  \item {main/libraries/RFID-\/RC522/MFRC522.h}, \hyperpage{32}
-  \item {main/libraries/RFID-\/RC522/MFRC522Extended.h}, \hyperpage{37}
-  \item {main/libraries/RFID-\/RC522/require\_cpp11.h}, \hyperpage{38}
+  \item {main/libraries/DHT11-\/HW-\/481/DHT11.h}, \hyperpage{31}
+  \item {main/libraries/DHT11-\/HW-\/481/setPin.cpp}, \hyperpage{31}
+  \item {main/libraries/DHT11-\/HW-\/481/setPin.h}, \hyperpage{33, 34}
+  \item {main/libraries/RFID-\/RC522/accesoRFID.h}, \hyperpage{34}
+  \item {main/libraries/RFID-\/RC522/deprecated.h}, \hyperpage{34}
+  \item {main/libraries/RFID-\/RC522/MFRC522.h}, \hyperpage{34}
+  \item {main/libraries/RFID-\/RC522/MFRC522Extended.h}, \hyperpage{39}
+  \item {main/libraries/RFID-\/RC522/require\_cpp11.h}, \hyperpage{40}
+  \item {main/libraries/TIMER/timer.h}, \hyperpage{40, 41}
   \item {MFRC522}, \hyperpage{11}
   \item {MFRC522::MIFARE\_Key}, \hyperpage{15}
   \item {MFRC522::Uid}, \hyperpage{15}
@@ -62,12 +63,17 @@
   \item {setDelay}
     \subitem {DHT11}, \hyperpage{10}
   \item {setPin.cpp}
-    \subitem {setPinDHT11}, \hyperpage{30}
+    \subitem {setPinDHT11}, \hyperpage{32}
   \item {setPin.h}
-    \subitem {setPinDHT11}, \hyperpage{31}
+    \subitem {setPinDHT11}, \hyperpage{33}
   \item {setPinDHT11}
     \subitem {DHT11}, \hyperpage{10}
-    \subitem {setPin.cpp}, \hyperpage{30}
-    \subitem {setPin.h}, \hyperpage{31}
+    \subitem {setPin.cpp}, \hyperpage{32}
+    \subitem {setPin.h}, \hyperpage{33}
+
+  \indexspace
+
+  \item {timer}, \hyperpage{28}
+    \subitem {timer}, \hyperpage{29}
 
 \end{theindex}

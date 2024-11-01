@@ -31,8 +31,13 @@ var NAVTREEINDEX0 =
 "classaccesoRFID.html#a796d502e70c965524f20c277278e2fc8":[0,0,0,2],
 "classaccesoRFID.html#abadde807c97ccaa1a49182292d43d8e1":[0,0,0,1],
 "classes.html":[0,1],
+"classtimer.html":[0,0,4],
+"classtimer.html#a098b183dd8f9767551b5192cf9b3d1a9":[0,0,4,0],
+"classtimer.html#a6bcf4ead1fcf6f2b474a7076a490c91c":[0,0,4,2],
+"classtimer.html#a7ba64bf6c04ef43bc030145daa5454b7":[0,0,4,1],
 "deprecated_8h_source.html":[1,0,0,0,1,1],
 "dir_1922e634e2de591c6b559ae413858f39.html":[1,0,0,0,0],
+"dir_531bad076138bd860eed6724c9bff369.html":[1,0,0,0,2],
 "dir_5c982d53a68cdbcd421152b4020263a9.html":[1,0,0],
 "dir_912024adb318c027cef44e2b810a75bc.html":[1,0,0,0,1],
 "dir_cd9e2b788230a8a887755d5801ce31f6.html":[1,0,0,0],
@@ -50,5 +55,7 @@ var NAVTREEINDEX0 =
 "setPin_8cpp.html#a73010b69762bc8832cebeabe6c10bed1":[1,0,0,0,0,1,0],
 "setPin_8h.html":[1,0,0,0,0,2],
 "setPin_8h.html#a73010b69762bc8832cebeabe6c10bed1":[1,0,0,0,0,2,0],
-"setPin_8h_source.html":[1,0,0,0,0,2]
+"setPin_8h_source.html":[1,0,0,0,0,2],
+"timer_8h.html":[1,0,0,0,2,0],
+"timer_8h_source.html":[1,0,0,0,2,0]
 };
