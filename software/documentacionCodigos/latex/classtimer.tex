@@ -11,36 +11,41 @@ Clase para gestionar un temporizador con dos salidas, cada una es activada en in
 
 
 
-Diagrama de colaboración de timer\+:
-\nopagebreak
+Diagrama de colaboración de timer\+:\nopagebreak
 \begin{figure}[H]
 \begin{center}
 \leavevmode
-\includegraphics[width=155pt]{classtimer__coll__graph}
+\includegraphics[width=208pt]{classtimer__coll__graph}
 \end{center}
 \end{figure}
 \doxysubsubsection*{Métodos públicos}
 \begin{DoxyCompactItemize}
 \item 
-\mbox{\hyperlink{classtimer_a098b183dd8f9767551b5192cf9b3d1a9}{timer}} (int p\+Ingreso, int p\+Reset, int p1, int p2, unsigned long t1, unsigned long t2, unsigned long rebote)
+\mbox{\hyperlink{classtimer_a9ab3a0bb7f907060140415d15b9cde4c}{timer}} (int p\+Ingreso, int p\+Reset, int p1, int p2, unsigned long t1, unsigned long t2)
 \begin{DoxyCompactList}\small\item\em Constructor de la clase timer. \end{DoxyCompactList}\item 
 \Hypertarget{classtimer_a6bcf4ead1fcf6f2b474a7076a490c91c}\label{classtimer_a6bcf4ead1fcf6f2b474a7076a490c91c} 
 void {\bfseries iniciar} ()
 \begin{DoxyCompactList}\small\item\em void \doxylink{classtimer_a6bcf4ead1fcf6f2b474a7076a490c91c}{iniciar()}\+: configura los pines del objeto de clase timer como entradas y salidas. \end{DoxyCompactList}\item 
 \Hypertarget{classtimer_a7ba64bf6c04ef43bc030145daa5454b7}\label{classtimer_a7ba64bf6c04ef43bc030145daa5454b7} 
 void {\bfseries actualizar} ()
-\begin{DoxyCompactList}\small\item\em void \doxylink{classtimer_a7ba64bf6c04ef43bc030145daa5454b7}{actualizar()}\+: Actualiza el estado del temporizador y controla las salidas según los tiempos establecidos. Verifica el estado de los pines de ingreso y reset, aplicando antirrebote. \end{DoxyCompactList}\end{DoxyCompactItemize}
+\begin{DoxyCompactList}\small\item\em void \doxylink{classtimer_a7ba64bf6c04ef43bc030145daa5454b7}{actualizar()}\+: Actualiza el estado del temporizador y controla las salidas según los tiempos establecidos. Verifica el estado de los pines de ingreso y reset, aplicando antirrebote. \end{DoxyCompactList}\item 
+\Hypertarget{classtimer_af69665dd4422433b10a2572d0beaf606}\label{classtimer_af69665dd4422433b10a2572d0beaf606} 
+bool {\bfseries tiempo\+Uno\+Cumplido} ()
+\begin{DoxyCompactList}\small\item\em bool \doxylink{classtimer_af69665dd4422433b10a2572d0beaf606}{tiempo\+Uno\+Cumplido()}\+: Función que verifica si se cumplió el tiempo\+Uno. Devuelve true en caso de haber pasado el tiempo\+Uno, de lo contrario devuelve false. \end{DoxyCompactList}\item 
+\Hypertarget{classtimer_ae095a5e20e8962714dabb41d134ae90f}\label{classtimer_ae095a5e20e8962714dabb41d134ae90f} 
+bool {\bfseries tiempo\+Dos\+Cumplido} ()
+\begin{DoxyCompactList}\small\item\em bool \doxylink{classtimer_ae095a5e20e8962714dabb41d134ae90f}{tiempo\+Dos\+Cumplido()}\+: Función que verifica si se cumplió el tiempo\+Dos. Devuelve true en caso de haber pasado el tiempo\+Dos, de lo contrario devuelve false. \end{DoxyCompactList}\end{DoxyCompactItemize}
 
 
 \doxysubsection{Descripción detallada}
 Clase para gestionar un temporizador con dos salidas, cada una es activada en intervalos distintos, con la funcionalidad de antirrebote en los pines de ingreso y reset. 
 
 \doxysubsection{Documentación de constructores y destructores}
-\Hypertarget{classtimer_a098b183dd8f9767551b5192cf9b3d1a9}\index{timer@{timer}!timer@{timer}}
+\Hypertarget{classtimer_a9ab3a0bb7f907060140415d15b9cde4c}\index{timer@{timer}!timer@{timer}}
 \index{timer@{timer}!timer@{timer}}
 \doxysubsubsection{\texorpdfstring{timer()}{timer()}}
-{\footnotesize\ttfamily \label{classtimer_a098b183dd8f9767551b5192cf9b3d1a9} 
-timer\+::timer (\begin{DoxyParamCaption}\item[{int}]{p\+Ingreso}{, }\item[{int}]{p\+Reset}{, }\item[{int}]{p1}{, }\item[{int}]{p2}{, }\item[{unsigned long}]{t1}{, }\item[{unsigned long}]{t2}{, }\item[{unsigned long}]{rebote}{}\end{DoxyParamCaption})}
+{\footnotesize\ttfamily \label{classtimer_a9ab3a0bb7f907060140415d15b9cde4c} 
+timer\+::timer (\begin{DoxyParamCaption}\item[{int}]{p\+Ingreso}{, }\item[{int}]{p\+Reset}{, }\item[{int}]{p1}{, }\item[{int}]{p2}{, }\item[{unsigned long}]{t1}{, }\item[{unsigned long}]{t2}{}\end{DoxyParamCaption})}
 
 
 
@@ -59,8 +64,6 @@ Constructor de la clase timer.
 {\em t1} & Tiempo (en milisegundos) después para activar la primera salida. \\
 \hline
 {\em t2} & Tiempo (en milisegundos) después para activar la segunda salida. \\
-\hline
-{\em rebote} & Tiempo de antirrebote para los pines de ingreso y reset. \\
 \hline
 \end{DoxyParams}
 

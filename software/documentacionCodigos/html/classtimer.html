@@ -111,15 +111,15 @@ Diagrama de colaboración de timer:</div>
 <div class="dyncontent">
 <div class="center"><img src="classtimer__coll__graph.png" border="0" usemap="#atimer_coll__map" alt="Collaboration graph"/></div>
 <map name="atimer_coll__map" id="atimer_coll__map">
-<area shape="rect" title="Clase para gestionar un temporizador con dos salidas, cada una es activada en intervalos distintos,..." alt="" coords="5,5,105,117"/>
+<area shape="rect" title="Clase para gestionar un temporizador con dos salidas, cada una es activada en intervalos distintos,..." alt="" coords="5,5,176,160"/>
 </map>
 </div>
 <table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a id="pub-methods" name="pub-methods"></a>
 Métodos públicos</h2></td></tr>
-<tr class="memitem:a098b183dd8f9767551b5192cf9b3d1a9" id="r_a098b183dd8f9767551b5192cf9b3d1a9"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#a098b183dd8f9767551b5192cf9b3d1a9">timer</a> (int pIngreso, int pReset, int p1, int p2, unsigned long t1, unsigned long t2, unsigned long rebote)</td></tr>
-<tr class="memdesc:a098b183dd8f9767551b5192cf9b3d1a9"><td class="mdescLeft">&#160;</td><td class="mdescRight">Constructor de la clase timer.  <br /></td></tr>
-<tr class="separator:a098b183dd8f9767551b5192cf9b3d1a9"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a9ab3a0bb7f907060140415d15b9cde4c" id="r_a9ab3a0bb7f907060140415d15b9cde4c"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#a9ab3a0bb7f907060140415d15b9cde4c">timer</a> (int pIngreso, int pReset, int p1, int p2, unsigned long t1, unsigned long t2)</td></tr>
+<tr class="memdesc:a9ab3a0bb7f907060140415d15b9cde4c"><td class="mdescLeft">&#160;</td><td class="mdescRight">Constructor de la clase timer.  <br /></td></tr>
+<tr class="separator:a9ab3a0bb7f907060140415d15b9cde4c"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a6bcf4ead1fcf6f2b474a7076a490c91c" id="r_a6bcf4ead1fcf6f2b474a7076a490c91c"><td class="memItemLeft" align="right" valign="top"><a id="a6bcf4ead1fcf6f2b474a7076a490c91c" name="a6bcf4ead1fcf6f2b474a7076a490c91c"></a>
 void&#160;</td><td class="memItemRight" valign="bottom"><b>iniciar</b> ()</td></tr>
 <tr class="memdesc:a6bcf4ead1fcf6f2b474a7076a490c91c"><td class="mdescLeft">&#160;</td><td class="mdescRight">void <a class="el" href="#a6bcf4ead1fcf6f2b474a7076a490c91c" title="void iniciar(): configura los pines del objeto de clase timer como entradas y salidas.">iniciar()</a>: configura los pines del objeto de clase timer como entradas y salidas. <br /></td></tr>
@@ -128,12 +128,20 @@ void&#160;</td><td class="memItemRight" valign="bottom"><b>iniciar</b> ()</td></
 void&#160;</td><td class="memItemRight" valign="bottom"><b>actualizar</b> ()</td></tr>
 <tr class="memdesc:a7ba64bf6c04ef43bc030145daa5454b7"><td class="mdescLeft">&#160;</td><td class="mdescRight">void <a class="el" href="#a7ba64bf6c04ef43bc030145daa5454b7" title="void actualizar(): Actualiza el estado del temporizador y controla las salidas según los tiempos esta...">actualizar()</a>: Actualiza el estado del temporizador y controla las salidas según los tiempos establecidos. Verifica el estado de los pines de ingreso y reset, aplicando antirrebote. <br /></td></tr>
 <tr class="separator:a7ba64bf6c04ef43bc030145daa5454b7"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:af69665dd4422433b10a2572d0beaf606" id="r_af69665dd4422433b10a2572d0beaf606"><td class="memItemLeft" align="right" valign="top"><a id="af69665dd4422433b10a2572d0beaf606" name="af69665dd4422433b10a2572d0beaf606"></a>
+bool&#160;</td><td class="memItemRight" valign="bottom"><b>tiempoUnoCumplido</b> ()</td></tr>
+<tr class="memdesc:af69665dd4422433b10a2572d0beaf606"><td class="mdescLeft">&#160;</td><td class="mdescRight">bool <a class="el" href="#af69665dd4422433b10a2572d0beaf606" title="bool tiempoUnoCumplido(): Función que verifica si se cumplió el tiempoUno. Devuelve true en caso de h...">tiempoUnoCumplido()</a>: Función que verifica si se cumplió el tiempoUno. Devuelve true en caso de haber pasado el tiempoUno, de lo contrario devuelve false. <br /></td></tr>
+<tr class="separator:af69665dd4422433b10a2572d0beaf606"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ae095a5e20e8962714dabb41d134ae90f" id="r_ae095a5e20e8962714dabb41d134ae90f"><td class="memItemLeft" align="right" valign="top"><a id="ae095a5e20e8962714dabb41d134ae90f" name="ae095a5e20e8962714dabb41d134ae90f"></a>
+bool&#160;</td><td class="memItemRight" valign="bottom"><b>tiempoDosCumplido</b> ()</td></tr>
+<tr class="memdesc:ae095a5e20e8962714dabb41d134ae90f"><td class="mdescLeft">&#160;</td><td class="mdescRight">bool <a class="el" href="#ae095a5e20e8962714dabb41d134ae90f" title="bool tiempoDosCumplido(): Función que verifica si se cumplió el tiempoDos. Devuelve true en caso de h...">tiempoDosCumplido()</a>: Función que verifica si se cumplió el tiempoDos. Devuelve true en caso de haber pasado el tiempoDos, de lo contrario devuelve false. <br /></td></tr>
+<tr class="separator:ae095a5e20e8962714dabb41d134ae90f"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table>
 <a name="details" id="details"></a><h2 class="groupheader">Descripción detallada</h2>
 <div class="textblock"><p>Clase para gestionar un temporizador con dos salidas, cada una es activada en intervalos distintos, con la funcionalidad de antirrebote en los pines de ingreso y reset. </p>
 </div><h2 class="groupheader">Documentación de constructores y destructores</h2>
-<a id="a098b183dd8f9767551b5192cf9b3d1a9" name="a098b183dd8f9767551b5192cf9b3d1a9"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#a098b183dd8f9767551b5192cf9b3d1a9">&#9670;&#160;</a></span>timer()</h2>
+<a id="a9ab3a0bb7f907060140415d15b9cde4c" name="a9ab3a0bb7f907060140415d15b9cde4c"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a9ab3a0bb7f907060140415d15b9cde4c">&#9670;&#160;</a></span>timer()</h2>
 
 <div class="memitem">
 <div class="memproto">
@@ -166,12 +174,7 @@ void&#160;</td><td class="memItemRight" valign="bottom"><b>actualizar</b> ()</td
         <tr>
           <td class="paramkey"></td>
           <td></td>
-          <td class="paramtype">unsigned long</td>          <td class="paramname"><span class="paramname"><em>t2</em></span>, </td>
-        </tr>
-        <tr>
-          <td class="paramkey"></td>
-          <td></td>
-          <td class="paramtype">unsigned long</td>          <td class="paramname"><span class="paramname"><em>rebote</em></span>&#160;)</td>
+          <td class="paramtype">unsigned long</td>          <td class="paramname"><span class="paramname"><em>t2</em></span>&#160;)</td>
         </tr>
       </table>
 </div><div class="memdoc">
@@ -185,7 +188,6 @@ void&#160;</td><td class="memItemRight" valign="bottom"><b>actualizar</b> ()</td
     <tr><td class="paramname">p2</td><td>Pin de la segunda salida, activado después de tiempoDos. </td></tr>
     <tr><td class="paramname">t1</td><td>Tiempo (en milisegundos) después para activar la primera salida. </td></tr>
     <tr><td class="paramname">t2</td><td>Tiempo (en milisegundos) después para activar la segunda salida. </td></tr>
-    <tr><td class="paramname">rebote</td><td>Tiempo de antirrebote para los pines de ingreso y reset. </td></tr>
   </table>
   </dd>
 </dl>

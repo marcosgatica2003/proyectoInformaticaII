@@ -108,33 +108,35 @@ $(function(){initNavTree('timer_8h_source.html',''); initResizable(true); });
 <div class="foldopen" id="foldopen00015" data-start="{" data-end="};">
 <div class="line"><a id="l00015" name="l00015"></a><span class="lineno"><a class="line" href="classtimer.html">   15</a></span><span class="keyword">class </span><a class="code hl_class" href="classtimer.html">timer</a> {</div>
 <div class="line"><a id="l00016" name="l00016"></a><span class="lineno">   16</span>    <span class="keyword">public</span>:</div>
-<div class="line"><a id="l00028" name="l00028"></a><span class="lineno"><a class="line" href="classtimer.html#a098b183dd8f9767551b5192cf9b3d1a9">   28</a></span>       <a class="code hl_function" href="classtimer.html#a098b183dd8f9767551b5192cf9b3d1a9">timer</a>(<span class="keywordtype">int</span> pIngreso, <span class="keywordtype">int</span> pReset, <span class="keywordtype">int</span> p1, <span class="keywordtype">int</span> p2, <span class="keywordtype">unsigned</span> <span class="keywordtype">long</span> t1, <span class="keywordtype">unsigned</span> <span class="keywordtype">long</span> t2, <span class="keywordtype">unsigned</span> <span class="keywordtype">long</span> rebote);</div>
-<div class="line"><a id="l00029" name="l00029"></a><span class="lineno">   29</span> </div>
-<div class="line"><a id="l00034" name="l00034"></a><span class="lineno"><a class="line" href="classtimer.html#a6bcf4ead1fcf6f2b474a7076a490c91c">   34</a></span>       <span class="keywordtype">void</span> <a class="code hl_function" href="classtimer.html#a6bcf4ead1fcf6f2b474a7076a490c91c">iniciar</a>();</div>
-<div class="line"><a id="l00039" name="l00039"></a><span class="lineno"><a class="line" href="classtimer.html#a7ba64bf6c04ef43bc030145daa5454b7">   39</a></span>       <span class="keywordtype">void</span> <a class="code hl_function" href="classtimer.html#a7ba64bf6c04ef43bc030145daa5454b7">actualizar</a>();</div>
-<div class="line"><a id="l00040" name="l00040"></a><span class="lineno">   40</span> </div>
-<div class="line"><a id="l00041" name="l00041"></a><span class="lineno">   41</span>    <span class="keyword">private</span>:</div>
-<div class="line"><a id="l00042" name="l00042"></a><span class="lineno">   42</span>        <span class="keyword">const</span> <span class="keywordtype">unsigned</span> <span class="keywordtype">long</span> tiempoUno; </div>
-<div class="line"><a id="l00043" name="l00043"></a><span class="lineno">   43</span>        <span class="keyword">const</span> <span class="keywordtype">unsigned</span> <span class="keywordtype">long</span> tiempoDos; </div>
-<div class="line"><a id="l00044" name="l00044"></a><span class="lineno">   44</span>        <span class="keywordtype">unsigned</span> <span class="keywordtype">long</span> tiempoAntirrebote; </div>
-<div class="line"><a id="l00045" name="l00045"></a><span class="lineno">   45</span>        <span class="keywordtype">unsigned</span> <span class="keywordtype">long</span> ultimoTiempoIngreso; </div>
-<div class="line"><a id="l00046" name="l00046"></a><span class="lineno">   46</span>        <span class="keywordtype">unsigned</span> <span class="keywordtype">long</span> ultimoTiempoReset; </div>
-<div class="line"><a id="l00047" name="l00047"></a><span class="lineno">   47</span>        <span class="keywordtype">unsigned</span> <span class="keywordtype">long</span> cont1; </div>
-<div class="line"><a id="l00048" name="l00048"></a><span class="lineno">   48</span>        <span class="keywordtype">int</span> pinIngreso; </div>
-<div class="line"><a id="l00049" name="l00049"></a><span class="lineno">   49</span>        <span class="keywordtype">int</span> pinSalidaUno; </div>
-<div class="line"><a id="l00050" name="l00050"></a><span class="lineno">   50</span>        <span class="keywordtype">int</span> pinSalidaDos; </div>
-<div class="line"><a id="l00051" name="l00051"></a><span class="lineno">   51</span>        <span class="keywordtype">int</span> pinReset; </div>
-<div class="line"><a id="l00052" name="l00052"></a><span class="lineno">   52</span>        <span class="keywordtype">bool</span> contON; </div>
-<div class="line"><a id="l00060" name="l00060"></a><span class="lineno">   60</span>        <span class="keywordtype">bool</span> antirrebote(<span class="keywordtype">int</span>, <span class="keywordtype">unsigned</span> <span class="keywordtype">long</span>&amp;);</div>
-<div class="line"><a id="l00061" name="l00061"></a><span class="lineno">   61</span>};</div>
+<div class="line"><a id="l00027" name="l00027"></a><span class="lineno"><a class="line" href="classtimer.html#a9ab3a0bb7f907060140415d15b9cde4c">   27</a></span>       <a class="code hl_function" href="classtimer.html#a9ab3a0bb7f907060140415d15b9cde4c">timer</a>(<span class="keywordtype">int</span> pIngreso, <span class="keywordtype">int</span> pReset, <span class="keywordtype">int</span> p1, <span class="keywordtype">int</span> p2, <span class="keywordtype">unsigned</span> <span class="keywordtype">long</span> t1, <span class="keywordtype">unsigned</span> <span class="keywordtype">long</span> t2);</div>
+<div class="line"><a id="l00028" name="l00028"></a><span class="lineno">   28</span> </div>
+<div class="line"><a id="l00033" name="l00033"></a><span class="lineno"><a class="line" href="classtimer.html#a6bcf4ead1fcf6f2b474a7076a490c91c">   33</a></span>       <span class="keywordtype">void</span> <a class="code hl_function" href="classtimer.html#a6bcf4ead1fcf6f2b474a7076a490c91c">iniciar</a>();</div>
+<div class="line"><a id="l00038" name="l00038"></a><span class="lineno"><a class="line" href="classtimer.html#a7ba64bf6c04ef43bc030145daa5454b7">   38</a></span>       <span class="keywordtype">void</span> <a class="code hl_function" href="classtimer.html#a7ba64bf6c04ef43bc030145daa5454b7">actualizar</a>();</div>
+<div class="line"><a id="l00039" name="l00039"></a><span class="lineno">   39</span> </div>
+<div class="line"><a id="l00045" name="l00045"></a><span class="lineno"><a class="line" href="classtimer.html#af69665dd4422433b10a2572d0beaf606">   45</a></span>       <span class="keywordtype">bool</span> <a class="code hl_function" href="classtimer.html#af69665dd4422433b10a2572d0beaf606">tiempoUnoCumplido</a>();</div>
+<div class="line"><a id="l00046" name="l00046"></a><span class="lineno">   46</span> </div>
+<div class="line"><a id="l00052" name="l00052"></a><span class="lineno"><a class="line" href="classtimer.html#ae095a5e20e8962714dabb41d134ae90f">   52</a></span>       <span class="keywordtype">bool</span> <a class="code hl_function" href="classtimer.html#ae095a5e20e8962714dabb41d134ae90f">tiempoDosCumplido</a>();</div>
+<div class="line"><a id="l00053" name="l00053"></a><span class="lineno">   53</span> </div>
+<div class="line"><a id="l00054" name="l00054"></a><span class="lineno">   54</span>    <span class="keyword">private</span>:</div>
+<div class="line"><a id="l00055" name="l00055"></a><span class="lineno">   55</span>        <span class="keyword">const</span> <span class="keywordtype">unsigned</span> <span class="keywordtype">long</span> tiempoUno; </div>
+<div class="line"><a id="l00056" name="l00056"></a><span class="lineno">   56</span>        <span class="keyword">const</span> <span class="keywordtype">unsigned</span> <span class="keywordtype">long</span> tiempoDos; </div>
+<div class="line"><a id="l00057" name="l00057"></a><span class="lineno">   57</span>        <span class="keywordtype">unsigned</span> <span class="keywordtype">long</span> cont1; </div>
+<div class="line"><a id="l00058" name="l00058"></a><span class="lineno">   58</span>        <span class="keywordtype">int</span> pinIngreso; </div>
+<div class="line"><a id="l00059" name="l00059"></a><span class="lineno">   59</span>        <span class="keywordtype">int</span> pinSalidaUno; </div>
+<div class="line"><a id="l00060" name="l00060"></a><span class="lineno">   60</span>        <span class="keywordtype">int</span> pinSalidaDos; </div>
+<div class="line"><a id="l00061" name="l00061"></a><span class="lineno">   61</span>        <span class="keywordtype">int</span> pinReset; </div>
+<div class="line"><a id="l00062" name="l00062"></a><span class="lineno">   62</span>        <span class="keywordtype">bool</span> contON; </div>
+<div class="line"><a id="l00064" name="l00064"></a><span class="lineno">   64</span>};</div>
 </div>
-<div class="line"><a id="l00062" name="l00062"></a><span class="lineno">   62</span> </div>
-<div class="line"><a id="l00063" name="l00063"></a><span class="lineno">   63</span><span class="preprocessor">#endif</span></div>
-<div class="line"><a id="l00064" name="l00064"></a><span class="lineno">   64</span> </div>
+<div class="line"><a id="l00065" name="l00065"></a><span class="lineno">   65</span> </div>
+<div class="line"><a id="l00066" name="l00066"></a><span class="lineno">   66</span><span class="preprocessor">#endif</span></div>
+<div class="line"><a id="l00067" name="l00067"></a><span class="lineno">   67</span> </div>
 <div class="ttc" id="aclasstimer_html"><div class="ttname"><a href="classtimer.html">timer</a></div><div class="ttdoc">Clase para gestionar un temporizador con dos salidas, cada una es activada en intervalos distintos,...</div><div class="ttdef"><b>Definition</b> timer.h:15</div></div>
-<div class="ttc" id="aclasstimer_html_a098b183dd8f9767551b5192cf9b3d1a9"><div class="ttname"><a href="classtimer.html#a098b183dd8f9767551b5192cf9b3d1a9">timer::timer</a></div><div class="ttdeci">timer(int pIngreso, int pReset, int p1, int p2, unsigned long t1, unsigned long t2, unsigned long rebote)</div><div class="ttdoc">Constructor de la clase timer.</div></div>
 <div class="ttc" id="aclasstimer_html_a6bcf4ead1fcf6f2b474a7076a490c91c"><div class="ttname"><a href="classtimer.html#a6bcf4ead1fcf6f2b474a7076a490c91c">timer::iniciar</a></div><div class="ttdeci">void iniciar()</div><div class="ttdoc">void iniciar(): configura los pines del objeto de clase timer como entradas y salidas.</div></div>
 <div class="ttc" id="aclasstimer_html_a7ba64bf6c04ef43bc030145daa5454b7"><div class="ttname"><a href="classtimer.html#a7ba64bf6c04ef43bc030145daa5454b7">timer::actualizar</a></div><div class="ttdeci">void actualizar()</div><div class="ttdoc">void actualizar(): Actualiza el estado del temporizador y controla las salidas según los tiempos esta...</div></div>
+<div class="ttc" id="aclasstimer_html_a9ab3a0bb7f907060140415d15b9cde4c"><div class="ttname"><a href="classtimer.html#a9ab3a0bb7f907060140415d15b9cde4c">timer::timer</a></div><div class="ttdeci">timer(int pIngreso, int pReset, int p1, int p2, unsigned long t1, unsigned long t2)</div><div class="ttdoc">Constructor de la clase timer.</div></div>
+<div class="ttc" id="aclasstimer_html_ae095a5e20e8962714dabb41d134ae90f"><div class="ttname"><a href="classtimer.html#ae095a5e20e8962714dabb41d134ae90f">timer::tiempoDosCumplido</a></div><div class="ttdeci">bool tiempoDosCumplido()</div><div class="ttdoc">bool tiempoDosCumplido(): Función que verifica si se cumplió el tiempoDos. Devuelve true en caso de h...</div></div>
+<div class="ttc" id="aclasstimer_html_af69665dd4422433b10a2572d0beaf606"><div class="ttname"><a href="classtimer.html#af69665dd4422433b10a2572d0beaf606">timer::tiempoUnoCumplido</a></div><div class="ttdeci">bool tiempoUnoCumplido()</div><div class="ttdoc">bool tiempoUnoCumplido(): Función que verifica si se cumplió el tiempoUno. Devuelve true en caso de h...</div></div>
 </div><!-- fragment --></div><!-- contents -->
 </div><!-- doc-content -->
 <!-- start footer part -->
