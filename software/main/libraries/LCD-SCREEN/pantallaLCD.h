@@ -9,12 +9,12 @@
 
 class pantallaLCD {
     public:
-        pantallaLCD(uint8_t width, uint8_t height, uint8_t address);
+        pantallaLCD(uint8_t address);
         void limpiar();
         void pantallaTexto(const String& text, int x, int y, int textSize);
         
     private:
-        Adafruit_SSD1306 pantalla;
+        Adafruit_SSD1306 _pantalla;
         int _address;
 };
 

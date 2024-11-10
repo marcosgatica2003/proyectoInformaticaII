@@ -9,8 +9,6 @@
 
 //Parámetros
 #define BAUD 9600
-#define SCREEN_WIDTH 128
-#define SCREEN_HEIGHT 32
 #define OLED_RESET -1
 #define SCREEN_ADDRESS 0x3C
 #define PIN_INGRESO_TIMER 2
@@ -43,7 +41,7 @@ buzzer elBuzzer(PIN_BUZZER, PIN_POTENCIOMETRO_BUZZER);
 timer elTimer(PIN_INGRESO_TIMER, PIN_RESET_TIMER, PIN_SALIDA1_TIMER, PIN_SALIDA2_TIMER, 3000, 6000);
 DHT11 sensor(PIN_SENSOR_TEMPERATURA); 
 
-pantallaLCD laPantalla(SCREEN_WIDTH, SCREEN_HEIGHT, SCREEN_ADDRESS);
+pantallaLCD laPantalla(SCREEN_ADDRESS);
 
 puertaServo puerta(PIN_SERVO_PUERTA);
 
@@ -67,7 +65,7 @@ void loop() {
 
   temperatura = sensor.readTemperature();
   temperaturaText = "Temp: " + String(temperatura) + " C";
-  laPantalla.limpiar(); laPantalla.pantallaTexto(temperaturaText, 0, 0, 2);
+  laPantalla.pantallaTexto(temperaturaText, 0, 0, 2);
 
   if (digitalRead(pinCerrarPuerta) == HIGH) {
     puerta.cerrar(); 

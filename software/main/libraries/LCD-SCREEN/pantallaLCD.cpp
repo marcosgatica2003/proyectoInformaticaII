@@ -1,30 +1,28 @@
 #include "pantallaLCD.h"
 
-pantallaLCD::pantallaLCD(
-        uint8_t width, 
-        uint8_t height,
-        uint8_t address
-        ): pantalla(width, height, &Wire, -1), _address(address) {
+pantallaLCD::pantallaLCD(uint8_t address): _pantalla(128, 32, &Wire, -1), _address(address) {
 
-    if(!pantalla.begin(SSD1306_SWITCHCAPVCC, _address)) {
+    if(!_pantalla.begin(SSD1306_SWITCHCAPVCC, _address)) {
         Serial.println(F("Pantalla OLED no encontrada"));
+        while(true);
     }
-
-    pantalla.clearDisplay();
-    pantalla.display();
+    
+    limpiar();
 
 }
 
 void pantallaLCD::limpiar() {
-    pantalla.clearDisplay();
-    pantalla.display();
+    this->_pantalla.clearDisplay();
+    this->_pantalla.display();
 }
 
 void pantallaLCD::pantallaTexto(const String& text, int x, int y, int textSize) {
-    pantalla.setTextSize(textSize);
-    pantalla.setTextColor(SSD1306_WHITE);
-    pantalla.setCursor(x, y);
-    pantalla.println(text);
-    pantalla.display();
+    this->_pantalla.clearDisplay();
+    this->_pantalla.setTextSize(textSize);
+    this->_pantalla.setTextColor(SSD1306_BLACK, SSD1306_WHITE);
+    this->_pantalla.setCursor(x, y);
+    this->_pantalla.println(text);
+    this->_pantalla.display();
+    delay(1000);
 }
 
