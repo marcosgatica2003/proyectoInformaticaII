@@ -1,6 +1,11 @@
-#include "reloj.h"
+#include "clock.h"
 
-reloj::reloj(unsigned int hora, unsigned int minuto, unsigned int segundo): _horas(hora), _minutos(minuto), _segundos(segundo, _ultimaActualizacion(millis())) {}
+reloj::reloj(unsigned int hora, unsigned int minuto, unsigned int segundo): 
+_horas(hora), 
+_minutos(minuto), 
+_segundos(segundo),
+_ultimaActualizacion(millis()) 
+{}
 
 void reloj::actualizar() {
     unsigned long ahora = millis();
@@ -20,13 +25,13 @@ void reloj::actualizar() {
             _horas++;
         }
 
-        if (_horas > = 24) {
+        if (_horas >= 24) {
             _horas = 0;
         }
     }
 }
 
-unsigned int reloj::getHoras() { return _horas; }
-unsigned int reloj::getMinutos() { return _minutos; }
-unsigned int reloj::getSegundos() { return _segundos; }
+unsigned int reloj::getHoras() const { return _horas; }
+unsigned int reloj::getMinutos() const { return _minutos; }
+unsigned int reloj::getSegundos() const { return _segundos; }
 

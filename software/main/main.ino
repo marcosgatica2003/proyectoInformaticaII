@@ -5,6 +5,7 @@
 #include "libraries/LCD-SCREEN/pantallaLCDLibs.h"
 #include "libraries/USERS-CONTROL/usuarioLibs.h"
 #include "libraries/SERVO/servoLibs.h"
+#include "libraries/CLOCK/clockLibs.h"
 
 //Parámetros
 #define BAUD 9600
@@ -25,6 +26,13 @@
 #define RST_PIN 9 ///< Pin RST para el módulo RFID
 
 //Objetos y variables
+float temperatura = 0;
+String temperaturaText = "";
+const int pinCerrarPuerta = PIN_CERRAR_SERVO_PUERTA;
+const int HORAS = __TIME__[0] * 10 + __TIME__[1] - '0' * 11;
+const int MINUTOS = __TIME__[3] * 10 + __TIME__[4] - '0' * 11;
+const int SEGUNDOS = __TIME__[6] * 10 + __TIME__[7] - '0' * 11;
+
 accesoRFID tarjetaRFID(SS_PIN, RST_PIN, "87 9C 0A 4E"); 
 usuario elSalas("87 9C 0A 4E", "Joaquin", "Salas");
 
@@ -39,13 +47,13 @@ pantallaLCD laPantalla(SCREEN_WIDTH, SCREEN_HEIGHT, SCREEN_ADDRESS);
 
 puertaServo puerta(PIN_SERVO_PUERTA);
 
-float temperatura = 0;
-String temperaturaText = "";
-const int pinCerrarPuerta = PIN_CERRAR_SERVO_PUERTA;
+reloj clock(HORAS, MINUTOS, SEGUNDOS);
 
 //Prototipos de funciones
 bool verificarAcceso();
+bool rangoHorario();
 void accionarTimer();
+
 
 void setup() {
   Serial.begin(BAUD);
@@ -86,18 +94,25 @@ void loop() {
   }
 }
 
+bool rangoHorario() {
+  if(clock.getHoras() >= 8 && clock.getHoras() < 23) { return true; }
+  return false;
+}
+
 bool verificarAcceso () {
-  bool verif = false;
-
   if(tarjetaRFID.autorizar() || llaveroRFID.autorizar()) {
+    if (rangoHorario()) { 
+      laPantalla.limpiar();
+      laPantalla.pantallaTexto("Acceso permitido", 0, 0, 2);
+      return true;
 
-    Serial.println("Autorizado");
-    verif = true;
-  } else {
-    Serial.println("Denegado");
+    } else {
+      laPantalla.limpiar();
+      laPantalla.pantallaTexto("Fuera de horario", 0, 0, 2);
+      return false;
+    }
   }
-  
-  return verif;
+  return false;
 }
 
 void accionarTimer() {
