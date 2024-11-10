@@ -58,7 +58,7 @@ void accionarTimer();
 void setup() {
   Serial.begin(BAUD);
   tarjetaRFID.start(); llaveroRFID.start();
-  laPantalla.begin(); laPantalla.limpiar();
+  laPantalla.limpiar();
   elBuzzer.update(); //Esto hará que el buzzer tome el valor de la resistencia actual
   puerta.inicializar(); pinMode(pinCerrarPuerta, INPUT_PULLUP);
 }
