@@ -3,8 +3,8 @@
 buzzer::buzzer(int buzzPin, int potPin) {
     this->buzzerPin = buzzPin; pinMode(buzzerPin, OUTPUT);
     this->potenciometroPin = potPin; pinMode(potenciometroPin, INPUT);
-    sonandoSuave = false;
-    sonandoFuerte = false;
+    sonandoBreve = false;
+    sonandoIntenso = false;
 }
 
 // void buzzer::setup() {
@@ -17,38 +17,38 @@ void buzzer::update() {
     Serial.println(potenciometroVal);
 }
 
-void buzzer::emitirSonidoSuave() {
+void buzzer::emitirSonidoBreve() {
 
     float delaySuave = (9940.0 / 1023.0) * potenciometroVal + 60;
 
-    if(!sonandoSuave) {
-        sonandoSuave = true;
-        tiempoAnteriorSuave = millis();
+    if(!sonandoBreve) {
+        sonandoBreve = true;
+        tiempoAnteriorBreve = millis();
     }
 
-    if (sonandoSuave) {
+    if (sonandoBreve) {
         unsigned long tiempoActual = millis();
-        if (tiempoActual - tiempoAnteriorSuave >= delaySuave) {
+        if (tiempoActual - tiempoAnteriorBreve >= delaySuave) {
             digitalWrite(buzzerPin, !digitalRead(buzzerPin));
-            tiempoAnteriorSuave = tiempoActual;
+            tiempoAnteriorBreve = tiempoActual;
         }
     }
 }
 
-void buzzer::emitirSonidoFuerte() {
+void buzzer::emitirSonidoIntenso() {
 
     float delayFuerte = (5000.0 / 1023.0) * potenciometroVal + 30;
 
-    if(!sonandoFuerte) {
-        sonandoFuerte = true;
-        tiempoAnteriorFuerte = millis();
+    if(!sonandoIntenso) {
+        sonandoIntenso = true;
+        tiempoAnteriorIntenso = millis();
     }
 
-    if (sonandoFuerte) {
+    if (sonandoIntenso) {
         unsigned long tiempoActual = millis();
-        if (tiempoActual - tiempoAnteriorFuerte >= delayFuerte) {
+        if (tiempoActual - tiempoAnteriorIntenso >= delayFuerte) {
             digitalWrite(buzzerPin, !digitalRead(buzzerPin));
-            tiempoAnteriorFuerte = tiempoActual;
+            tiempoAnteriorIntenso = tiempoActual;
         }
     }
 }
