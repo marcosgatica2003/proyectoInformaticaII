@@ -6,6 +6,8 @@ DOXYFILE_DIR="."
 DOCS_DIR="$DOXYFILE_DIR/documentacionCodigos"
 
 mkdir -p "$DOCS_DIR"
+cp "$DOXYFILE_DIR/main/main.ino" "$DOXYFILE_DIR"
+mv main.ino main.cpp
 
 doxygen "$DOXYFILE_DIR/Doxyfile"
 
@@ -15,7 +17,6 @@ make
 
 mv refman.pdf S.S.C.F.Software.pdf
 mv S.S.C.F.Software.pdf ../
-
 cd - || exit
 
 echo "Documentación de software generada como S.S.C.F.Software.pdf"

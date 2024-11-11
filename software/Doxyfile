@@ -965,20 +965,19 @@ WARN_LOGFILE           =
 # spaces. See also FILE_PATTERNS and EXTENSION_MAPPING
 # Note: If this tag is empty the current directory is searched.
 
-INPUT                  = ./main/main.ino \
-                         ./main/libraries/RFID-RC522/accesoRFID.h \
-			 ./main/libraries/RFID-RC522/MFRC522.h \
-			 ./main/libraries/RFID-RC522/MFRC522Extended.h \
-			 ./main/libraries/RFID-RC522/deprecated.h \
-			 ./main/libraries/RFID-RC522/require_cpp11.h \
+INPUT                  = ./main/libraries/RFID-RC522/accesoRFID.h \
+                         ./main/libraries/RFID-RC522/MFRC522.h \
+                         ./main/libraries/RFID-RC522/MFRC522Extended.h \
+                         ./main/libraries/RFID-RC522/deprecated.h \
+                         ./main/libraries/RFID-RC522/require_cpp11.h \
                          ./main/libraries/DHT11-HW-481/setPin.h \
                          ./main/libraries/DHT11-HW-481/DHT11.h \
-			 ./main/libraries/TIMER/timer.h \
-			 ./main/libraries/USERS-CONTROL/usuario.h \
-			 ./main/libraries/CLOCK/clock.h \
-			 ./main/libraries/SERVO/servo.h \
-			 ./main/libraries/BUZZER-CLDZ/buzzer.h 
-
+                         ./main/libraries/TIMER/timer.h \
+                         ./main/libraries/USERS-CONTROL/usuario.h \
+                         ./main/libraries/CLOCK/clock.h \
+                         ./main/libraries/SERVO/servo.h \
+                         ./main/libraries/BUZZER-CLDZ/buzzer.h \
+                         ./main/main.cpp
 
 # This tag can be used to specify the character encoding of the source files
 # that Doxygen parses. Internally Doxygen uses the UTF-8 encoding. Doxygen uses
@@ -1032,6 +1031,7 @@ FILE_PATTERNS          = *.c \
                          *.ixx \
                          *.ipp \
                          *.i++ \
+			 *.ino \
                          *.inl \
                          *.idl \
                          *.ddl \
