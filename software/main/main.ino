@@ -16,6 +16,7 @@
 #include "libraries/SERVO/servoLibs.h"
 #include "libraries/CLOCK/clockLibs.h"
 
+
 //Parámetros y pines
 #define BAUD 9600 /**< Velocidad de comunicación del puerto serie en baudios */
 /* #define OLED_RESET -1 */ /**< Pin de reset de la pantalla (innabilitado)
@@ -32,6 +33,7 @@
 #define SS_PIN 10 ///< Pin SS (setting) para el módulo RFID
 #define RST_PIN 9 ///< Pin RST (reset) para el módulo RFID
 
+
 //Objetos y variables
 float temperatura = 0; /**< Variable para almacenar la tamperatura laída. */
 String temperaturaText = ""; /**< Cadena para mostrar la temperatura por LCD (innabilitado). */
@@ -39,6 +41,7 @@ const int pinCerrarPuerta = PIN_CERRAR_SERVO_PUERTA; /**< Pin para cerrar la pue
 const int HORAS = __TIME__[0] * 10 + __TIME__[1] - '0' * 11; /**< Variable que almacena la hora al momento de compilar usando una macro de Arduino. */
 const int MINUTOS = __TIME__[3] * 10 + __TIME__[4] - '0' * 11; /**< Variable que almacena los minutos al momento de compilar usando una macro de Arduino. */
 const int SEGUNDOS = __TIME__[6] * 10 + __TIME__[7] - '0' * 11;/**< Variable que almacena los segundos al momento de compilar usando una macro de Arduino. */ 
+
 
 accesoRFID tarjetaRFID(SS_PIN, RST_PIN, "87 9C 0A 4E");  /**< Objeto para acceso RFID con tarjeta. */
 usuario elSalas("87 9C 0A 4E", "Joaquin", "Salas"); /**< Objeto usuario Joaquín Salas. */
@@ -66,6 +69,7 @@ reloj clock(HORAS, MINUTOS, SEGUNDOS); /**< Objeto reloj para gestionar la hora,
  * @return true Si el acceso está permitido, false si es denegado.
  */
 bool verificarAcceso();
+
 
 /**
  * @brief bool rangoHorario();
@@ -97,6 +101,7 @@ void setup() {
   puerta.inicializar(); /**<Inicializa el servomotor, cerrando la puerta por defecto. */
   pinMode(pinCerrarPuerta, INPUT_PULLUP); /**< Configura el pin para cerrar la puerta con servomotor (en formato entrada para pulsador).*/
   digitalWrite(pinCerrarPuerta, LOW); /**< Configura el pin en bajo para la puerta con servomotor. */
+
 }
 
 /**
@@ -236,6 +241,7 @@ void loop() {
  * Verifica si se encuentra en el rango horario laboral. Imprime por puerto serie el resultado final.
  * @return true cuando el acceso está en un horario correcto, retorna false en caso que no.
  */
+
 
 bool rangoHorario() {
   if(clock.getHoras() >= 8 && clock.getHoras() < 23) {

@@ -1,0 +1,331 @@
+\documentclass[a4paper]{article}
+
+\usepackage{times}
+\usepackage{tikz}
+\usepackage[margin=0cm]{geometry}
+\usepackage{graphicx}
+\usepackage{anyfontsize}
+\usepackage{fancyhdr}
+\usepackage{indentfirst}
+\usepackage{amsmath}
+\usepackage[spanish]{babel}
+\usepackage[utf8]{inputenc}
+\usepackage[breaklinks=true]{hyperref}
+\usepackage{listings}
+
+\author{}
+\date{}
+\title{}
+
+\lstset{
+    basicstyle=\ttfamily,
+    breaklines=true,
+    frame=single,
+    xleftmargin=0pt,
+    xrightmargin=0pt,
+    linewidth=\linewidth
+}
+
+\begin{document}
+\thispagestyle{empty}
+
+\begin{tikzpicture}[remember picture, overlay]
+    \pgftransformshift{\pgfpoint{0cm}{0cm}}
+    \draw [line width=2pt](1cm,-1cm) -- (1cm,-27.7cm) -- (14cm, -27.7cm) -- (14cm, -1cm) -- (1cm, -1cm);
+    \draw[line width=2pt] (15cm, -27.7cm) -- (19cm,-27.7cm) -- (19cm, -1cm) -- (15cm, -1cm) --  (15cm, -27.7cm);
+    \node [line width=2pt] at (17cm, -3.5cm) {\includegraphics[width=3cm]{../imagenesParaInformes/utn.png}};
+		\node [line width=2pt] at (7.5cm, -7.5cm) {\includegraphics[width=4cm]{../imagenesParaInformes/github.jpeg}};
+    \node at (17cm, -7cm) {\scalebox{5}{\textbf{U}}};
+    \node at (17cm, -9cm) {\scalebox{5}{\textbf{T}}};
+    \node at (17cm, -11cm) {\scalebox{5}{\textbf{N}}};
+    \node at (17cm, -14cm) {\scalebox{5}{\textbf{F}}};
+    \node at (17cm, -16cm) {\scalebox{5}{\textbf{R}}};
+    \node at (17cm, -18cm) {\scalebox{5}{\textbf{C}}};
+    \node at (7.5cm, -12cm) {\scalebox{3.5}{\textbf{Cómo generar aportes}}};
+    \node at (7.5cm, -14cm) {\scalebox{3.5}{Proyecto Informática II}};
+
+    \node at (7.6cm, -24cm){\begin{minipage}[c]{12cm}
+        \raggedright
+        \begin{itemize}
+            \item \fontsize{12}{12}\selectfont \textbf{Autores:} \vspace{1mm} \\ \hspace{1mm} Facundo Zacco (Leg. 97663) \\ \hspace{1mm} Joaquín Salas (Leg. 98368) \\ \hspace{1mm} Mercadal Juan Ignacio (Leg. 95561) \\ \hspace{1mm} Gatica Marcos Raúl (Leg. 402006)\\
+            \item \fontsize{12}{12}\selectfont \textbf{Curso:} 2R4 \\
+            \item \fontsize{12}{12}\selectfont \textbf{Asignatura:} Informática II.\\
+            \item \fontsize{12}{12}\selectfont \textbf{Institución:} Universidad Tecnológica Nacional - Facultad Regional de Córdoba.\\
+        \end{itemize}
+    \end{minipage}};
+
+\end{tikzpicture}
+
+\renewcommand{\normalsize}{\fontsize{12}{14}\selectfont}
+\newgeometry{margin=1cm}
+
+
+\pagestyle{empty}
+\fancyhf{}
+\renewcommand{\headrulewidth}{0pt}
+\renewcommand{\footrulewidth}{0pt}
+\fancyfoot[R]{\textit{[Zacco F. - Salas J. - Mercadal J. - Gatica M.] [2R4] \textbf{[pág. \thepage]}}}
+\setlength{\footskip}{0pt}
+
+\newpage
+
+\setcounter{page}{0}
+\tableofcontents
+
+\newpage
+\thispagestyle{fancy}
+\flushbottom
+\twocolumn
+
+\section{Flujo de trabajo}
+    \indent En el siguiente documento se explica la metodología de trabajo para el proyecto ''Prototipo de sistema de seguridad en cámaras frigoríficas'', con el fin de organizar y separar las diferentes áreas de desarrollo, facilitando que cada integrante o aportes voluntarios puedan subir sus modificaciones o generarlos.
+    \indent El motivo de esta metodología surge con el fin de evitar conflictos entre cambios no relacionados y manteniendo el historial de trabajo estructurado.
+    
+    \subsection{main}
+        \indent Rama principal del proyecto. Aquí se integran los cambios aprobados y estables. Todo lo que se llega a \textit{main} debe haber pasado por un proceso de revisión. Es importante mantener esta rama libre de errores, ya que representa la versión final y funcional del proyecto.
+
+    \subsection{devel}
+        \indent Esta es la rama de desarrollo principal. Todo el código relacionado con el software del proyecto se trabaja aquí. El objetivo de esta rama es que cada integrante pueda hacer sus aportes y pruebas antes de integrarlo a \textit{main}. Al trabajar en \textit{devel}, nos permite implementar y probar nuevas funcionalidades sin afectar la estabilidad del proyecto.
+
+    \subsection{hardware}
+        \indent Es la rama dedicada al desarrollo y documentación del hardware. Todos los cambios que afectan las especificaciones, la configuración o la implementación del hardware se gestionan en esta rama. Esto permite que el equipo de hardware pueda trabajar de forma independiente sin interferir con los desarrollos de software y documentación.
+
+    \subsection{docs}
+        \indent Esta rama está destinada a la creación y mantenimiento de la documentación del proyecto. Los manuales, guías de instalación, y cualquier otro tipo de documentación necesaria se alojan aquí. Separar la documentación en su propia rama garantiza que los desarrolladores puedan trabajar en el código sin preocuparse por las modificaciones en los documentos, y viceversa.
+
+\section{Por qué de estas ramas}
+
+    \subsection{Organización}
+    \indent Al tener ramas dedicadas para cada parte del proyecto (software, hardware, y documentación), podemos mantener un orden claro sobre qué se está trabajando y dónde. Esto evita confusiones y reduce la probabilidad de mezclar cambios de áreas diferentes.
+    \subsection{Flujo de trabajo eficiente}
+    \indent Al trabajar en ramas específicas, los colaboradores pueden implementar y probar sus cambios sin comprometer la estabilidad del proyecto en \textit{main}. Solo cuando los cambios han sido revisados y validados, se hacen los \textit{Pull Requests (PRs)} para integrarlos a \textit{main}.
+    \subsection{Control de versiones}
+    \indent Este esquema permite tener un registro claro de cada cambio hecho en el proyecto. Al crear PRs y hacer merges entre ramas, se mantiene un historial detallado de quién hizo cada contribución y cuándo. Esto es especialmente útil cuando hay que rastrear la fuente de un problema o realizar revisiones de código.
+    \subsection{Colaboración y revisión}
+    El uso de Pull Requests permite que cualquier cambio sea revisado por el equipo antes de ser integrado a la rama principal (\textit{main}). Esto asegura que todos los aportes sean revisados y aprobados, fomentando un mejor control de calidad en el código, la documentación y el hardware.
+
+\section{Flujo típico de trabajo con estas ramas}
+    \subsection{Desarrollo separado}
+        \begin{itemize}
+            \item Cada colaborador trabaja en su área específica en alguna de las ramas (\textit{devel, hardware, docs}), según corresponda.
+            \item Cada colaborador debe notificar el comienzo y fin de su trabajo.
+            \item Los desarrolladores pueden hacer \textit{push} directamente a sus respectivas ramas de trabajo.
+            \item Se realizan los commits correspondientes para reflejar los avances.
+        \end{itemize}
+
+        \subsection{Revisión e integración a \textit{main}}
+        \begin{itemize}
+            \item Los supervisores del proyecto revisan periódicamente los cambios en las ramas de desarrollo.
+            \item Cuando los cambios en una rama de desarrollo (\textit{devel, docs, hardware}) están listos y probados, un supervisor abre un PR desde la rama de desarollo, hacia la rama principal (\textit{main}).
+            \item El equipo principal de desarrollo revisan los cambios propuestos, los comentarios y, si es necesario, solicita ajustes.
+        \end{itemize}
+
+    \subsection{Integración con \textit{main}}
+        Una vez aprobado el PR, los cambios se fusionan a \textit{main} asegurando que el proyecto se mantenga actualizado con los aportes más recientes.
+        
+\section{Trabajo con GNU/Linux}
+\indent Esta sección contiene la explicación sobre cómo trabajar con GitHub usando la terminal en sistemas operativos GNU/Linux.
+\subsection{Instalación de Git}
+    Asegúrese de tener \textbf{git} instalado en su sistema. Opcionalmente puede instalar GitHub CLI en su sistema para hacer los PR desde su consola:
+    \newline
+    Sistemas basados en Debian:
+    \begin{center}
+        \begin{lstlisting}
+            apt update 
+            apt full-upgrade 
+            apt install git gh 
+        \end{lstlisting}
+    \end{center}
+    Sistemas basados en Arch Linux:
+    \begin{center}
+        \begin{lstlisting}
+            pacman -Syu git github-cli
+        \end{lstlisting}
+    \end{center}
+
+\newpage
+\noindent
+\thispagestyle{fancy}
+
+\thispagestyle{fancy}
+\indent Una vez instalado en su sistema, ya puede clonar el repositorio remoto del proyecto. Recomendamos usar SSH con este link: 
+
+\begin{center}
+    \url{git@github.com:marcosgatica2003/} \\
+    \url{proyectoInformaticaII.git} \\
+\end{center}
+
+\textit{Nota: va a necesitar una clave SSH en su computadora para poder clonar correctamente el repositorio y hacer sus aportes, puede generarla revisando esta documentación de GitHub:}
+
+\begin{center}
+    \url{https://docs.github.com/es/authentication/connecting-to-github-with-ssh} \\
+    \url{/generating-a-new-ssh-key-and-adding-it-to-} \\
+    \url{the-ssh-agent} \\
+\end{center}
+
+\subsection{Configuración}
+\indent Una vez clonado el repositorio, necesita generar la configuración para poder subir correctamente sus aportes. 
+Git utiliza el nombre de usuario y el correo electrónico configurados para asociar los commits con la identidad del desarrollador. Estos valores se pueden establecer de la siguiente manera:
+
+\begin{lstlisting}
+    # Establecer nombre de usuario
+    git config --global user.name "Tu Nombre"
+
+    # Establecer correo
+    git config --global user.email "Tu correo"
+
+    # Establecer un editor de texto (VIM)
+    git config --global user.editor vim
+
+    # Puede ver los cambios con:
+    git config --list
+
+\end{lstlisting}
+
+Después de ejecutar estos comandos, Git usará el nombre y el correo electrónico proporcionados para identificar las contribuciones en todos los repositorios locales.
+
+\subsection{Subir cambios al repositorio}
+
+Antes de realizar cualquier cambio, es necesario cambiarse a la rama en la que se desea trabajar. El siguiente comando cambia a una rama existente, por ejemplo \textit{devel}:
+
+    \begin{lstlisting}
+        git checkout devel
+    \end{lstlisting}
+
+Una vez en la rama correcta, puedes realizar cambios en los archivos del proyecto. Después de hacer las modificaciones, sigue estos pasos para agregar y confirmar los cambios:
+\begin{lstlisting}
+    # Agregar los cambios
+    git add .
+\end{lstlisting}
+A partir de aquí sus cambios están preparados para ser agregados a un commit, puede hacerlo con:
+
+\begin{lstlisting}
+        # Realizar un commit con un mensaje descriptivo
+    git commit -m "su mensaje breve"
+
+    # Abrir el editor VIM y escribir su mensaje
+    git commit
+\end{lstlisting}
+
+\newpage
+\noindent
+\thispagestyle{fancy}
+
+Para compartir los cambios con el resto del equipo, debes subir la rama de trabajo al repositorio remoto. Esto se hace con el siguiente comando (suponiendo que está trabajando en la rama devel):
+
+    \begin{lstlisting}
+        git push origin devel
+    \end{lstlisting}
+
+Una vez que los cambios se han subido al repositorio remoto y haya pasado la revisión, el supervisor puede generar un Pull Request y combine con la rama principal. 
+
+\subsection{Generar un Pull Request - supervisores}
+
+\indent Para generar un pull request, es necesario utilizar la herramienta \textbf{GitHub CLI}, como se explicó al principio de la sección \textbf{TRABAJO CON GNU/LINUX}:
+
+    \begin{lstlisting}
+        # Crear un PR desde la rama actual hacia main
+        gh pr create --base main --title
+        "Detalles del PR" --body
+        "Detalles del cambio"
+    \end{lstlisting}
+
+\indent También puede generar un pull request desde el menú en la página de GitHub por si prefiere una interfaz gráfica: \\
+
+\begin{figure}[h!]
+    \centering
+    \includegraphics[width=6cm]{../imagenesParaInformes/pullRequestMenu.png}
+\end{figure}
+
+\indent Compare las dos ramas origen $\rightarrow$ destino (ejemplo de devel a main): \\
+
+\begin{figure}[h!]
+    \centering
+    \includegraphics[width=7cm]{../imagenesParaInformes/comparingChanges.png}
+\end{figure}
+
+\indent A continuación verá un menú para terminar de abrir el pull request, tiene una entrada de título del pull request y una descripción (convenientemente agregue los detalles y los cambios): \\
+
+\newpage
+\noindent
+\thispagestyle{fancy}
+
+\begin{figure}[h!]
+    \centering
+    \includegraphics[width=7cm]{../imagenesParaInformes/openAPullRequest.png}
+\end{figure}
+
+\indent A partir de aquí, los cambios de una rama de desarrollo están aplicados a la rama \textit{main}.
+
+
+\section{Manejo de Issues}
+
+\subsection{Creación y asignación de Issues}
+
+\indent Los Issues son la herramienta principal para el seguimiento de tareas y problemas en el proyecto. Pueden representar: \\
+
+\begin{itemize}
+    \item Errores que necesitan ser corregidos.
+    \item Nuevas funcionalidades por implementar.
+    \item Mejoras en el código existente.
+    \item Tareas de documentación.
+    \item Implementación de módulos de hardware.
+\end{itemize}
+
+\indent Cada Issue puede contener: \\
+
+\begin{itemize}
+    \item Una descripción clara del problema o tarea.
+    \item Los requisitos necesarios para resolverlo.
+    \item Cualquier información técnica relevante.
+\end{itemize}
+
+\subsection{Flujo de trabajo con Issues}
+
+\indent Para trabajar en un Issue asignado, se debe seguir el siguiente procedimiento: \\
+
+\begin{enumerate}
+    \item Asegúrese de estar en la rama de desarrollo correspondiente a lo que detalla el Issue:
+    \begin{lstlisting}
+        #Ejemplo con devel
+        git checkout devel
+    \end{lstlisting}
+
+\item Cree una nueva rama sobre la rama de desarrollo con el nombre ``\text{fix-issue\#XX}'', siendo el número ``XX'', el que asigna GitHub al Issue:
+
+    \begin{lstlisting}
+        #Ejemplo con un issue #12
+        git checkout -b fix-issue#12
+    \end{lstlisting}
+
+\item A partir de aquí puede trabajar en su rama fix-issue\#XX, resulva los detalles descriptos en el issue y haga los commits correspondientes al finalizar su trabajo. \\
+
+\item Subir los cambios: 
+
+    \begin{lstlisting}
+        git add .
+        git commit -m "fix-issue#XX: (detalles opcional)"
+        git push origin fix-issue#XX
+    \end{lstlisting}
+
+\item Una vez completado y subido su trabajo, un supervisor revisará su aporte y puede generar un pr a la rama de desarrollo correspondiente, o puede solicitar un ajuste sobre la misma interfaz de comunicación del issue en la página de GitHub.\\
+
+    \textit{Nota a los supervisores: se usa el mismo comando para generar un pull request a main, solo que en este punto es a una rama de desarrollo. También se puede generar otro pr a main posteriormente a la resolución del issue.}
+
+\item Tras haber resuelto el issue y haber subido su trabajo, es necesario borrar su rama con el nombre ''fix-issue\#XX'' para mantener únicamente las ramas de desarrollo. \\
+
+    \begin{figure}[h!]
+        \centering
+        \includegraphics[width=5.5cm]{../imagenesParaInformes/ramasDelProyecto.png}
+    \end{figure}
+
+    \begin{figure}[h!]
+        \centering
+        \includegraphics[width=8.5cm]{../imagenesParaInformes/yourBranches.png}
+    \end{figure}
+
+\end{enumerate}
+
+\end{document}
+
+

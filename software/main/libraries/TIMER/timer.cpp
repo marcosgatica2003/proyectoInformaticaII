@@ -29,23 +29,29 @@ void timer::actualizar() {
     unsigned long tiempoActual = millis();
 
     if (digitalRead(pinIngreso) && !contON) {
+
         contON = true;
         cont1 = tiempoActual;
     }
 
+
     if (contON && digitalRead(pinReset)) {
+
         cont1 = tiempoActual;
         digitalWrite(pinSalidaUno, LOW);
         digitalWrite(pinSalidaDos, LOW);
     }
 
     if (contON) {
+
         if (tiempoUnoCumplido()) {
             digitalWrite(pinSalidaUno, HIGH);
             if (tiempoDosCumplido()) {
+
                 digitalWrite(pinSalidaDos, HIGH);
             }
         }
     }
 }
+
 

@@ -1,0 +1,48 @@
+\doxysection{DHT11.\+h}
+\hypertarget{DHT11_8h_source}{}\label{DHT11_8h_source}\index{main/libraries/DHT11-\/HW-\/481/DHT11.h@{main/libraries/DHT11-\/HW-\/481/DHT11.h}}
+
+\begin{DoxyCode}{0}
+\DoxyCodeLine{00001\ }
+\DoxyCodeLine{00011\ \textcolor{preprocessor}{\#ifndef\ DHT11\_h}}
+\DoxyCodeLine{00012\ \textcolor{preprocessor}{\#define\ DHT11\_h}}
+\DoxyCodeLine{00013\ }
+\DoxyCodeLine{00014\ \textcolor{preprocessor}{\#include\ "{}Arduino.h"{}}}
+\DoxyCodeLine{00015\ }
+\DoxyCodeLine{00021\ \textcolor{keyword}{class\ }\mbox{\hyperlink{classDHT11}{DHT11}}}
+\DoxyCodeLine{00022\ \{}
+\DoxyCodeLine{00023\ }
+\DoxyCodeLine{00024\ \textcolor{keyword}{public}:}
+\DoxyCodeLine{00031\ \ \ \mbox{\hyperlink{classDHT11_ad52a70ab511e087aaad53848d64ee976}{DHT11}}(\textcolor{keywordtype}{int}\ pin);}
+\DoxyCodeLine{00032\ }
+\DoxyCodeLine{00039\ \ \ \textcolor{keywordtype}{void}\ \mbox{\hyperlink{classDHT11_a70a9b21081d65b2b418745366efd8d88}{setDelay}}(\textcolor{keywordtype}{unsigned}\ \textcolor{keywordtype}{long}\ delay);}
+\DoxyCodeLine{00040\ }
+\DoxyCodeLine{00047\ \ \ \textcolor{keywordtype}{int}\ \mbox{\hyperlink{classDHT11_ae869e047ca078c54d2601f0247fa2078}{readHumidity}}();}
+\DoxyCodeLine{00048\ }
+\DoxyCodeLine{00055\ \ \ \textcolor{keywordtype}{int}\ \mbox{\hyperlink{classDHT11_a5891be6d1c971949e3fe3b8d7bc2a993}{readTemperature}}();}
+\DoxyCodeLine{00056\ }
+\DoxyCodeLine{00064\ \ \ \textcolor{keywordtype}{int}\ \mbox{\hyperlink{classDHT11_a071ea5ad5f0df9275c2ed338645f6479}{readTemperatureHumidity}}(\textcolor{keywordtype}{int}\ \&temperature,\ \textcolor{keywordtype}{int}\ \&humidity);}
+\DoxyCodeLine{00065\ }
+\DoxyCodeLine{00066\ \ \ \textcolor{comment}{//\ Constants\ to\ represent\ error\ codes.}}
+\DoxyCodeLine{00067\ \ \ \textcolor{keyword}{static}\ \textcolor{keyword}{const}\ \textcolor{keywordtype}{int}\ ERROR\_CHECKSUM\ =\ 254;\ \ \ \ \textcolor{comment}{//\ Error\ code\ indicating\ checksum\ mismatch.}}
+\DoxyCodeLine{00068\ \ \ \textcolor{keyword}{static}\ \textcolor{keyword}{const}\ \textcolor{keywordtype}{int}\ ERROR\_TIMEOUT\ =\ 253;\ \ \ \ \ \textcolor{comment}{//\ Error\ code\ indicating\ a\ timeout\ occurred\ during\ reading.}}
+\DoxyCodeLine{00069\ \ \ \textcolor{keyword}{static}\ \textcolor{keyword}{const}\ \textcolor{keywordtype}{int}\ TIMEOUT\_DURATION\ =\ 1000;\ \textcolor{comment}{//\ Duration\ (in\ milliseconds)\ to\ wait\ before\ timing\ out.}}
+\DoxyCodeLine{00070\ }
+\DoxyCodeLine{00077\ \ \ \textcolor{comment}{//\ static\ String\ getErrorString(int\ errorCode);}}
+\DoxyCodeLine{00078\ }
+\DoxyCodeLine{00079\ \textcolor{keyword}{private}:}
+\DoxyCodeLine{00080\ \ \ \textcolor{keywordtype}{int}\ \_pin;\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{comment}{//\ Pin\ number\ used\ for\ communication\ with\ the\ DHT11\ sensor.}}
+\DoxyCodeLine{00081\ \ \ \textcolor{keywordtype}{unsigned}\ \textcolor{keywordtype}{long}\ \_delayMS\ =\ 500;\ \textcolor{comment}{//\ Default\ delay\ in\ milliseconds\ between\ sensor\ readings.}}
+\DoxyCodeLine{00082\ }
+\DoxyCodeLine{00093\ \ \ \textcolor{keywordtype}{int}\ readRawData(\textcolor{keywordtype}{byte}\ data[5]);}
+\DoxyCodeLine{00094\ }
+\DoxyCodeLine{00100\ \ \ \textcolor{keywordtype}{byte}\ readByte();}
+\DoxyCodeLine{00101\ }
+\DoxyCodeLine{00107\ \ \ \textcolor{keywordtype}{void}\ startSignal();}
+\DoxyCodeLine{00108\ }
+\DoxyCodeLine{00109\ \ \ \textcolor{keyword}{friend}\ \textcolor{keywordtype}{void}\ \mbox{\hyperlink{classDHT11_a73010b69762bc8832cebeabe6c10bed1}{setPinDHT11}}(\mbox{\hyperlink{classDHT11}{DHT11}}\&\ sensor,\ \textcolor{keywordtype}{int}\ pin);}
+\DoxyCodeLine{00110\ }
+\DoxyCodeLine{00111\ \};}
+\DoxyCodeLine{00112\ }
+\DoxyCodeLine{00113\ \textcolor{preprocessor}{\#endif}}
+
+\end{DoxyCode}

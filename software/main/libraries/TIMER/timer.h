@@ -22,9 +22,11 @@ class timer {
  * @param p2: Pin de la segunda salida, activado después de tiempoDos.
  * @param t1: Tiempo (en milisegundos) después para activar la primera salida.
  * @param t2: Tiempo (en milisegundos) después para activar la segunda salida.
+
  */
 
        timer(int pIngreso, int pReset, int p1, int p2, unsigned long t1, unsigned long t2);
+
 
 /**
  * @brief void iniciar(): configura los pines del objeto de clase timer como entradas y salidas.
@@ -36,6 +38,7 @@ class timer {
  * Verifica el estado de los pines de ingreso y reset, aplicando antirrebote.
  */
        void actualizar();
+
 
 /**
  * @brief bool tiempoUnoCumplido(): Función que verifica si se cumplió el tiempoUno.
@@ -54,12 +57,14 @@ class timer {
     private:
         const unsigned long tiempoUno; /**< Tiempo de activación de la primera salida en milisegundos. */
         const unsigned long tiempoDos; /**< Tiempo de activación de la segunda salida en milisegundos. */
+
         unsigned long cont1; /**< Variable para almacenar el tiempo de inicio de la cuenta regresiva. */
         int pinIngreso; /**< Pin de ingreso para iniciar el temporizador. */
         int pinSalidaUno; /**< Pin de salida uno tras cumplir el tiempoUno. */
         int pinSalidaDos; /**< Pin de salida dos tras cumplir el tiempoDos. */
         int pinReset; /**< Pin de reset del temporizador activo. */
         bool contON; /**< Estado del temporizador. */
+
 
 };
 

@@ -1,0 +1,353 @@
+\doxysection{MFRC522.\+h}
+\hypertarget{MFRC522_8h_source}{}\label{MFRC522_8h_source}\index{main/libraries/RFID-\/RC522/MFRC522.h@{main/libraries/RFID-\/RC522/MFRC522.h}}
+
+\begin{DoxyCode}{0}
+\DoxyCodeLine{00001\ }
+\DoxyCodeLine{00010\ \textcolor{preprocessor}{\#ifndef\ MFRC522\_h}}
+\DoxyCodeLine{00011\ \textcolor{preprocessor}{\#define\ MFRC522\_h}}
+\DoxyCodeLine{00012\ }
+\DoxyCodeLine{00013\ \textcolor{preprocessor}{\#include\ "{}require\_cpp11.h"{}}}
+\DoxyCodeLine{00014\ \textcolor{preprocessor}{\#include\ "{}deprecated.h"{}}}
+\DoxyCodeLine{00015\ \textcolor{comment}{//\ Enable\ integer\ limits}}
+\DoxyCodeLine{00016\ \textcolor{preprocessor}{\#define\ \_\_STDC\_LIMIT\_MACROS}}
+\DoxyCodeLine{00017\ \textcolor{preprocessor}{\#include\ <stdint.h>}}
+\DoxyCodeLine{00018\ \textcolor{preprocessor}{\#include\ <Arduino.h>}}
+\DoxyCodeLine{00019\ \textcolor{preprocessor}{\#include\ <SPI.h>}}
+\DoxyCodeLine{00020\ }
+\DoxyCodeLine{00021\ \textcolor{preprocessor}{\#ifndef\ MFRC522\_SPICLOCK}}
+\DoxyCodeLine{00022\ \textcolor{preprocessor}{\#define\ MFRC522\_SPICLOCK\ (4000000u)\ }\textcolor{comment}{//\ MFRC522\ accept\ upto\ 10MHz,\ set\ to\ 4MHz.}}
+\DoxyCodeLine{00023\ \textcolor{preprocessor}{\#endif}}
+\DoxyCodeLine{00024\ }
+\DoxyCodeLine{00025\ \textcolor{comment}{//\ Firmware\ data\ for\ self-\/test}}
+\DoxyCodeLine{00026\ \textcolor{comment}{//\ Reference\ values\ based\ on\ firmware\ version}}
+\DoxyCodeLine{00027\ \textcolor{comment}{//\ Hint:\ if\ needed,\ you\ can\ remove\ unused\ self-\/test\ data\ to\ save\ flash\ memory}}
+\DoxyCodeLine{00028\ \textcolor{comment}{//}}
+\DoxyCodeLine{00029\ \textcolor{comment}{//\ Version\ 0.0\ (0x90)}}
+\DoxyCodeLine{00030\ \textcolor{comment}{//\ Philips\ Semiconductors;\ Preliminary\ Specification\ Revision\ 2.0\ -\/\ 01\ August\ 2005;\ 16.1\ self-\/test}}
+\DoxyCodeLine{00031\ \textcolor{keyword}{const}\ \textcolor{keywordtype}{byte}\ MFRC522\_firmware\_referenceV0\_0[]\ PROGMEM\ =\ \{}
+\DoxyCodeLine{00032\ \ \ \ \ 0x00,\ 0x87,\ 0x98,\ 0x0f,\ 0x49,\ 0xFF,\ 0x07,\ 0x19,}
+\DoxyCodeLine{00033\ \ \ \ \ 0xBF,\ 0x22,\ 0x30,\ 0x49,\ 0x59,\ 0x63,\ 0xAD,\ 0xCA,}
+\DoxyCodeLine{00034\ \ \ \ \ 0x7F,\ 0xE3,\ 0x4E,\ 0x03,\ 0x5C,\ 0x4E,\ 0x49,\ 0x50,}
+\DoxyCodeLine{00035\ \ \ \ \ 0x47,\ 0x9A,\ 0x37,\ 0x61,\ 0xE7,\ 0xE2,\ 0xC6,\ 0x2E,}
+\DoxyCodeLine{00036\ \ \ \ \ 0x75,\ 0x5A,\ 0xED,\ 0x04,\ 0x3D,\ 0x02,\ 0x4B,\ 0x78,}
+\DoxyCodeLine{00037\ \ \ \ \ 0x32,\ 0xFF,\ 0x58,\ 0x3B,\ 0x7C,\ 0xE9,\ 0x00,\ 0x94,}
+\DoxyCodeLine{00038\ \ \ \ \ 0xB4,\ 0x4A,\ 0x59,\ 0x5B,\ 0xFD,\ 0xC9,\ 0x29,\ 0xDF,}
+\DoxyCodeLine{00039\ \ \ \ \ 0x35,\ 0x96,\ 0x98,\ 0x9E,\ 0x4F,\ 0x30,\ 0x32,\ 0x8D}
+\DoxyCodeLine{00040\ \};}
+\DoxyCodeLine{00041\ \textcolor{comment}{//\ Version\ 1.0\ (0x91)}}
+\DoxyCodeLine{00042\ \textcolor{comment}{//\ NXP\ Semiconductors;\ Rev.\ 3.8\ -\/\ 17\ September\ 2014;\ 16.1.1\ self-\/test}}
+\DoxyCodeLine{00043\ \textcolor{keyword}{const}\ \textcolor{keywordtype}{byte}\ MFRC522\_firmware\_referenceV1\_0[]\ PROGMEM\ =\ \{}
+\DoxyCodeLine{00044\ \ \ \ \ 0x00,\ 0xC6,\ 0x37,\ 0xD5,\ 0x32,\ 0xB7,\ 0x57,\ 0x5C,}
+\DoxyCodeLine{00045\ \ \ \ \ 0xC2,\ 0xD8,\ 0x7C,\ 0x4D,\ 0xD9,\ 0x70,\ 0xC7,\ 0x73,}
+\DoxyCodeLine{00046\ \ \ \ \ 0x10,\ 0xE6,\ 0xD2,\ 0xAA,\ 0x5E,\ 0xA1,\ 0x3E,\ 0x5A,}
+\DoxyCodeLine{00047\ \ \ \ \ 0x14,\ 0xAF,\ 0x30,\ 0x61,\ 0xC9,\ 0x70,\ 0xDB,\ 0x2E,}
+\DoxyCodeLine{00048\ \ \ \ \ 0x64,\ 0x22,\ 0x72,\ 0xB5,\ 0xBD,\ 0x65,\ 0xF4,\ 0xEC,}
+\DoxyCodeLine{00049\ \ \ \ \ 0x22,\ 0xBC,\ 0xD3,\ 0x72,\ 0x35,\ 0xCD,\ 0xAA,\ 0x41,}
+\DoxyCodeLine{00050\ \ \ \ \ 0x1F,\ 0xA7,\ 0xF3,\ 0x53,\ 0x14,\ 0xDE,\ 0x7E,\ 0x02,}
+\DoxyCodeLine{00051\ \ \ \ \ 0xD9,\ 0x0F,\ 0xB5,\ 0x5E,\ 0x25,\ 0x1D,\ 0x29,\ 0x79}
+\DoxyCodeLine{00052\ \};}
+\DoxyCodeLine{00053\ \textcolor{comment}{//\ Version\ 2.0\ (0x92)}}
+\DoxyCodeLine{00054\ \textcolor{comment}{//\ NXP\ Semiconductors;\ Rev.\ 3.8\ -\/\ 17\ September\ 2014;\ 16.1.1\ self-\/test}}
+\DoxyCodeLine{00055\ \textcolor{keyword}{const}\ \textcolor{keywordtype}{byte}\ MFRC522\_firmware\_referenceV2\_0[]\ PROGMEM\ =\ \{}
+\DoxyCodeLine{00056\ \ \ \ \ 0x00,\ 0xEB,\ 0x66,\ 0xBA,\ 0x57,\ 0xBF,\ 0x23,\ 0x95,}
+\DoxyCodeLine{00057\ \ \ \ \ 0xD0,\ 0xE3,\ 0x0D,\ 0x3D,\ 0x27,\ 0x89,\ 0x5C,\ 0xDE,}
+\DoxyCodeLine{00058\ \ \ \ \ 0x9D,\ 0x3B,\ 0xA7,\ 0x00,\ 0x21,\ 0x5B,\ 0x89,\ 0x82,}
+\DoxyCodeLine{00059\ \ \ \ \ 0x51,\ 0x3A,\ 0xEB,\ 0x02,\ 0x0C,\ 0xA5,\ 0x00,\ 0x49,}
+\DoxyCodeLine{00060\ \ \ \ \ 0x7C,\ 0x84,\ 0x4D,\ 0xB3,\ 0xCC,\ 0xD2,\ 0x1B,\ 0x81,}
+\DoxyCodeLine{00061\ \ \ \ \ 0x5D,\ 0x48,\ 0x76,\ 0xD5,\ 0x71,\ 0x61,\ 0x21,\ 0xA9,}
+\DoxyCodeLine{00062\ \ \ \ \ 0x86,\ 0x96,\ 0x83,\ 0x38,\ 0xCF,\ 0x9D,\ 0x5B,\ 0x6D,}
+\DoxyCodeLine{00063\ \ \ \ \ 0xDC,\ 0x15,\ 0xBA,\ 0x3E,\ 0x7D,\ 0x95,\ 0x3B,\ 0x2F}
+\DoxyCodeLine{00064\ \};}
+\DoxyCodeLine{00065\ \textcolor{comment}{//\ Clone}}
+\DoxyCodeLine{00066\ \textcolor{comment}{//\ Fudan\ Semiconductor\ FM17522\ (0x88)}}
+\DoxyCodeLine{00067\ \textcolor{keyword}{const}\ \textcolor{keywordtype}{byte}\ FM17522\_firmware\_reference[]\ PROGMEM\ =\ \{}
+\DoxyCodeLine{00068\ \ \ \ \ 0x00,\ 0xD6,\ 0x78,\ 0x8C,\ 0xE2,\ 0xAA,\ 0x0C,\ 0x18,}
+\DoxyCodeLine{00069\ \ \ \ \ 0x2A,\ 0xB8,\ 0x7A,\ 0x7F,\ 0xD3,\ 0x6A,\ 0xCF,\ 0x0B,}
+\DoxyCodeLine{00070\ \ \ \ \ 0xB1,\ 0x37,\ 0x63,\ 0x4B,\ 0x69,\ 0xAE,\ 0x91,\ 0xC7,}
+\DoxyCodeLine{00071\ \ \ \ \ 0xC3,\ 0x97,\ 0xAE,\ 0x77,\ 0xF4,\ 0x37,\ 0xD7,\ 0x9B,}
+\DoxyCodeLine{00072\ \ \ \ \ 0x7C,\ 0xF5,\ 0x3C,\ 0x11,\ 0x8F,\ 0x15,\ 0xC3,\ 0xD7,}
+\DoxyCodeLine{00073\ \ \ \ \ 0xC1,\ 0x5B,\ 0x00,\ 0x2A,\ 0xD0,\ 0x75,\ 0xDE,\ 0x9E,}
+\DoxyCodeLine{00074\ \ \ \ \ 0x51,\ 0x64,\ 0xAB,\ 0x3E,\ 0xE9,\ 0x15,\ 0xB5,\ 0xAB,}
+\DoxyCodeLine{00075\ \ \ \ \ 0x56,\ 0x9A,\ 0x98,\ 0x82,\ 0x26,\ 0xEA,\ 0x2A,\ 0x62}
+\DoxyCodeLine{00076\ \};}
+\DoxyCodeLine{00077\ }
+\DoxyCodeLine{00078\ \textcolor{keyword}{class\ }\mbox{\hyperlink{classMFRC522}{MFRC522}}\ \{}
+\DoxyCodeLine{00079\ \textcolor{keyword}{public}:}
+\DoxyCodeLine{00080\ \ \ \ \ \textcolor{comment}{//\ Size\ of\ the\ MFRC522\ FIFO}}
+\DoxyCodeLine{00081\ \ \ \ \ \textcolor{keyword}{static}\ \textcolor{keyword}{constexpr}\ \textcolor{keywordtype}{byte}\ FIFO\_SIZE\ =\ 64;\ \ \ \ \ \ \ \textcolor{comment}{//\ The\ FIFO\ is\ 64\ bytes.}}
+\DoxyCodeLine{00082\ \ \ \ \ \textcolor{comment}{//\ Default\ value\ for\ unused\ pin}}
+\DoxyCodeLine{00083\ \ \ \ \ \textcolor{keyword}{static}\ \textcolor{keyword}{constexpr}\ uint8\_t\ UNUSED\_PIN\ =\ UINT8\_MAX;}
+\DoxyCodeLine{00084\ }
+\DoxyCodeLine{00085\ \ \ \ \ \textcolor{comment}{//\ MFRC522\ registers.\ Described\ in\ chapter\ 9\ of\ the\ datasheet.}}
+\DoxyCodeLine{00086\ \ \ \ \ \textcolor{comment}{//\ When\ using\ SPI\ all\ addresses\ are\ shifted\ one\ bit\ left\ in\ the\ "{}SPI\ address\ byte"{}\ (section\ 8.1.2.3)}}
+\DoxyCodeLine{00087\ \ \ \ \ \textcolor{keyword}{enum}\ PCD\_Register\ :\ \textcolor{keywordtype}{byte}\ \{}
+\DoxyCodeLine{00088\ \ \ \ \ \ \ \ \ \textcolor{comment}{//\ Page\ 0:\ Command\ and\ status}}
+\DoxyCodeLine{00089\ \ \ \ \ \ \ \ \ \textcolor{comment}{//\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ 0x00\ \ \ \ \ \ \ \ \ \ //\ reserved\ for\ future\ use}}
+\DoxyCodeLine{00090\ \ \ \ \ \ \ \ \ CommandReg\ \ \ \ \ \ \ \ \ \ \ \ \ \ =\ 0x01\ <<\ 1,\ \ \ \ \textcolor{comment}{//\ starts\ and\ stops\ command\ execution}}
+\DoxyCodeLine{00091\ \ \ \ \ \ \ \ \ ComIEnReg\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ =\ 0x02\ <<\ 1,\ \ \ \ \textcolor{comment}{//\ enable\ and\ disable\ interrupt\ request\ control\ bits}}
+\DoxyCodeLine{00092\ \ \ \ \ \ \ \ \ DivIEnReg\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ =\ 0x03\ <<\ 1,\ \ \ \ \textcolor{comment}{//\ enable\ and\ disable\ interrupt\ request\ control\ bits}}
+\DoxyCodeLine{00093\ \ \ \ \ \ \ \ \ ComIrqReg\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ =\ 0x04\ <<\ 1,\ \ \ \ \textcolor{comment}{//\ interrupt\ request\ bits}}
+\DoxyCodeLine{00094\ \ \ \ \ \ \ \ \ DivIrqReg\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ =\ 0x05\ <<\ 1,\ \ \ \ \textcolor{comment}{//\ interrupt\ request\ bits}}
+\DoxyCodeLine{00095\ \ \ \ \ \ \ \ \ ErrorReg\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ =\ 0x06\ <<\ 1,\ \ \ \ \textcolor{comment}{//\ error\ bits\ showing\ the\ error\ status\ of\ the\ last\ command\ executed\ }}
+\DoxyCodeLine{00096\ \ \ \ \ \ \ \ \ Status1Reg\ \ \ \ \ \ \ \ \ \ \ \ \ \ =\ 0x07\ <<\ 1,\ \ \ \ \textcolor{comment}{//\ communication\ status\ bits}}
+\DoxyCodeLine{00097\ \ \ \ \ \ \ \ \ Status2Reg\ \ \ \ \ \ \ \ \ \ \ \ \ \ =\ 0x08\ <<\ 1,\ \ \ \ \textcolor{comment}{//\ receiver\ and\ transmitter\ status\ bits}}
+\DoxyCodeLine{00098\ \ \ \ \ \ \ \ \ FIFODataReg\ \ \ \ \ \ \ \ \ \ \ \ \ =\ 0x09\ <<\ 1,\ \ \ \ \textcolor{comment}{//\ input\ and\ output\ of\ 64\ byte\ FIFO\ buffer}}
+\DoxyCodeLine{00099\ \ \ \ \ \ \ \ \ FIFOLevelReg\ \ \ \ \ \ \ \ \ \ \ \ =\ 0x0A\ <<\ 1,\ \ \ \ \textcolor{comment}{//\ number\ of\ bytes\ stored\ in\ the\ FIFO\ buffer}}
+\DoxyCodeLine{00100\ \ \ \ \ \ \ \ \ WaterLevelReg\ \ \ \ \ \ \ \ \ \ \ =\ 0x0B\ <<\ 1,\ \ \ \ \textcolor{comment}{//\ level\ for\ FIFO\ underflow\ and\ overflow\ warning}}
+\DoxyCodeLine{00101\ \ \ \ \ \ \ \ \ ControlReg\ \ \ \ \ \ \ \ \ \ \ \ \ \ =\ 0x0C\ <<\ 1,\ \ \ \ \textcolor{comment}{//\ miscellaneous\ control\ registers}}
+\DoxyCodeLine{00102\ \ \ \ \ \ \ \ \ BitFramingReg\ \ \ \ \ \ \ \ \ \ \ =\ 0x0D\ <<\ 1,\ \ \ \ \textcolor{comment}{//\ adjustments\ for\ bit-\/oriented\ frames}}
+\DoxyCodeLine{00103\ \ \ \ \ \ \ \ \ CollReg\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ =\ 0x0E\ <<\ 1,\ \ \ \ \textcolor{comment}{//\ bit\ position\ of\ the\ first\ bit-\/collision\ detected\ on\ the\ RF\ interface}}
+\DoxyCodeLine{00104\ \ \ \ \ \ \ \ \ \textcolor{comment}{//\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ 0x0F\ \ \ \ \ \ \ \ \ \ //\ reserved\ for\ future\ use}}
+\DoxyCodeLine{00105\ \ \ \ \ \ \ \ \ }
+\DoxyCodeLine{00106\ \ \ \ \ \ \ \ \ \textcolor{comment}{//\ Page\ 1:\ Command}}
+\DoxyCodeLine{00107\ \ \ \ \ \ \ \ \ \textcolor{comment}{//\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ 0x10\ \ \ \ \ \ \ \ \ \ //\ reserved\ for\ future\ use}}
+\DoxyCodeLine{00108\ \ \ \ \ \ \ \ \ ModeReg\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ =\ 0x11\ <<\ 1,\ \ \ \ \textcolor{comment}{//\ defines\ general\ modes\ for\ transmitting\ and\ receiving\ }}
+\DoxyCodeLine{00109\ \ \ \ \ \ \ \ \ TxModeReg\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ =\ 0x12\ <<\ 1,\ \ \ \ \textcolor{comment}{//\ defines\ transmission\ data\ rate\ and\ framing}}
+\DoxyCodeLine{00110\ \ \ \ \ \ \ \ \ RxModeReg\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ =\ 0x13\ <<\ 1,\ \ \ \ \textcolor{comment}{//\ defines\ reception\ data\ rate\ and\ framing}}
+\DoxyCodeLine{00111\ \ \ \ \ \ \ \ \ TxControlReg\ \ \ \ \ \ \ \ \ \ \ \ =\ 0x14\ <<\ 1,\ \ \ \ \textcolor{comment}{//\ controls\ the\ logical\ behavior\ of\ the\ antenna\ driver\ pins\ TX1\ and\ TX2}}
+\DoxyCodeLine{00112\ \ \ \ \ \ \ \ \ TxASKReg\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ =\ 0x15\ <<\ 1,\ \ \ \ \textcolor{comment}{//\ controls\ the\ setting\ of\ the\ transmission\ modulation}}
+\DoxyCodeLine{00113\ \ \ \ \ \ \ \ \ TxSelReg\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ =\ 0x16\ <<\ 1,\ \ \ \ \textcolor{comment}{//\ selects\ the\ internal\ sources\ for\ the\ antenna\ driver}}
+\DoxyCodeLine{00114\ \ \ \ \ \ \ \ \ RxSelReg\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ =\ 0x17\ <<\ 1,\ \ \ \ \textcolor{comment}{//\ selects\ internal\ receiver\ settings}}
+\DoxyCodeLine{00115\ \ \ \ \ \ \ \ \ RxThresholdReg\ \ \ \ \ \ \ \ \ \ =\ 0x18\ <<\ 1,\ \ \ \ \textcolor{comment}{//\ selects\ thresholds\ for\ the\ bit\ decoder}}
+\DoxyCodeLine{00116\ \ \ \ \ \ \ \ \ DemodReg\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ =\ 0x19\ <<\ 1,\ \ \ \ \textcolor{comment}{//\ defines\ demodulator\ settings}}
+\DoxyCodeLine{00117\ \ \ \ \ \ \ \ \ \textcolor{comment}{//\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ 0x1A\ \ \ \ \ \ \ \ \ \ //\ reserved\ for\ future\ use}}
+\DoxyCodeLine{00118\ \ \ \ \ \ \ \ \ \textcolor{comment}{//\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ 0x1B\ \ \ \ \ \ \ \ \ \ //\ reserved\ for\ future\ use}}
+\DoxyCodeLine{00119\ \ \ \ \ \ \ \ \ MfTxReg\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ =\ 0x1C\ <<\ 1,\ \ \ \ \textcolor{comment}{//\ controls\ some\ MIFARE\ communication\ transmit\ parameters}}
+\DoxyCodeLine{00120\ \ \ \ \ \ \ \ \ MfRxReg\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ =\ 0x1D\ <<\ 1,\ \ \ \ \textcolor{comment}{//\ controls\ some\ MIFARE\ communication\ receive\ parameters}}
+\DoxyCodeLine{00121\ \ \ \ \ \ \ \ \ \textcolor{comment}{//\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ 0x1E\ \ \ \ \ \ \ \ \ \ //\ reserved\ for\ future\ use}}
+\DoxyCodeLine{00122\ \ \ \ \ \ \ \ \ SerialSpeedReg\ \ \ \ \ \ \ \ \ \ =\ 0x1F\ <<\ 1,\ \ \ \ \textcolor{comment}{//\ selects\ the\ speed\ of\ the\ serial\ UART\ interface}}
+\DoxyCodeLine{00123\ \ \ \ \ \ \ \ \ }
+\DoxyCodeLine{00124\ \ \ \ \ \ \ \ \ \textcolor{comment}{//\ Page\ 2:\ Configuration}}
+\DoxyCodeLine{00125\ \ \ \ \ \ \ \ \ \textcolor{comment}{//\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ 0x20\ \ \ \ \ \ \ \ \ \ //\ reserved\ for\ future\ use}}
+\DoxyCodeLine{00126\ \ \ \ \ \ \ \ \ CRCResultRegH\ \ \ \ \ \ \ \ \ \ \ =\ 0x21\ <<\ 1,\ \ \ \ \textcolor{comment}{//\ shows\ the\ MSB\ and\ LSB\ values\ of\ the\ CRC\ calculation}}
+\DoxyCodeLine{00127\ \ \ \ \ \ \ \ \ CRCResultRegL\ \ \ \ \ \ \ \ \ \ \ =\ 0x22\ <<\ 1,}
+\DoxyCodeLine{00128\ \ \ \ \ \ \ \ \ \textcolor{comment}{//\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ 0x23\ \ \ \ \ \ \ \ \ \ //\ reserved\ for\ future\ use}}
+\DoxyCodeLine{00129\ \ \ \ \ \ \ \ \ ModWidthReg\ \ \ \ \ \ \ \ \ \ \ \ \ =\ 0x24\ <<\ 1,\ \ \ \ \textcolor{comment}{//\ controls\ the\ ModWidth\ setting?}}
+\DoxyCodeLine{00130\ \ \ \ \ \ \ \ \ \textcolor{comment}{//\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ 0x25\ \ \ \ \ \ \ \ \ \ //\ reserved\ for\ future\ use}}
+\DoxyCodeLine{00131\ \ \ \ \ \ \ \ \ RFCfgReg\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ =\ 0x26\ <<\ 1,\ \ \ \ \textcolor{comment}{//\ configures\ the\ receiver\ gain}}
+\DoxyCodeLine{00132\ \ \ \ \ \ \ \ \ GsNReg\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ =\ 0x27\ <<\ 1,\ \ \ \ \textcolor{comment}{//\ selects\ the\ conductance\ of\ the\ antenna\ driver\ pins\ TX1\ and\ TX2\ for\ modulation\ }}
+\DoxyCodeLine{00133\ \ \ \ \ \ \ \ \ CWGsPReg\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ =\ 0x28\ <<\ 1,\ \ \ \ \textcolor{comment}{//\ defines\ the\ conductance\ of\ the\ p-\/driver\ output\ during\ periods\ of\ no\ modulation}}
+\DoxyCodeLine{00134\ \ \ \ \ \ \ \ \ ModGsPReg\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ =\ 0x29\ <<\ 1,\ \ \ \ \textcolor{comment}{//\ defines\ the\ conductance\ of\ the\ p-\/driver\ output\ during\ periods\ of\ modulation}}
+\DoxyCodeLine{00135\ \ \ \ \ \ \ \ \ TModeReg\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ =\ 0x2A\ <<\ 1,\ \ \ \ \textcolor{comment}{//\ defines\ settings\ for\ the\ internal\ timer}}
+\DoxyCodeLine{00136\ \ \ \ \ \ \ \ \ TPrescalerReg\ \ \ \ \ \ \ \ \ \ \ =\ 0x2B\ <<\ 1,\ \ \ \ \textcolor{comment}{//\ the\ lower\ 8\ bits\ of\ the\ TPrescaler\ value.\ The\ 4\ high\ bits\ are\ in\ TModeReg.}}
+\DoxyCodeLine{00137\ \ \ \ \ \ \ \ \ TReloadRegH\ \ \ \ \ \ \ \ \ \ \ \ \ =\ 0x2C\ <<\ 1,\ \ \ \ \textcolor{comment}{//\ defines\ the\ 16-\/bit\ timer\ reload\ value}}
+\DoxyCodeLine{00138\ \ \ \ \ \ \ \ \ TReloadRegL\ \ \ \ \ \ \ \ \ \ \ \ \ =\ 0x2D\ <<\ 1,}
+\DoxyCodeLine{00139\ \ \ \ \ \ \ \ \ TCounterValueRegH\ \ \ \ \ \ \ =\ 0x2E\ <<\ 1,\ \ \ \ \textcolor{comment}{//\ shows\ the\ 16-\/bit\ timer\ value}}
+\DoxyCodeLine{00140\ \ \ \ \ \ \ \ \ TCounterValueRegL\ \ \ \ \ \ \ =\ 0x2F\ <<\ 1,}
+\DoxyCodeLine{00141\ \ \ \ \ \ \ \ \ }
+\DoxyCodeLine{00142\ \ \ \ \ \ \ \ \ \textcolor{comment}{//\ Page\ 3:\ Test\ Registers}}
+\DoxyCodeLine{00143\ \ \ \ \ \ \ \ \ \textcolor{comment}{//\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ 0x30\ \ \ \ \ \ \ \ \ \ //\ reserved\ for\ future\ use}}
+\DoxyCodeLine{00144\ \ \ \ \ \ \ \ \ TestSel1Reg\ \ \ \ \ \ \ \ \ \ \ \ \ =\ 0x31\ <<\ 1,\ \ \ \ \textcolor{comment}{//\ general\ test\ signal\ configuration}}
+\DoxyCodeLine{00145\ \ \ \ \ \ \ \ \ TestSel2Reg\ \ \ \ \ \ \ \ \ \ \ \ \ =\ 0x32\ <<\ 1,\ \ \ \ \textcolor{comment}{//\ general\ test\ signal\ configuration}}
+\DoxyCodeLine{00146\ \ \ \ \ \ \ \ \ TestPinEnReg\ \ \ \ \ \ \ \ \ \ \ \ =\ 0x33\ <<\ 1,\ \ \ \ \textcolor{comment}{//\ enables\ pin\ output\ driver\ on\ pins\ D1\ to\ D7}}
+\DoxyCodeLine{00147\ \ \ \ \ \ \ \ \ TestPinValueReg\ \ \ \ \ \ \ \ \ =\ 0x34\ <<\ 1,\ \ \ \ \textcolor{comment}{//\ defines\ the\ values\ for\ D1\ to\ D7\ when\ it\ is\ used\ as\ an\ I/O\ bus}}
+\DoxyCodeLine{00148\ \ \ \ \ \ \ \ \ TestBusReg\ \ \ \ \ \ \ \ \ \ \ \ \ \ =\ 0x35\ <<\ 1,\ \ \ \ \textcolor{comment}{//\ shows\ the\ status\ of\ the\ internal\ test\ bus}}
+\DoxyCodeLine{00149\ \ \ \ \ \ \ \ \ AutoTestReg\ \ \ \ \ \ \ \ \ \ \ \ \ =\ 0x36\ <<\ 1,\ \ \ \ \textcolor{comment}{//\ controls\ the\ digital\ self-\/test}}
+\DoxyCodeLine{00150\ \ \ \ \ \ \ \ \ VersionReg\ \ \ \ \ \ \ \ \ \ \ \ \ \ =\ 0x37\ <<\ 1,\ \ \ \ \textcolor{comment}{//\ shows\ the\ software\ version}}
+\DoxyCodeLine{00151\ \ \ \ \ \ \ \ \ AnalogTestReg\ \ \ \ \ \ \ \ \ \ \ =\ 0x38\ <<\ 1,\ \ \ \ \textcolor{comment}{//\ controls\ the\ pins\ AUX1\ and\ AUX2}}
+\DoxyCodeLine{00152\ \ \ \ \ \ \ \ \ TestDAC1Reg\ \ \ \ \ \ \ \ \ \ \ \ \ =\ 0x39\ <<\ 1,\ \ \ \ \textcolor{comment}{//\ defines\ the\ test\ value\ for\ TestDAC1}}
+\DoxyCodeLine{00153\ \ \ \ \ \ \ \ \ TestDAC2Reg\ \ \ \ \ \ \ \ \ \ \ \ \ =\ 0x3A\ <<\ 1,\ \ \ \ \textcolor{comment}{//\ defines\ the\ test\ value\ for\ TestDAC2}}
+\DoxyCodeLine{00154\ \ \ \ \ \ \ \ \ TestADCReg\ \ \ \ \ \ \ \ \ \ \ \ \ \ =\ 0x3B\ <<\ 1\ \ \ \ \ \textcolor{comment}{//\ shows\ the\ value\ of\ ADC\ I\ and\ Q\ channels}}
+\DoxyCodeLine{00155\ \ \ \ \ \ \ \ \ \textcolor{comment}{//\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ 0x3C\ \ \ \ \ \ \ \ \ \ //\ reserved\ for\ production\ tests}}
+\DoxyCodeLine{00156\ \ \ \ \ \ \ \ \ \textcolor{comment}{//\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ 0x3D\ \ \ \ \ \ \ \ \ \ //\ reserved\ for\ production\ tests}}
+\DoxyCodeLine{00157\ \ \ \ \ \ \ \ \ \textcolor{comment}{//\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ 0x3E\ \ \ \ \ \ \ \ \ \ //\ reserved\ for\ production\ tests}}
+\DoxyCodeLine{00158\ \ \ \ \ \ \ \ \ \textcolor{comment}{//\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ 0x3F\ \ \ \ \ \ \ \ \ \ //\ reserved\ for\ production\ tests}}
+\DoxyCodeLine{00159\ \ \ \ \ \};}
+\DoxyCodeLine{00160\ \ \ \ \ }
+\DoxyCodeLine{00161\ \ \ \ \ \textcolor{comment}{//\ MFRC522\ commands.\ Described\ in\ chapter\ 10\ of\ the\ datasheet.}}
+\DoxyCodeLine{00162\ \ \ \ \ \textcolor{keyword}{enum}\ PCD\_Command\ :\ \textcolor{keywordtype}{byte}\ \{}
+\DoxyCodeLine{00163\ \ \ \ \ \ \ \ \ PCD\_Idle\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ =\ 0x00,\ \ \ \ \ \textcolor{comment}{//\ no\ action,\ cancels\ current\ command\ execution}}
+\DoxyCodeLine{00164\ \ \ \ \ \ \ \ \ PCD\_Mem\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ =\ 0x01,\ \ \ \ \ \textcolor{comment}{//\ stores\ 25\ bytes\ into\ the\ internal\ buffer}}
+\DoxyCodeLine{00165\ \ \ \ \ \ \ \ \ PCD\_GenerateRandomID\ \ \ \ =\ 0x02,\ \ \ \ \ \textcolor{comment}{//\ generates\ a\ 10-\/byte\ random\ ID\ number}}
+\DoxyCodeLine{00166\ \ \ \ \ \ \ \ \ PCD\_CalcCRC\ \ \ \ \ \ \ \ \ \ \ \ \ =\ 0x03,\ \ \ \ \ \textcolor{comment}{//\ activates\ the\ CRC\ coprocessor\ or\ performs\ a\ self-\/test}}
+\DoxyCodeLine{00167\ \ \ \ \ \ \ \ \ PCD\_Transmit\ \ \ \ \ \ \ \ \ \ \ \ =\ 0x04,\ \ \ \ \ \textcolor{comment}{//\ transmits\ data\ from\ the\ FIFO\ buffer}}
+\DoxyCodeLine{00168\ \ \ \ \ \ \ \ \ PCD\_NoCmdChange\ \ \ \ \ \ \ \ \ =\ 0x07,\ \ \ \ \ \textcolor{comment}{//\ no\ command\ change,\ can\ be\ used\ to\ modify\ the\ CommandReg\ register\ bits\ without\ affecting\ the\ command,\ for\ example,\ the\ PowerDown\ bit}}
+\DoxyCodeLine{00169\ \ \ \ \ \ \ \ \ PCD\_Receive\ \ \ \ \ \ \ \ \ \ \ \ \ =\ 0x08,\ \ \ \ \ \textcolor{comment}{//\ activates\ the\ receiver\ circuits}}
+\DoxyCodeLine{00170\ \ \ \ \ \ \ \ \ PCD\_Transceive\ \ \ \ \ \ \ \ \ \ =\ 0x0C,\ \ \ \ \ \textcolor{comment}{//\ transmits\ data\ from\ FIFO\ buffer\ to\ antenna\ and\ automatically\ activates\ the\ receiver\ after\ transmission}}
+\DoxyCodeLine{00171\ \ \ \ \ \ \ \ \ PCD\_MFAuthent\ \ \ \ \ \ \ \ \ \ \ =\ 0x0E,\ \ \ \ \ \textcolor{comment}{//\ performs\ the\ MIFARE\ standard\ authentication\ as\ a\ reader}}
+\DoxyCodeLine{00172\ \ \ \ \ \ \ \ \ PCD\_SoftReset\ \ \ \ \ \ \ \ \ \ \ =\ 0x0F\ \ \ \ \ \ \textcolor{comment}{//\ resets\ the\ MFRC522}}
+\DoxyCodeLine{00173\ \ \ \ \ \};}
+\DoxyCodeLine{00174\ \ \ \ \ }
+\DoxyCodeLine{00175\ \ \ \ \ \textcolor{comment}{//\ MFRC522\ RxGain[2:0]\ masks,\ defines\ the\ receiver's\ signal\ voltage\ gain\ factor\ (on\ the\ PCD).}}
+\DoxyCodeLine{00176\ \ \ \ \ \textcolor{comment}{//\ Described\ in\ 9.3.3.6\ /\ table\ 98\ of\ the\ datasheet\ at\ http://www.nxp.com/documents/data\_sheet/MFRC522.pdf}}
+\DoxyCodeLine{00177\ \ \ \ \ \textcolor{keyword}{enum}\ PCD\_RxGain\ :\ \textcolor{keywordtype}{byte}\ \{}
+\DoxyCodeLine{00178\ \ \ \ \ \ \ \ \ RxGain\_18dB\ \ \ \ \ \ \ \ \ \ \ \ \ =\ 0x00\ <<\ 4,\ \ \ \ \textcolor{comment}{//\ 000b\ -\/\ 18\ dB,\ minimum}}
+\DoxyCodeLine{00179\ \ \ \ \ \ \ \ \ RxGain\_23dB\ \ \ \ \ \ \ \ \ \ \ \ \ =\ 0x01\ <<\ 4,\ \ \ \ \textcolor{comment}{//\ 001b\ -\/\ 23\ dB}}
+\DoxyCodeLine{00180\ \ \ \ \ \ \ \ \ RxGain\_18dB\_2\ \ \ \ \ \ \ \ \ \ \ =\ 0x02\ <<\ 4,\ \ \ \ \textcolor{comment}{//\ 010b\ -\/\ 18\ dB,\ it\ seems\ 010b\ is\ a\ duplicate\ for\ 000b}}
+\DoxyCodeLine{00181\ \ \ \ \ \ \ \ \ RxGain\_23dB\_2\ \ \ \ \ \ \ \ \ \ \ =\ 0x03\ <<\ 4,\ \ \ \ \textcolor{comment}{//\ 011b\ -\/\ 23\ dB,\ it\ seems\ 011b\ is\ a\ duplicate\ for\ 001b}}
+\DoxyCodeLine{00182\ \ \ \ \ \ \ \ \ RxGain\_33dB\ \ \ \ \ \ \ \ \ \ \ \ \ =\ 0x04\ <<\ 4,\ \ \ \ \textcolor{comment}{//\ 100b\ -\/\ 33\ dB,\ average,\ and\ typical\ default}}
+\DoxyCodeLine{00183\ \ \ \ \ \ \ \ \ RxGain\_38dB\ \ \ \ \ \ \ \ \ \ \ \ \ =\ 0x05\ <<\ 4,\ \ \ \ \textcolor{comment}{//\ 101b\ -\/\ 38\ dB}}
+\DoxyCodeLine{00184\ \ \ \ \ \ \ \ \ RxGain\_43dB\ \ \ \ \ \ \ \ \ \ \ \ \ =\ 0x06\ <<\ 4,\ \ \ \ \textcolor{comment}{//\ 110b\ -\/\ 43\ dB}}
+\DoxyCodeLine{00185\ \ \ \ \ \ \ \ \ RxGain\_48dB\ \ \ \ \ \ \ \ \ \ \ \ \ =\ 0x07\ <<\ 4,\ \ \ \ \textcolor{comment}{//\ 111b\ -\/\ 48\ dB,\ maximum}}
+\DoxyCodeLine{00186\ \ \ \ \ \ \ \ \ RxGain\_min\ \ \ \ \ \ \ \ \ \ \ \ \ \ =\ 0x00\ <<\ 4,\ \ \ \ \textcolor{comment}{//\ 000b\ -\/\ 18\ dB,\ minimum,\ convenience\ for\ RxGain\_18dB}}
+\DoxyCodeLine{00187\ \ \ \ \ \ \ \ \ RxGain\_avg\ \ \ \ \ \ \ \ \ \ \ \ \ \ =\ 0x04\ <<\ 4,\ \ \ \ \textcolor{comment}{//\ 100b\ -\/\ 33\ dB,\ average,\ convenience\ for\ RxGain\_33dB}}
+\DoxyCodeLine{00188\ \ \ \ \ \ \ \ \ RxGain\_max\ \ \ \ \ \ \ \ \ \ \ \ \ \ =\ 0x07\ <<\ 4\ \ \ \ \ \textcolor{comment}{//\ 111b\ -\/\ 48\ dB,\ maximum,\ convenience\ for\ RxGain\_48dB}}
+\DoxyCodeLine{00189\ \ \ \ \ \};}
+\DoxyCodeLine{00190\ \ \ \ \ }
+\DoxyCodeLine{00191\ \ \ \ \ \textcolor{comment}{//\ Commands\ sent\ to\ the\ PICC.}}
+\DoxyCodeLine{00192\ \ \ \ \ \textcolor{keyword}{enum}\ PICC\_Command\ :\ \textcolor{keywordtype}{byte}\ \{}
+\DoxyCodeLine{00193\ \ \ \ \ \ \ \ \ \textcolor{comment}{//\ The\ commands\ used\ by\ the\ PCD\ to\ manage\ communication\ with\ several\ PICCs\ (ISO\ 14443-\/3,\ Type\ A,\ section\ 6.4)}}
+\DoxyCodeLine{00194\ \ \ \ \ \ \ \ \ PICC\_CMD\_REQA\ \ \ \ \ \ \ \ \ \ \ =\ 0x26,\ \ \ \ \ \textcolor{comment}{//\ REQuest\ command,\ Type\ A.\ Invites\ PICCs\ in\ state\ IDLE\ to\ go\ to\ READY\ and\ prepare\ for\ anticollision\ or\ selection.\ 7\ bit\ frame.}}
+\DoxyCodeLine{00195\ \ \ \ \ \ \ \ \ PICC\_CMD\_WUPA\ \ \ \ \ \ \ \ \ \ \ =\ 0x52,\ \ \ \ \ \textcolor{comment}{//\ Wake-\/UP\ command,\ Type\ A.\ Invites\ PICCs\ in\ state\ IDLE\ and\ HALT\ to\ go\ to\ READY(*)\ and\ prepare\ for\ anticollision\ or\ selection.\ 7\ bit\ frame.}}
+\DoxyCodeLine{00196\ \ \ \ \ \ \ \ \ PICC\_CMD\_CT\ \ \ \ \ \ \ \ \ \ \ \ \ =\ 0x88,\ \ \ \ \ \textcolor{comment}{//\ Cascade\ Tag.\ Not\ really\ a\ command,\ but\ used\ during\ anti\ collision.}}
+\DoxyCodeLine{00197\ \ \ \ \ \ \ \ \ PICC\_CMD\_SEL\_CL1\ \ \ \ \ \ \ \ =\ 0x93,\ \ \ \ \ \textcolor{comment}{//\ Anti\ collision/Select,\ Cascade\ Level\ 1}}
+\DoxyCodeLine{00198\ \ \ \ \ \ \ \ \ PICC\_CMD\_SEL\_CL2\ \ \ \ \ \ \ \ =\ 0x95,\ \ \ \ \ \textcolor{comment}{//\ Anti\ collision/Select,\ Cascade\ Level\ 2}}
+\DoxyCodeLine{00199\ \ \ \ \ \ \ \ \ PICC\_CMD\_SEL\_CL3\ \ \ \ \ \ \ \ =\ 0x97,\ \ \ \ \ \textcolor{comment}{//\ Anti\ collision/Select,\ Cascade\ Level\ 3}}
+\DoxyCodeLine{00200\ \ \ \ \ \ \ \ \ PICC\_CMD\_HLTA\ \ \ \ \ \ \ \ \ \ \ =\ 0x50,\ \ \ \ \ \textcolor{comment}{//\ HaLT\ command,\ Type\ A.\ Instructs\ an\ ACTIVE\ PICC\ to\ go\ to\ state\ HALT.}}
+\DoxyCodeLine{00201\ \ \ \ \ \ \ \ \ PICC\_CMD\_RATS\ \ \ \ \ \ \ \ \ \ \ =\ 0xE0,\ \ \ \ \ \textcolor{comment}{//\ Request\ command\ for\ Answer\ To\ Reset.}}
+\DoxyCodeLine{00202\ \ \ \ \ \ \ \ \ \textcolor{comment}{//\ The\ commands\ used\ for\ MIFARE\ Classic\ (from\ http://www.mouser.com/ds/2/302/MF1S503x-\/89574.pdf,\ Section\ 9)}}
+\DoxyCodeLine{00203\ \ \ \ \ \ \ \ \ \textcolor{comment}{//\ Use\ PCD\_MFAuthent\ to\ authenticate\ access\ to\ a\ sector,\ then\ use\ these\ commands\ to\ read/write/modify\ the\ blocks\ on\ the\ sector.}}
+\DoxyCodeLine{00204\ \ \ \ \ \ \ \ \ \textcolor{comment}{//\ The\ read/write\ commands\ can\ also\ be\ used\ for\ MIFARE\ Ultralight.}}
+\DoxyCodeLine{00205\ \ \ \ \ \ \ \ \ PICC\_CMD\_MF\_AUTH\_KEY\_A\ \ =\ 0x60,\ \ \ \ \ \textcolor{comment}{//\ Perform\ authentication\ with\ Key\ A}}
+\DoxyCodeLine{00206\ \ \ \ \ \ \ \ \ PICC\_CMD\_MF\_AUTH\_KEY\_B\ \ =\ 0x61,\ \ \ \ \ \textcolor{comment}{//\ Perform\ authentication\ with\ Key\ B}}
+\DoxyCodeLine{00207\ \ \ \ \ \ \ \ \ PICC\_CMD\_MF\_READ\ \ \ \ \ \ \ \ =\ 0x30,\ \ \ \ \ \textcolor{comment}{//\ Reads\ one\ 16\ byte\ block\ from\ the\ authenticated\ sector\ of\ the\ PICC.\ Also\ used\ for\ MIFARE\ Ultralight.}}
+\DoxyCodeLine{00208\ \ \ \ \ \ \ \ \ PICC\_CMD\_MF\_WRITE\ \ \ \ \ \ \ =\ 0xA0,\ \ \ \ \ \textcolor{comment}{//\ Writes\ one\ 16\ byte\ block\ to\ the\ authenticated\ sector\ of\ the\ PICC.\ Called\ "{}COMPATIBILITY\ WRITE"{}\ for\ MIFARE\ Ultralight.}}
+\DoxyCodeLine{00209\ \ \ \ \ \ \ \ \ PICC\_CMD\_MF\_DECREMENT\ \ \ =\ 0xC0,\ \ \ \ \ \textcolor{comment}{//\ Decrements\ the\ contents\ of\ a\ block\ and\ stores\ the\ result\ in\ the\ internal\ data\ register.}}
+\DoxyCodeLine{00210\ \ \ \ \ \ \ \ \ PICC\_CMD\_MF\_INCREMENT\ \ \ =\ 0xC1,\ \ \ \ \ \textcolor{comment}{//\ Increments\ the\ contents\ of\ a\ block\ and\ stores\ the\ result\ in\ the\ internal\ data\ register.}}
+\DoxyCodeLine{00211\ \ \ \ \ \ \ \ \ PICC\_CMD\_MF\_RESTORE\ \ \ \ \ =\ 0xC2,\ \ \ \ \ \textcolor{comment}{//\ Reads\ the\ contents\ of\ a\ block\ into\ the\ internal\ data\ register.}}
+\DoxyCodeLine{00212\ \ \ \ \ \ \ \ \ PICC\_CMD\_MF\_TRANSFER\ \ \ \ =\ 0xB0,\ \ \ \ \ \textcolor{comment}{//\ Writes\ the\ contents\ of\ the\ internal\ data\ register\ to\ a\ block.}}
+\DoxyCodeLine{00213\ \ \ \ \ \ \ \ \ \textcolor{comment}{//\ The\ commands\ used\ for\ MIFARE\ Ultralight\ (from\ http://www.nxp.com/documents/data\_sheet/MF0ICU1.pdf,\ Section\ 8.6)}}
+\DoxyCodeLine{00214\ \ \ \ \ \ \ \ \ \textcolor{comment}{//\ The\ PICC\_CMD\_MF\_READ\ and\ PICC\_CMD\_MF\_WRITE\ can\ also\ be\ used\ for\ MIFARE\ Ultralight.}}
+\DoxyCodeLine{00215\ \ \ \ \ \ \ \ \ PICC\_CMD\_UL\_WRITE\ \ \ \ \ \ \ =\ 0xA2\ \ \ \ \ \ \textcolor{comment}{//\ Writes\ one\ 4\ byte\ page\ to\ the\ PICC.}}
+\DoxyCodeLine{00216\ \ \ \ \ \};}
+\DoxyCodeLine{00217\ \ \ \ \ }
+\DoxyCodeLine{00218\ \ \ \ \ \textcolor{comment}{//\ MIFARE\ constants\ that\ does\ not\ fit\ anywhere\ else}}
+\DoxyCodeLine{00219\ \ \ \ \ \textcolor{keyword}{enum}\ MIFARE\_Misc\ \{}
+\DoxyCodeLine{00220\ \ \ \ \ \ \ \ \ MF\_ACK\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ =\ 0xA,\ \ \ \ \ \ \textcolor{comment}{//\ The\ MIFARE\ Classic\ uses\ a\ 4\ bit\ ACK/NAK.\ Any\ other\ value\ than\ 0xA\ is\ NAK.}}
+\DoxyCodeLine{00221\ \ \ \ \ \ \ \ \ MF\_KEY\_SIZE\ \ \ \ \ \ \ \ \ \ \ \ \ =\ 6\ \ \ \ \ \ \ \ \ \textcolor{comment}{//\ A\ Mifare\ Crypto1\ key\ is\ 6\ bytes.}}
+\DoxyCodeLine{00222\ \ \ \ \ \};}
+\DoxyCodeLine{00223\ \ \ \ \ }
+\DoxyCodeLine{00224\ \ \ \ \ \textcolor{comment}{//\ PICC\ types\ we\ can\ detect.\ Remember\ to\ update\ PICC\_GetTypeName()\ if\ you\ add\ more.}}
+\DoxyCodeLine{00225\ \ \ \ \ \textcolor{comment}{//\ last\ value\ set\ to\ 0xff,\ then\ compiler\ uses\ less\ ram,\ it\ seems\ some\ optimisations\ are\ triggered}}
+\DoxyCodeLine{00226\ \ \ \ \ \textcolor{keyword}{enum}\ PICC\_Type\ :\ \textcolor{keywordtype}{byte}\ \{}
+\DoxyCodeLine{00227\ \ \ \ \ \ \ \ \ PICC\_TYPE\_UNKNOWN\ \ \ \ \ \ \ ,}
+\DoxyCodeLine{00228\ \ \ \ \ \ \ \ \ PICC\_TYPE\_ISO\_14443\_4\ \ \ ,\ \ \ \textcolor{comment}{//\ PICC\ compliant\ with\ ISO/IEC\ 14443-\/4\ }}
+\DoxyCodeLine{00229\ \ \ \ \ \ \ \ \ PICC\_TYPE\_ISO\_18092\ \ \ \ \ ,\ \ \ \textcolor{comment}{//\ PICC\ compliant\ with\ ISO/IEC\ 18092\ (NFC)}}
+\DoxyCodeLine{00230\ \ \ \ \ \ \ \ \ PICC\_TYPE\_MIFARE\_MINI\ \ \ ,\ \ \ \textcolor{comment}{//\ MIFARE\ Classic\ protocol,\ 320\ bytes}}
+\DoxyCodeLine{00231\ \ \ \ \ \ \ \ \ PICC\_TYPE\_MIFARE\_1K\ \ \ \ \ ,\ \ \ \textcolor{comment}{//\ MIFARE\ Classic\ protocol,\ 1KB}}
+\DoxyCodeLine{00232\ \ \ \ \ \ \ \ \ PICC\_TYPE\_MIFARE\_4K\ \ \ \ \ ,\ \ \ \textcolor{comment}{//\ MIFARE\ Classic\ protocol,\ 4KB}}
+\DoxyCodeLine{00233\ \ \ \ \ \ \ \ \ PICC\_TYPE\_MIFARE\_UL\ \ \ \ \ ,\ \ \ \textcolor{comment}{//\ MIFARE\ Ultralight\ or\ Ultralight\ C}}
+\DoxyCodeLine{00234\ \ \ \ \ \ \ \ \ PICC\_TYPE\_MIFARE\_PLUS\ \ \ ,\ \ \ \textcolor{comment}{//\ MIFARE\ Plus}}
+\DoxyCodeLine{00235\ \ \ \ \ \ \ \ \ PICC\_TYPE\_MIFARE\_DESFIRE,\ \ \ \textcolor{comment}{//\ MIFARE\ DESFire}}
+\DoxyCodeLine{00236\ \ \ \ \ \ \ \ \ PICC\_TYPE\_TNP3XXX\ \ \ \ \ \ \ ,\ \ \ \textcolor{comment}{//\ Only\ mentioned\ in\ NXP\ AN\ 10833\ MIFARE\ Type\ Identification\ Procedure}}
+\DoxyCodeLine{00237\ \ \ \ \ \ \ \ \ PICC\_TYPE\_NOT\_COMPLETE\ \ =\ 0xff\ \ \textcolor{comment}{//\ SAK\ indicates\ UID\ is\ not\ complete.}}
+\DoxyCodeLine{00238\ \ \ \ \ \};}
+\DoxyCodeLine{00239\ \ \ \ \ }
+\DoxyCodeLine{00240\ \ \ \ \ \textcolor{comment}{//\ Return\ codes\ from\ the\ functions\ in\ this\ class.\ Remember\ to\ update\ GetStatusCodeName()\ if\ you\ add\ more.}}
+\DoxyCodeLine{00241\ \ \ \ \ \textcolor{comment}{//\ last\ value\ set\ to\ 0xff,\ then\ compiler\ uses\ less\ ram,\ it\ seems\ some\ optimisations\ are\ triggered}}
+\DoxyCodeLine{00242\ \ \ \ \ \textcolor{keyword}{enum}\ StatusCode\ :\ \textcolor{keywordtype}{byte}\ \{}
+\DoxyCodeLine{00243\ \ \ \ \ \ \ \ \ STATUS\_OK\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ ,\ \ \ \textcolor{comment}{//\ Success}}
+\DoxyCodeLine{00244\ \ \ \ \ \ \ \ \ STATUS\_ERROR\ \ \ \ \ \ \ \ \ \ \ \ ,\ \ \ \textcolor{comment}{//\ Error\ in\ communication}}
+\DoxyCodeLine{00245\ \ \ \ \ \ \ \ \ STATUS\_COLLISION\ \ \ \ \ \ \ \ ,\ \ \ \textcolor{comment}{//\ Collission\ detected}}
+\DoxyCodeLine{00246\ \ \ \ \ \ \ \ \ STATUS\_TIMEOUT\ \ \ \ \ \ \ \ \ \ ,\ \ \ \textcolor{comment}{//\ Timeout\ in\ communication.}}
+\DoxyCodeLine{00247\ \ \ \ \ \ \ \ \ STATUS\_NO\_ROOM\ \ \ \ \ \ \ \ \ \ ,\ \ \ \textcolor{comment}{//\ A\ buffer\ is\ not\ big\ enough.}}
+\DoxyCodeLine{00248\ \ \ \ \ \ \ \ \ STATUS\_INTERNAL\_ERROR\ \ \ ,\ \ \ \textcolor{comment}{//\ Internal\ error\ in\ the\ code.\ Should\ not\ happen\ ;-\/)}}
+\DoxyCodeLine{00249\ \ \ \ \ \ \ \ \ STATUS\_INVALID\ \ \ \ \ \ \ \ \ \ ,\ \ \ \textcolor{comment}{//\ Invalid\ argument.}}
+\DoxyCodeLine{00250\ \ \ \ \ \ \ \ \ STATUS\_CRC\_WRONG\ \ \ \ \ \ \ \ ,\ \ \ \textcolor{comment}{//\ The\ CRC\_A\ does\ not\ match}}
+\DoxyCodeLine{00251\ \ \ \ \ \ \ \ \ STATUS\_MIFARE\_NACK\ \ \ \ \ \ =\ 0xff\ \ \textcolor{comment}{//\ A\ MIFARE\ PICC\ responded\ with\ NAK.}}
+\DoxyCodeLine{00252\ \ \ \ \ \};}
+\DoxyCodeLine{00253\ \ \ \ \ }
+\DoxyCodeLine{00254\ \ \ \ \ \textcolor{comment}{//\ A\ struct\ used\ for\ passing\ the\ UID\ of\ a\ PICC.}}
+\DoxyCodeLine{00255\ \ \ \ \ \textcolor{keyword}{typedef}\ \textcolor{keyword}{struct\ }\{}
+\DoxyCodeLine{00256\ \ \ \ \ \ \ \ \ \textcolor{keywordtype}{byte}\ \ \ \ \ \ \ \ size;\ \ \ \ \ \ \ \ \ \ \ \textcolor{comment}{//\ Number\ of\ bytes\ in\ the\ UID.\ 4,\ 7\ or\ 10.}}
+\DoxyCodeLine{00257\ \ \ \ \ \ \ \ \ \textcolor{keywordtype}{byte}\ \ \ \ \ \ \ \ uidByte[10];}
+\DoxyCodeLine{00258\ \ \ \ \ \ \ \ \ \textcolor{keywordtype}{byte}\ \ \ \ \ \ \ \ sak;\ \ \ \ \ \ \ \ \ \ \ \ \textcolor{comment}{//\ The\ SAK\ (Select\ acknowledge)\ byte\ returned\ from\ the\ PICC\ after\ successful\ selection.}}
+\DoxyCodeLine{00259\ \ \ \ \ \}\ \mbox{\hyperlink{classMFRC522_structMFRC522_1_1Uid}{Uid}};}
+\DoxyCodeLine{00260\ }
+\DoxyCodeLine{00261\ \ \ \ \ \textcolor{comment}{//\ A\ struct\ used\ for\ passing\ a\ MIFARE\ Crypto1\ key}}
+\DoxyCodeLine{00262\ \ \ \ \ \textcolor{keyword}{typedef}\ \textcolor{keyword}{struct\ }\{}
+\DoxyCodeLine{00263\ \ \ \ \ \ \ \ \ \textcolor{keywordtype}{byte}\ \ \ \ \ \ \ \ keyByte[MF\_KEY\_SIZE];}
+\DoxyCodeLine{00264\ \ \ \ \ \}\ \mbox{\hyperlink{classMFRC522_structMFRC522_1_1MIFARE__Key}{MIFARE\_Key}};}
+\DoxyCodeLine{00265\ \ \ \ \ }
+\DoxyCodeLine{00266\ \ \ \ \ \textcolor{comment}{//\ Member\ variables}}
+\DoxyCodeLine{00267\ \ \ \ \ \mbox{\hyperlink{classMFRC522_structMFRC522_1_1Uid}{Uid}}\ uid;\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{comment}{//\ Used\ by\ PICC\_ReadCardSerial().}}
+\DoxyCodeLine{00268\ \ \ \ \ }
+\DoxyCodeLine{00270\ \ \ \ \ \textcolor{comment}{//\ Functions\ for\ setting\ up\ the\ Arduino}}
+\DoxyCodeLine{00272\ \ \ \ \ \mbox{\hyperlink{classMFRC522}{MFRC522}}();}
+\DoxyCodeLine{00273\ \ \ \ \ \mbox{\hyperlink{classMFRC522}{MFRC522}}(\textcolor{keywordtype}{byte}\ resetPowerDownPin);}
+\DoxyCodeLine{00274\ \ \ \ \ \mbox{\hyperlink{classMFRC522}{MFRC522}}(\textcolor{keywordtype}{byte}\ chipSelectPin,\ \textcolor{keywordtype}{byte}\ resetPowerDownPin);}
+\DoxyCodeLine{00275\ \ \ \ \ }
+\DoxyCodeLine{00277\ \ \ \ \ \textcolor{comment}{//\ Basic\ interface\ functions\ for\ communicating\ with\ the\ MFRC522}}
+\DoxyCodeLine{00279\ \ \ \ \ \textcolor{keywordtype}{void}\ PCD\_WriteRegister(PCD\_Register\ reg,\ \textcolor{keywordtype}{byte}\ value);}
+\DoxyCodeLine{00280\ \ \ \ \ \textcolor{keywordtype}{void}\ PCD\_WriteRegister(PCD\_Register\ reg,\ \textcolor{keywordtype}{byte}\ count,\ \textcolor{keywordtype}{byte}\ *values);}
+\DoxyCodeLine{00281\ \ \ \ \ \textcolor{keywordtype}{byte}\ PCD\_ReadRegister(PCD\_Register\ reg);}
+\DoxyCodeLine{00282\ \ \ \ \ \textcolor{keywordtype}{void}\ PCD\_ReadRegister(PCD\_Register\ reg,\ \textcolor{keywordtype}{byte}\ count,\ \textcolor{keywordtype}{byte}\ *values,\ \textcolor{keywordtype}{byte}\ rxAlign\ =\ 0);}
+\DoxyCodeLine{00283\ \ \ \ \ \textcolor{keywordtype}{void}\ PCD\_SetRegisterBitMask(PCD\_Register\ reg,\ \textcolor{keywordtype}{byte}\ mask);}
+\DoxyCodeLine{00284\ \ \ \ \ \textcolor{keywordtype}{void}\ PCD\_ClearRegisterBitMask(PCD\_Register\ reg,\ \textcolor{keywordtype}{byte}\ mask);}
+\DoxyCodeLine{00285\ \ \ \ \ StatusCode\ PCD\_CalculateCRC(\textcolor{keywordtype}{byte}\ *data,\ \textcolor{keywordtype}{byte}\ length,\ \textcolor{keywordtype}{byte}\ *result);}
+\DoxyCodeLine{00286\ \ \ \ \ }
+\DoxyCodeLine{00288\ \ \ \ \ \textcolor{comment}{//\ Functions\ for\ manipulating\ the\ MFRC522}}
+\DoxyCodeLine{00290\ \ \ \ \ \textcolor{keywordtype}{void}\ PCD\_Init();}
+\DoxyCodeLine{00291\ \ \ \ \ \textcolor{keywordtype}{void}\ PCD\_Init(\textcolor{keywordtype}{byte}\ resetPowerDownPin);}
+\DoxyCodeLine{00292\ \ \ \ \ \textcolor{keywordtype}{void}\ PCD\_Init(\textcolor{keywordtype}{byte}\ chipSelectPin,\ \textcolor{keywordtype}{byte}\ resetPowerDownPin);}
+\DoxyCodeLine{00293\ \ \ \ \ \textcolor{keywordtype}{void}\ PCD\_Reset();}
+\DoxyCodeLine{00294\ \ \ \ \ \textcolor{keywordtype}{void}\ PCD\_AntennaOn();}
+\DoxyCodeLine{00295\ \ \ \ \ \textcolor{keywordtype}{void}\ PCD\_AntennaOff();}
+\DoxyCodeLine{00296\ \ \ \ \ \textcolor{keywordtype}{byte}\ PCD\_GetAntennaGain();}
+\DoxyCodeLine{00297\ \ \ \ \ \textcolor{keywordtype}{void}\ PCD\_SetAntennaGain(\textcolor{keywordtype}{byte}\ mask);}
+\DoxyCodeLine{00298\ \ \ \ \ \textcolor{keywordtype}{bool}\ PCD\_PerformSelfTest();}
+\DoxyCodeLine{00299\ \ \ \ \ }
+\DoxyCodeLine{00301\ \ \ \ \ \textcolor{comment}{//\ Power\ control\ functions}}
+\DoxyCodeLine{00303\ \ \ \ \ \textcolor{keywordtype}{void}\ PCD\_SoftPowerDown();}
+\DoxyCodeLine{00304\ \ \ \ \ \textcolor{keywordtype}{void}\ PCD\_SoftPowerUp();}
+\DoxyCodeLine{00305\ \ \ \ \ }
+\DoxyCodeLine{00307\ \ \ \ \ \textcolor{comment}{//\ Functions\ for\ communicating\ with\ PICCs}}
+\DoxyCodeLine{00309\ \ \ \ \ StatusCode\ PCD\_TransceiveData(\textcolor{keywordtype}{byte}\ *sendData,\ \textcolor{keywordtype}{byte}\ sendLen,\ \textcolor{keywordtype}{byte}\ *backData,\ \textcolor{keywordtype}{byte}\ *backLen,\ \textcolor{keywordtype}{byte}\ *validBits\ =\ \textcolor{keyword}{nullptr},\ \textcolor{keywordtype}{byte}\ rxAlign\ =\ 0,\ \textcolor{keywordtype}{bool}\ checkCRC\ =\ \textcolor{keyword}{false});}
+\DoxyCodeLine{00310\ \ \ \ \ StatusCode\ PCD\_CommunicateWithPICC(\textcolor{keywordtype}{byte}\ command,\ \textcolor{keywordtype}{byte}\ waitIRq,\ \textcolor{keywordtype}{byte}\ *sendData,\ \textcolor{keywordtype}{byte}\ sendLen,\ \textcolor{keywordtype}{byte}\ *backData\ =\ \textcolor{keyword}{nullptr},\ \textcolor{keywordtype}{byte}\ *backLen\ =\ \textcolor{keyword}{nullptr},\ \textcolor{keywordtype}{byte}\ *validBits\ =\ \textcolor{keyword}{nullptr},\ \textcolor{keywordtype}{byte}\ rxAlign\ =\ 0,\ \textcolor{keywordtype}{bool}\ checkCRC\ =\ \textcolor{keyword}{false});}
+\DoxyCodeLine{00311\ \ \ \ \ StatusCode\ PICC\_RequestA(\textcolor{keywordtype}{byte}\ *bufferATQA,\ \textcolor{keywordtype}{byte}\ *bufferSize);}
+\DoxyCodeLine{00312\ \ \ \ \ StatusCode\ PICC\_WakeupA(\textcolor{keywordtype}{byte}\ *bufferATQA,\ \textcolor{keywordtype}{byte}\ *bufferSize);}
+\DoxyCodeLine{00313\ \ \ \ \ StatusCode\ PICC\_REQA\_or\_WUPA(\textcolor{keywordtype}{byte}\ command,\ \textcolor{keywordtype}{byte}\ *bufferATQA,\ \textcolor{keywordtype}{byte}\ *bufferSize);}
+\DoxyCodeLine{00314\ \ \ \ \ \textcolor{keyword}{virtual}\ StatusCode\ PICC\_Select(\mbox{\hyperlink{classMFRC522_structMFRC522_1_1Uid}{Uid}}\ *uid,\ \textcolor{keywordtype}{byte}\ validBits\ =\ 0);}
+\DoxyCodeLine{00315\ \ \ \ \ StatusCode\ PICC\_HaltA();}
+\DoxyCodeLine{00316\ }
+\DoxyCodeLine{00318\ \ \ \ \ \textcolor{comment}{//\ Functions\ for\ communicating\ with\ MIFARE\ PICCs}}
+\DoxyCodeLine{00320\ \ \ \ \ StatusCode\ PCD\_Authenticate(\textcolor{keywordtype}{byte}\ command,\ \textcolor{keywordtype}{byte}\ blockAddr,\ \mbox{\hyperlink{classMFRC522_structMFRC522_1_1MIFARE__Key}{MIFARE\_Key}}\ *key,\ \mbox{\hyperlink{classMFRC522_structMFRC522_1_1Uid}{Uid}}\ *uid);}
+\DoxyCodeLine{00321\ \ \ \ \ \textcolor{keywordtype}{void}\ PCD\_StopCrypto1();}
+\DoxyCodeLine{00322\ \ \ \ \ StatusCode\ MIFARE\_Read(\textcolor{keywordtype}{byte}\ blockAddr,\ \textcolor{keywordtype}{byte}\ *buffer,\ \textcolor{keywordtype}{byte}\ *bufferSize);}
+\DoxyCodeLine{00323\ \ \ \ \ StatusCode\ MIFARE\_Write(\textcolor{keywordtype}{byte}\ blockAddr,\ \textcolor{keywordtype}{byte}\ *buffer,\ \textcolor{keywordtype}{byte}\ bufferSize);}
+\DoxyCodeLine{00324\ \ \ \ \ StatusCode\ MIFARE\_Ultralight\_Write(\textcolor{keywordtype}{byte}\ page,\ \textcolor{keywordtype}{byte}\ *buffer,\ \textcolor{keywordtype}{byte}\ bufferSize);}
+\DoxyCodeLine{00325\ \ \ \ \ StatusCode\ MIFARE\_Decrement(\textcolor{keywordtype}{byte}\ blockAddr,\ int32\_t\ delta);}
+\DoxyCodeLine{00326\ \ \ \ \ StatusCode\ MIFARE\_Increment(\textcolor{keywordtype}{byte}\ blockAddr,\ int32\_t\ delta);}
+\DoxyCodeLine{00327\ \ \ \ \ StatusCode\ MIFARE\_Restore(\textcolor{keywordtype}{byte}\ blockAddr);}
+\DoxyCodeLine{00328\ \ \ \ \ StatusCode\ MIFARE\_Transfer(\textcolor{keywordtype}{byte}\ blockAddr);}
+\DoxyCodeLine{00329\ \ \ \ \ StatusCode\ MIFARE\_GetValue(\textcolor{keywordtype}{byte}\ blockAddr,\ int32\_t\ *value);}
+\DoxyCodeLine{00330\ \ \ \ \ StatusCode\ MIFARE\_SetValue(\textcolor{keywordtype}{byte}\ blockAddr,\ int32\_t\ value);}
+\DoxyCodeLine{00331\ \ \ \ \ StatusCode\ PCD\_NTAG216\_AUTH(\textcolor{keywordtype}{byte}\ *passWord,\ \textcolor{keywordtype}{byte}\ pACK[]);}
+\DoxyCodeLine{00332\ \ \ \ \ }
+\DoxyCodeLine{00334\ \ \ \ \ \textcolor{comment}{//\ Support\ functions}}
+\DoxyCodeLine{00336\ \ \ \ \ StatusCode\ PCD\_MIFARE\_Transceive(\textcolor{keywordtype}{byte}\ *sendData,\ \textcolor{keywordtype}{byte}\ sendLen,\ \textcolor{keywordtype}{bool}\ acceptTimeout\ =\ \textcolor{keyword}{false});}
+\DoxyCodeLine{00337\ \ \ \ \ \textcolor{comment}{//\ old\ function\ used\ too\ much\ memory,\ now\ name\ moved\ to\ flash;\ if\ you\ need\ char,\ copy\ from\ flash\ to\ memory}}
+\DoxyCodeLine{00338\ \ \ \ \ \textcolor{comment}{//const\ char\ *GetStatusCodeName(byte\ code);}}
+\DoxyCodeLine{00339\ \ \ \ \ \textcolor{keyword}{static}\ \textcolor{keyword}{const}\ \_\_FlashStringHelper\ *GetStatusCodeName(StatusCode\ code);}
+\DoxyCodeLine{00340\ \ \ \ \ \textcolor{keyword}{static}\ PICC\_Type\ PICC\_GetType(\textcolor{keywordtype}{byte}\ sak);}
+\DoxyCodeLine{00341\ \ \ \ \ \textcolor{comment}{//\ old\ function\ used\ too\ much\ memory,\ now\ name\ moved\ to\ flash;\ if\ you\ need\ char,\ copy\ from\ flash\ to\ memory}}
+\DoxyCodeLine{00342\ \ \ \ \ \textcolor{comment}{//const\ char\ *PICC\_GetTypeName(byte\ type);}}
+\DoxyCodeLine{00343\ \ \ \ \ \textcolor{keyword}{static}\ \textcolor{keyword}{const}\ \_\_FlashStringHelper\ *PICC\_GetTypeName(PICC\_Type\ type);}
+\DoxyCodeLine{00344\ \ \ \ \ }
+\DoxyCodeLine{00345\ \ \ \ \ \textcolor{comment}{//\ Support\ functions\ for\ debuging}}
+\DoxyCodeLine{00346\ \ \ \ \ \textcolor{keywordtype}{void}\ PCD\_DumpVersionToSerial();}
+\DoxyCodeLine{00347\ \ \ \ \ \textcolor{keywordtype}{void}\ PICC\_DumpToSerial(\mbox{\hyperlink{classMFRC522_structMFRC522_1_1Uid}{Uid}}\ *uid);}
+\DoxyCodeLine{00348\ \ \ \ \ \textcolor{keywordtype}{void}\ PICC\_DumpDetailsToSerial(\mbox{\hyperlink{classMFRC522_structMFRC522_1_1Uid}{Uid}}\ *uid);}
+\DoxyCodeLine{00349\ \ \ \ \ \textcolor{keywordtype}{void}\ PICC\_DumpMifareClassicToSerial(\mbox{\hyperlink{classMFRC522_structMFRC522_1_1Uid}{Uid}}\ *uid,\ PICC\_Type\ piccType,\ \mbox{\hyperlink{classMFRC522_structMFRC522_1_1MIFARE__Key}{MIFARE\_Key}}\ *key);}
+\DoxyCodeLine{00350\ \ \ \ \ \textcolor{keywordtype}{void}\ PICC\_DumpMifareClassicSectorToSerial(\mbox{\hyperlink{classMFRC522_structMFRC522_1_1Uid}{Uid}}\ *uid,\ \mbox{\hyperlink{classMFRC522_structMFRC522_1_1MIFARE__Key}{MIFARE\_Key}}\ *key,\ \textcolor{keywordtype}{byte}\ sector);}
+\DoxyCodeLine{00351\ \ \ \ \ \textcolor{keywordtype}{void}\ PICC\_DumpMifareUltralightToSerial();}
+\DoxyCodeLine{00352\ \ \ \ \ }
+\DoxyCodeLine{00353\ \ \ \ \ \textcolor{comment}{//\ Advanced\ functions\ for\ MIFARE}}
+\DoxyCodeLine{00354\ \ \ \ \ \textcolor{keywordtype}{void}\ MIFARE\_SetAccessBits(\textcolor{keywordtype}{byte}\ *accessBitBuffer,\ \textcolor{keywordtype}{byte}\ g0,\ \textcolor{keywordtype}{byte}\ g1,\ \textcolor{keywordtype}{byte}\ g2,\ \textcolor{keywordtype}{byte}\ g3);}
+\DoxyCodeLine{00355\ \ \ \ \ \textcolor{keywordtype}{bool}\ MIFARE\_OpenUidBackdoor(\textcolor{keywordtype}{bool}\ logErrors);}
+\DoxyCodeLine{00356\ \ \ \ \ \textcolor{keywordtype}{bool}\ MIFARE\_SetUid(\textcolor{keywordtype}{byte}\ *newUid,\ \textcolor{keywordtype}{byte}\ uidSize,\ \textcolor{keywordtype}{bool}\ logErrors);}
+\DoxyCodeLine{00357\ \ \ \ \ \textcolor{keywordtype}{bool}\ MIFARE\_UnbrickUidSector(\textcolor{keywordtype}{bool}\ logErrors);}
+\DoxyCodeLine{00358\ \ \ \ \ }
+\DoxyCodeLine{00360\ \ \ \ \ \textcolor{comment}{//\ Convenience\ functions\ -\/\ does\ not\ add\ extra\ functionality}}
+\DoxyCodeLine{00362\ \ \ \ \ \textcolor{keyword}{virtual}\ \textcolor{keywordtype}{bool}\ PICC\_IsNewCardPresent();}
+\DoxyCodeLine{00363\ \ \ \ \ \textcolor{keyword}{virtual}\ \textcolor{keywordtype}{bool}\ PICC\_ReadCardSerial();}
+\DoxyCodeLine{00364\ \ \ \ \ }
+\DoxyCodeLine{00365\ \textcolor{keyword}{protected}:}
+\DoxyCodeLine{00366\ \ \ \ \ \textcolor{keywordtype}{byte}\ \_chipSelectPin;\ \ \ \ \ \ \ \ \textcolor{comment}{//\ Arduino\ pin\ connected\ to\ MFRC522's\ SPI\ slave\ select\ input\ (Pin\ 24,\ NSS,\ active\ low)}}
+\DoxyCodeLine{00367\ \ \ \ \ \textcolor{keywordtype}{byte}\ \_resetPowerDownPin;\ \ \ \ \textcolor{comment}{//\ Arduino\ pin\ connected\ to\ MFRC522's\ reset\ and\ power\ down\ input\ (Pin\ 6,\ NRSTPD,\ active\ low)}}
+\DoxyCodeLine{00368\ \ \ \ \ StatusCode\ MIFARE\_TwoStepHelper(\textcolor{keywordtype}{byte}\ command,\ \textcolor{keywordtype}{byte}\ blockAddr,\ int32\_t\ data);}
+\DoxyCodeLine{00369\ \};}
+\DoxyCodeLine{00370\ }
+\DoxyCodeLine{00371\ \textcolor{preprocessor}{\#endif}}
+
+\end{DoxyCode}

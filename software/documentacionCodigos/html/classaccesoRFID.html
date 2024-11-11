@@ -1,0 +1,193 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "https://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" lang="es">
+<head>
+<meta http-equiv="Content-Type" content="text/xhtml;charset=UTF-8"/>
+<meta http-equiv="X-UA-Compatible" content="IE=11"/>
+<meta name="generator" content="Doxygen 1.12.0"/>
+<meta name="viewport" content="width=device-width, initial-scale=1"/>
+<title>Sistema de seguridad en cámaras frigoríficas: Referencia de la clase accesoRFID</title>
+<link href="tabs.css" rel="stylesheet" type="text/css"/>
+<script type="text/javascript" src="jquery.js"></script>
+<script type="text/javascript" src="dynsections.js"></script>
+<script type="text/javascript" src="clipboard.js"></script>
+<link href="navtree.css" rel="stylesheet" type="text/css"/>
+<script type="text/javascript" src="navtreedata.js"></script>
+<script type="text/javascript" src="navtree.js"></script>
+<script type="text/javascript" src="resize.js"></script>
+<script type="text/javascript" src="cookie.js"></script>
+<link href="search/search.css" rel="stylesheet" type="text/css"/>
+<script type="text/javascript" src="search/searchdata.js"></script>
+<script type="text/javascript" src="search/search.js"></script>
+<link href="doxygen.css" rel="stylesheet" type="text/css" />
+</head>
+<body>
+<div id="top"><!-- do not remove this div, it is closed by doxygen! -->
+<div id="titlearea">
+<table cellspacing="0" cellpadding="0">
+ <tbody>
+ <tr id="projectrow">
+  <td id="projectalign">
+   <div id="projectname">Sistema de seguridad en cámaras frigoríficas
+   </div>
+  </td>
+ </tr>
+ </tbody>
+</table>
+</div>
+<!-- end header part -->
+<!-- Generado por Doxygen 1.12.0 -->
+<script type="text/javascript">
+/* @license magnet:?xt=urn:btih:d3d9a9a6595521f9666a5e94cc830dab83b65699&amp;dn=expat.txt MIT */
+var searchBox = new SearchBox("searchBox", "search/",'.html');
+/* @license-end */
+</script>
+<script type="text/javascript">
+/* @license magnet:?xt=urn:btih:d3d9a9a6595521f9666a5e94cc830dab83b65699&amp;dn=expat.txt MIT */
+$(function() { codefold.init(0); });
+/* @license-end */
+</script>
+<script type="text/javascript" src="menudata.js"></script>
+<script type="text/javascript" src="menu.js"></script>
+<script type="text/javascript">
+/* @license magnet:?xt=urn:btih:d3d9a9a6595521f9666a5e94cc830dab83b65699&amp;dn=expat.txt MIT */
+$(function() {
+  initMenu('',true,false,'search.php','Buscar',true);
+  $(function() { init_search(); });
+});
+/* @license-end */
+</script>
+<div id="main-nav"></div>
+</div><!-- top -->
+<div id="side-nav" class="ui-resizable side-nav-resizable">
+  <div id="nav-tree">
+    <div id="nav-tree-contents">
+      <div id="nav-sync" class="sync"></div>
+    </div>
+  </div>
+  <div id="splitbar" style="-moz-user-select:none;" 
+       class="ui-resizable-handle">
+  </div>
+</div>
+<script type="text/javascript">
+/* @license magnet:?xt=urn:btih:d3d9a9a6595521f9666a5e94cc830dab83b65699&amp;dn=expat.txt MIT */
+$(function(){initNavTree('classaccesoRFID.html',''); initResizable(true); });
+/* @license-end */
+</script>
+<div id="doc-content">
+<!-- window showing the filter options -->
+<div id="MSearchSelectWindow"
+     onmouseover="return searchBox.OnSearchSelectShow()"
+     onmouseout="return searchBox.OnSearchSelectHide()"
+     onkeydown="return searchBox.OnSearchSelectKey(event)">
+</div>
+
+<!-- iframe showing the search results (closed by default) -->
+<div id="MSearchResultsWindow">
+<div id="MSearchResults">
+<div class="SRPage">
+<div id="SRIndex">
+<div id="SRResults"></div>
+<div class="SRStatus" id="Loading">Cargando...</div>
+<div class="SRStatus" id="Searching">Buscando...</div>
+<div class="SRStatus" id="NoMatches">Nada coincide</div>
+</div>
+</div>
+</div>
+</div>
+
+<div class="header">
+  <div class="summary">
+<a href="#pub-methods">Métodos públicos</a>  </div>
+  <div class="headertitle"><div class="title">Referencia de la clase accesoRFID</div></div>
+</div><!--header-->
+<div class="contents">
+
+<p>Clase para manejar el acceso usando el módulo RFID-RC522.  
+ <a href="#details">Más...</a></p>
+
+<p><code>#include &lt;<a class="el" href="accesoRFID_8h_source.html">accesoRFID.h</a>&gt;</code></p>
+<div class="dynheader">
+Diagrama de colaboración de accesoRFID:</div>
+<div class="dyncontent">
+<div class="center"><img src="classaccesoRFID__coll__graph.png" border="0" usemap="#aaccesoRFID_coll__map" alt="Collaboration graph"/></div>
+<map name="aaccesoRFID_coll__map" id="aaccesoRFID_coll__map">
+<area shape="rect" title="Clase para manejar el acceso usando el módulo RFID&#45;RC522." alt="" coords="5,5,140,160"/>
+</map>
+</div>
+<table class="memberdecls">
+<tr class="heading"><td colspan="2"><h2 class="groupheader"><a id="pub-methods" name="pub-methods"></a>
+Métodos públicos</h2></td></tr>
+<tr class="memitem:a76ec44dbd93eed875350296b46670f11" id="r_a76ec44dbd93eed875350296b46670f11"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#a76ec44dbd93eed875350296b46670f11">accesoRFID</a> (byte ssPin, byte rstPin, String autorizarID)</td></tr>
+<tr class="memdesc:a76ec44dbd93eed875350296b46670f11"><td class="mdescLeft">&#160;</td><td class="mdescRight">Constructor de la clase <a class="el" href="classaccesoRFID.html" title="Clase para manejar el acceso usando el módulo RFID-RC522.">accesoRFID</a>.  <br /></td></tr>
+<tr class="separator:a76ec44dbd93eed875350296b46670f11"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a3bc744bb024b8bfbe459092a36f9cd68" id="r_a3bc744bb024b8bfbe459092a36f9cd68"><td class="memItemLeft" align="right" valign="top"><a id="a3bc744bb024b8bfbe459092a36f9cd68" name="a3bc744bb024b8bfbe459092a36f9cd68"></a>
+void&#160;</td><td class="memItemRight" valign="bottom"><b>start</b> ()</td></tr>
+<tr class="memdesc:a3bc744bb024b8bfbe459092a36f9cd68"><td class="mdescLeft">&#160;</td><td class="mdescRight">void <a class="el" href="#a3bc744bb024b8bfbe459092a36f9cd68" title="void start(); Inicia la comunicación SPI con el módulo RFID (usando sus métodos).">start()</a>; Inicia la comunicación SPI con el módulo RFID (usando sus métodos). <br /></td></tr>
+<tr class="separator:a3bc744bb024b8bfbe459092a36f9cd68"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a0274f257c332f825bdb079d4b4e6efd6" id="r_a0274f257c332f825bdb079d4b4e6efd6"><td class="memItemLeft" align="right" valign="top"><a id="a0274f257c332f825bdb079d4b4e6efd6" name="a0274f257c332f825bdb079d4b4e6efd6"></a>
+void&#160;</td><td class="memItemRight" valign="bottom"><b>mostrarID</b> ()</td></tr>
+<tr class="memdesc:a0274f257c332f825bdb079d4b4e6efd6"><td class="mdescLeft">&#160;</td><td class="mdescRight">void <a class="el" href="#a0274f257c332f825bdb079d4b4e6efd6" title="void mostrarID(); Imprime por puerto serie el UID de la tarjeta detectada por el RFID">mostrarID()</a>; Imprime por puerto serie el UID de la tarjeta detectada por el RFID <br /></td></tr>
+<tr class="separator:a0274f257c332f825bdb079d4b4e6efd6"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:abadde807c97ccaa1a49182292d43d8e1" id="r_abadde807c97ccaa1a49182292d43d8e1"><td class="memItemLeft" align="right" valign="top"><a id="abadde807c97ccaa1a49182292d43d8e1" name="abadde807c97ccaa1a49182292d43d8e1"></a>
+bool&#160;</td><td class="memItemRight" valign="bottom"><b>autorizar</b> ()</td></tr>
+<tr class="memdesc:abadde807c97ccaa1a49182292d43d8e1"><td class="mdescLeft">&#160;</td><td class="mdescRight">bool <a class="el" href="#abadde807c97ccaa1a49182292d43d8e1" title="bool autorizar(); Compara el UID de la tarjeta con el UID autorizado. Devuelve true (acceso permitido...">autorizar()</a>; Compara el UID de la tarjeta con el UID autorizado. Devuelve true (acceso permitido) o un false (acceso denegado). <br /></td></tr>
+<tr class="separator:abadde807c97ccaa1a49182292d43d8e1"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a796d502e70c965524f20c277278e2fc8" id="r_a796d502e70c965524f20c277278e2fc8"><td class="memItemLeft" align="right" valign="top"><a id="a796d502e70c965524f20c277278e2fc8" name="a796d502e70c965524f20c277278e2fc8"></a>
+bool&#160;</td><td class="memItemRight" valign="bottom"><b>detectarTarjeta</b> ()</td></tr>
+<tr class="memdesc:a796d502e70c965524f20c277278e2fc8"><td class="mdescLeft">&#160;</td><td class="mdescRight">bool <a class="el" href="#a796d502e70c965524f20c277278e2fc8" title="bool detectarTarjeta(); Lee el UID de la tarjeta para implementarla en el sistema.">detectarTarjeta()</a>; Lee el UID de la tarjeta para implementarla en el sistema. <br /></td></tr>
+<tr class="separator:a796d502e70c965524f20c277278e2fc8"><td class="memSeparator" colspan="2">&#160;</td></tr>
+</table>
+<a name="details" id="details"></a><h2 class="groupheader">Descripción detallada</h2>
+<div class="textblock"><p>Clase para manejar el acceso usando el módulo RFID-RC522. </p>
+<p>Esta clase permite inicializar el lector RFID y verificar si una tarjeta tiene autorización para entrar. </p>
+</div><h2 class="groupheader">Documentación de constructores y destructores</h2>
+<a id="a76ec44dbd93eed875350296b46670f11" name="a76ec44dbd93eed875350296b46670f11"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a76ec44dbd93eed875350296b46670f11">&#9670;&#160;</a></span>accesoRFID()</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">accesoRFID::accesoRFID </td>
+          <td>(</td>
+          <td class="paramtype">byte</td>          <td class="paramname"><span class="paramname"><em>ssPin</em></span>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">byte</td>          <td class="paramname"><span class="paramname"><em>rstPin</em></span>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">String</td>          <td class="paramname"><span class="paramname"><em>autorizarID</em></span>&#160;)</td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p>Constructor de la clase <a class="el" href="classaccesoRFID.html" title="Clase para manejar el acceso usando el módulo RFID-RC522.">accesoRFID</a>. </p>
+<dl class="params"><dt>Parámetros</dt><dd>
+  <table class="params">
+    <tr><td class="paramname">ssPin</td><td>El pin SS (Slave Select) para la comunicación SPI. </td></tr>
+    <tr><td class="paramname">rstPin</td><td>es el pin de Reset para el módulo RFID. </td></tr>
+    <tr><td class="paramname">autorizarID</td><td>El UID de la tarjeta autorizada para el acceso. </td></tr>
+  </table>
+  </dd>
+</dl>
+
+</div>
+</div>
+<hr/>La documentación de esta clase está generada del siguiente archivo:<ul>
+<li>main/libraries/RFID-RC522/<a class="el" href="accesoRFID_8h_source.html">accesoRFID.h</a></li>
+</ul>
+</div><!-- contents -->
+</div><!-- doc-content -->
+<!-- start footer part -->
+<div id="nav-path" class="navpath"><!-- id is needed for treeview function! -->
+  <ul>
+    <li class="navelem"><a class="el" href="classaccesoRFID.html">accesoRFID</a></li>
+    <li class="footer">Generado por <a href="https://www.doxygen.org/index.html"><img class="footer" src="doxygen.svg" width="104" height="31" alt="doxygen"/></a> 1.12.0 </li>
+  </ul>
+</div>
+</body>
+</html>
