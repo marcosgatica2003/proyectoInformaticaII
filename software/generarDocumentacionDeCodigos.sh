@@ -15,8 +15,9 @@ cd "$DOXYFILE_DIR/documentacionCodigos/latex" || exit
 
 make
 
+rm .main.cpp
 mv refman.pdf S.S.C.F.Software.pdf
 mv S.S.C.F.Software.pdf ../
 cd - || exit
-
+clear
 echo "Documentación de software generada como S.S.C.F.Software.pdf"

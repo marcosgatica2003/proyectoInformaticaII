@@ -977,7 +977,7 @@ INPUT                  = ./main/libraries/RFID-RC522/accesoRFID.h \
                          ./main/libraries/CLOCK/clock.h \
                          ./main/libraries/SERVO/servo.h \
                          ./main/libraries/BUZZER-CLDZ/buzzer.h \
-                         ./main/main.cpp
+                         ./main.cpp
 
 # This tag can be used to specify the character encoding of the source files
 # that Doxygen parses. Internally Doxygen uses the UTF-8 encoding. Doxygen uses

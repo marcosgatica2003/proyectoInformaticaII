@@ -1,5 +1,5 @@
 /**
- * @file main.ino
+ * @file main.cpp
  * @brief Sistema de control de cámaras frigoríficas.
  * Este proyecto utiliza un sistema baso en RFID, BUZZER, TIMER, RELOJ, SERVOMOTOR y Gestión de usuario
  * @author Grupo 06 - Informática II
