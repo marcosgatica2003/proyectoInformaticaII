@@ -58,7 +58,7 @@ void setup() {
   tarjetaRFID.start(); llaveroRFID.start();
   //laPantalla.limpiar();
   elBuzzer.update(); //Esto hará que el buzzer tome el valor de la resistencia actual
-  puerta.inicializar(); pinMode(pinCerrarPuerta, INPUT_PULLUP);
+  puerta.inicializar(); pinMode(pinCerrarPuerta, INPUT_PULLUP); digitalWrite(pinCerrarPuerta, LOW);
 }
 
 void loop() {
@@ -90,8 +90,19 @@ void loop() {
       Serial.print(":");
       Serial.print(String(clock.getSegundos()));
       Serial.println("------------------------------");
-      delay(2000);
-      
+      delay(2000);      
+    }
+
+    if (comando == "force") {
+      Serial.println("------------------------------");
+      Serial.print("Entrada forzada!");
+      Serial.println("------------------------------");
+      delay(2000);  
+
+      puerta.abrir();
+      accionarTimer();
+      elTimer.actualizar();
+
     }
 
   }
@@ -159,7 +170,7 @@ bool verificarAcceso () {
       Serial.println("------------------------------");
       Serial.println("Acceso permitido");
       Serial.println("------------------------------");
-
+      delay(3000);
       //laPantalla.limpiar();
       //laPantalla.pantallaTexto("Acceso permitido", 0, 0, 2);
       return true;
@@ -167,12 +178,10 @@ bool verificarAcceso () {
     } else {
       //laPantalla.limpiar();
       //laPantalla.pantallaTexto("Fuera de horario", 0, 0, 2);
+      
     }
   }
-
-  Serial.println("------------------------------");
-  Serial.println("Acceso denegado");
-  Serial.println("------------------------------");
+  
 
   return false;
 }
