@@ -25,7 +25,7 @@ bool contON = false;
 
 void setup() {
   pinMode (pinIngreso, INPUT);
-  pinMode (pinReset, INPUT);
+  PinMode (pinReset, INPUT);
   pinMode (pin2, OUTPUT);
   pinMode (pin3, OUTPUT);
 }

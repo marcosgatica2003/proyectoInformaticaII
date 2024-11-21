@@ -1,5 +1,0 @@
-<map id="main/libraries/TIMER/timer.h" name="main/libraries/TIMER/timer.h">
-<area shape="rect" id="Node000001" title="Declaración de la clase timer para manejar dos fases de un temporizador, con antirrebote y un reset." alt="" coords="5,5,162,50"/>
-<area shape="rect" id="Node000002" title=" " alt="" coords="42,98,125,126"/>
-<area shape="poly" id="edge1_Node000001_Node000002" title=" " alt="" coords="86,50,86,82,81,82,81,50"/>
-</map>
